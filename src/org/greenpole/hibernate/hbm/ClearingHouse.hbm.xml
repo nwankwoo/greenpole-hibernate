@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.ClearingHouse" table="CLEARING_HOUSE" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="50" unique="true" />
+        </property>
+        <property name="brokerage" type="java.lang.Double">
+            <column name="brokerage" precision="53" scale="0" />
+        </property>
+        <property name="appCleared" type="boolean">
+            <column name="app_cleared" />
+        </property>
+        <property name="submissionDate" type="date">
+            <column name="submission_Date" length="10" />
+        </property>
+        <set name="privatePlacementApplications" table="PRIVATE_PLACEMENT_APPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="clearing_house_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.PrivatePlacementApplication" />
+        </set>
+        <set name="ipoApplications" table="IPO_APPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="clearing_house_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.IpoApplication" />
+        </set>
+        <set name="rightsIssueApplications" table="RIGHTS_ISSUE_APPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="clearing_house_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.RightsIssueApplication" />
+        </set>
+    </class>
+</hibernate-mapping>

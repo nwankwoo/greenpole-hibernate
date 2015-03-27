@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.VotingProcess" table="VOTING_PROCESS" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="gm" class="org.greenpole.hibernate.entrypoint.Gm" fetch="select">
+            <column name="gm_id" />
+        </many-to-one>
+        <property name="title" type="string">
+            <column name="title" />
+        </property>
+        <property name="notes" type="string">
+            <column name="notes" />
+        </property>
+        <set name="holderVotings" table="HOLDER_VOTING" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="voting_process_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderVoting" />
+        </set>
+    </class>
+</hibernate-mapping>

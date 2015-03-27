@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.Requirement" table="REQUIREMENT" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="group" class="org.greenpole.hibernate.entrypoint.Group" fetch="select">
+            <column name="group_id" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" />
+        </property>
+        <property name="screen" type="string">
+            <column name="screen" />
+        </property>
+        <set name="requirementFunctions" table="REQUIREMENT_FUNCTION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="requirement_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.RequirementFunction" />
+        </set>
+        <set name="userAccounts" table="USER_ACCOUNT_REQUIREMENT" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="requirement_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.greenpole.hibernate.entrypoint.UserAccount">
+                <column name="user_account_id" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

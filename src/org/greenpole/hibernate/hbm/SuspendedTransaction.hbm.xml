@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.SuspendedTransaction" table="SUSPENDED_TRANSACTION" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entrypoint.ClientCompany" fetch="select">
+            <column name="client_company_id" />
+        </many-to-one>
+        <property name="cscsTransactionId" type="int">
+            <column name="cscs_transaction_id" />
+        </property>
+        <property name="transactionDate" type="date">
+            <column name="transaction_date" length="10" />
+        </property>
+        <property name="suspensionDate" type="date">
+            <column name="suspension_date" length="10" />
+        </property>
+        <property name="suspensionReason" type="string">
+            <column name="suspension_reason" length="500" />
+        </property>
+        <property name="reconciled" type="boolean">
+            <column name="reconciled" />
+        </property>
+        <property name="companyName" type="string">
+            <column name="company_name" length="300" />
+        </property>
+        <set name="suspendedTransactionHolders" table="SUSPENDED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="transaction_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.SuspendedTransactionHolder" />
+        </set>
+    </class>
+</hibernate-mapping>

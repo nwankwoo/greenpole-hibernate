@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.AdministratorEmailAddress" table="ADMINISTRATOR_EMAIL_ADDRESS" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <composite-id name="id" class="org.greenpole.hibernate.entrypoint.AdministratorEmailAddressId">
+            <key-property name="administratorId" type="int">
+                <column name="administrator_id" />
+            </key-property>
+            <key-property name="emailAddress" type="string">
+                <column name="email_address" length="500" />
+            </key-property>
+            <key-property name="lineNumber" type="int">
+                <column name="line_number" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="administrator" class="org.greenpole.hibernate.entrypoint.Administrator" update="false" insert="false" fetch="select">
+            <column name="administrator_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

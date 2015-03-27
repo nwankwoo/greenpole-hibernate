@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.CertificateVerification" table="CERTIFICATE_VERIFICATION" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="certificate" class="org.greenpole.hibernate.entrypoint.Certificate" fetch="select">
+            <column name="certificate_id" unique="true" />
+        </many-to-one>
+        <property name="status" type="string">
+            <column name="status" length="50" />
+        </property>
+        <property name="note" type="string">
+            <column name="note" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.Dividend" table="DIVIDEND" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entrypoint.ClientCompany" fetch="select">
+            <column name="client_Comp_Id" />
+        </many-to-one>
+        <many-to-one name="dividendDeclared" class="org.greenpole.hibernate.entrypoint.DividendDeclared" fetch="select">
+            <column name="div_decld_id" />
+        </many-to-one>
+        <many-to-one name="dividendIssueType" class="org.greenpole.hibernate.entrypoint.DividendIssueType" fetch="select">
+            <column name="div_Issue_Type_Id" />
+        </many-to-one>
+        <many-to-one name="holderCompanyAccount" class="org.greenpole.hibernate.entrypoint.HolderCompanyAccount" fetch="select">
+            <column name="h_act_holder_id" />
+            <column name="h_act_client_comp_id" />
+        </many-to-one>
+        <property name="warrantNumber" type="int">
+            <column name="warrant_Number" not-null="true" unique="true" />
+        </property>
+        <property name="clientCompName" type="string">
+            <column name="client_Comp_Name" length="200" />
+        </property>
+        <property name="issueType" type="string">
+            <column name="issue_Type" length="50" />
+        </property>
+        <property name="issueDate" type="date">
+            <column name="issue_Date" length="10" />
+        </property>
+        <property name="divNumber" type="int">
+            <column name="div_Number" />
+        </property>
+        <property name="yearType" type="string">
+            <column name="year_Type" length="50" />
+        </property>
+        <property name="yearEnding" type="date">
+            <column name="year_Ending" length="10" />
+        </property>
+        <property name="SHolderMailingAddr" type="string">
+            <column name="s_holder_mailing_addr" />
+        </property>
+        <property name="rate" type="java.lang.Double">
+            <column name="rate" precision="53" scale="0" />
+        </property>
+        <property name="compAccHoldings" type="int">
+            <column name="comp_acc_holdings" />
+        </property>
+        <property name="withldingTaxRate" type="java.lang.Double">
+            <column name="withlding_tax_rate" precision="53" scale="0" />
+        </property>
+        <property name="grossAmount" type="java.lang.Double">
+            <column name="gross_Amount" precision="53" scale="0" />
+        </property>
+        <property name="tax" type="java.lang.Double">
+            <column name="tax" precision="53" scale="0" />
+        </property>
+        <property name="payableAmount" type="java.lang.Double">
+            <column name="payable_Amount" precision="53" scale="0" />
+        </property>
+        <property name="payableDate" type="date">
+            <column name="payable_Date" length="10" />
+        </property>
+        <property name="issued" type="boolean">
+            <column name="issued" />
+        </property>
+        <property name="issuedDate" type="date">
+            <column name="issued_Date" length="10" />
+        </property>
+        <property name="reIssued" type="boolean">
+            <column name="re_Issued" />
+        </property>
+        <property name="reIssuedDate" type="date">
+            <column name="re_Issued_Date" length="10" />
+        </property>
+        <property name="paid" type="boolean">
+            <column name="paid" />
+        </property>
+        <property name="paidDate" type="date">
+            <column name="paid_Date" length="10" />
+        </property>
+        <property name="paymentMethod" type="string">
+            <column name="payment_method" length="50" />
+        </property>
+        <property name="unclaimed" type="boolean">
+            <column name="unclaimed" />
+        </property>
+        <property name="unclaimedDate" type="date">
+            <column name="unclaimed_date" length="10" />
+        </property>
+        <property name="cancelled" type="boolean">
+            <column name="cancelled" />
+        </property>
+        <property name="canelledDate" type="date">
+            <column name="canelled_Date" length="10" />
+        </property>
+        <set name="dividenAnnotations" table="DIVIDEN_ANNOTATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="dividend_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.DividenAnnotation" />
+        </set>
+    </class>
+</hibernate-mapping>

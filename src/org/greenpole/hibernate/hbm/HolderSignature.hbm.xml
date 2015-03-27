@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.HolderSignature" table="HOLDER_SIGNATURE" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entrypoint.Holder" fetch="select">
+            <column name="holder_id" />
+        </many-to-one>
+        <property name="signaturePath" type="string">
+            <column name="signature_Path" />
+        </property>
+        <property name="holderSignaturePrimary" type="boolean">
+            <column name="holder_Signature_Primary" />
+        </property>
+    </class>
+</hibernate-mapping>

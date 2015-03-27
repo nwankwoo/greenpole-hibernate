@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entrypoint.Holder" table="HOLDER" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entrypoint.Holder" fetch="select">
+            <column name="secondary_holder_id" />
+        </many-to-one>
+        <property name="holderAcctNumber" type="int">
+            <column name="holder_acct_number" unique="true" />
+        </property>
+        <property name="firstName" type="string">
+            <column name="first_name" length="200" />
+        </property>
+        <property name="middleName" type="string">
+            <column name="middle_name" length="200" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="200" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="100" />
+        </property>
+        <property name="gender" type="string">
+            <column name="gender" length="50" />
+        </property>
+        <property name="dob" type="date">
+            <column name="dob" length="10" />
+        </property>
+        <property name="taxExempted" type="boolean">
+            <column name="tax_exempted" />
+        </property>
+        <property name="merged" type="boolean">
+            <column name="merged" />
+        </property>
+        <property name="pryHolder" type="boolean">
+            <column name="pry_holder" />
+        </property>
+        <set name="privatePlacementApplications" table="PRIVATE_PLACEMENT_APPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.PrivatePlacementApplication" />
+        </set>
+        <set name="holders" table="HOLDER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="secondary_holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.Holder" />
+        </set>
+        <set name="holderGmAttendances" table="HOLDER_GM_ATTENDANCE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderGmAttendance" />
+        </set>
+        <set name="holderSignatures" table="HOLDER_SIGNATURE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderSignature" />
+        </set>
+        <set name="ipoApplications" table="IPO_APPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.IpoApplication" />
+        </set>
+        <set name="holderPhoneNumbers" table="HOLDER_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderPhoneNumber" />
+        </set>
+        <set name="suspendedTransactionHolders" table="SUSPENDED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.SuspendedTransactionHolder" />
+        </set>
+        <set name="rightsIssueApplications" table="RIGHTS_ISSUE_APPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.RightsIssueApplication" />
+        </set>
+        <set name="digitalCaptures" table="DIGITAL_CAPTURE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" unique="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.DigitalCapture" />
+        </set>
+        <set name="processedTransactionHolders" table="PROCESSED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.ProcessedTransactionHolder" />
+        </set>
+        <set name="powerOfAttorneys" table="POWER_OF_ATTORNEY" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.PowerOfAttorney" />
+        </set>
+        <set name="holderResidentialAddresses" table="HOLDER_RESIDENTIAL_ADDRESS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderResidentialAddress" />
+        </set>
+        <set name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderCompanyAccount" />
+        </set>
+        <set name="holderPostalAddresses" table="HOLDER_POSTAL_ADDRESS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderPostalAddress" />
+        </set>
+        <set name="stockbrokers" table="STOCKBROKER_HOLDER" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.greenpole.hibernate.entrypoint.Stockbroker">
+                <column name="stockbroker_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="holderEmailAddresses" table="HOLDER_EMAIL_ADDRESS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderEmailAddress" />
+        </set>
+        <set name="holderVotings" table="HOLDER_VOTING" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderVoting" />
+        </set>
+        <set name="cautions" table="CAUTION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.Caution" />
+        </set>
+        <set name="certificates" table="CERTIFICATE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entrypoint.Certificate" />
+        </set>
+        <set name="administrators" table="ADMINISTRATOR_HOLDER" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.greenpole.hibernate.entrypoint.Administrator">
+                <column name="administrator_id" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
