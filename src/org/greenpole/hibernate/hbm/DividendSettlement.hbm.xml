@@ -1,33 +1,32 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.DividendSettlement" table="DIVIDEND_SETTLEMENT" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity"></generator>
-        </id>
-        <many-to-one name="dividendDeclared" class="org.greenpole.hibernate.entrypoint.DividendDeclared" fetch="select">
-            <column name="dividend_declaration_id" unique="true" />
-        </many-to-one>
-        <property name="totalDivAmtDec" type="java.lang.Double">
-            <column name="total_Div_Amt_Dec" precision="53" scale="0" />
-        </property>
-        <property name="totalDivAmtPaid" type="java.lang.Double">
-            <column name="total_Div_Amt_Paid" precision="53" scale="0" />
-        </property>
-        <property name="totalDivAmtUnpaid" type="java.lang.Double">
-            <column name="total_Div_Amt_Unpaid" precision="53" scale="0" />
-        </property>
-        <property name="totalDivAmtLeft" type="java.lang.Double">
-            <column name="total_Div_Amt_Left" precision="53" scale="0" />
-        </property>
-        <property name="shareholdersPaid" type="int">
-            <column name="shareholders_Paid" />
-        </property>
-        <property name="shareholdersUnpaid" type="int">
-            <column name="shareholders_Unpaid" />
-        </property>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.DividendSettlement" optimistic-lock="version" schema="dbo" table="DIVIDEND_SETTLEMENT">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="org.greenpole.hibernate.entity.DividendDeclared" fetch="select" name="dividendDeclared">
+      <column name="dividend_declaration_id" unique="true"/>
+    </many-to-one>
+    <property name="totalDivAmtDec" type="java.lang.Double">
+      <column name="total_Div_Amt_Dec" precision="53" scale="0"/>
+    </property>
+    <property name="totalDivAmtPaid" type="java.lang.Double">
+      <column name="total_Div_Amt_Paid" precision="53" scale="0"/>
+    </property>
+    <property name="totalDivAmtUnpaid" type="java.lang.Double">
+      <column name="total_Div_Amt_Unpaid" precision="53" scale="0"/>
+    </property>
+    <property name="totalDivAmtLeft" type="java.lang.Double">
+      <column name="total_Div_Amt_Left" precision="53" scale="0"/>
+    </property>
+    <property name="shareholdersPaid" type="int">
+      <column name="shareholders_Paid"/>
+    </property>
+    <property name="shareholdersUnpaid" type="int">
+      <column name="shareholders_Unpaid"/>
+    </property>
+  </class>
 </hibernate-mapping>

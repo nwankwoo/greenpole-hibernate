@@ -1,27 +1,26 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.ProcessedTransaction" table="PROCESSED_TRANSACTION" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity"></generator>
-        </id>
-        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entrypoint.ClientCompany" fetch="select">
-            <column name="company_id" />
-        </many-to-one>
-        <property name="cscsTransactionId" type="int">
-            <column name="cscs_transaction_id" unique="true" />
-        </property>
-        <property name="companyName" type="string">
-            <column name="company_name" />
-        </property>
-        <set name="processedTransactionHolders" table="PROCESSED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="transaction_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.ProcessedTransactionHolder" />
-        </set>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.ProcessedTransaction" optimistic-lock="version" schema="dbo" table="PROCESSED_TRANSACTION">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="org.greenpole.hibernate.entity.ClientCompany" fetch="select" name="clientCompany">
+      <column name="company_id"/>
+    </many-to-one>
+    <property name="cscsTransactionId" type="int">
+      <column name="cscs_transaction_id" unique="true"/>
+    </property>
+    <property name="companyName" type="string">
+      <column name="company_name"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="processedTransactionHolders" table="PROCESSED_TRANSACTION_HOLDER">
+      <key>
+        <column name="transaction_id" not-null="true"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.ProcessedTransactionHolder"/>
+    </set>
+  </class>
 </hibernate-mapping>

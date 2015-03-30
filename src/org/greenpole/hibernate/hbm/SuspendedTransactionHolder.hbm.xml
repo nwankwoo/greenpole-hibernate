@@ -1,37 +1,36 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.SuspendedTransactionHolder" table="SUSPENDED_TRANSACTION_HOLDER" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <composite-id name="id" class="org.greenpole.hibernate.entrypoint.SuspendedTransactionHolderId">
-            <key-property name="transactionId" type="int">
-                <column name="transaction_id" />
-            </key-property>
-            <key-property name="holderId" type="int">
-                <column name="holder_id" />
-            </key-property>
-        </composite-id>
-        <many-to-one name="holder" class="org.greenpole.hibernate.entrypoint.Holder" update="false" insert="false" fetch="select">
-            <column name="holder_id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="suspendedTransaction" class="org.greenpole.hibernate.entrypoint.SuspendedTransaction" update="false" insert="false" fetch="select">
-            <column name="transaction_id" not-null="true" />
-        </many-to-one>
-        <property name="holderName" type="string">
-            <column name="holder_name" />
-        </property>
-        <property name="holderChn" type="string">
-            <column name="holder_chn" length="100" />
-        </property>
-        <property name="units" type="int">
-            <column name="units" />
-        </property>
-        <property name="unitType" type="string">
-            <column name="unit_type" length="50" />
-        </property>
-        <property name="fromTo" type="string">
-            <column name="from_to" length="50" />
-        </property>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.SuspendedTransactionHolder" optimistic-lock="version" schema="dbo" table="SUSPENDED_TRANSACTION_HOLDER">
+    <composite-id class="org.greenpole.hibernate.entity.SuspendedTransactionHolderId" name="id">
+      <key-property name="transactionId" type="int">
+        <column name="transaction_id"/>
+      </key-property>
+      <key-property name="holderId" type="int">
+        <column name="holder_id"/>
+      </key-property>
+    </composite-id>
+    <many-to-one class="org.greenpole.hibernate.entity.Holder" fetch="select" insert="false" name="holder" update="false">
+      <column name="holder_id" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="org.greenpole.hibernate.entity.SuspendedTransaction" fetch="select" insert="false" name="suspendedTransaction" update="false">
+      <column name="transaction_id" not-null="true"/>
+    </many-to-one>
+    <property name="holderName" type="string">
+      <column name="holder_name"/>
+    </property>
+    <property name="holderChn" type="string">
+      <column length="100" name="holder_chn"/>
+    </property>
+    <property name="units" type="int">
+      <column name="units"/>
+    </property>
+    <property name="unitType" type="string">
+      <column length="50" name="unit_type"/>
+    </property>
+    <property name="fromTo" type="string">
+      <column length="50" name="from_to"/>
+    </property>
+  </class>
 </hibernate-mapping>

@@ -1,54 +1,53 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.RightsIssueApplication" table="RIGHTS_ISSUE_APPLICATION" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity"></generator>
-        </id>
-        <many-to-one name="clearingHouse" class="org.greenpole.hibernate.entrypoint.ClearingHouse" fetch="select">
-            <column name="clearing_house_id" />
-        </many-to-one>
-        <many-to-one name="holder" class="org.greenpole.hibernate.entrypoint.Holder" fetch="select">
-            <column name="holder_id" />
-        </many-to-one>
-        <many-to-one name="rightsIssue" class="org.greenpole.hibernate.entrypoint.RightsIssue" fetch="select">
-            <column name="rights_issue_id" />
-        </many-to-one>
-        <property name="issuer" type="string">
-            <column name="issuer" length="200" />
-        </property>
-        <property name="sharesSubscribed" type="int">
-            <column name="shares_subscribed" />
-        </property>
-        <property name="additionalSharesSubscribed" type="int">
-            <column name="additional_shares_subscribed" />
-        </property>
-        <property name="amountPaid" type="java.lang.Double">
-            <column name="amount_paid" precision="53" scale="0" />
-        </property>
-        <property name="issuingHouse" type="string">
-            <column name="issuing_house" />
-        </property>
-        <property name="sharesSubscribedValue" type="java.lang.Double">
-            <column name="shares_subscribed_value" precision="53" scale="0" />
-        </property>
-        <property name="additionalSharesSubValue" type="java.lang.Double">
-            <column name="additional_shares_sub_value" precision="53" scale="0" />
-        </property>
-        <property name="totalValue" type="java.lang.Double">
-            <column name="total_value" precision="53" scale="0" />
-        </property>
-        <property name="totalSharesRenounced" type="int">
-            <column name="total_shares_renounced" />
-        </property>
-        <property name="returnMoney" type="java.lang.Double">
-            <column name="return_money" precision="53" scale="0" />
-        </property>
-        <property name="cancelled" type="boolean">
-            <column name="cancelled" />
-        </property>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.RightsIssueApplication" optimistic-lock="version" schema="dbo" table="RIGHTS_ISSUE_APPLICATION">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="org.greenpole.hibernate.entity.ClearingHouse" fetch="select" name="clearingHouse">
+      <column name="clearing_house_id"/>
+    </many-to-one>
+    <many-to-one class="org.greenpole.hibernate.entity.Holder" fetch="select" name="holder">
+      <column name="holder_id"/>
+    </many-to-one>
+    <many-to-one class="org.greenpole.hibernate.entity.RightsIssue" fetch="select" name="rightsIssue">
+      <column name="rights_issue_id"/>
+    </many-to-one>
+    <property name="issuer" type="string">
+      <column length="200" name="issuer"/>
+    </property>
+    <property name="sharesSubscribed" type="int">
+      <column name="shares_subscribed"/>
+    </property>
+    <property name="additionalSharesSubscribed" type="int">
+      <column name="additional_shares_subscribed"/>
+    </property>
+    <property name="amountPaid" type="java.lang.Double">
+      <column name="amount_paid" precision="53" scale="0"/>
+    </property>
+    <property name="issuingHouse" type="string">
+      <column name="issuing_house"/>
+    </property>
+    <property name="sharesSubscribedValue" type="java.lang.Double">
+      <column name="shares_subscribed_value" precision="53" scale="0"/>
+    </property>
+    <property name="additionalSharesSubValue" type="java.lang.Double">
+      <column name="additional_shares_sub_value" precision="53" scale="0"/>
+    </property>
+    <property name="totalValue" type="java.lang.Double">
+      <column name="total_value" precision="53" scale="0"/>
+    </property>
+    <property name="totalSharesRenounced" type="int">
+      <column name="total_shares_renounced"/>
+    </property>
+    <property name="returnMoney" type="java.lang.Double">
+      <column name="return_money" precision="53" scale="0"/>
+    </property>
+    <property name="cancelled" type="boolean">
+      <column name="cancelled"/>
+    </property>
+  </class>
 </hibernate-mapping>

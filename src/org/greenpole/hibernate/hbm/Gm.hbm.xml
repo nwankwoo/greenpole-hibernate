@@ -1,45 +1,44 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.Gm" table="GM" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity"></generator>
-        </id>
-        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entrypoint.ClientCompany" fetch="select">
-            <column name="client_company_id" />
-        </many-to-one>
-        <property name="title" type="string">
-            <column name="title" />
-        </property>
-        <property name="type" type="string">
-            <column name="type" length="50" />
-        </property>
-        <property name="purpose" type="string">
-            <column name="purpose" />
-        </property>
-        <property name="notes" type="string">
-            <column name="notes" />
-        </property>
-        <property name="startDate" type="date">
-            <column name="start_date" length="10" />
-        </property>
-        <property name="endDate" type="date">
-            <column name="end_date" length="10" />
-        </property>
-        <set name="votingProcesses" table="VOTING_PROCESS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="gm_id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.VotingProcess" />
-        </set>
-        <set name="holderGmAttendances" table="HOLDER_GM_ATTENDANCE" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="gm_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderGmAttendance" />
-        </set>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.Gm" optimistic-lock="version" schema="dbo" table="GM">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="org.greenpole.hibernate.entity.ClientCompany" fetch="select" name="clientCompany">
+      <column name="client_company_id"/>
+    </many-to-one>
+    <property name="title" type="string">
+      <column name="title"/>
+    </property>
+    <property name="type" type="string">
+      <column length="50" name="type"/>
+    </property>
+    <property name="purpose" type="string">
+      <column name="purpose"/>
+    </property>
+    <property name="notes" type="string">
+      <column name="notes"/>
+    </property>
+    <property name="startDate" type="date">
+      <column length="10" name="start_date"/>
+    </property>
+    <property name="endDate" type="date">
+      <column length="10" name="end_date"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="votingProcesses" table="VOTING_PROCESS">
+      <key>
+        <column name="gm_id"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.VotingProcess"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="holderGmAttendances" table="HOLDER_GM_ATTENDANCE">
+      <key>
+        <column name="gm_id" not-null="true"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.HolderGmAttendance"/>
+    </set>
+  </class>
 </hibernate-mapping>
