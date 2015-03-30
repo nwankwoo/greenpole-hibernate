@@ -1,68 +1,67 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.HolderCompanyAccount" table="HOLDER_COMPANY_ACCOUNT" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <composite-id name="id" class="org.greenpole.hibernate.entrypoint.HolderCompanyAccountId">
-            <key-property name="holderId" type="int">
-                <column name="holder_id" />
-            </key-property>
-            <key-property name="clientCompanyId" type="int">
-                <column name="client_Company_Id" />
-            </key-property>
-        </composite-id>
-        <many-to-one name="bank" class="org.greenpole.hibernate.entrypoint.Bank" fetch="select">
-            <column name="bank_id" />
-        </many-to-one>
-        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entrypoint.ClientCompany" update="false" insert="false" fetch="select">
-            <column name="client_Company_Id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="holder" class="org.greenpole.hibernate.entrypoint.Holder" update="false" insert="false" fetch="select">
-            <column name="holder_id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="holderCompanyAccount" class="org.greenpole.hibernate.entrypoint.HolderCompanyAccount" fetch="select">
-            <column name="sec_holder_id" />
-            <column name="sec_client_comp_id" />
-        </many-to-one>
-        <property name="chn" type="string">
-            <column name="chn" length="50" />
-        </property>
-        <property name="esop" type="boolean">
-            <column name="esop" />
-        </property>
-        <property name="taxExempted" type="boolean">
-            <column name="tax_Exempted" />
-        </property>
-        <property name="nubanAccount" type="string">
-            <column name="nuban_Account" length="50" />
-        </property>
-        <property name="merged" type="boolean">
-            <column name="merged" />
-        </property>
-        <property name="holderCompAccPrimary" type="boolean">
-            <column name="holder_comp_acc_Primary" />
-        </property>
-        <set name="coupons" table="COUPON" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="h_act_holder_id" />
-                <column name="h_act_client_comp_id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.Coupon" />
-        </set>
-        <set name="dividends" table="DIVIDEND" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="h_act_holder_id" />
-                <column name="h_act_client_comp_id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.Dividend" />
-        </set>
-        <set name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="sec_holder_id" />
-                <column name="sec_client_comp_id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.HolderCompanyAccount" />
-        </set>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.HolderCompanyAccount" optimistic-lock="version" schema="dbo" table="HOLDER_COMPANY_ACCOUNT">
+    <composite-id class="org.greenpole.hibernate.entity.HolderCompanyAccountId" name="id">
+      <key-property name="holderId" type="int">
+        <column name="holder_id"/>
+      </key-property>
+      <key-property name="clientCompanyId" type="int">
+        <column name="client_Company_Id"/>
+      </key-property>
+    </composite-id>
+    <many-to-one class="org.greenpole.hibernate.entity.Bank" fetch="select" name="bank">
+      <column name="bank_id"/>
+    </many-to-one>
+    <many-to-one class="org.greenpole.hibernate.entity.ClientCompany" fetch="select" insert="false" name="clientCompany" update="false">
+      <column name="client_Company_Id" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="org.greenpole.hibernate.entity.Holder" fetch="select" insert="false" name="holder" update="false">
+      <column name="holder_id" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="org.greenpole.hibernate.entity.HolderCompanyAccount" fetch="select" name="holderCompanyAccount">
+      <column name="sec_holder_id"/>
+      <column name="sec_client_comp_id"/>
+    </many-to-one>
+    <property name="chn" type="string">
+      <column length="50" name="chn"/>
+    </property>
+    <property name="esop" type="boolean">
+      <column name="esop"/>
+    </property>
+    <property name="taxExempted" type="boolean">
+      <column name="tax_Exempted"/>
+    </property>
+    <property name="nubanAccount" type="string">
+      <column length="50" name="nuban_Account"/>
+    </property>
+    <property name="merged" type="boolean">
+      <column name="merged"/>
+    </property>
+    <property name="holderCompAccPrimary" type="boolean">
+      <column name="holder_comp_acc_Primary"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="coupons" table="COUPON">
+      <key>
+        <column name="h_act_holder_id"/>
+        <column name="h_act_client_comp_id"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.Coupon"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="dividends" table="DIVIDEND">
+      <key>
+        <column name="h_act_holder_id"/>
+        <column name="h_act_client_comp_id"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.Dividend"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT">
+      <key>
+        <column name="sec_holder_id"/>
+        <column name="sec_client_comp_id"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount"/>
+    </set>
+  </class>
 </hibernate-mapping>

@@ -1,21 +1,20 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.StockbrokerSignature" table="STOCKBROKER_SIGNATURE" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity"></generator>
-        </id>
-        <many-to-one name="stockbroker" class="org.greenpole.hibernate.entrypoint.Stockbroker" fetch="select">
-            <column name="stockbroker_Id" />
-        </many-to-one>
-        <property name="signaturePath" type="string">
-            <column name="signature_Path" />
-        </property>
-        <property name="stockbrokerSignPrimary" type="boolean">
-            <column name="stockbroker_sign_Primary" />
-        </property>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.StockbrokerSignature" optimistic-lock="version" schema="dbo" table="STOCKBROKER_SIGNATURE">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="org.greenpole.hibernate.entity.Stockbroker" fetch="select" name="stockbroker">
+      <column name="stockbroker_Id"/>
+    </many-to-one>
+    <property name="signaturePath" type="string">
+      <column name="signature_Path"/>
+    </property>
+    <property name="stockbrokerSignPrimary" type="boolean">
+      <column name="stockbroker_sign_Primary"/>
+    </property>
+  </class>
 </hibernate-mapping>

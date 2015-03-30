@@ -1,54 +1,53 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.RightsIssue" table="RIGHTS_ISSUE" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity"></generator>
-        </id>
-        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entrypoint.ClientCompany" fetch="select">
-            <column name="client_Company_Id" />
-        </many-to-one>
-        <property name="totalSharesOnIssue" type="int">
-            <column name="total_Shares_On_Issue" />
-        </property>
-        <property name="methodOnOffer" type="string">
-            <column name="method_On_Offer" length="50" />
-        </property>
-        <property name="issuePrice" type="java.lang.Double">
-            <column name="issue_Price" precision="53" scale="0" />
-        </property>
-        <property name="issueSize" type="int">
-            <column name="issue_Size" />
-        </property>
-        <property name="qualifyShareUnit" type="int">
-            <column name="qualify_Share_Unit" />
-        </property>
-        <property name="alottedUnitPerQualifyUnit" type="int">
-            <column name="alotted_Unit_Per_Qualify_Unit" />
-        </property>
-        <property name="qualifyDate" type="date">
-            <column name="qualify_Date" length="10" />
-        </property>
-        <property name="openingDate" type="date">
-            <column name="opening_Date" length="10" />
-        </property>
-        <property name="closingDate" type="date">
-            <column name="closing_Date" length="10" />
-        </property>
-        <set name="rightsIssueApplications" table="RIGHTS_ISSUE_APPLICATION" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="rights_issue_id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.RightsIssueApplication" />
-        </set>
-        <set name="certificates" table="CERTIFICATE" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="rights_Issue_Id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.Certificate" />
-        </set>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.RightsIssue" optimistic-lock="version" schema="dbo" table="RIGHTS_ISSUE">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="org.greenpole.hibernate.entity.ClientCompany" fetch="select" name="clientCompany">
+      <column name="client_Company_Id"/>
+    </many-to-one>
+    <property name="totalSharesOnIssue" type="int">
+      <column name="total_Shares_On_Issue"/>
+    </property>
+    <property name="methodOnOffer" type="string">
+      <column length="50" name="method_On_Offer"/>
+    </property>
+    <property name="issuePrice" type="java.lang.Double">
+      <column name="issue_Price" precision="53" scale="0"/>
+    </property>
+    <property name="issueSize" type="int">
+      <column name="issue_Size"/>
+    </property>
+    <property name="qualifyShareUnit" type="int">
+      <column name="qualify_Share_Unit"/>
+    </property>
+    <property name="alottedUnitPerQualifyUnit" type="int">
+      <column name="alotted_Unit_Per_Qualify_Unit"/>
+    </property>
+    <property name="qualifyDate" type="date">
+      <column length="10" name="qualify_Date"/>
+    </property>
+    <property name="openingDate" type="date">
+      <column length="10" name="opening_Date"/>
+    </property>
+    <property name="closingDate" type="date">
+      <column length="10" name="closing_Date"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="rightsIssueApplications" table="RIGHTS_ISSUE_APPLICATION">
+      <key>
+        <column name="rights_issue_id"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.RightsIssueApplication"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="certificates" table="CERTIFICATE">
+      <key>
+        <column name="rights_Issue_Id"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.Certificate"/>
+    </set>
+  </class>
 </hibernate-mapping>

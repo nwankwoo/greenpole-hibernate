@@ -1,53 +1,52 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entrypoint.Administrator" table="ADMINISTRATOR" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity"></generator>
-        </id>
-        <property name="firstName" type="string">
-            <column name="first_Name" length="50" />
-        </property>
-        <property name="middleName" type="string">
-            <column name="middle_Name" length="50" />
-        </property>
-        <property name="lastName" type="string">
-            <column name="last_Name" length="50" />
-        </property>
-        <set name="administratorPhoneNumbers" table="ADMINISTRATOR_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="administrator_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.AdministratorPhoneNumber" />
-        </set>
-        <set name="administratorResidentialAddresses" table="ADMINISTRATOR_RESIDENTIAL_ADDRESS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="administrator_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.AdministratorResidentialAddress" />
-        </set>
-        <set name="holders" table="ADMINISTRATOR_HOLDER" inverse="false" lazy="true" fetch="select">
-            <key>
-                <column name="administrator_id" not-null="true" />
-            </key>
-            <many-to-many entity-name="org.greenpole.hibernate.entrypoint.Holder">
-                <column name="holder_id" not-null="true" />
-            </many-to-many>
-        </set>
-        <set name="administratorEmailAddresses" table="ADMINISTRATOR_EMAIL_ADDRESS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="administrator_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.AdministratorEmailAddress" />
-        </set>
-        <set name="administratorPostalAddresses" table="ADMINISTRATOR_POSTAL_ADDRESS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="administrator_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entrypoint.AdministratorPostalAddress" />
-        </set>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.Administrator" optimistic-lock="version" schema="dbo" table="ADMINISTRATOR">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <property name="firstName" type="string">
+      <column length="50" name="first_Name"/>
+    </property>
+    <property name="middleName" type="string">
+      <column length="50" name="middle_Name"/>
+    </property>
+    <property name="lastName" type="string">
+      <column length="50" name="last_Name"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="administratorPhoneNumbers" table="ADMINISTRATOR_PHONE_NUMBER">
+      <key>
+        <column name="administrator_id" not-null="true"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.AdministratorPhoneNumber"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="administratorResidentialAddresses" table="ADMINISTRATOR_RESIDENTIAL_ADDRESS">
+      <key>
+        <column name="administrator_id" not-null="true"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.AdministratorResidentialAddress"/>
+    </set>
+    <set fetch="select" inverse="false" lazy="true" name="holders" table="ADMINISTRATOR_HOLDER">
+      <key>
+        <column name="administrator_id" not-null="true"/>
+      </key>
+      <many-to-many entity-name="org.greenpole.hibernate.entrypoint.Holder">
+        <column name="holder_id" not-null="true"/>
+      </many-to-many>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="administratorEmailAddresses" table="ADMINISTRATOR_EMAIL_ADDRESS">
+      <key>
+        <column name="administrator_id" not-null="true"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.AdministratorEmailAddress"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="administratorPostalAddresses" table="ADMINISTRATOR_POSTAL_ADDRESS">
+      <key>
+        <column name="administrator_id" not-null="true"/>
+      </key>
+      <one-to-many class="org.greenpole.hibernate.entity.AdministratorPostalAddress"/>
+    </set>
+  </class>
 </hibernate-mapping>
