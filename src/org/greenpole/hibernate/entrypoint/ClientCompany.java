@@ -12,6 +12,7 @@ public class ClientCompany  implements java.io.Serializable {
 
 
      private int id;
+     private long versionId;
      private ClientCompany clientCompany;
      private Depository depository;
      private String name;
@@ -84,6 +85,24 @@ public class ClientCompany  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    /**
+     * A getter for ClientCompany object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for ClientCompany object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
+    
     public ClientCompany getClientCompany() {
         return this.clientCompany;
     }

@@ -8,6 +8,9 @@
             <column name="id" />
             <generator class="identity"></generator>
         </id>
+               
+        <version name="versionId" type="long"  insert="false"/>
+
         <many-to-one name="certificate" class="org.greenpole.hibernate.entrypoint.Certificate" fetch="select">
             <column name="certificate_id" unique="true" />
         </many-to-one>

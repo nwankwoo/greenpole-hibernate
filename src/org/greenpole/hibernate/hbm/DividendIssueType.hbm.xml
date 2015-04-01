@@ -8,6 +8,9 @@
             <column name="id" />
             <generator class="identity"></generator>
         </id>
+        
+        <version name="versionId" type="long"  insert="false"/>
+        
         <property name="dividendType" type="string">
             <column name="dividend_Type" length="50" />
         </property>

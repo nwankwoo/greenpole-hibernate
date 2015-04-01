@@ -12,6 +12,7 @@ public class StockbrokerAgent  implements java.io.Serializable {
 
 
      private int id;
+     private long versionId;
      private Stockbroker stockbroker;
      private String firstName;
      private String middleName;
@@ -30,7 +31,7 @@ public class StockbrokerAgent  implements java.io.Serializable {
        this.position = position;
        this.agentSignatures = agentSignatures;
     }
-   
+    
     public int getId() {
         return this.id;
     }
@@ -38,6 +39,24 @@ public class StockbrokerAgent  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    /**
+     * A getter for an object version, mostly assist in 
+     * concurrency and easy retrieval of an object
+     * @return  versionId, which is unique to a particular object, aside the 
+	database primary key
+    */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for the object version, mostly assist in 
+     * concurrency. it keeps records of general modified persistence object
+     * @param versionId, argument that takes automatic generated versionId by the hibernate
+    */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
+    
     public Stockbroker getStockbroker() {
         return this.stockbroker;
     }

@@ -13,6 +13,7 @@ public class PrivatePlacement  implements java.io.Serializable {
 
 
      private int id;
+     private long versionId;
      private ClientCompany clientCompany;
      private int totalSharesOnOffer;
      private int methodOnOffer;
@@ -49,6 +50,26 @@ public class PrivatePlacement  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    /**
+     * A getter for PrivatePlacement object version, mostly assist in 
+     * concurrency and easy retrieval of an object
+     * @return  versionId, which is unique to a particular object, aside the 
+	database primary key
+    */
+    public long getVersionId() {
+        return versionId;
+    }
+    
+    /**
+     * A setter for PrivatePlacement object version, mostly assist in 
+     * concurrency. it keeps records of general modified persistence object
+     * @param versionId, argument that takes automatic generated versionId by the hibernate
+    */
+
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
+    
     public ClientCompany getClientCompany() {
         return this.clientCompany;
     }

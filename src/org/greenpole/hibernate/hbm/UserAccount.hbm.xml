@@ -8,6 +8,9 @@
             <column name="id" />
             <generator class="identity"></generator>
         </id>
+        
+        <version name="versionId" type="long" insert="false"/>
+        
         <property name="firstName" type="string">
             <column name="first_name" length="300" />
         </property>

@@ -10,6 +10,9 @@
                 <param name="property">userAccount</param>
             </generator>
         </id>
+        
+        <version name="versionId" type="long"  insert="false"/>
+        
         <one-to-one name="userAccount" class="org.greenpole.hibernate.entrypoint.UserAccount" constrained="true"></one-to-one>
         <property name="email" type="string">
             <column name="email" length="200" unique="true" />

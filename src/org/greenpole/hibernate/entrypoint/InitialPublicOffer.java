@@ -13,6 +13,7 @@ public class InitialPublicOffer  implements java.io.Serializable {
 
 
      private int id;
+     private int versionId;
      private ClientCompany clientCompany;
      private int totalSharesOnOffer;
      private String methodOnOffer;
@@ -49,6 +50,24 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    /**
+     * A getter for InitialPublicOffer object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public int getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for InitialPublicOffer object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(int versionId) {
+        this.versionId = versionId;
+    }
+    
     public ClientCompany getClientCompany() {
         return this.clientCompany;
     }

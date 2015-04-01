@@ -10,6 +10,7 @@ public class Reminder  implements java.io.Serializable {
 
 
      private int id;
+     private long versionId;
      private String title;
      private String mailBody;
      private String component;
@@ -34,6 +35,24 @@ public class Reminder  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    /**
+     * A getter for Reminder object version, mostly assist in 
+     * concurrency and easy retrieval of an object
+     * @return  versionId, which is unique to a particular object, aside the 
+	database primary key
+    */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for Reminder object version, mostly assist in 
+     * concurrency. it keeps records of general modified persistence object
+     * @param versionId, argument that takes automatic generated versionId by the hibernate
+    */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
+    
     public String getTitle() {
         return this.title;
     }

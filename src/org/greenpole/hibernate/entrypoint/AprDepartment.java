@@ -10,6 +10,7 @@ public class AprDepartment  implements java.io.Serializable {
 
 
      private int id;
+     private long versionId;
      private String name;
      private String description;
 
@@ -28,6 +29,24 @@ public class AprDepartment  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    /**
+     * A getter for AprDepartment object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for AprDepartment object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
+    
     public String getName() {
         return this.name;
     }

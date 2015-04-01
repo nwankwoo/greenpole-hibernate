@@ -6,6 +6,9 @@
     <class name="org.greenpole.hibernate.entrypoint.DividenAnnotation" table="DIVIDEN_ANNOTATION" schema="dbo" catalog="greenpole" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
+            
+            <version name="versionId" type="long"  insert="false"/>
+            
             <generator class="identity"></generator>
         </id>
         <many-to-one name="dividend" class="org.greenpole.hibernate.entrypoint.Dividend" fetch="select">

@@ -8,6 +8,9 @@
             <column name="id" />
             <generator class="identity"></generator>
         </id>
+        
+        <version name="versionId" type="long"  insert="false"/>
+        
         <many-to-one name="holder" class="org.greenpole.hibernate.entrypoint.Holder" fetch="select">
             <column name="holder_id" unique="true" />
         </many-to-one>

@@ -10,6 +10,7 @@ public class Caution  implements java.io.Serializable {
 
 
      private int id;
+     private long versionId;
      private Holder holder;
      private String title;
      private String description;
@@ -34,6 +35,24 @@ public class Caution  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    /**
+     * A getter for Caution object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for Caution object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
+    
     public Holder getHolder() {
         return this.holder;
     }
