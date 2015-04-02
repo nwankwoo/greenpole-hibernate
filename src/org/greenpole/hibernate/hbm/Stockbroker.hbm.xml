@@ -1,62 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="greenpole" name="org.greenpole.hibernate.entity.Stockbroker" optimistic-lock="version" schema="dbo" table="STOCKBROKER">
-    <id name="id" type="int">
-      <column name="id"/>
-      <generator class="identity"/>
-    </id>
-    <version insert="false" name="versionId" type="long"/>
-    <property name="name" type="string">
-      <column name="name"/>
-    </property>
-    <property name="cscsAccNo" type="string">
-      <column length="50" name="cscs_Acc_No" unique="true"/>
-    </property>
-    <property name="active" type="boolean">
-      <column name="active"/>
-    </property>
-    <property name="valid" type="boolean">
-      <column name="valid"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="stockbrokerAddresses" table="STOCKBROKER_ADDRESS">
-      <key>
-        <column name="stockbroker_id" not-null="true"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.StockbrokerAddress"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="stockbrokerPhoneNumbers" table="STOCKBROKER_PHONE_NUMBER">
-      <key>
-        <column name="stockbroker_id" not-null="true"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.StockbrokerPhoneNumber"/>
-    </set>
-    <set fetch="select" inverse="false" lazy="true" name="holders" table="STOCKBROKER_HOLDER">
-      <key>
-        <column name="stockbroker_id" not-null="true"/>
-      </key>
-      <many-to-many entity-name="org.greenpole.hibernate.entrypoint.Holder">
-        <column name="holder_id" not-null="true"/>
-      </many-to-many>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="stockbrokerAgents" table="STOCKBROKER_AGENT">
-      <key>
-        <column name="stockbroker_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.StockbrokerAgent"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="stockbrokerSignatures" table="STOCKBROKER_SIGNATURE">
-      <key>
-        <column name="stockbroker_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.StockbrokerSignature"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="stockbrokerEmailAddresses" table="STOCKBROKER_EMAIL_ADDRESS">
-      <key>
-        <column name="stockbroker_id" not-null="true"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.StockbrokerEmailAddress"/>
-    </set>
-  </class>
+    <class name="org.greenpole.hibernate.entity.Stockbroker" table="STOCKBROKER" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="cscsAccNo" type="string">
+            <column name="cscs_Acc_No" length="50" unique="true" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="active" />
+        </property>
+        <property name="valid" type="boolean">
+            <column name="valid" />
+        </property>
+        <set name="stockbrokerAddresses" table="STOCKBROKER_ADDRESS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="stockbroker_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.StockbrokerAddress" />
+        </set>
+        <set name="stockbrokerPhoneNumbers" table="STOCKBROKER_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="stockbroker_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.StockbrokerPhoneNumber" />
+        </set>
+        <set name="holders" table="STOCKBROKER_HOLDER" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="stockbroker_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.greenpole.hibernate.entity.Holder">
+                <column name="holder_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="stockbrokerAgents" table="STOCKBROKER_AGENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="stockbroker_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.StockbrokerAgent" />
+        </set>
+        <set name="stockbrokerSignatures" table="STOCKBROKER_SIGNATURE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="stockbroker_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.StockbrokerSignature" />
+        </set>
+        <set name="stockbrokerEmailAddresses" table="STOCKBROKER_EMAIL_ADDRESS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="stockbroker_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.StockbrokerEmailAddress" />
+        </set>
+    </class>
 </hibernate-mapping>

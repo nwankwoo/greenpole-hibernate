@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Mar 27, 2015 1:23:05 PM by Hibernate Tools 4.3.1
+// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
 
 
@@ -10,7 +10,6 @@ public class RightsIssueApplication  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
      private ClearingHouse clearingHouse;
      private Holder holder;
      private RightsIssue rightsIssue;
@@ -53,26 +52,6 @@ public class RightsIssueApplication  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
-/**
-     * A getter for RightsIssueApplication object version, mostly assist in 
-     * concurrency and easy retrieval of an object
-     * @return  versionId, which is unique to a particular object, aside the 
-	database primary key
-    */
-    public long getVersionId() {
-        return versionId;
-    }
-    
-    /**
-     * A setter for RightsIssueApplication object version, mostly assist in 
-     * concurrency. it keeps records of general modified persistence object
-     * @param versionId, argument that takes automatic generated versionId by the hibernate
-    */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
-    
     public ClearingHouse getClearingHouse() {
         return this.clearingHouse;
     }

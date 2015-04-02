@@ -1,24 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="greenpole" name="org.greenpole.hibernate.entity.HolderGmAttendance" optimistic-lock="version" schema="dbo" table="HOLDER_GM_ATTENDANCE">
-    <composite-id class="org.greenpole.hibernate.entity.HolderGmAttendanceId" name="id">
-      <key-property name="holderId" type="int">
-        <column name="holder_id"/>
-      </key-property>
-      <key-property name="gmId" type="int">
-        <column name="gm_id"/>
-      </key-property>
-    </composite-id>
-    <many-to-one class="org.greenpole.hibernate.entity.Gm" fetch="select" insert="false" name="gm" update="false">
-      <column name="gm_id" not-null="true"/>
-    </many-to-one>
-    <many-to-one class="org.greenpole.hibernate.entity.Holder" fetch="select" insert="false" name="holder" update="false">
-      <column name="holder_id" not-null="true"/>
-    </many-to-one>
-    <property name="proxy" type="string">
-      <column name="proxy"/>
-    </property>
-  </class>
+    <class name="org.greenpole.hibernate.entity.HolderGmAttendance" table="HOLDER_GM_ATTENDANCE" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <composite-id name="id" class="org.greenpole.hibernate.entity.HolderGmAttendanceId">
+            <key-property name="holderId" type="int">
+                <column name="holder_id" />
+            </key-property>
+            <key-property name="gmId" type="int">
+                <column name="gm_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="gm" class="org.greenpole.hibernate.entity.Gm" update="false" insert="false" fetch="select">
+            <column name="gm_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" update="false" insert="false" fetch="select">
+            <column name="holder_id" not-null="true" />
+        </many-to-one>
+        <property name="proxy" type="string">
+            <column name="proxy" />
+        </property>
+    </class>
 </hibernate-mapping>

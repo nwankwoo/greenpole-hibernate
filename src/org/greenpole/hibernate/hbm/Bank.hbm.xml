@@ -1,26 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="greenpole" name="org.greenpole.hibernate.entity.Bank" optimistic-lock="version" schema="dbo" table="BANK">
-    <id name="id" type="int">
-      <column name="id"/>
-      <generator class="identity"/>
-    </id>
-    
-    <version insert="false" name="versionId" type="long"/>
-    
-    <property name="bankName" type="string">
-      <column length="50" name="bank_Name"/>
-    </property>
-    <property name="bankCode" type="string">
-      <column length="50" name="bank_Code" unique="true"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT">
-      <key>
-        <column name="bank_id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount"/>
-    </set>
-  </class>
+    <class name="org.greenpole.hibernate.entity.Bank" table="BANK" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <property name="bankName" type="string">
+            <column name="bank_Name" length="50" />
+        </property>
+        <property name="bankCode" type="string">
+            <column name="bank_Code" length="50" unique="true" />
+        </property>
+        <set name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="bank_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount" />
+        </set>
+    </class>
 </hibernate-mapping>

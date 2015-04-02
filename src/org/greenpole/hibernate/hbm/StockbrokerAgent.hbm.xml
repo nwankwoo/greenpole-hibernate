@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="greenpole" name="org.greenpole.hibernate.entity.StockbrokerAgent" optimistic-lock="version" schema="dbo" table="STOCKBROKER_AGENT">
-    <id name="id" type="int">
-      <column name="id"/>
-      <generator class="identity"/>
-    </id>
-    <version insert="false" name="versionId" type="long"/>
-    <many-to-one class="org.greenpole.hibernate.entity.Stockbroker" fetch="select" name="stockbroker">
-      <column name="stockbroker_Id"/>
-    </many-to-one>
-    <property name="firstName" type="string">
-      <column length="50" name="first_Name"/>
-    </property>
-    <property name="middleName" type="string">
-      <column length="50" name="middle_Name"/>
-    </property>
-    <property name="lastName" type="string">
-      <column length="50" name="last_Name"/>
-    </property>
-    <property name="position" type="string">
-      <column length="50" name="position"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="agentSignatures" table="AGENT_SIGNATURE">
-      <key>
-        <column name="stockbroker_agent_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.AgentSignature"/>
-    </set>
-  </class>
+    <class name="org.greenpole.hibernate.entity.StockbrokerAgent" table="STOCKBROKER_AGENT" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="stockbroker" class="org.greenpole.hibernate.entity.Stockbroker" fetch="select">
+            <column name="stockbroker_Id" />
+        </many-to-one>
+        <property name="firstName" type="string">
+            <column name="first_Name" length="50" />
+        </property>
+        <property name="middleName" type="string">
+            <column name="middle_Name" length="50" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_Name" length="50" />
+        </property>
+        <property name="position" type="string">
+            <column name="position" length="50" />
+        </property>
+        <set name="agentSignatures" table="AGENT_SIGNATURE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="stockbroker_agent_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.AgentSignature" />
+        </set>
+    </class>
 </hibernate-mapping>

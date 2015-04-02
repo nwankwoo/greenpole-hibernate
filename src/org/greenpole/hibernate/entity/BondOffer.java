@@ -1,9 +1,7 @@
 package org.greenpole.hibernate.entity;
-// Generated Mar 27, 2015 1:23:05 PM by Hibernate Tools 4.3.1
+// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
 
-import org.greenpole.hibernate.backup_entity.*;
-import org.greenpole.hibernate.entity.*;
 import java.util.Date;
 
 /**
@@ -13,7 +11,6 @@ public class BondOffer  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
      private ClientCompany clientCompany;
      private String title;
      private Double bondUnitPrice;
@@ -42,25 +39,6 @@ public class BondOffer  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
-/**
-     * A getter for BondOffer object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for BondOffer object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
-    
     public ClientCompany getClientCompany() {
         return this.clientCompany;
     }

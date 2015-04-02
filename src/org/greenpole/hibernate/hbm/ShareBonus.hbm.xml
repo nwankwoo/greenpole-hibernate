@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="greenpole" name="org.greenpole.hibernate.entity.ShareBonus" optimistic-lock="version" schema="dbo" table="SHARE_BONUS">
-    <id name="id" type="int">
-      <column name="id"/>
-      <generator class="identity"/>
-    </id>
-    <version insert="false" name="versionId" type="long"/>
-    <many-to-one class="org.greenpole.hibernate.entity.ClientCompany" fetch="select" name="clientCompany">
-      <column name="client_Comany_Id"/>
-    </many-to-one>
-    <property name="title" type="string">
-      <column name="title"/>
-    </property>
-    <property name="qualifyDate" type="date">
-      <column length="10" name="qualify_Date"/>
-    </property>
-    <property name="qualifyShareUnit" type="int">
-      <column name="qualify_Share_Unit"/>
-    </property>
-    <property name="bonusUnitPerQualifyUnit" type="int">
-      <column name="bonus_Unit_per_qualify_Unit"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="certificates" table="CERTIFICATE">
-      <key>
-        <column name="share_Bonus_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.Certificate"/>
-    </set>
-  </class>
+    <class name="org.greenpole.hibernate.entity.ShareBonus" table="SHARE_BONUS" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
+            <column name="client_Comany_Id" />
+        </many-to-one>
+        <property name="title" type="string">
+            <column name="title" />
+        </property>
+        <property name="qualifyDate" type="date">
+            <column name="qualify_Date" length="10" />
+        </property>
+        <property name="qualifyShareUnit" type="int">
+            <column name="qualify_Share_Unit" />
+        </property>
+        <property name="bonusUnitPerQualifyUnit" type="int">
+            <column name="bonus_Unit_per_qualify_Unit" />
+        </property>
+        <set name="certificates" table="CERTIFICATE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="share_Bonus_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Certificate" />
+        </set>
+    </class>
 </hibernate-mapping>

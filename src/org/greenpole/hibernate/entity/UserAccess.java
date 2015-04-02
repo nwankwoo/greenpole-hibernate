@@ -1,9 +1,7 @@
 package org.greenpole.hibernate.entity;
-// Generated Mar 27, 2015 1:23:05 PM by Hibernate Tools 4.3.1
+// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
 
-import org.greenpole.hibernate.backup_entity.*;
-import org.greenpole.hibernate.entity.*;
 import java.util.Date;
 
 /**
@@ -13,7 +11,6 @@ public class UserAccess  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
      private UserAccount userAccount;
      private String email;
      private String password;
@@ -27,16 +24,16 @@ public class UserAccess  implements java.io.Serializable {
      private String expiredPassword2;
      private String expiredPassword3;
      private String expiredPassword4;
-     private int userAccountId;
 
     public UserAccess() {
     }
 
 	
-    public UserAccess(UserAccount userAccount) {
-        this.userAccount = userAccount;
+    public UserAccess(int id) {
+        this.id = id;
     }
-    public UserAccess(UserAccount userAccount, String email, String password, int maxIndividualShareHolding, int maxTotalShareHolding, boolean suspended, Date releaseSuspension, boolean locked, boolean expired, String expiredPassword1, String expiredPassword2, String expiredPassword3, String expiredPassword4, int userAccountId) {
+    public UserAccess(int id, UserAccount userAccount, String email, String password, int maxIndividualShareHolding, int maxTotalShareHolding, boolean suspended, Date releaseSuspension, boolean locked, boolean expired, String expiredPassword1, String expiredPassword2, String expiredPassword3, String expiredPassword4) {
+       this.id = id;
        this.userAccount = userAccount;
        this.email = email;
        this.password = password;
@@ -50,7 +47,6 @@ public class UserAccess  implements java.io.Serializable {
        this.expiredPassword2 = expiredPassword2;
        this.expiredPassword3 = expiredPassword3;
        this.expiredPassword4 = expiredPassword4;
-       this.userAccountId = userAccountId;
     }
    
     public int getId() {
@@ -60,24 +56,6 @@ public class UserAccess  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for UserAccess object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for UserAccess object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
-    
     public UserAccount getUserAccount() {
         return this.userAccount;
     }
@@ -168,13 +146,6 @@ public class UserAccess  implements java.io.Serializable {
     
     public void setExpiredPassword4(String expiredPassword4) {
         this.expiredPassword4 = expiredPassword4;
-    }
-    public int getUserAccountId() {
-        return this.userAccountId;
-    }
-    
-    public void setUserAccountId(int userAccountId) {
-        this.userAccountId = userAccountId;
     }
 
 

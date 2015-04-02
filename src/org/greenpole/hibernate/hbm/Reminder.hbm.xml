@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="greenpole" name="org.greenpole.hibernate.entity.Reminder" optimistic-lock="version" schema="dbo" table="REMINDER">
-    <id name="id" type="int">
-      <column name="id"/>
-      <generator class="identity"/>
-    </id>
-    <version insert="false" name="versionId" type="long"/>
-    <property name="title" type="string">
-      <column name="title"/>
-    </property>
-    <property name="mailBody" type="string">
-      <column name="mail_body"/>
-    </property>
-    <property name="component" type="string">
-      <column name="component"/>
-    </property>
-    <property name="reminderFunction" type="string">
-      <column length="50" name="reminder_Function"/>
-    </property>
-    <property name="type" type="string">
-      <column length="50" name="type"/>
-    </property>
-  </class>
+    <class name="org.greenpole.hibernate.entity.Reminder" table="REMINDER" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <property name="title" type="string">
+            <column name="title" />
+        </property>
+        <property name="mailBody" type="string">
+            <column name="mail_body" />
+        </property>
+        <property name="component" type="string">
+            <column name="component" />
+        </property>
+        <property name="reminderFunction" type="string">
+            <column name="reminder_Function" length="50" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="50" />
+        </property>
+    </class>
 </hibernate-mapping>

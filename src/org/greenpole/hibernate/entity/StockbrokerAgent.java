@@ -1,9 +1,7 @@
 package org.greenpole.hibernate.entity;
-// Generated Mar 27, 2015 1:23:05 PM by Hibernate Tools 4.3.1
+// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
 
-import org.greenpole.hibernate.backup_entity.*;
-import org.greenpole.hibernate.entity.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +12,6 @@ public class StockbrokerAgent  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
      private Stockbroker stockbroker;
      private String firstName;
      private String middleName;
@@ -33,7 +30,7 @@ public class StockbrokerAgent  implements java.io.Serializable {
        this.position = position;
        this.agentSignatures = agentSignatures;
     }
-    
+   
     public int getId() {
         return this.id;
     }
@@ -41,24 +38,6 @@ public class StockbrokerAgent  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for an object version, mostly assist in 
-     * concurrency and easy retrieval of an object
-     * @return  versionId, which is unique to a particular object, aside the 
-	database primary key
-    */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for the object version, mostly assist in 
-     * concurrency. it keeps records of general modified persistence object
-     * @param versionId, argument that takes automatic generated versionId by the hibernate
-    */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
-    
     public Stockbroker getStockbroker() {
         return this.stockbroker;
     }

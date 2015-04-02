@@ -1,9 +1,7 @@
 package org.greenpole.hibernate.entity;
-// Generated Mar 27, 2015 1:23:05 PM by Hibernate Tools 4.3.1
+// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
 
-import org.greenpole.hibernate.backup_entity.*;
-import org.greenpole.hibernate.entity.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +13,6 @@ public class UserAccount  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
      private String firstName;
      private String middleName;
      private String lastName;
@@ -27,13 +24,13 @@ public class UserAccount  implements java.io.Serializable {
      private int unitId;
      private Set groups = new HashSet(0);
      private Set requirementFunctions = new HashSet(0);
-     private UserAccess userAccess;
+     private Set userAccesses = new HashSet(0);
      private Set requirements = new HashSet(0);
 
     public UserAccount() {
     }
 
-    public UserAccount(String firstName, String middleName, String lastName, Date dob, String gender, String position, String unit, int deptId, int unitId, Set groups, Set requirementFunctions, UserAccess userAccess, Set requirements) {
+    public UserAccount(String firstName, String middleName, String lastName, Date dob, String gender, String position, String unit, int deptId, int unitId, Set groups, Set requirementFunctions, Set userAccesses, Set requirements) {
        this.firstName = firstName;
        this.middleName = middleName;
        this.lastName = lastName;
@@ -45,7 +42,7 @@ public class UserAccount  implements java.io.Serializable {
        this.unitId = unitId;
        this.groups = groups;
        this.requirementFunctions = requirementFunctions;
-       this.userAccess = userAccess;
+       this.userAccesses = userAccesses;
        this.requirements = requirements;
     }
    
@@ -56,24 +53,6 @@ public class UserAccount  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for an object version, mostly assist in 
-     * concurrency and easy retrieval of an object
-     * @return  versionId, which is unique to a particular object, aside the 
-	database primary key
-    */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for the object version, mostly assist in 
-     * concurrency. it keeps records of general modified persistence object
-     * @param versionId, argument that takes automatic generated versionId by the hibernate
-    */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
-    
     public String getFirstName() {
         return this.firstName;
     }
@@ -151,12 +130,12 @@ public class UserAccount  implements java.io.Serializable {
     public void setRequirementFunctions(Set requirementFunctions) {
         this.requirementFunctions = requirementFunctions;
     }
-    public UserAccess getUserAccess() {
-        return this.userAccess;
+    public Set getUserAccesses() {
+        return this.userAccesses;
     }
     
-    public void setUserAccess(UserAccess userAccess) {
-        this.userAccess = userAccess;
+    public void setUserAccesses(Set userAccesses) {
+        this.userAccesses = userAccesses;
     }
     public Set getRequirements() {
         return this.requirements;

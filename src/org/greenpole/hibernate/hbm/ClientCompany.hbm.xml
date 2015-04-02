@@ -1,150 +1,150 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 27, 2015 1:23:07 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="greenpole" name="org.greenpole.hibernate.entity.ClientCompany" optimistic-lock="version" schema="dbo" table="CLIENT_COMPANY">
-    <id name="id" type="int">
-      <column name="id"/>
-      <generator class="identity"/>
-    </id>
-    <version insert="false" name="versionId" type="long"/>
-    <many-to-one class="org.greenpole.hibernate.entity.ClientCompany" fetch="select" name="clientCompany">
-      <column name="secondary_Client_Company_Id"/>
-    </many-to-one>
-    <many-to-one class="org.greenpole.hibernate.entity.Depository" fetch="select" name="depository">
-      <column name="depository_Id"/>
-    </many-to-one>
-    <property name="name" type="string">
-      <column length="200" name="name" unique="true"/>
-    </property>
-    <property name="code" type="string">
-      <column length="50" name="code" unique="true"/>
-    </property>
-    <property name="nseSector" type="string">
-      <column name="nse_Sector"/>
-    </property>
-    <property name="ceo" type="string">
-      <column name="ceo"/>
-    </property>
-    <property name="secretary" type="string">
-      <column name="secretary"/>
-    </property>
-    <property name="address" type="string">
-      <column name="address"/>
-    </property>
-    <property name="depository_1" type="string">
-      <column length="50" name="depository"/>
-    </property>
-    <property name="valid" type="boolean">
-      <column name="valid"/>
-    </property>
-    <property name="merged" type="boolean">
-      <column name="merged"/>
-    </property>
-    <property name="clientCompanyPrimary" type="boolean">
-      <column name="client_Company_Primary"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="clientCompanies" table="CLIENT_COMPANY">
-      <key>
-        <column name="secondary_Client_Company_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.ClientCompany"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="initialPublicOffers" table="INITIAL_PUBLIC_OFFER">
-      <key>
-        <column name="client_Company_id" unique="true"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.InitialPublicOffer"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="shareBonuses" table="SHARE_BONUS">
-      <key>
-        <column name="client_Comany_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.ShareBonus"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="gms" table="GM">
-      <key>
-        <column name="client_company_id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.Gm"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="certificates" table="CERTIFICATE">
-      <key>
-        <column name="client_Company_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.Certificate"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="dividends" table="DIVIDEND">
-      <key>
-        <column name="client_Comp_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.Dividend"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT">
-      <key>
-        <column name="client_Company_Id" not-null="true"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="reconstructions" table="RECONSTRUCTION">
-      <key>
-        <column name="client_company_id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.Reconstruction"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="clientCompanyPhoneNumbers" table="CLIENT_COMPANY_PHONE_NUMBER">
-      <key>
-        <column name="client_company_id" not-null="true"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.ClientCompanyPhoneNumber"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="clientCompanyEmailAddresses" table="CLIENT_COMPANY_EMAIL_ADDRESS">
-      <key>
-        <column name="client_company_id" not-null="true"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.ClientCompanyEmailAddress"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="privatePlacements" table="PRIVATE_PLACEMENT">
-      <key>
-        <column name="client_Company_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.PrivatePlacement"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="shareQuotations" table="SHARE_QUOTATION">
-      <key>
-        <column name="client_Company_Id" unique="true"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.ShareQuotation"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="dividendDeclareds" table="DIVIDEND_DECLARED">
-      <key>
-        <column name="client_company_id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.DividendDeclared"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="processedTransactions" table="PROCESSED_TRANSACTION">
-      <key>
-        <column name="company_id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.ProcessedTransaction"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="rightsIssues" table="RIGHTS_ISSUE">
-      <key>
-        <column name="client_Company_Id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.RightsIssue"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="suspendedTransactions" table="SUSPENDED_TRANSACTION">
-      <key>
-        <column name="client_company_id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.SuspendedTransaction"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="bondOffers" table="BOND_OFFER">
-      <key>
-        <column name="client_company_id"/>
-      </key>
-      <one-to-many class="org.greenpole.hibernate.entity.BondOffer"/>
-    </set>
-  </class>
+    <class name="org.greenpole.hibernate.entity.ClientCompany" table="CLIENT_COMPANY" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
+            <column name="secondary_Client_Company_Id" />
+        </many-to-one>
+        <many-to-one name="depository" class="org.greenpole.hibernate.entity.Depository" fetch="select">
+            <column name="depository_Id" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="200" unique="true" />
+        </property>
+        <property name="code" type="string">
+            <column name="code" length="50" unique="true" />
+        </property>
+        <property name="nseSector" type="string">
+            <column name="nse_Sector" />
+        </property>
+        <property name="ceo" type="string">
+            <column name="ceo" />
+        </property>
+        <property name="secretary" type="string">
+            <column name="secretary" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" />
+        </property>
+        <property name="depository_1" type="string">
+            <column name="depository" length="50" />
+        </property>
+        <property name="valid" type="boolean">
+            <column name="valid" />
+        </property>
+        <property name="merged" type="boolean">
+            <column name="merged" />
+        </property>
+        <property name="clientCompanyPrimary" type="boolean">
+            <column name="client_Company_Primary" />
+        </property>
+        <set name="clientCompanies" table="CLIENT_COMPANY" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="secondary_Client_Company_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ClientCompany" />
+        </set>
+        <set name="initialPublicOffers" table="INITIAL_PUBLIC_OFFER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_Company_id" unique="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.InitialPublicOffer" />
+        </set>
+        <set name="shareBonuses" table="SHARE_BONUS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_Comany_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ShareBonus" />
+        </set>
+        <set name="gms" table="GM" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_company_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Gm" />
+        </set>
+        <set name="certificates" table="CERTIFICATE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_Company_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Certificate" />
+        </set>
+        <set name="dividends" table="DIVIDEND" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_Comp_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Dividend" />
+        </set>
+        <set name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_Company_Id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount" />
+        </set>
+        <set name="reconstructions" table="RECONSTRUCTION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_company_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Reconstruction" />
+        </set>
+        <set name="clientCompanyPhoneNumbers" table="CLIENT_COMPANY_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_company_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ClientCompanyPhoneNumber" />
+        </set>
+        <set name="clientCompanyEmailAddresses" table="CLIENT_COMPANY_EMAIL_ADDRESS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_company_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ClientCompanyEmailAddress" />
+        </set>
+        <set name="privatePlacements" table="PRIVATE_PLACEMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_Company_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.PrivatePlacement" />
+        </set>
+        <set name="shareQuotations" table="SHARE_QUOTATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_Company_Id" unique="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ShareQuotation" />
+        </set>
+        <set name="dividendDeclareds" table="DIVIDEND_DECLARED" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_company_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.DividendDeclared" />
+        </set>
+        <set name="processedTransactions" table="PROCESSED_TRANSACTION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="company_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ProcessedTransaction" />
+        </set>
+        <set name="rightsIssues" table="RIGHTS_ISSUE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_Company_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.RightsIssue" />
+        </set>
+        <set name="suspendedTransactions" table="SUSPENDED_TRANSACTION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_company_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.SuspendedTransaction" />
+        </set>
+        <set name="bondOffers" table="BOND_OFFER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_company_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.BondOffer" />
+        </set>
+    </class>
 </hibernate-mapping>
