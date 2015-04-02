@@ -2,6 +2,8 @@ package org.greenpole.hibernate.entity;
 // Generated Mar 27, 2015 1:23:05 PM by Hibernate Tools 4.3.1
 
 
+import org.greenpole.hibernate.backup_entity.*;
+import org.greenpole.hibernate.entity.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;

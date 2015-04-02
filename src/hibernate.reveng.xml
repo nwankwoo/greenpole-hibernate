@@ -76,6 +76,7 @@
     <table-filter match-name="REQUIREMENT"/>
     <table-filter match-name="GROUP"/>
     <table-filter match-name="CLIENT_COMPANY_EMAIL_ADDRESS"/>
+    <table-filter match-name="NOTIFICATION"/>
   
     <table name="VOTING_PROCESS" catalog="greenpole" schema="dbo">
         <primary-key>
@@ -379,6 +380,13 @@
     </table>
   
     <table name="APR_UNIT" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"></generator>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="NOTIFICATION" catalog="greenpole" schema="dbo">
         <primary-key>
             <generator class="identity"></generator>
             <key-column name="id" type="int"/>
