@@ -6,8 +6,6 @@
 package org.greenpole.hibernate.query.impl;
 
 import java.util.Iterator;
-import java.util.List;
-import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.util.HibernateUtil;
 import org.hibernate.Query;
@@ -33,6 +31,8 @@ public class ClientCompanyComponentQueryImpl implements ClientCompanyComponentQu
         for (Iterator it = query.iterate(); it.hasNext();) {
             count = (int) it.next();
         }
+        
+        tx.commit();
         
         return count > 0;
     }
