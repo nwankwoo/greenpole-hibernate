@@ -6,7 +6,9 @@
 package org.greenpole.hibernate.query.factory;
 
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
+import org.greenpole.hibernate.query.GeneralComponentQuery;
 import org.greenpole.hibernate.query.impl.ClientCompanyComponentQueryImpl;
+import org.greenpole.hibernate.query.impl.GeneralComponentQueryImpl;
 
 /**
  *
@@ -14,7 +16,19 @@ import org.greenpole.hibernate.query.impl.ClientCompanyComponentQueryImpl;
  * The factory class that creates all component query implementation classes.
  */
 public class ComponentQueryFactory {
+    /**
+     * Creates a new client company component query implementation.
+     * @return a new client company component query implementation
+     */
     public static ClientCompanyComponentQuery getClientCompanyQuery() {
         return new ClientCompanyComponentQueryImpl();
+    }
+    
+    /**
+     * Creates a new general component query implementation.
+     * @return a new general component query implementation
+     */
+    public static GeneralComponentQuery getGeneralComponentQuery() {
+        return new GeneralComponentQueryImpl();
     }
 }
