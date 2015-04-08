@@ -10,6 +10,7 @@ public class ProcessedTransactionHolderId  implements java.io.Serializable {
 
 
      private int transactionId;
+     private long versionId;
      private int holderId;
 
     public ProcessedTransactionHolderId() {
@@ -27,6 +28,23 @@ public class ProcessedTransactionHolderId  implements java.io.Serializable {
     public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
     }
+    /**
+     * A getter for ProcessedTransactionHolderId object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for ProcessedTransactionHolderId object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
     public int getHolderId() {
         return this.holderId;
     }
@@ -34,7 +52,6 @@ public class ProcessedTransactionHolderId  implements java.io.Serializable {
     public void setHolderId(int holderId) {
         this.holderId = holderId;
     }
-
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;

@@ -12,6 +12,7 @@ public class Administrator  implements java.io.Serializable {
 
 
      private int id;
+     private long versionId;
      private String firstName;
      private String middleName;
      private String lastName;
@@ -41,6 +42,23 @@ public class Administrator  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    /**
+     * A getter for Administrator object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for Administrator object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public String getFirstName() {
         return this.firstName;

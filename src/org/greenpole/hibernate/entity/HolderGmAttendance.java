@@ -10,6 +10,7 @@ public class HolderGmAttendance  implements java.io.Serializable {
 
 
      private HolderGmAttendanceId id;
+     private long versionId;
      private Gm gm;
      private Holder holder;
      private String proxy;
@@ -36,6 +37,23 @@ public class HolderGmAttendance  implements java.io.Serializable {
     
     public void setId(HolderGmAttendanceId id) {
         this.id = id;
+    }
+    /**
+     * A getter for HolderGmAttendance object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for HolderGmAttendance object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public Gm getGm() {
         return this.gm;

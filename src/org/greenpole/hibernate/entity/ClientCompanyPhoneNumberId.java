@@ -10,6 +10,7 @@ public class ClientCompanyPhoneNumberId  implements java.io.Serializable {
 
 
      private int clientCompanyId;
+     private long versionId;
      private String phoneNumber;
      private int lineNumber;
 
@@ -28,6 +29,24 @@ public class ClientCompanyPhoneNumberId  implements java.io.Serializable {
     
     public void setClientCompanyId(int clientCompanyId) {
         this.clientCompanyId = clientCompanyId;
+    }
+    
+    /**
+     * A getter for ClientCompanyPhoneNumberId object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for ClientCompanyPhoneNumberId object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public String getPhoneNumber() {
         return this.phoneNumber;

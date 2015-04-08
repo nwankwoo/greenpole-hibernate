@@ -6,11 +6,35 @@
 package org.greenpole.hibernate.entrycode;
 
 import org.greenpole.hibernate.entity.ClientCompany;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Ahmad.Gbadamosi
  */
-public class ClientCompanyDao {
+public class ClientCompanyDao extends GeneralisedAbstractDao{
+    private final Logger log = LoggerFactory.getLogger(ClientCompanyDao.class);
     
+    /**
+     *
+     * @param clientcompany
+     * @throws DataAccessLayerException
+     */
+    public void create(ClientCompany clientcompany) throws DataAccessLayerException{
+        super.createUpdateObject(this);
+    }
+    /**
+     *
+     * @param cc
+     * @return
+     * @throws DataAccessLayerException
+     */
+    public ClientCompany getClientCompany(String cc) throws DataAccessLayerException{
+        return (ClientCompany)super.searchObject(ClientCompany.class, cc);
+    }
+    
+    public void editClientCompany(ClientCompany clientcompany){
+        super.createUpdateObject(this);
+    }
 }

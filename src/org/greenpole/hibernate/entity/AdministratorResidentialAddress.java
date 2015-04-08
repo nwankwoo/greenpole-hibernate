@@ -10,6 +10,7 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
 
 
      private AdministratorResidentialAddressId id;
+     private long versionId;
      private Administrator administrator;
      private String type;
 
@@ -33,6 +34,23 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
     
     public void setId(AdministratorResidentialAddressId id) {
         this.id = id;
+    }
+     /**
+     * A getter for AdministratorResidentialAddress object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for AdministratorResidentialAddress object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public Administrator getAdministrator() {
         return this.administrator;
