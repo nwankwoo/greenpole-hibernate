@@ -15,5 +15,17 @@
         <property name="description" type="string">
             <column name="description" length="50" />
         </property>
+        <set name="aprUnits" table="APR_UNIT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="dept_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.AprUnit" />
+        </set>
+        <set name="userAccounts" table="USER_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="dept_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.UserAccount" />
+        </set>
     </class>
 </hibernate-mapping>

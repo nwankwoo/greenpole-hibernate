@@ -1,6 +1,10 @@
 package org.greenpole.hibernate.entity;
 // Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
+import java.util.HashSet;
+import java.util.Set;
+
+
 
 
 /**
@@ -11,17 +15,19 @@ public class AprUnit  implements java.io.Serializable {
 
      private int id;
      private long versionId;
+     private AprDepartment aprDepartment;
      private String name;
      private String description;
-     private int deptId;
+     private Set userAccounts = new HashSet(0);
 
     public AprUnit() {
     }
 
-    public AprUnit(String name, String description, int deptId) {
-       this.name = name;
-       this.description = description;
-       this.deptId = deptId;
+    public AprUnit(AprDepartment aprDepartment, String name, String description, Set userAccounts) {
+        this.aprDepartment = aprDepartment;
+        this.name = name;
+        this.description = description;
+        this.userAccounts = userAccounts;
     }
    
     public int getId() {
@@ -48,6 +54,22 @@ public class AprUnit  implements java.io.Serializable {
     public void setVersionId(long versionId) {
         this.versionId = versionId;
     }
+
+    public AprDepartment getAprDepartment() {
+        return aprDepartment;
+    }
+
+    public void setAprDepartment(AprDepartment aprDepartment) {
+        this.aprDepartment = aprDepartment;
+    }
+
+    public Set getUserAccounts() {
+        return userAccounts;
+    }
+
+    public void setUserAccounts(Set userAccounts) {
+        this.userAccounts = userAccounts;
+    }
     public String getName() {
         return this.name;
     }
@@ -62,17 +84,6 @@ public class AprUnit  implements java.io.Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public int getDeptId() {
-        return this.deptId;
-    }
-    
-    public void setDeptId(int deptId) {
-        this.deptId = deptId;
-    }
-
-
-
-
 }
 
 

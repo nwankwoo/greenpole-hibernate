@@ -9,6 +9,12 @@
             <generator class="identity"></generator>
         </id>
         <version name="versionId" type="long"/>
+        <many-to-one name="aprDepartment" class="org.greenpole.hibernate.entity.AprDepartment" fetch="select">
+            <column name="dept_id" />
+        </many-to-one>
+        <many-to-one name="aprUnit" class="org.greenpole.hibernate.entity.AprUnit" fetch="select">
+            <column name="unit_id" />
+        </many-to-one>
         <property name="firstName" type="string">
             <column name="first_name" length="300" />
         </property>
@@ -26,15 +32,6 @@
         </property>
         <property name="position" type="string">
             <column name="position" length="200" />
-        </property>
-        <property name="unit" type="string">
-            <column name="unit" length="200" />
-        </property>
-        <property name="deptId" type="int">
-            <column name="dept_id" />
-        </property>
-        <property name="unitId" type="int">
-            <column name="unit_id" />
         </property>
         <set name="groups" table="USER_ACCOUNT_GROUP" inverse="false" lazy="true" fetch="select">
             <key>

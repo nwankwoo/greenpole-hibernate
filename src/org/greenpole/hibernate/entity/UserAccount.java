@@ -14,15 +14,14 @@ public class UserAccount  implements java.io.Serializable {
 
      private int id;
      private long versionId;
+     private AprDepartment aprDepartment;
+     private AprUnit aprUnit;
      private String firstName;
      private String middleName;
      private String lastName;
      private Date dob;
      private String gender;
      private String position;
-     private String unit;
-     private int deptId;
-     private int unitId;
      private Set groups = new HashSet(0);
      private Set requirementFunctions = new HashSet(0);
      private Set userAccesses = new HashSet(0);
@@ -31,20 +30,15 @@ public class UserAccount  implements java.io.Serializable {
     public UserAccount() {
     }
 
-    public UserAccount(String firstName, String middleName, String lastName, Date dob, String gender, String position, String unit, int deptId, int unitId, Set groups, Set requirementFunctions, Set userAccesses, Set requirements) {
-       this.firstName = firstName;
-       this.middleName = middleName;
-       this.lastName = lastName;
-       this.dob = dob;
-       this.gender = gender;
-       this.position = position;
-       this.unit = unit;
-       this.deptId = deptId;
-       this.unitId = unitId;
-       this.groups = groups;
-       this.requirementFunctions = requirementFunctions;
-       this.userAccesses = userAccesses;
-       this.requirements = requirements;
+    public UserAccount(AprDepartment aprDepartment, AprUnit aprUnit, String firstName, String middleName, String lastName, Date dob, String gender, String position) {
+        this.aprDepartment = aprDepartment;
+        this.aprUnit = aprUnit;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.gender = gender;
+        this.position = position;
     }
    
     public int getId() {
@@ -73,6 +67,22 @@ public class UserAccount  implements java.io.Serializable {
      */
     public void setVersionId(long versionId) {
         this.versionId = versionId;
+    }
+
+    public AprDepartment getAprDepartment() {
+        return aprDepartment;
+    }
+
+    public void setAprDepartment(AprDepartment aprDepartment) {
+        this.aprDepartment = aprDepartment;
+    }
+
+    public AprUnit getAprUnit() {
+        return aprUnit;
+    }
+
+    public void setAprUnit(AprUnit aprUnit) {
+        this.aprUnit = aprUnit;
     }
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -111,27 +121,6 @@ public class UserAccount  implements java.io.Serializable {
     
     public void setPosition(String position) {
         this.position = position;
-    }
-    public String getUnit() {
-        return this.unit;
-    }
-    
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-    public int getDeptId() {
-        return this.deptId;
-    }
-    
-    public void setDeptId(int deptId) {
-        this.deptId = deptId;
-    }
-    public int getUnitId() {
-        return this.unitId;
-    }
-    
-    public void setUnitId(int unitId) {
-        this.unitId = unitId;
     }
     public Set getGroups() {
         return this.groups;

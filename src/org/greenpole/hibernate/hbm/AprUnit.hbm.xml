@@ -9,14 +9,20 @@
             <generator class="identity"></generator>
         </id>
         <version name="versionId" type="long"/>
+        <many-to-one name="aprDepartment" class="org.greenpole.hibernate.backup_entity.AprDepartment" fetch="select">
+            <column name="dept_id" />
+        </many-to-one>
         <property name="name" type="string">
             <column name="name" length="50" />
         </property>
         <property name="description" type="string">
             <column name="description" length="50" />
         </property>
-        <property name="deptId" type="int">
-            <column name="dept_id" />
-        </property>
+        <set name="userAccounts" table="USER_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="unit_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.UserAccount" />
+        </set>
     </class>
 </hibernate-mapping>
