@@ -10,6 +10,7 @@ public class StockbrokerEmailAddress  implements java.io.Serializable {
 
 
      private StockbrokerEmailAddressId id;
+     private long versionId;
      private Stockbroker stockbroker;
 
     public StockbrokerEmailAddress() {
@@ -26,6 +27,23 @@ public class StockbrokerEmailAddress  implements java.io.Serializable {
     
     public void setId(StockbrokerEmailAddressId id) {
         this.id = id;
+    }
+      /**
+     * A getter for StockbrokerEmailAddress object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for StockbrokerEmailAddress object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public Stockbroker getStockbroker() {
         return this.stockbroker;

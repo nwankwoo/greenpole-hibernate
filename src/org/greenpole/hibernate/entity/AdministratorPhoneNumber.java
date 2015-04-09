@@ -10,6 +10,7 @@ public class AdministratorPhoneNumber  implements java.io.Serializable {
 
 
      private AdministratorPhoneNumberId id;
+     private long versionId;
      private Administrator administrator;
 
     public AdministratorPhoneNumber() {
@@ -26,6 +27,24 @@ public class AdministratorPhoneNumber  implements java.io.Serializable {
     
     public void setId(AdministratorPhoneNumberId id) {
         this.id = id;
+    }
+    
+    /**
+     * A getter for AdministratorPhoneNumber object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for AdministratorPhoneNumber object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public Administrator getAdministrator() {
         return this.administrator;

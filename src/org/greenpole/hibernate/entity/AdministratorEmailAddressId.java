@@ -10,6 +10,7 @@ public class AdministratorEmailAddressId  implements java.io.Serializable {
 
 
      private int administratorId;
+     private long versionId;
      private String emailAddress;
      private int lineNumber;
 
@@ -28,6 +29,23 @@ public class AdministratorEmailAddressId  implements java.io.Serializable {
     
     public void setAdministratorId(int administratorId) {
         this.administratorId = administratorId;
+    }
+     /**
+     * A getter for AdministratorEmailAddressId object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for AdministratorEmailAddressId object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public String getEmailAddress() {
         return this.emailAddress;

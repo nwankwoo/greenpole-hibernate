@@ -10,10 +10,10 @@ import java.util.Set;
  */
 public class ClientCompany  implements java.io.Serializable {
 
-
-     private int id;
-     private ClientCompany clientCompany;
-     private Depository depository;
+     private int id;            //primary id
+     private long versionId;    //version
+     private ClientCompany clientCompany;   
+     private Depository depository;     
      private String name;
      private String code;
      private String nseSector;
@@ -45,6 +45,16 @@ public class ClientCompany  implements java.io.Serializable {
     public ClientCompany() {
     }
 
+    public ClientCompany(Depository depository, String name, String code, String ceo, String address) {
+        this.depository = depository;
+        this.name = name;        
+        this.code = code;
+        this.ceo = ceo;
+        this.address = address;
+    }
+    
+    
+    
     public ClientCompany(ClientCompany clientCompany, Depository depository, String name, String code, String nseSector, String ceo, String secretary, String address, String depository_1, boolean valid, boolean merged, boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
        this.clientCompany = clientCompany;
        this.depository = depository;
@@ -83,6 +93,23 @@ public class ClientCompany  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    /**
+     * A getter for ClientCompany object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for ClientCompany object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
