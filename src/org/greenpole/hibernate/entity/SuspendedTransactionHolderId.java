@@ -11,7 +11,6 @@ public class SuspendedTransactionHolderId  implements java.io.Serializable {
 
      private int transactionId;
      private int holderId;
-     private long versionId;
 
     public SuspendedTransactionHolderId() {
     }
@@ -35,25 +34,7 @@ public class SuspendedTransactionHolderId  implements java.io.Serializable {
     public void setHolderId(int holderId) {
         this.holderId = holderId;
     }
-      /**
-     * A getter for SuspendedTransactionHolderId object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for SuspendedTransactionHolderId object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
-
-
+    
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;
 		 if ( (other == null ) ) return false;

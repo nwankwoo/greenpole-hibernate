@@ -10,9 +10,9 @@ public class AdministratorPostalAddress  implements java.io.Serializable {
 
 
      private AdministratorPostalAddressId id;
-     private long versionId;
      private Administrator administrator;
-     private String type;
+     private String lineType;
+     private String addressType;
 
     public AdministratorPostalAddress() {
     }
@@ -22,10 +22,12 @@ public class AdministratorPostalAddress  implements java.io.Serializable {
         this.id = id;
         this.administrator = administrator;
     }
-    public AdministratorPostalAddress(AdministratorPostalAddressId id, Administrator administrator, String type) {
-       this.id = id;
-       this.administrator = administrator;
-       this.type = type;
+    
+    public AdministratorPostalAddress(AdministratorPostalAddressId id, Administrator administrator, String lineType, String addressType) {
+        this.id = id;
+        this.administrator = administrator;
+        this.lineType = lineType;
+        this.addressType = addressType;
     }
    
     public AdministratorPostalAddressId getId() {
@@ -38,35 +40,25 @@ public class AdministratorPostalAddress  implements java.io.Serializable {
     public Administrator getAdministrator() {
         return this.administrator;
     }
-    /**
-     * A getter for AdministratorPostalAddress object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for AdministratorPostalAddress object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
+    
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
     }
-    public String getType() {
-        return this.type;
+    public String getLineType() {
+        return this.lineType;
     }
     
-    public void setType(String type) {
-        this.type = type;
+    public void setLineType(String lineType) {
+        this.lineType = lineType;
     }
 
+    public String getAddressType() {
+        return addressType;
+    }
 
+    public void setAddressType(String addressType) {
+        this.addressType = addressType;
+    }
 
 
 }

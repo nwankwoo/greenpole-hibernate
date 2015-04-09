@@ -5,6 +5,8 @@
  */
 package org.greenpole.hibernate.query;
 
+import org.greenpole.hibernate.entity.ClientCompany;
+
 /**
  *
  * @author Akinwale Agbaje
@@ -17,4 +19,26 @@ public interface ClientCompanyComponentQuery {
      * @return true, if company exists. Otherwise, false
      */
     public boolean checkClientCompany(String companyname);
+    
+    /**
+     * Creates a new client company in the database.
+     * @param clientCompany the client company object model containing data
+     * to be added
+     */
+    public void create(ClientCompany clientCompany);
+    
+    /**
+     * Gets a client company object by a specified id.
+     * @param id the client company id
+     * @return the client company object
+     */
+    public ClientCompany getClientCompany(Integer id);
+    
+    /**
+     * Updates an existing client company in the database.
+     * @param clientCompany the client company object model containing data
+     * to be updated
+     */
+    public void editClientCompany(ClientCompany clientCompany);
+    
 }

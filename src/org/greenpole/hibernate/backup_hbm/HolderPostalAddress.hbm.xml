@@ -19,8 +19,11 @@
         <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" update="false" insert="false" fetch="select">
             <column name="holder_id" not-null="true" />
         </many-to-one>
-        <property name="type" type="string">
-            <column name="type" length="50" />
+        <property name="lineType" type="string">
+            <column name="line_type" length="50" />
+        </property>
+        <property name="addressType" type="string">
+            <column name="address_type" length="50" />
         </property>
     </class>
 </hibernate-mapping>

@@ -10,9 +10,9 @@ public class HolderResidentialAddress  implements java.io.Serializable {
 
 
      private HolderResidentialAddressId id;
-     private long versionId;
      private Holder holder;
-     private String type;
+     private String lineType;
+     private String addressType;
 
     public HolderResidentialAddress() {
     }
@@ -22,10 +22,12 @@ public class HolderResidentialAddress  implements java.io.Serializable {
         this.id = id;
         this.holder = holder;
     }
-    public HolderResidentialAddress(HolderResidentialAddressId id, Holder holder, String type) {
-       this.id = id;
-       this.holder = holder;
-       this.type = type;
+
+    public HolderResidentialAddress(HolderResidentialAddressId id, Holder holder, String lineType, String addressType) {
+        this.id = id;
+        this.holder = holder;
+        this.lineType = lineType;
+        this.addressType = addressType;
     }
    
     public HolderResidentialAddressId getId() {
@@ -35,23 +37,7 @@ public class HolderResidentialAddress  implements java.io.Serializable {
     public void setId(HolderResidentialAddressId id) {
         this.id = id;
     }
-    /**
-     * A getter for HolderResidentialAddress object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for HolderResidentialAddress object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
+    
     public Holder getHolder() {
         return this.holder;
     }
@@ -59,15 +45,21 @@ public class HolderResidentialAddress  implements java.io.Serializable {
     public void setHolder(Holder holder) {
         this.holder = holder;
     }
-    public String getType() {
-        return this.type;
+    public String getLineType() {
+        return this.lineType;
     }
     
-    public void setType(String type) {
-        this.type = type;
+    public void setLineType(String lineType) {
+        this.lineType = lineType;
     }
 
+    public String getAddressType() {
+        return addressType;
+    }
 
+    public void setAddressType(String addressType) {
+        this.addressType = addressType;
+    }
 
 
 }

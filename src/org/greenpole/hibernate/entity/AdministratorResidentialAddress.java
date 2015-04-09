@@ -10,9 +10,9 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
 
 
      private AdministratorResidentialAddressId id;
-     private long versionId;
      private Administrator administrator;
-     private String type;
+     private String lineType;
+     private String addressType;
 
     public AdministratorResidentialAddress() {
     }
@@ -22,10 +22,12 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
         this.id = id;
         this.administrator = administrator;
     }
-    public AdministratorResidentialAddress(AdministratorResidentialAddressId id, Administrator administrator, String type) {
-       this.id = id;
-       this.administrator = administrator;
-       this.type = type;
+
+    public AdministratorResidentialAddress(AdministratorResidentialAddressId id, Administrator administrator, String lineType, String addressType) {
+        this.id = id;
+        this.administrator = administrator;
+        this.lineType = lineType;
+        this.addressType = addressType;
     }
    
     public AdministratorResidentialAddressId getId() {
@@ -35,23 +37,7 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
     public void setId(AdministratorResidentialAddressId id) {
         this.id = id;
     }
-     /**
-     * A getter for AdministratorResidentialAddress object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for AdministratorResidentialAddress object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
+    
     public Administrator getAdministrator() {
         return this.administrator;
     }
@@ -59,15 +45,21 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
     }
-    public String getType() {
-        return this.type;
+    public String getLineType() {
+        return this.lineType;
     }
     
-    public void setType(String type) {
-        this.type = type;
+    public void setLineType(String lineType) {
+        this.lineType = lineType;
     }
 
+    public String getAddressType() {
+        return addressType;
+    }
 
+    public void setAddressType(String addressType) {
+        this.addressType = addressType;
+    }
 
 
 }

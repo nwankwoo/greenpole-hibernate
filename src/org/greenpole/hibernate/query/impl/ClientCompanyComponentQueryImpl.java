@@ -6,7 +6,9 @@
 package org.greenpole.hibernate.query.impl;
 
 import java.util.Iterator;
+import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
+import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.greenpole.hibernate.util.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -17,24 +19,35 @@ import org.hibernate.Transaction;
  * @author Akinwale Agbaje
  * Query implementations to do with client company requirements.
  */
-public class ClientCompanyComponentQueryImpl implements ClientCompanyComponentQuery {
+public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao implements ClientCompanyComponentQuery  {
 
     @Override
     public boolean checkClientCompany(String companyname) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tx = session.beginTransaction();
+        startOperation();
         String hql = "SELECT count(distinct name) FROM ClientCompany WHERE name = :companyname";
-        Query query = session.createQuery(hql);
+        Query query = getSession().createQuery(hql);
         query.setParameter("companyname", companyname);
         int count = 0;
-        
         for (Iterator it = query.iterate(); it.hasNext();) {
             count = (int) it.next();
         }
-        
-        tx.commit();
-        
+        getTransaction().commit();
         return count > 0;
+    }
+
+    @Override
+    public void create(ClientCompany clientCompany) {
+        createUpdateObject(clientCompany);
+    }
+
+    @Override
+    public ClientCompany getClientCompany(Integer id) {
+        return (ClientCompany) searchObject(ClientCompany.class, id);
+    }
+
+    @Override
+    public void editClientCompany(ClientCompany clientCompany) {
+        createUpdateObject(clientCompany);
     }
     
 }
