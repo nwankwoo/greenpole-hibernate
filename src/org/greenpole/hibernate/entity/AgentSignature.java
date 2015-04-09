@@ -10,6 +10,7 @@ public class AgentSignature  implements java.io.Serializable {
 
 
      private int id;
+     private long versionId;
      private StockbrokerAgent stockbrokerAgent;
      private String signaturePath;
      private boolean agentSignaturePrimary;
@@ -29,6 +30,23 @@ public class AgentSignature  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+        /**
+     * A getter for AgentSignature object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for AgentSignature object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public StockbrokerAgent getStockbrokerAgent() {
         return this.stockbrokerAgent;

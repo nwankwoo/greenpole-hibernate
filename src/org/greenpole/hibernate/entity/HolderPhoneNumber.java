@@ -10,6 +10,7 @@ public class HolderPhoneNumber  implements java.io.Serializable {
 
 
      private HolderPhoneNumberId id;
+     private long versionId;
      private Holder holder;
 
     public HolderPhoneNumber() {
@@ -26,6 +27,23 @@ public class HolderPhoneNumber  implements java.io.Serializable {
     
     public void setId(HolderPhoneNumberId id) {
         this.id = id;
+    }
+    /**
+     * A getter for HolderPhoneNumber object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for HolderPhoneNumber object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
     }
     public Holder getHolder() {
         return this.holder;

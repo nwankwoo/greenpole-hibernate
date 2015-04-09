@@ -15,7 +15,7 @@ import org.hibernate.Transaction;
 /**
  *
  * @author Ahmad.Gbadamosi
- * An abstract superclass, this provides the attributes and methods<p> 
+ * A general abstract superclass, provides the attributes and methods<p> 
  * that are common among subclasses. It is inherited by various data access
  *<p>objects (concrete classes) and from which, implements complete
  * details of the methods in the inherited abstract class<p>
@@ -35,27 +35,29 @@ public abstract class GeneralisedAbstractDao {
         session = HibernateUtil.getSessionFactory().getCurrentSession();
         tx = session.beginTransaction();  //use hibernate api to manage and demarcate transaction
     }
-    /*
-        protected void handleException(HibernateException e) throws DataAccessLayerException{
-        HibernateFactory.rollback(transaction);
+    
+    
+    protected void handleException(HibernateException e) throws DataAccessLayerException{
+        HibernateUtil.rollback(tx);
         throw new DataAccessLayerException(e);
-    }*/
+    }
     
     
     /**
      * Utility save or update method that persist the our objects
      * @param object
      */
-    protected void savePersistent(Object object){
+    protected void createUpdateObject(Object object){
         try{
             startOperation();
             session.saveOrUpdate(object);
             session.getTransaction();
             tx.commit();
-        }catch(HibernateException e)
-        {
+        }catch(HibernateException he){
+            HibernateUtil.rollback(tx);
+            throw new DataAccessLayerException(he);
         }
-    } //end saveOrUpdate
+    } 
     /**
      * Return the component instance of the given entity class 
      * with the given identifier, or null if there is no such 
@@ -64,6 +66,7 @@ public abstract class GeneralisedAbstractDao {
      */
     protected Object searchObject(Class classObj, String searchParams){
         Object object = null;
+        
         startOperation();
         session.get(classObj, searchParams);  //get is used over load, becuase load cannot handle non-identifier searchParams
         tx.commit();
