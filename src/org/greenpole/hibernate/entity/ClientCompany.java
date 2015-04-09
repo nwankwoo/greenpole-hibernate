@@ -34,6 +34,7 @@ public class ClientCompany  implements java.io.Serializable {
      private Set reconstructions = new HashSet(0);
      private Set clientCompanyPhoneNumbers = new HashSet(0);
      private Set clientCompanyEmailAddresses = new HashSet(0);
+     private Set clientCompanyAddresses = new HashSet(0);
      private Set privatePlacements = new HashSet(0);
      private Set shareQuotations = new HashSet(0);
      private Set dividendDeclareds = new HashSet(0);
@@ -55,7 +56,7 @@ public class ClientCompany  implements java.io.Serializable {
     
     
     
-    public ClientCompany(ClientCompany clientCompany, Depository depository, String name, String code, String nseSector, String ceo, String secretary, String address, String depository_1, boolean valid, boolean merged, boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
+    public ClientCompany(ClientCompany clientCompany, Depository depository, String name, String code, String nseSector, String ceo, String secretary, String address, String depository_1, boolean valid, boolean merged, boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set clientCompanyAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
        this.clientCompany = clientCompany;
        this.depository = depository;
        this.name = name;
@@ -78,6 +79,7 @@ public class ClientCompany  implements java.io.Serializable {
        this.reconstructions = reconstructions;
        this.clientCompanyPhoneNumbers = clientCompanyPhoneNumbers;
        this.clientCompanyEmailAddresses = clientCompanyEmailAddresses;
+       this.clientCompanyAddresses = clientCompanyAddresses;
        this.privatePlacements = privatePlacements;
        this.shareQuotations = shareQuotations;
        this.dividendDeclareds = dividendDeclareds;
@@ -264,6 +266,14 @@ public class ClientCompany  implements java.io.Serializable {
     
     public void setClientCompanyEmailAddresses(Set clientCompanyEmailAddresses) {
         this.clientCompanyEmailAddresses = clientCompanyEmailAddresses;
+    }
+
+    public Set getClientCompanyAddresses() {
+        return clientCompanyAddresses;
+    }
+
+    public void setClientCompanyAddresses(Set clientCompanyAddresses) {
+        this.clientCompanyAddresses = clientCompanyAddresses;
     }
     public Set getPrivatePlacements() {
         return this.privatePlacements;

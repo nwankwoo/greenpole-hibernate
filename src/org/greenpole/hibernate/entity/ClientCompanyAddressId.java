@@ -5,11 +5,13 @@
  */
 package org.greenpole.hibernate.entity;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Akinwale.Agbaje
  */
-public class ClientCompanyAddressId {
+public class ClientCompanyAddressId implements Serializable {
 
     private int clientCompanyId;
     private String addressLine;

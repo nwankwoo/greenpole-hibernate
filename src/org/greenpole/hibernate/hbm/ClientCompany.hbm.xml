@@ -105,6 +105,12 @@
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.ClientCompanyEmailAddress" />
         </set>
+        <set name="clientCompanyAddresses" table="CLIENT_COMPANY_ADDRESS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="client_company_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ClientCompanyAddress" />
+        </set>
         <set name="privatePlacements" table="PRIVATE_PLACEMENT" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="client_Company_Id" />
