@@ -14,10 +14,14 @@ import java.io.Serializable;
 public class ClientCompanyAddress implements Serializable {
 
     private ClientCompanyAddressId id;
-    private ClientCompany clientCompany;
     private long versionId;
-    private String lineType;
-    private String addressType;
+    private ClientCompany clientCompany;
+    private String addressLine2;
+    private String addressLine3;
+    private String addressLine4;
+    private String postCode;
+    private String city;
+    private boolean isPrimary;
 
     public ClientCompanyAddress() {
     }
@@ -27,21 +31,25 @@ public class ClientCompanyAddress implements Serializable {
         this.clientCompany = clientCompany;
     }
 
-    public ClientCompanyAddress(ClientCompanyAddressId id, ClientCompany clientCompany, String lineType, String addressType) {
+    public ClientCompanyAddress(ClientCompanyAddressId id, ClientCompany clientCompany, String addressLine2, String addressLine3, String addressLine4, String postCode, String city, boolean isPrimary) {
         this.id = id;
         this.clientCompany = clientCompany;
-        this.lineType = lineType;
-        this.addressType = addressType;
+        this.addressLine2 = addressLine2;
+        this.addressLine3 = addressLine3;
+        this.addressLine4 = addressLine4;
+        this.postCode = postCode;
+        this.city = city;
+        this.isPrimary = isPrimary;
     }
 
     public ClientCompanyAddressId getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(ClientCompanyAddressId id) {
         this.id = id;
     }
-    
+
     /**
      * A getter for HolderPostalAddress object which retrieve a version
      * identifier, apart from the primary key of object
@@ -64,26 +72,58 @@ public class ClientCompanyAddress implements Serializable {
     }
 
     public ClientCompany getClientCompany() {
-        return clientCompany;
+        return this.clientCompany;
     }
 
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
 
-    public String getLineType() {
-        return this.lineType;
+    public String getAddressLine2() {
+        return this.addressLine2;
     }
 
-    public void setLineType(String lineType) {
-        this.lineType = lineType;
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
     }
 
-    public String getAddressType() {
-        return addressType;
+    public String getAddressLine3() {
+        return this.addressLine3;
     }
 
-    public void setAddressType(String addressType) {
-        this.addressType = addressType;
+    public void setAddressLine3(String addressLine3) {
+        this.addressLine3 = addressLine3;
+    }
+
+    public String getAddressLine4() {
+        return this.addressLine4;
+    }
+
+    public void setAddressLine4(String addressLine4) {
+        this.addressLine4 = addressLine4;
+    }
+
+    public String getPostCode() {
+        return this.postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 }

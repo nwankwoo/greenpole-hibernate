@@ -10,16 +10,18 @@ public class HolderResidentialAddressId  implements java.io.Serializable {
 
 
      private int holderId;
-     private String addressLine;
-     private int lineNumber;
+     private String addressLine1;
+     private String state;
+     private String country;
 
     public HolderResidentialAddressId() {
     }
 
-    public HolderResidentialAddressId(int holderId, String addressLine, int lineNumber) {
+    public HolderResidentialAddressId(int holderId, String addressLine1, String state, String country) {
        this.holderId = holderId;
-       this.addressLine = addressLine;
-       this.lineNumber = lineNumber;
+       this.addressLine1 = addressLine1;
+       this.state = state;
+       this.country = country;
     }
    
     public int getHolderId() {
@@ -29,20 +31,26 @@ public class HolderResidentialAddressId  implements java.io.Serializable {
     public void setHolderId(int holderId) {
         this.holderId = holderId;
     }
-    
-    public String getAddressLine() {
-        return this.addressLine;
+    public String getAddressLine1() {
+        return this.addressLine1;
     }
     
-    public void setAddressLine(String addressLine) {
-        this.addressLine = addressLine;
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
     }
-    public int getLineNumber() {
-        return this.lineNumber;
+    public String getState() {
+        return this.state;
     }
     
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
+    public void setState(String state) {
+        this.state = state;
+    }
+    public String getCountry() {
+        return this.country;
+    }
+    
+    public void setCountry(String country) {
+        this.country = country;
     }
 
 
@@ -53,16 +61,18 @@ public class HolderResidentialAddressId  implements java.io.Serializable {
 		 HolderResidentialAddressId castOther = ( HolderResidentialAddressId ) other; 
          
 		 return (this.getHolderId()==castOther.getHolderId())
- && ( (this.getAddressLine()==castOther.getAddressLine()) || ( this.getAddressLine()!=null && castOther.getAddressLine()!=null && this.getAddressLine().equals(castOther.getAddressLine()) ) )
- && (this.getLineNumber()==castOther.getLineNumber());
+ && ( (this.getAddressLine1()==castOther.getAddressLine1()) || ( this.getAddressLine1()!=null && castOther.getAddressLine1()!=null && this.getAddressLine1().equals(castOther.getAddressLine1()) ) )
+ && ( (this.getState()==castOther.getState()) || ( this.getState()!=null && castOther.getState()!=null && this.getState().equals(castOther.getState()) ) )
+ && ( (this.getCountry()==castOther.getCountry()) || ( this.getCountry()!=null && castOther.getCountry()!=null && this.getCountry().equals(castOther.getCountry()) ) );
    }
    
    public int hashCode() {
          int result = 17;
          
          result = 37 * result + this.getHolderId();
-         result = 37 * result + ( getAddressLine() == null ? 0 : this.getAddressLine().hashCode() );
-         result = 37 * result + this.getLineNumber();
+         result = 37 * result + ( getAddressLine1() == null ? 0 : this.getAddressLine1().hashCode() );
+         result = 37 * result + ( getState() == null ? 0 : this.getState().hashCode() );
+         result = 37 * result + ( getCountry() == null ? 0 : this.getCountry().hashCode() );
          return result;
    }   
 

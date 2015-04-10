@@ -11,15 +11,13 @@ public class HolderPhoneNumberId  implements java.io.Serializable {
 
      private int holderId;
      private String phoneNumber;
-     private int lineNumber;
 
     public HolderPhoneNumberId() {
     }
 
-    public HolderPhoneNumberId(int holderId, String phoneNumber, int lineNumber) {
+    public HolderPhoneNumberId(int holderId, String phoneNumber) {
        this.holderId = holderId;
        this.phoneNumber = phoneNumber;
-       this.lineNumber = lineNumber;
     }
    
     public int getHolderId() {
@@ -29,20 +27,12 @@ public class HolderPhoneNumberId  implements java.io.Serializable {
     public void setHolderId(int holderId) {
         this.holderId = holderId;
     }
-    
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
     
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-    public int getLineNumber() {
-        return this.lineNumber;
-    }
-    
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
     }
 
 
@@ -53,8 +43,7 @@ public class HolderPhoneNumberId  implements java.io.Serializable {
 		 HolderPhoneNumberId castOther = ( HolderPhoneNumberId ) other; 
          
 		 return (this.getHolderId()==castOther.getHolderId())
- && ( (this.getPhoneNumber()==castOther.getPhoneNumber()) || ( this.getPhoneNumber()!=null && castOther.getPhoneNumber()!=null && this.getPhoneNumber().equals(castOther.getPhoneNumber()) ) )
- && (this.getLineNumber()==castOther.getLineNumber());
+ && ( (this.getPhoneNumber()==castOther.getPhoneNumber()) || ( this.getPhoneNumber()!=null && castOther.getPhoneNumber()!=null && this.getPhoneNumber().equals(castOther.getPhoneNumber()) ) );
    }
    
    public int hashCode() {
@@ -62,7 +51,6 @@ public class HolderPhoneNumberId  implements java.io.Serializable {
          
          result = 37 * result + this.getHolderId();
          result = 37 * result + ( getPhoneNumber() == null ? 0 : this.getPhoneNumber().hashCode() );
-         result = 37 * result + this.getLineNumber();
          return result;
    }   
 

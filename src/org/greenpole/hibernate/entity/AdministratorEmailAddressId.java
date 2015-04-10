@@ -11,15 +11,13 @@ public class AdministratorEmailAddressId  implements java.io.Serializable {
 
      private int administratorId;
      private String emailAddress;
-     private int lineNumber;
 
     public AdministratorEmailAddressId() {
     }
 
-    public AdministratorEmailAddressId(int administratorId, String emailAddress, int lineNumber) {
+    public AdministratorEmailAddressId(int administratorId, String emailAddress) {
        this.administratorId = administratorId;
        this.emailAddress = emailAddress;
-       this.lineNumber = lineNumber;
     }
    
     public int getAdministratorId() {
@@ -29,20 +27,12 @@ public class AdministratorEmailAddressId  implements java.io.Serializable {
     public void setAdministratorId(int administratorId) {
         this.administratorId = administratorId;
     }
-    
     public String getEmailAddress() {
         return this.emailAddress;
     }
     
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-    public int getLineNumber() {
-        return this.lineNumber;
-    }
-    
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
     }
 
 
@@ -53,8 +43,7 @@ public class AdministratorEmailAddressId  implements java.io.Serializable {
 		 AdministratorEmailAddressId castOther = ( AdministratorEmailAddressId ) other; 
          
 		 return (this.getAdministratorId()==castOther.getAdministratorId())
- && ( (this.getEmailAddress()==castOther.getEmailAddress()) || ( this.getEmailAddress()!=null && castOther.getEmailAddress()!=null && this.getEmailAddress().equals(castOther.getEmailAddress()) ) )
- && (this.getLineNumber()==castOther.getLineNumber());
+ && ( (this.getEmailAddress()==castOther.getEmailAddress()) || ( this.getEmailAddress()!=null && castOther.getEmailAddress()!=null && this.getEmailAddress().equals(castOther.getEmailAddress()) ) );
    }
    
    public int hashCode() {
@@ -62,7 +51,6 @@ public class AdministratorEmailAddressId  implements java.io.Serializable {
          
          result = 37 * result + this.getAdministratorId();
          result = 37 * result + ( getEmailAddress() == null ? 0 : this.getEmailAddress().hashCode() );
-         result = 37 * result + this.getLineNumber();
          return result;
    }   
 

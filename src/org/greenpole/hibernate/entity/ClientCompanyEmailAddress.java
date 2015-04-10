@@ -12,13 +12,20 @@ public class ClientCompanyEmailAddress  implements java.io.Serializable {
      private ClientCompanyEmailAddressId id;
      private long versionId;
      private ClientCompany clientCompany;
+     private boolean isPrimary;
 
     public ClientCompanyEmailAddress() {
     }
 
+	
     public ClientCompanyEmailAddress(ClientCompanyEmailAddressId id, ClientCompany clientCompany) {
+        this.id = id;
+        this.clientCompany = clientCompany;
+    }
+    public ClientCompanyEmailAddress(ClientCompanyEmailAddressId id, ClientCompany clientCompany, boolean isPrimary) {
        this.id = id;
        this.clientCompany = clientCompany;
+       this.isPrimary = isPrimary;
     }
    
     public ClientCompanyEmailAddressId getId() {
@@ -51,6 +58,13 @@ public class ClientCompanyEmailAddress  implements java.io.Serializable {
     
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
+    }
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+    
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
 

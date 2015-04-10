@@ -11,15 +11,13 @@ public class HolderEmailAddressId  implements java.io.Serializable {
 
      private int holderId;
      private String emailAddress;
-     private int lineNumber;
 
     public HolderEmailAddressId() {
     }
 
-    public HolderEmailAddressId(int holderId, String emailAddress, int lineNumber) {
+    public HolderEmailAddressId(int holderId, String emailAddress) {
        this.holderId = holderId;
        this.emailAddress = emailAddress;
-       this.lineNumber = lineNumber;
     }
    
     public int getHolderId() {
@@ -36,13 +34,6 @@ public class HolderEmailAddressId  implements java.io.Serializable {
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
-    public int getLineNumber() {
-        return this.lineNumber;
-    }
-    
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
-    }
 
 
    public boolean equals(Object other) {
@@ -52,8 +43,7 @@ public class HolderEmailAddressId  implements java.io.Serializable {
 		 HolderEmailAddressId castOther = ( HolderEmailAddressId ) other; 
          
 		 return (this.getHolderId()==castOther.getHolderId())
- && ( (this.getEmailAddress()==castOther.getEmailAddress()) || ( this.getEmailAddress()!=null && castOther.getEmailAddress()!=null && this.getEmailAddress().equals(castOther.getEmailAddress()) ) )
- && (this.getLineNumber()==castOther.getLineNumber());
+ && ( (this.getEmailAddress()==castOther.getEmailAddress()) || ( this.getEmailAddress()!=null && castOther.getEmailAddress()!=null && this.getEmailAddress().equals(castOther.getEmailAddress()) ) );
    }
    
    public int hashCode() {
@@ -61,7 +51,6 @@ public class HolderEmailAddressId  implements java.io.Serializable {
          
          result = 37 * result + this.getHolderId();
          result = 37 * result + ( getEmailAddress() == null ? 0 : this.getEmailAddress().hashCode() );
-         result = 37 * result + this.getLineNumber();
          return result;
    }   
 

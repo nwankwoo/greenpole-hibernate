@@ -12,13 +12,20 @@ public class AdministratorPhoneNumber  implements java.io.Serializable {
      private AdministratorPhoneNumberId id;
      private long versionId;
      private Administrator administrator;
+     private boolean isPrimary;
 
     public AdministratorPhoneNumber() {
     }
 
+	
     public AdministratorPhoneNumber(AdministratorPhoneNumberId id, Administrator administrator) {
+        this.id = id;
+        this.administrator = administrator;
+    }
+    public AdministratorPhoneNumber(AdministratorPhoneNumberId id, Administrator administrator, boolean isPrimary) {
        this.id = id;
        this.administrator = administrator;
+       this.isPrimary = isPrimary;
     }
    
     public AdministratorPhoneNumberId getId() {
@@ -52,6 +59,13 @@ public class AdministratorPhoneNumber  implements java.io.Serializable {
     
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
+    }
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+    
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
 

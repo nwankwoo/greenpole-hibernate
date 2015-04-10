@@ -11,14 +11,21 @@ public class ClientCompanyPhoneNumber  implements java.io.Serializable {
 
      private ClientCompanyPhoneNumberId id;
      private long versionId;
-     private ClientCompany clientCompany; // to which client
+     private ClientCompany clientCompany;
+     private boolean isPrimary;
 
     public ClientCompanyPhoneNumber() {
     }
 
+	
     public ClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id, ClientCompany clientCompany) {
+        this.id = id;
+        this.clientCompany = clientCompany;
+    }
+    public ClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id, ClientCompany clientCompany, boolean isPrimary) {
        this.id = id;
        this.clientCompany = clientCompany;
+       this.isPrimary = isPrimary;
     }
    
     public ClientCompanyPhoneNumberId getId() {
@@ -46,12 +53,20 @@ public class ClientCompanyPhoneNumber  implements java.io.Serializable {
     public void setVersionId(long versionId) {
         this.versionId = versionId;
     }
+    
     public ClientCompany getClientCompany() {
         return this.clientCompany;
     }
     
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
+    }
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+    
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
 

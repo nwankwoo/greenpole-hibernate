@@ -12,13 +12,20 @@ public class StockbrokerPhoneNumber  implements java.io.Serializable {
      private StockbrokerPhoneNumberId id;
      private long versionId;
      private Stockbroker stockbroker;
+     private boolean isPrimary;
 
     public StockbrokerPhoneNumber() {
     }
 
+	
     public StockbrokerPhoneNumber(StockbrokerPhoneNumberId id, Stockbroker stockbroker) {
+        this.id = id;
+        this.stockbroker = stockbroker;
+    }
+    public StockbrokerPhoneNumber(StockbrokerPhoneNumberId id, Stockbroker stockbroker, boolean isPrimary) {
        this.id = id;
        this.stockbroker = stockbroker;
+       this.isPrimary = isPrimary;
     }
    
     public StockbrokerPhoneNumberId getId() {
@@ -28,7 +35,6 @@ public class StockbrokerPhoneNumber  implements java.io.Serializable {
     public void setId(StockbrokerPhoneNumberId id) {
         this.id = id;
     }
-    
     /**
      * A getter for StockbrokerPhoneNumber object which retrieve 
      * a version identifier, apart from the primary key of object
@@ -52,6 +58,13 @@ public class StockbrokerPhoneNumber  implements java.io.Serializable {
     
     public void setStockbroker(Stockbroker stockbroker) {
         this.stockbroker = stockbroker;
+    }
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+    
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
 

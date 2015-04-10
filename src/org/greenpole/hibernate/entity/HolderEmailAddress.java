@@ -12,13 +12,20 @@ public class HolderEmailAddress  implements java.io.Serializable {
      private HolderEmailAddressId id;
      private long versionId;
      private Holder holder;
+     private boolean isPrimary;
 
     public HolderEmailAddress() {
     }
 
+	
     public HolderEmailAddress(HolderEmailAddressId id, Holder holder) {
+        this.id = id;
+        this.holder = holder;
+    }
+    public HolderEmailAddress(HolderEmailAddressId id, Holder holder, boolean isPrimary) {
        this.id = id;
        this.holder = holder;
+       this.isPrimary = isPrimary;
     }
    
     public HolderEmailAddressId getId() {
@@ -52,6 +59,13 @@ public class HolderEmailAddress  implements java.io.Serializable {
     
     public void setHolder(Holder holder) {
         this.holder = holder;
+    }
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+    
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
 

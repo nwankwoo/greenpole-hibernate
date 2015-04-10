@@ -12,13 +12,20 @@ public class HolderPhoneNumber  implements java.io.Serializable {
      private HolderPhoneNumberId id;
      private long versionId;
      private Holder holder;
+     private boolean isPrimary;
 
     public HolderPhoneNumber() {
     }
 
+	
     public HolderPhoneNumber(HolderPhoneNumberId id, Holder holder) {
+        this.id = id;
+        this.holder = holder;
+    }
+    public HolderPhoneNumber(HolderPhoneNumberId id, Holder holder, boolean isPrimary) {
        this.id = id;
        this.holder = holder;
+       this.isPrimary = isPrimary;
     }
    
     public HolderPhoneNumberId getId() {
@@ -51,6 +58,13 @@ public class HolderPhoneNumber  implements java.io.Serializable {
     
     public void setHolder(Holder holder) {
         this.holder = holder;
+    }
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+    
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
 

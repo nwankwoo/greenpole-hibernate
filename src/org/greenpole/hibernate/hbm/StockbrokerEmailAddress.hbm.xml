@@ -11,13 +11,13 @@
             <key-property name="emailAddress" type="string">
                 <column name="email_address" length="500" />
             </key-property>
-            <key-property name="lineNumber" type="int">
-                <column name="line_number" />
-            </key-property>
         </composite-id>
         <version name="versionId" type="long"/>
         <many-to-one name="stockbroker" class="org.greenpole.hibernate.entity.Stockbroker" update="false" insert="false" fetch="select">
             <column name="stockbroker_id" not-null="true" />
         </many-to-one>
+        <property name="isPrimary" type="boolean">
+            <column name="is_primary" />
+        </property>
     </class>
 </hibernate-mapping>

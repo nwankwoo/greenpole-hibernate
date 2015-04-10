@@ -6,8 +6,9 @@
     <type-mapping>
         <sql-type jdbc-type="BIT" hibernate-type="boolean"/>
         <sql-type jdbc-type="INTEGER" hibernate-type="int"/>
-    </type-mapping>
-    
+    </type-mapping>  
+  
+    <table-filter match-name="CLIENT_COMPANY_ADDRESS"/>
     <table-filter match-name="PRIVATE_PLACEMENT_APPLICATION"/>
     <table-filter match-name="CLIENT_COMPANY_PHONE_NUMBER"/>
     <table-filter match-name="CAUTION"/>
@@ -15,12 +16,10 @@
     <table-filter match-name="SUSPENDED_TRANSACTION"/>
     <table-filter match-name="COUPON"/>
     <table-filter match-name="DIVIDEND_SETTLEMENT"/>
-    <table-filter match-name="STOCKBROKER"/>
     <table-filter match-name="DIVIDEND_ISSUE_TYPE"/>
     <table-filter match-name="USER_ACCESS"/>
     <table-filter match-name="BOND_OFFER"/>
     <table-filter match-name="HOLDER_SIGNATURE"/>
-    <table-filter match-name="HOLDER_RESIDENTIAL_ADDRESS"/>
     <table-filter match-name="PROCESSED_TRANSACTION"/>
     <table-filter match-name="CLEARING_HOUSE"/>
     <table-filter match-name="CERTIFICATE_VERIFICATION"/>
@@ -29,32 +28,22 @@
     <table-filter match-name="PROCESSED_TRANSACTION_HOLDER"/>
     <table-filter match-name="SHARE_BONUS"/>
     <table-filter match-name="HOLDER_COMPANY_ACCOUNT"/>
-    <table-filter match-name="STOCKBROKER_ADDRESS"/>
-    <table-filter match-name="HOLDER_PHONE_NUMBER"/>
     <table-filter match-name="RECONSTRUCTION"/>
     <table-filter match-name="RIGHTS_ISSUE"/>
     <table-filter match-name="HOLDER_VOTING"/>
-    <table-filter match-name="HOLDER_POSTAL_ADDRESS"/>
     <table-filter match-name="SHARE_QUOTATION"/>
     <table-filter match-name="REQUIREMENT_FUNCTION"/>
     <table-filter match-name="STOCKBROKER_SIGNATURE"/>
     <table-filter match-name="AGENT_SIGNATURE"/>
-    <table-filter match-name="ADMINISTRATOR_EMAIL_ADDRESS"/>
     <table-filter match-name="IPO_APPLICATION"/>
     <table-filter match-name="DIVIDEND_DECLARED"/>
     <table-filter match-name="USER_ACCOUNT"/>
     <table-filter match-name="APR_DEPARTMENT"/>
-    <table-filter match-name="ADMINISTRATOR"/>
-    <table-filter match-name="STOCKBROKER_EMAIL_ADDRESS"/>
-    <table-filter match-name="HOLDER"/>
     <table-filter match-name="RIGHTS_ISSUE_APPLICATION"/>
     <table-filter match-name="POWER_OF_ATTORNEY"/>
     <table-filter match-name="USER_ACCOUNT_GROUP"/>
     <table-filter match-name="DIVIDEN_ANNOTATION"/>
-    <table-filter match-name="CLIENT_COMPANY"/>
     <table-filter match-name="SUSPENDED_TRANSACTION_HOLDER"/>
-    <table-filter match-name="ADMINISTRATOR_POSTAL_ADDRESS"/>
-    <table-filter match-name="ADMINISTRATOR_PHONE_NUMBER"/>
     <table-filter match-name="USER_ACCOUNT_REQUIREMENT"/>
     <table-filter match-name="HOLDER_GM_ATTENDANCE"/>
     <table-filter match-name="STOCKBROKER_HOLDER"/>
@@ -63,21 +52,18 @@
     <table-filter match-name="CERTIFICATE"/>
     <table-filter match-name="ADMINISTRATOR_HOLDER"/>
     <table-filter match-name="DIGITAL_CAPTURE"/>
-    <table-filter match-name="STOCKBROKER_PHONE_NUMBER"/>
     <table-filter match-name="PRIVATE_PLACEMENT"/>
     <table-filter match-name="BANK"/>
     <table-filter match-name="DEPOSITORY"/>
-    <table-filter match-name="ADMINISTRATOR_RESIDENTIAL_ADDRESS"/>
     <table-filter match-name="APR_UNIT"/>
     <table-filter match-name="DIVIDEND"/>
     <table-filter match-name="INITIAL_PUBLIC_OFFER"/>
     <table-filter match-name="VOTING_PROCESS"/>
-    <table-filter match-name="HOLDER_EMAIL_ADDRESS"/>
     <table-filter match-name="REQUIREMENT"/>
     <table-filter match-name="GROUP"/>
     <table-filter match-name="CLIENT_COMPANY_EMAIL_ADDRESS"/>
     <table-filter match-name="NOTIFICATION"/>
-  
+
     <table name="VOTING_PROCESS" catalog="greenpole" schema="dbo">
         <primary-key>
             <generator class="identity"/>
@@ -86,6 +72,13 @@
     </table>
   
     <table name="USER_ACCOUNT" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="USER_ACCESS" catalog="greenpole" schema="dbo">
         <primary-key>
             <generator class="identity"/>
             <key-column name="id" type="int"/>

@@ -12,13 +12,20 @@ public class AdministratorEmailAddress  implements java.io.Serializable {
      private AdministratorEmailAddressId id;
      private long versionId;
      private Administrator administrator;
+     private boolean isPrimary;
 
     public AdministratorEmailAddress() {
     }
 
+	
     public AdministratorEmailAddress(AdministratorEmailAddressId id, Administrator administrator) {
+        this.id = id;
+        this.administrator = administrator;
+    }
+    public AdministratorEmailAddress(AdministratorEmailAddressId id, Administrator administrator, boolean isPrimary) {
        this.id = id;
        this.administrator = administrator;
+       this.isPrimary = isPrimary;
     }
    
     public AdministratorEmailAddressId getId() {
@@ -51,6 +58,13 @@ public class AdministratorEmailAddress  implements java.io.Serializable {
     
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
+    }
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+    
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
 

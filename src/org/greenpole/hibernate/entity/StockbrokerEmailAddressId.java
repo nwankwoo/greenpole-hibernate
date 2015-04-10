@@ -11,15 +11,13 @@ public class StockbrokerEmailAddressId  implements java.io.Serializable {
 
      private int stockbrokerId;
      private String emailAddress;
-     private int lineNumber;
 
     public StockbrokerEmailAddressId() {
     }
 
-    public StockbrokerEmailAddressId(int stockbrokerId, String emailAddress, int lineNumber) {
+    public StockbrokerEmailAddressId(int stockbrokerId, String emailAddress) {
        this.stockbrokerId = stockbrokerId;
        this.emailAddress = emailAddress;
-       this.lineNumber = lineNumber;
     }
    
     public int getStockbrokerId() {
@@ -29,20 +27,12 @@ public class StockbrokerEmailAddressId  implements java.io.Serializable {
     public void setStockbrokerId(int stockbrokerId) {
         this.stockbrokerId = stockbrokerId;
     }
-    
     public String getEmailAddress() {
         return this.emailAddress;
     }
     
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-    public int getLineNumber() {
-        return this.lineNumber;
-    }
-    
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
     }
 
 
@@ -53,8 +43,7 @@ public class StockbrokerEmailAddressId  implements java.io.Serializable {
 		 StockbrokerEmailAddressId castOther = ( StockbrokerEmailAddressId ) other; 
          
 		 return (this.getStockbrokerId()==castOther.getStockbrokerId())
- && ( (this.getEmailAddress()==castOther.getEmailAddress()) || ( this.getEmailAddress()!=null && castOther.getEmailAddress()!=null && this.getEmailAddress().equals(castOther.getEmailAddress()) ) )
- && (this.getLineNumber()==castOther.getLineNumber());
+ && ( (this.getEmailAddress()==castOther.getEmailAddress()) || ( this.getEmailAddress()!=null && castOther.getEmailAddress()!=null && this.getEmailAddress().equals(castOther.getEmailAddress()) ) );
    }
    
    public int hashCode() {
@@ -62,7 +51,6 @@ public class StockbrokerEmailAddressId  implements java.io.Serializable {
          
          result = 37 * result + this.getStockbrokerId();
          result = 37 * result + ( getEmailAddress() == null ? 0 : this.getEmailAddress().hashCode() );
-         result = 37 * result + this.getLineNumber();
          return result;
    }   
 

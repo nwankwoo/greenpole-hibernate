@@ -11,15 +11,13 @@ public class StockbrokerPhoneNumberId  implements java.io.Serializable {
 
      private int stockbrokerId;
      private String phoneNumber;
-     private int lineNumber;
 
     public StockbrokerPhoneNumberId() {
     }
 
-    public StockbrokerPhoneNumberId(int stockbrokerId, String phoneNumber, int lineNumber) {
+    public StockbrokerPhoneNumberId(int stockbrokerId, String phoneNumber) {
        this.stockbrokerId = stockbrokerId;
        this.phoneNumber = phoneNumber;
-       this.lineNumber = lineNumber;
     }
    
     public int getStockbrokerId() {
@@ -29,20 +27,12 @@ public class StockbrokerPhoneNumberId  implements java.io.Serializable {
     public void setStockbrokerId(int stockbrokerId) {
         this.stockbrokerId = stockbrokerId;
     }
-    
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
     
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-    public int getLineNumber() {
-        return this.lineNumber;
-    }
-    
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
     }
 
 
@@ -53,8 +43,7 @@ public class StockbrokerPhoneNumberId  implements java.io.Serializable {
 		 StockbrokerPhoneNumberId castOther = ( StockbrokerPhoneNumberId ) other; 
          
 		 return (this.getStockbrokerId()==castOther.getStockbrokerId())
- && ( (this.getPhoneNumber()==castOther.getPhoneNumber()) || ( this.getPhoneNumber()!=null && castOther.getPhoneNumber()!=null && this.getPhoneNumber().equals(castOther.getPhoneNumber()) ) )
- && (this.getLineNumber()==castOther.getLineNumber());
+ && ( (this.getPhoneNumber()==castOther.getPhoneNumber()) || ( this.getPhoneNumber()!=null && castOther.getPhoneNumber()!=null && this.getPhoneNumber().equals(castOther.getPhoneNumber()) ) );
    }
    
    public int hashCode() {
@@ -62,7 +51,6 @@ public class StockbrokerPhoneNumberId  implements java.io.Serializable {
          
          result = 37 * result + this.getStockbrokerId();
          result = 37 * result + ( getPhoneNumber() == null ? 0 : this.getPhoneNumber().hashCode() );
-         result = 37 * result + this.getLineNumber();
          return result;
    }   
 

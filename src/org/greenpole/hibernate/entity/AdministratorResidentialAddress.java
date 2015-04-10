@@ -10,9 +10,14 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
 
 
      private AdministratorResidentialAddressId id;
+     private long versionId;
      private Administrator administrator;
-     private String lineType;
-     private String addressType;
+     private String addressLine2;
+     private String addressLine3;
+     private String addressLine4;
+     private String postCode;
+     private String city;
+     private boolean isPrimary;
 
     public AdministratorResidentialAddress() {
     }
@@ -22,12 +27,15 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
         this.id = id;
         this.administrator = administrator;
     }
-
-    public AdministratorResidentialAddress(AdministratorResidentialAddressId id, Administrator administrator, String lineType, String addressType) {
-        this.id = id;
-        this.administrator = administrator;
-        this.lineType = lineType;
-        this.addressType = addressType;
+    public AdministratorResidentialAddress(AdministratorResidentialAddressId id, Administrator administrator, String addressLine2, String addressLine3, String addressLine4, String postCode, String city, boolean isPrimary) {
+       this.id = id;
+       this.administrator = administrator;
+       this.addressLine2 = addressLine2;
+       this.addressLine3 = addressLine3;
+       this.addressLine4 = addressLine4;
+       this.postCode = postCode;
+       this.city = city;
+       this.isPrimary = isPrimary;
     }
    
     public AdministratorResidentialAddressId getId() {
@@ -37,7 +45,23 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
     public void setId(AdministratorResidentialAddressId id) {
         this.id = id;
     }
-    
+    /**
+     * A getter for AdministratorPhoneNumber object which retrieve 
+     * a version identifier, apart from the primary key of object
+     * @return versionId identifier
+     */
+    public long getVersionId() {
+        return versionId;
+    }
+    /**
+     * A setter for AdministratorPhoneNumber object which persist the 
+     * versionId identifier in the memory by hibernate
+     * @param versionId, an argument that receives the generated 
+     * version of current object by hibernate
+     */
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
     public Administrator getAdministrator() {
         return this.administrator;
     }
@@ -45,20 +69,47 @@ public class AdministratorResidentialAddress  implements java.io.Serializable {
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
     }
-    public String getLineType() {
-        return this.lineType;
+    public String getAddressLine2() {
+        return this.addressLine2;
     }
     
-    public void setLineType(String lineType) {
-        this.lineType = lineType;
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
     }
-
-    public String getAddressType() {
-        return addressType;
+    public String getAddressLine3() {
+        return this.addressLine3;
     }
-
-    public void setAddressType(String addressType) {
-        this.addressType = addressType;
+    
+    public void setAddressLine3(String addressLine3) {
+        this.addressLine3 = addressLine3;
+    }
+    public String getAddressLine4() {
+        return this.addressLine4;
+    }
+    
+    public void setAddressLine4(String addressLine4) {
+        this.addressLine4 = addressLine4;
+    }
+    public String getPostCode() {
+        return this.postCode;
+    }
+    
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+    public String getCity() {
+        return this.city;
+    }
+    
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public boolean isIsPrimary() {
+        return this.isPrimary;
+    }
+    
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
 
