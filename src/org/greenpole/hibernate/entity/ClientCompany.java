@@ -19,7 +19,6 @@ public class ClientCompany  implements java.io.Serializable {
      private String nseSector;
      private String ceo;
      private String secretary;
-     private String address;
      private String depository_1;
      private boolean valid;
      private boolean merged;
@@ -46,17 +45,16 @@ public class ClientCompany  implements java.io.Serializable {
     public ClientCompany() {
     }
 
-    public ClientCompany(Depository depository, String name, String code, String ceo, String address) {
+    public ClientCompany(Depository depository, String name, String code, String ceo) {
         this.depository = depository;
         this.name = name;        
         this.code = code;
         this.ceo = ceo;
-        this.address = address;
     }
     
     
     
-    public ClientCompany(ClientCompany clientCompany, Depository depository, String name, String code, String nseSector, String ceo, String secretary, String address, String depository_1, boolean valid, boolean merged, boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set clientCompanyAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
+    public ClientCompany(ClientCompany clientCompany, Depository depository, String name, String code, String nseSector, String ceo, String secretary, String depository_1, boolean valid, boolean merged, boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set clientCompanyAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
        this.clientCompany = clientCompany;
        this.depository = depository;
        this.name = name;
@@ -64,7 +62,6 @@ public class ClientCompany  implements java.io.Serializable {
        this.nseSector = nseSector;
        this.ceo = ceo;
        this.secretary = secretary;
-       this.address = address;
        this.depository_1 = depository_1;
        this.valid = valid;
        this.merged = merged;
@@ -161,13 +158,6 @@ public class ClientCompany  implements java.io.Serializable {
     
     public void setSecretary(String secretary) {
         this.secretary = secretary;
-    }
-    public String getAddress() {
-        return this.address;
-    }
-    
-    public void setAddress(String address) {
-        this.address = address;
     }
     public String getDepository_1() {
         return this.depository_1;

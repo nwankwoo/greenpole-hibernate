@@ -6,7 +6,7 @@
     <class name="org.greenpole.hibernate.entity.UserAccess" table="USER_ACCESS" schema="dbo" catalog="greenpole" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <version name="versionId" type="long"/>
         <many-to-one name="userAccount" class="org.greenpole.hibernate.entity.UserAccount" fetch="select">
@@ -17,6 +17,9 @@
         </property>
         <property name="password" type="string">
             <column name="password" />
+        </property>
+        <property name="userType" type="string">
+            <column name="user_type" length="50" />
         </property>
         <property name="maxIndividualShareHolding" type="int">
             <column name="max_individual_share_holding" />

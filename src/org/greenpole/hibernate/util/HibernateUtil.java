@@ -27,9 +27,8 @@ public class HibernateUtil {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
-            Configuration config = new Configuration();
-            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                    .applySettings(config.getProperties());
+            Configuration config = new Configuration().configure();
+            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
             sessionFactory = config.buildSessionFactory(builder.build());
         } catch (Throwable ex) {
             // Log the exception. 
