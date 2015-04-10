@@ -15,6 +15,7 @@ public class UserAccess  implements java.io.Serializable {
      private UserAccount userAccount;
      private String email;
      private String password;
+     private String userType;
      private int maxIndividualShareHolding;
      private int maxTotalShareHolding;
      private boolean suspended;
@@ -29,15 +30,11 @@ public class UserAccess  implements java.io.Serializable {
     public UserAccess() {
     }
 
-	
-    public UserAccess(int id) {
-        this.id = id;
-    }
-    public UserAccess(int id, UserAccount userAccount, String email, String password, int maxIndividualShareHolding, int maxTotalShareHolding, boolean suspended, Date releaseSuspension, boolean locked, boolean expired, String expiredPassword1, String expiredPassword2, String expiredPassword3, String expiredPassword4) {
-       this.id = id;
+    public UserAccess(UserAccount userAccount, String email, String password, String userType, int maxIndividualShareHolding, int maxTotalShareHolding, boolean suspended, Date releaseSuspension, boolean locked, boolean expired, String expiredPassword1, String expiredPassword2, String expiredPassword3, String expiredPassword4) {
        this.userAccount = userAccount;
        this.email = email;
        this.password = password;
+       this.userType = userType;
        this.maxIndividualShareHolding = maxIndividualShareHolding;
        this.maxTotalShareHolding = maxTotalShareHolding;
        this.suspended = suspended;
@@ -94,6 +91,14 @@ public class UserAccess  implements java.io.Serializable {
     
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
     public int getMaxIndividualShareHolding() {
         return this.maxIndividualShareHolding;
