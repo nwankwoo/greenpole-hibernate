@@ -5,12 +5,10 @@
  */
 package org.greenpole.hibernate.util;
 
-import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.jboss.logging.Logger;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
@@ -22,7 +20,7 @@ public class HibernateUtil {
 
     private static final SessionFactory sessionFactory;
     //An interface which specifies the basic logger methods
-    private final static Logger logStatus = Logger.getLogger(HibernateUtil.class);
+    
     static {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
@@ -43,14 +41,11 @@ public class HibernateUtil {
     
     /**
      * Rollback an underlying transaction or Issue a log message on failure
+     * @param transaction the transaction
      */
     public static void rollback(Transaction transaction){
-        try{
-            if(transaction != null){
+        if (transaction != null) {
             transaction.rollback();
-            }
-        }catch(HibernateException ignore){
-                    logStatus.error("Couldn't rollback transaction", ignore);
-        }       
+        }
     }
 }

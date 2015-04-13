@@ -12,8 +12,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -26,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * @see ClientCompanyQueryImpl
  */
 public abstract class GeneralisedAbstractDao {
-    //private static final Logger logger = LoggerFactory.getLogger(GeneralisedAbstractDao.class);
     private Session session;
     private Transaction tx;
 
@@ -63,7 +60,11 @@ public abstract class GeneralisedAbstractDao {
      * 
      * @param ex
      * @throws DataAccessLayerException 
+     * @deprecated exceptions / rollbacks will not be handled this way. If a 
+     * rollback must occur, it should be called explicitly within the running
+     * method.
      */
+    @Deprecated
     private void handleException(String information, HibernateException ex) throws DataAccessLayerException{
         HibernateUtil.rollback(tx);
         throw new DataAccessLayerException(information, ex);
@@ -72,46 +73,38 @@ public abstract class GeneralisedAbstractDao {
     
     /**
      * Saves or updates a hibernate object in the database.
+     * The {@link #startOperation()} method must be explicitly called, along
+     * with the {@link #getSession()} and {@link #getTransaction()} to commit.
      * @param object a hibernate entity
      */
     public void createUpdateObject(Object object){
-        //logger.info("called createOrUpdate method in hibernate");
-        try{
-            startOperation();
-            session.saveOrUpdate(object);
-            tx.commit();
-        }catch(HibernateException ex){
-            handleException("Save or update operation failure on object", ex);
-            //logger.error("Save or update operation failure on object", ex);
-        }
+        session.saveOrUpdate(object);
     } 
     /**
      * Returns the component instance of the given entity class 
      * with the given identifier, or null if there is no such 
      * persistent instance.
+     * The {@link #startOperation()} method must be explicitly called, along
+     * with the {@link #getSession()} and {@link #getTransaction()} to commit.
      * @param clz the entity class
      * @param id the id of the object to retrieve
      * @return the object of the entity class
      */
     public Object searchObject(Class clz, Integer id){
-        Object object = null;
-        
-        startOperation();
-        session.get(clz, id);
-        tx.commit();
+        Object object = session.get(clz, id);
         return object;
     }
     
     /**
      * Returns all component instances of the given entity class.
+     * The {@link #startOperation()} method must be explicitly called, along
+     * with the {@link #getSession()} and {@link #getTransaction()} to commit.
      * @param clz the entity class
      * @return a list of objects of the entity class
      */
     public List searchAll(Class clz){
-        startOperation();
         Query query = session.createQuery("from " + clz.getName());
         List objects = query.list();
-        tx.commit();
         return objects;
     }
 }

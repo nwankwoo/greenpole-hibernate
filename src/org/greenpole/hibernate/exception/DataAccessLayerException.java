@@ -14,7 +14,10 @@ import org.slf4j.LoggerFactory;
  * An unchecked exception subclass to RuntimeException
  * This exception is used to mark (fatal) failures in the data 
  * access layer level and system code.
+ * @deprecated should not be used any longer. Hibernate exceptions will be caught
+ * in the middle tier and not here.
  */
+@Deprecated
 public class DataAccessLayerException extends RuntimeException {
 
     /**
