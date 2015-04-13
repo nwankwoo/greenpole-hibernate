@@ -30,9 +30,6 @@
         <property name="secretary" type="string">
             <column name="secretary" />
         </property>
-        <property name="depository_1" type="string">
-            <column name="depository" length="50" />
-        </property>
         <property name="valid" type="boolean">
             <column name="valid" />
         </property>
