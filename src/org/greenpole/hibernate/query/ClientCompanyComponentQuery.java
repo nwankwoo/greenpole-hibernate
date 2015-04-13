@@ -6,6 +6,9 @@
 package org.greenpole.hibernate.query;
 
 import org.greenpole.hibernate.entity.ClientCompany;
+import org.greenpole.hibernate.entity.ClientCompanyAddress;
+import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
+import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
 
 /**
  *
@@ -15,10 +18,10 @@ import org.greenpole.hibernate.entity.ClientCompany;
 public interface ClientCompanyComponentQuery {
     /**
      * Checks the existence of a client company.
-     * @param companyname company name to search for
+     * @param companyName company name to search for
      * @return true, if company exists. Otherwise, false
      */
-    public boolean checkClientCompany(String companyname);
+    public boolean checkClientCompany(String companyName);
     
     /**
      * Creates a new client company in the database.
@@ -40,5 +43,31 @@ public interface ClientCompanyComponentQuery {
      * to be updated
      */
     public void editClientCompany(ClientCompany clientCompany);
+    
+    /**
+     * Retrieves the unique identifier of the client company according to the
+     * provided name.
+     * @param clientCompanyName the name of the client company
+     * @return the client company id
+     */
+    public int getClientCompanyId(String clientCompanyName);
+    
+    /**
+     * Creates a new address for the client company.
+     * @param address the client company's address
+     */
+    public void createAddress(ClientCompanyAddress address);
+    
+    /**
+     * Creates a new email address for the client company.
+     * @param emailAddress the client company's email address
+     */
+    public void createEmailAddress(ClientCompanyEmailAddress emailAddress);
+    
+    /**
+     * Creates a new phone number for the client company.
+     * @param phoneNumber the client company's phone number
+     */
+    public void createPhoneNumber(ClientCompanyPhoneNumber phoneNumber);
     
 }

@@ -13,10 +13,10 @@ public class ClientCompany  implements java.io.Serializable {
      private int id;            //primary id
      private long versionId;    //version
      private ClientCompany clientCompany;   
-     private Depository depository;     
+     private Depository depository;
+     private NseSector nseSector;
      private String name;
      private String code;
-     private String nseSector;
      private String ceo;
      private String secretary;
      private boolean valid;
@@ -53,7 +53,7 @@ public class ClientCompany  implements java.io.Serializable {
     
     
     
-    public ClientCompany(ClientCompany clientCompany, Depository depository, String name, String code, String nseSector, String ceo, String secretary, boolean valid, boolean merged, boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set clientCompanyAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
+    public ClientCompany(ClientCompany clientCompany, Depository depository, NseSector nseSector, String name, String code, String ceo, String secretary, boolean valid, boolean merged, boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set clientCompanyAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
        this.clientCompany = clientCompany;
        this.depository = depository;
        this.name = name;
@@ -122,6 +122,13 @@ public class ClientCompany  implements java.io.Serializable {
     public void setDepository(Depository depository) {
         this.depository = depository;
     }
+    public NseSector getNseSector() {
+        return this.nseSector;
+    }
+    
+    public void setNseSector(NseSector nseSector) {
+        this.nseSector = nseSector;
+    }
     public String getName() {
         return this.name;
     }
@@ -135,13 +142,6 @@ public class ClientCompany  implements java.io.Serializable {
     
     public void setCode(String code) {
         this.code = code;
-    }
-    public String getNseSector() {
-        return this.nseSector;
-    }
-    
-    public void setNseSector(String nseSector) {
-        this.nseSector = nseSector;
     }
     public String getCeo() {
         return this.ceo;
