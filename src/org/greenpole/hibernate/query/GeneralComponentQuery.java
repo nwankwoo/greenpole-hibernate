@@ -5,7 +5,7 @@
  */
 package org.greenpole.hibernate.query;
 
-import org.greenpole.entity.notification.NotificationWrapper;
+import org.greenpole.hibernate.entity.Notification;
 
 /**
  *
@@ -15,8 +15,7 @@ import org.greenpole.entity.notification.NotificationWrapper;
 public interface GeneralComponentQuery {
     /**
      * Registers a new notification record in the database.
-     * @param wrapper the notification wrapper containing information to be added
-     *                into the database
+     * @param notification the notification to be registered
      */
-    public void createNotification(NotificationWrapper wrapper);
+    public void createNotification(Notification notification);
 }

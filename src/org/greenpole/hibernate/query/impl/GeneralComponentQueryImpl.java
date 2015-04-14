@@ -5,28 +5,21 @@
  */
 package org.greenpole.hibernate.query.impl;
 
-import org.greenpole.entity.notification.NotificationWrapper;
 import org.greenpole.hibernate.entity.Notification;
 import org.greenpole.hibernate.query.GeneralComponentQuery;
-import org.greenpole.hibernate.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 
 /**
  *
  * @author Akinwale Agbaje
  */
-public class GeneralComponentQueryImpl implements GeneralComponentQuery {
+public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements GeneralComponentQuery {
 
     @Override
-    public void createNotification(NotificationWrapper wrapper) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        Notification notification = new Notification(wrapper.getCode(), 
-                wrapper.getDescription(),wrapper.getFrom(), wrapper.getTo(),
-                wrapper.getFromType(), wrapper.getToType(), wrapper.isAttendedTo());
-        session.save(notification);
-        tx.commit();
+    public void createNotification(Notification notification) {
+        startOperation();
+        createUpdateObject(notification);
+        getTransaction().commit();
     }
     
 }
