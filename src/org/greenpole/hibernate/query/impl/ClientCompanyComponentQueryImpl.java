@@ -14,6 +14,8 @@ import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.hibernate.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,6 +23,7 @@ import org.hibernate.Query;
  * Query implementations to do with client company requirements.
  */
 public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao implements ClientCompanyComponentQuery  {
+    private static final Logger logger = LoggerFactory.getLogger(ClientCompanyComponentQueryImpl.class);
 
     @Override
     public boolean checkClientCompany(String companyName) {
@@ -34,13 +37,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         }
         getTransaction().commit();
         return count > 0;
-    }
-
-    @Override
-    public void create(ClientCompany clientCompany) {
-        startOperation();
-        createUpdateObject(clientCompany);
-        getTransaction().commit();
     }
 
     @Override
@@ -89,6 +85,44 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         createUpdateObject(phoneNumber);
         getTransaction().commit();
+    }
+
+    @Override
+    public boolean createOrUpdateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, 
+            List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers) {
+        boolean created = false;
+        try {
+            startOperation();
+            //create client company
+            createUpdateObject(clientCompany);
+            //create addresses
+            addresses.stream().map((address) -> {
+                address.getId().setClientCompanyId(clientCompany.getId());
+                return address;
+            }).forEach((addy) -> {
+                createUpdateObject(addy);
+            });
+            //create email addresses
+            emailAddresses.stream().map((email) -> {
+                email.getId().setClientCompanyId(clientCompany.getId());
+                return email;
+            }).forEach((email) -> {
+                createUpdateObject(email);
+            });
+            //create phone numbers
+            phoneNumbers.stream().map((phone) -> {
+                phone.getId().setClientCompanyId(clientCompany.getId());
+                return phone;
+            }).forEach((phone) -> {
+                createUpdateObject(phone);
+            });
+            created = true;
+            return created;
+        } catch (Exception ex) {
+            logger.error("error creating client company - ", ex);
+            getTransaction().rollback();
+            return created;
+        }
     }
     
 }

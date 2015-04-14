@@ -5,6 +5,7 @@
  */
 package org.greenpole.hibernate.query;
 
+import java.util.List;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
@@ -24,11 +25,16 @@ public interface ClientCompanyComponentQuery {
     public boolean checkClientCompany(String companyName);
     
     /**
-     * Creates a new client company in the database.
+     * Creates a new client company, or updates an existing one in the database.
      * @param clientCompany the client company object model containing data
      * to be added
+     * @param addresses the client company's addresses
+     * @param emailAddresses the client company's email addresses
+     * @param phoneNumbers the client company's phone numbers
+     * @return true if the creation was successful
      */
-    public void create(ClientCompany clientCompany);
+    public boolean createOrUpdateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, 
+            List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers);
     
     /**
      * Gets a client company object by a specified id.
@@ -41,7 +47,10 @@ public interface ClientCompanyComponentQuery {
      * Updates an existing client company in the database.
      * @param clientCompany the client company object model containing data
      * to be updated
+     * @deprecated outdated method. Use {@link #createOrUpdateClientCompany(org.greenpole.hibernate.entity.ClientCompany, org.greenpole.hibernate.entity.ClientCompanyAddress, org.greenpole.hibernate.entity.ClientCompanyEmailAddress, org.greenpole.hibernate.entity.ClientCompanyPhoneNumber)}
+     * instead
      */
+    @Deprecated
     public void editClientCompany(ClientCompany clientCompany);
     
     /**
