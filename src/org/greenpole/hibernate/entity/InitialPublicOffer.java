@@ -20,7 +20,7 @@ public class InitialPublicOffer  implements java.io.Serializable {
      private int startingMinSub;
      private int contMinSub;
      private Double offerPrice;
-     private int offerSize;
+     private Double offerSize;
      private Date openingDate;
      private Date closingDate;
      private Set ipoApplications = new HashSet(0);
@@ -29,7 +29,7 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public InitialPublicOffer() {
     }
 
-    public InitialPublicOffer(ClientCompany clientCompany, int totalSharesOnOffer, String methodOnOffer, int startingMinSub, int contMinSub, Double offerPrice, int offerSize, Date openingDate, Date closingDate, Set ipoApplications, Set certificates) {
+    public InitialPublicOffer(ClientCompany clientCompany, int totalSharesOnOffer, String methodOnOffer, int startingMinSub, int contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Set ipoApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOnOffer = methodOnOffer;
@@ -109,11 +109,11 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public void setOfferPrice(Double offerPrice) {
         this.offerPrice = offerPrice;
     }
-    public int getOfferSize() {
+    public Double getOfferSize() {
         return this.offerSize;
     }
     
-    public void setOfferSize(int offerSize) {
+    public void setOfferSize(Double offerSize) {
         this.offerSize = offerSize;
     }
     public Date getOpeningDate() {
