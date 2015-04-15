@@ -103,7 +103,7 @@ public abstract class GeneralisedAbstractDao {
      * @return a list of objects of the entity class
      */
     public List searchAll(Class clz){
-        Query query = session.createQuery("from " + clz.getName());
+        Query query = session.createQuery("FROM " + clz.getName());
         List objects = query.list();
         return objects;
     }

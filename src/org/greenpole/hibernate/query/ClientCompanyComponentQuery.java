@@ -6,10 +6,14 @@
 package org.greenpole.hibernate.query;
 
 import java.util.List;
+import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
+import org.greenpole.hibernate.entity.InitialPublicOffer;
+import org.greenpole.hibernate.entity.PrivatePlacement;
+import org.greenpole.hibernate.entity.ShareQuotation;
 
 /**
  *
@@ -78,5 +82,35 @@ public interface ClientCompanyComponentQuery {
      * @param phoneNumber the client company's phone number
      */
     public void createPhoneNumber(ClientCompanyPhoneNumber phoneNumber);
+    
+    /**
+     * Sets up a bond offer.
+     * @param bondOffer the bond offer to be created
+     */
+    public void createBondOffer(BondOffer bondOffer);
+    
+    /**
+     * Sets up an initial public offer.
+     * @param initialPublicOffer the ipo to be created
+     */
+    public void createInitialPublicOffer(InitialPublicOffer initialPublicOffer);
+    
+    /**
+     * Sets up a private placement.
+     * @param privatePlacement the private placement to be created
+     */
+    public void createPrivatePlacement(PrivatePlacement privatePlacement);
+    
+    /**
+     * Retrieves a list of all available share unit quotations.
+     * @return the list of share unit quotations
+     */
+    public List retrieveShareUnitQuatationList();
+    
+    /**
+     * Creates a new share unit quotation.
+     * @param shareQuotation the share quotation to be created
+     */
+    public void uploadShareQuotation(ShareQuotation shareQuotation);
     
 }

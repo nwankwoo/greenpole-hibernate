@@ -7,10 +7,14 @@ package org.greenpole.hibernate.query.impl;
 
 import java.util.Iterator;
 import java.util.List;
+import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
+import org.greenpole.hibernate.entity.InitialPublicOffer;
+import org.greenpole.hibernate.entity.PrivatePlacement;
+import org.greenpole.hibernate.entity.ShareQuotation;
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.hibernate.Query;
@@ -116,6 +120,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             }).forEach((phone) -> {
                 createUpdateObject(phone);
             });
+            getTransaction().commit();
             created = true;
             return created;
         } catch (Exception ex) {
@@ -123,6 +128,42 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             getTransaction().rollback();
             return created;
         }
+    }
+
+    @Override
+    public void createBondOffer(BondOffer bondOffer) {
+        startOperation();
+        createUpdateObject(bondOffer);
+        getTransaction().commit();
+    }
+
+    @Override
+    public void createInitialPublicOffer(InitialPublicOffer initialPublicOffer) {
+        startOperation();
+        createUpdateObject(initialPublicOffer);
+        getTransaction().commit();
+    }
+
+    @Override
+    public void createPrivatePlacement(PrivatePlacement privatePlacement) {
+        startOperation();
+        createUpdateObject(privatePlacement);
+        getTransaction().commit();
+    }
+
+    @Override
+    public List retrieveShareUnitQuatationList() {
+        startOperation();
+        List result = searchAll(ShareQuotation.class);
+        getTransaction().commit();
+        return result;
+    }
+
+    @Override
+    public void uploadShareQuotation(ShareQuotation shareQuotation) {
+        startOperation();
+        createUpdateObject(shareQuotation);
+        getTransaction().commit();
     }
     
 }
