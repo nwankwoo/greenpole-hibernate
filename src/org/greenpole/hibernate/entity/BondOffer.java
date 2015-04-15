@@ -17,19 +17,19 @@ public class BondOffer  implements java.io.Serializable {
      private Double bondUnitPrice;
      private Date bondMaturity;
      private String bondType;
-     private Double taxRate;
+     private Double interestRate;
      private String paymentPlan;
 
     public BondOffer() {
     }
 
-    public BondOffer(ClientCompany clientCompany, String title, Double bondUnitPrice, Date bondMaturity, String bondType, Double taxRate, String paymentPlan) {
+    public BondOffer(ClientCompany clientCompany, String title, Double bondUnitPrice, Date bondMaturity, String bondType, Double interestRate, String paymentPlan) {
        this.clientCompany = clientCompany;
        this.title = title;
        this.bondUnitPrice = bondUnitPrice;
        this.bondMaturity = bondMaturity;
        this.bondType = bondType;
-       this.taxRate = taxRate;
+       this.interestRate = interestRate;
        this.paymentPlan = paymentPlan;
     }
    
@@ -93,12 +93,12 @@ public class BondOffer  implements java.io.Serializable {
     public void setBondType(String bondType) {
         this.bondType = bondType;
     }
-    public Double getTaxRate() {
-        return this.taxRate;
+    public Double getInterestRate() {
+        return this.interestRate;
     }
     
-    public void setTaxRate(Double taxRate) {
-        this.taxRate = taxRate;
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
     }
     public String getPaymentPlan() {
         return this.paymentPlan;
