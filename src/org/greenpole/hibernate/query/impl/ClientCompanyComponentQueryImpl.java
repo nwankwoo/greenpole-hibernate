@@ -5,7 +5,6 @@
  */
 package org.greenpole.hibernate.query.impl;
 
-import java.util.Iterator;
 import java.util.List;
 import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.ClientCompany;
@@ -17,7 +16,9 @@ import org.greenpole.hibernate.entity.PrivatePlacement;
 import org.greenpole.hibernate.entity.ShareQuotation;
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,13 +33,9 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     @Override
     public boolean checkClientCompany(String companyName) {
         startOperation();
-        String hql = "SELECT count(distinct name) FROM ClientCompany WHERE name = :companyname";
-        Query query = getSession().createQuery(hql);
-        query.setParameter("companyname", companyName);
-        int count = 0;
-        for (Iterator it = query.iterate(); it.hasNext();) {
-            count = (int) it.next();
-        }
+        Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.ilike("name", "%"+companyName+"%"));
+        Long count =  (Long) criteria.uniqueResult();
         getTransaction().commit();
         return count > 0;
     }
@@ -164,6 +161,18 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         createUpdateObject(shareQuotation);
         getTransaction().commit();
+    }
+
+    @Override
+    public boolean checkClientCompanyForShareholders(String clientCompanyName) {
+        startOperation();
+        List result = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.eq("name", clientCompanyName)).list();
+        ClientCompany cc = (ClientCompany) result.get(0);
+        int countAccounts = cc.getHolderCompanyAccounts().size();
+        int countCertificates = cc.getCertificates().size();
+        getTransaction().commit();
+        return countAccounts > 0 || countCertificates > 0;
     }
     
 }

@@ -113,4 +113,12 @@ public interface ClientCompanyComponentQuery {
      */
     public void uploadShareQuotation(ShareQuotation shareQuotation);
     
+    /**
+     * Checks if a client company has shareholders tied to it.
+     * @param clientCompanyName the client company to check
+     * @return true if the client company has more than one holder company account
+     * or more than one certificate (in case of a nominal transfer)
+     */
+    public boolean checkClientCompanyForShareholders(String clientCompanyName);
+    
 }
