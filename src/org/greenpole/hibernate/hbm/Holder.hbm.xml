@@ -15,6 +15,9 @@
         <property name="holderAcctNumber" type="int">
             <column name="holder_acct_number" unique="true" />
         </property>
+        <property name="chn" type="string">
+            <column name="chn" length="50" />
+        </property>
         <property name="firstName" type="string">
             <column name="first_name" length="200" />
         </property>
@@ -41,6 +44,9 @@
         </property>
         <property name="pryHolder" type="boolean">
             <column name="pry_holder" />
+        </property>
+        <property name="pryAddress" type="string">
+            <column name="pry_address" length="50" />
         </property>
         <set name="privatePlacementApplications" table="PRIVATE_PLACEMENT_APPLICATION" inverse="true" lazy="true" fetch="select">
             <key>

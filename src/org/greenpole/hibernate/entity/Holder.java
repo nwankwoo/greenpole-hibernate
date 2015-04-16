@@ -16,6 +16,7 @@ public class Holder  implements java.io.Serializable {
      private long versionId;
      private Holder holder;
      private int holderAcctNumber;
+     private String chn;
      private String firstName;
      private String middleName;
      private String lastName;
@@ -25,6 +26,7 @@ public class Holder  implements java.io.Serializable {
      private boolean taxExempted;
      private boolean merged;
      private boolean pryHolder;
+     private String pryAddress;
      private Set privatePlacementApplications = new HashSet(0);
      private Set holders = new HashSet(0);
      private Set holderGmAttendances = new HashSet(0);
@@ -49,9 +51,10 @@ public class Holder  implements java.io.Serializable {
     public Holder() {
     }
 
-    public Holder(Holder holder, int holderAcctNumber, String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators) {
+    public Holder(Holder holder, int holderAcctNumber, String chn, String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, String pryAddress, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators) {
        this.holder = holder;
        this.holderAcctNumber = holderAcctNumber;
+       this.chn = chn;
        this.firstName = firstName;
        this.middleName = middleName;
        this.lastName = lastName;
@@ -61,6 +64,7 @@ public class Holder  implements java.io.Serializable {
        this.taxExempted = taxExempted;
        this.merged = merged;
        this.pryHolder = pryHolder;
+       this.pryAddress = pryAddress;
        this.privatePlacementApplications = privatePlacementApplications;
        this.holders = holders;
        this.holderGmAttendances = holderGmAttendances;
@@ -121,6 +125,14 @@ public class Holder  implements java.io.Serializable {
     
     public void setHolderAcctNumber(int holderAcctNumber) {
         this.holderAcctNumber = holderAcctNumber;
+    }
+
+    public String getChn() {
+        return chn;
+    }
+
+    public void setChn(String chn) {
+        this.chn = chn;
     }
     public String getFirstName() {
         return this.firstName;
@@ -184,6 +196,14 @@ public class Holder  implements java.io.Serializable {
     
     public void setPryHolder(boolean pryHolder) {
         this.pryHolder = pryHolder;
+    }
+
+    public String getPryAddress() {
+        return pryAddress;
+    }
+
+    public void setPryAddress(String pryAddress) {
+        this.pryAddress = pryAddress;
     }
     public Set getPrivatePlacementApplications() {
         return this.privatePlacementApplications;

@@ -7,6 +7,9 @@ package org.greenpole.hibernate.query.impl;
 
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
+import org.greenpole.hibernate.entity.HolderPhoneNumber;
+import org.greenpole.hibernate.entity.HolderPostalAddress;
+import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.greenpole.hibernate.query.HolderComponentQuery;
 
@@ -17,12 +20,17 @@ import org.greenpole.hibernate.query.HolderComponentQuery;
 public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements HolderComponentQuery {
 
     @Override
-    public boolean createHolderAccount(Holder holder, HolderCompanyAccount holderCompanyAccount) {
+    public void createHolderCompanyAccount(HolderCompanyAccount holderCompanyAccount) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void createHolderCompanyAccount(HolderCompanyAccount holderCompanyAccount) {
+    public boolean createHolderAccount(Holder holder, HolderCompanyAccount holderCompanyAccount, HolderPostalAddress postalAddress, HolderPhoneNumber phoneNumber) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean createHolderAccount(Holder holder, HolderCompanyAccount holderCompanyAccount, HolderResidentialAddress residentialAddress, HolderPhoneNumber phoneNumber) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
