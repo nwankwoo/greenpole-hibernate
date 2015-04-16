@@ -29,6 +29,13 @@ public interface ClientCompanyComponentQuery {
     public boolean checkClientCompany(String companyName);
     
     /**
+     * Checks the existence of a client company.
+     * @param clientCompanyId client company id to search with
+     * @return true, if company exists. Otherwise, false
+     */
+    public boolean checkClientCompany(int clientCompanyId);
+    
+    /**
      * Creates a new client company, or updates an existing one in the database.
      * @param clientCompany the client company object model containing data
      * to be added

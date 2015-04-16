@@ -18,6 +18,7 @@ import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +35,24 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public boolean checkClientCompany(String companyName) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.ilike("name", "%"+companyName+"%"));
+                .add(Restrictions.ilike("name", "%"+companyName+"%"))
+                .setProjection(Projections.rowCount());
         Long count =  (Long) criteria.uniqueResult();
         getTransaction().commit();
         return count > 0;
     }
 
+    @Override
+    public boolean checkClientCompany(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.idEq(clientCompanyId))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
+    }
+    
     @Override
     public ClientCompany getClientCompany(Integer id) {
         startOperation();
@@ -174,5 +187,5 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         getTransaction().commit();
         return countAccounts > 0 || countCertificates > 0;
     }
-    
+
 }
