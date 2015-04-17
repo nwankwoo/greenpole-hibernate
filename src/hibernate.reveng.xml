@@ -64,6 +64,7 @@
     <table-filter match-name="CLIENT_COMPANY_EMAIL_ADDRESS"/>
     <table-filter match-name="NOTIFICATION"/>
     <table-filter match-name="NSE_SECTOR"/>
+    <table-filter match-name="HOLDER_BOND_ACCOUNT"/>
     
     <table name="NSE_SECTOR" catalog="greenpole" schema="dbo">
         <primary-key>

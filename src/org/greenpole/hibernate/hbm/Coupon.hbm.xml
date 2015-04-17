@@ -9,12 +9,12 @@
             <generator class="identity"></generator>
         </id>
         <version name="versionId" type="long"/>
-        <many-to-one name="holderCompanyAccount" class="org.greenpole.hibernate.entity.HolderCompanyAccount" fetch="select">
-            <column name="h_act_holder_id" />
-            <column name="h_act_client_comp_id" />
+        <many-to-one name="holderBondAccount" class="org.greenpole.hibernate.entity.HolderBondAccount" fetch="select">
+            <column name="h_bond_act_holder_id" />
+            <column name="h_bond_act_bond_offer_id" />
         </many-to-one>
-        <property name="clientCompanyName" type="string">
-            <column name="client_Company_Name" />
+        <property name="bondTitle" type="string">
+            <column name="bond_title" />
         </property>
         <property name="issueDate" type="date">
             <column name="issue_Date" length="10" />

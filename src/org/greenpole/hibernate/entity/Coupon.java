@@ -12,8 +12,8 @@ public class Coupon  implements java.io.Serializable {
 
      private int id;
      private long versionId;
-     private HolderCompanyAccount holderCompanyAccount;
-     private String clientCompanyName;
+     private HolderBondAccount holderBondAccount;
+     private String bondTitle;
      private Date issueDate;
      private int couponNumber;
      private String bondType;
@@ -29,9 +29,9 @@ public class Coupon  implements java.io.Serializable {
     public Coupon() {
     }
 
-    public Coupon(HolderCompanyAccount holderCompanyAccount, String clientCompanyName, Date issueDate, int couponNumber, String bondType, Double redemptionAmt, Double couponAmt, String bondholderMailingAddress, Date redemptnDate, Double totalPymtsToBMade, Double totalPaymtsMade, boolean paid, Date paidDate) {
-       this.holderCompanyAccount = holderCompanyAccount;
-       this.clientCompanyName = clientCompanyName;
+    public Coupon(HolderBondAccount holderBondAccount, String bondTitle, Date issueDate, int couponNumber, String bondType, Double redemptionAmt, Double couponAmt, String bondholderMailingAddress, Date redemptnDate, Double totalPymtsToBMade, Double totalPaymtsMade, boolean paid, Date paidDate) {
+       this.holderBondAccount = holderBondAccount;
+       this.bondTitle = bondTitle;
        this.issueDate = issueDate;
        this.couponNumber = couponNumber;
        this.bondType = bondType;
@@ -69,19 +69,21 @@ public class Coupon  implements java.io.Serializable {
     public void setVersionId(long versionId) {
         this.versionId = versionId;
     }
-    public HolderCompanyAccount getHolderCompanyAccount() {
-        return this.holderCompanyAccount;
+
+    public HolderBondAccount getHolderBondAccount() {
+        return holderBondAccount;
     }
-    
-    public void setHolderCompanyAccount(HolderCompanyAccount holderCompanyAccount) {
-        this.holderCompanyAccount = holderCompanyAccount;
+
+    public void setHolderBondAccount(HolderBondAccount holderBondAccount) {
+        this.holderBondAccount = holderBondAccount;
     }
-    public String getClientCompanyName() {
-        return this.clientCompanyName;
+
+    public String getBondTitle() {
+        return bondTitle;
     }
-    
-    public void setClientCompanyName(String clientCompanyName) {
-        this.clientCompanyName = clientCompanyName;
+
+    public void setBondTitle(String bondTitle) {
+        this.bondTitle = bondTitle;
     }
     public Date getIssueDate() {
         return this.issueDate;

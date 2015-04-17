@@ -76,5 +76,6 @@
     <mapping resource="org/greenpole/hibernate/hbm/UserAccess.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/ClientCompanyAddress.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/NseSector.hbm.xml"/>
+    <mapping resource="org/greenpole/hibernate/hbm/HolderBondAccount.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
