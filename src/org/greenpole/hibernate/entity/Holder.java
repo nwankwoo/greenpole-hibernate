@@ -40,6 +40,7 @@ public class Holder  implements java.io.Serializable {
      private Set powerOfAttorneys = new HashSet(0);
      private Set holderResidentialAddresses = new HashSet(0);
      private Set holderCompanyAccounts = new HashSet(0);
+     private Set holderBondAccounts = new HashSet(0);
      private Set holderPostalAddresses = new HashSet(0);
      private Set stockbrokers = new HashSet(0);
      private Set holderEmailAddresses = new HashSet(0);
@@ -51,7 +52,7 @@ public class Holder  implements java.io.Serializable {
     public Holder() {
     }
 
-    public Holder(Holder holder, int holderAcctNumber, String chn, String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, String pryAddress, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators) {
+    public Holder(Holder holder, int holderAcctNumber, String chn, String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, String pryAddress, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderBondAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators) {
        this.holder = holder;
        this.holderAcctNumber = holderAcctNumber;
        this.chn = chn;
@@ -78,6 +79,7 @@ public class Holder  implements java.io.Serializable {
        this.powerOfAttorneys = powerOfAttorneys;
        this.holderResidentialAddresses = holderResidentialAddresses;
        this.holderCompanyAccounts = holderCompanyAccounts;
+       this.holderBondAccounts = holderBondAccounts;
        this.holderPostalAddresses = holderPostalAddresses;
        this.stockbrokers = stockbrokers;
        this.holderEmailAddresses = holderEmailAddresses;
@@ -295,6 +297,14 @@ public class Holder  implements java.io.Serializable {
     
     public void setHolderCompanyAccounts(Set holderCompanyAccounts) {
         this.holderCompanyAccounts = holderCompanyAccounts;
+    }
+
+    public Set getHolderBondAccounts() {
+        return holderBondAccounts;
+    }
+
+    public void setHolderBondAccounts(Set holderBondAccounts) {
+        this.holderBondAccounts = holderBondAccounts;
     }
     public Set getHolderPostalAddresses() {
         return this.holderPostalAddresses;

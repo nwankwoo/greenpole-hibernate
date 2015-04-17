@@ -126,6 +126,12 @@
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount" />
         </set>
+        <set name="holderBondAccounts" table="HOLDER_BOND_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderBondAccount" />
+        </set>
         <set name="holderPostalAddresses" table="HOLDER_POSTAL_ADDRESS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="holder_id" not-null="true" />
