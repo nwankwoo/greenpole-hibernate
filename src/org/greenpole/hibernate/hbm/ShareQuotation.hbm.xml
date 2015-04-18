@@ -12,9 +12,6 @@
         <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
             <column name="client_Company_Id" unique="true" />
         </many-to-one>
-        <property name="code" type="string">
-            <column name="code" length="50" />
-        </property>
         <property name="unitPrice" type="java.lang.Double">
             <column name="unit_Price" precision="53" scale="0" />
         </property>

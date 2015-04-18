@@ -29,6 +29,9 @@
         <property name="chn" type="string">
             <column name="chn" length="50" />
         </property>
+        <property name="bondUnits" type="java.lang.Double">
+            <column name="bond_units" precision="53" scale="0" />
+        </property>        
         <property name="nubanAccount" type="string">
             <column name="nuban_Account" length="50" />
         </property>
