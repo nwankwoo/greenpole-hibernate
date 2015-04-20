@@ -6,6 +6,7 @@
 package org.greenpole.hibernate.query;
 
 import java.util.List;
+import java.util.Map;
 import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
@@ -127,5 +128,17 @@ public interface ClientCompanyComponentQuery {
      * or more than one certificate (in case of a nominal transfer)
      */
     public boolean checkClientCompanyForShareholders(String clientCompanyName);
+    
+    /**
+     * Searches for list of client companies according to the provided search 
+     * @param descriptor
+     * @param searchTerms
+     * @param shareUnitCriteria
+     * @param noOfShareholders
+     * @param noOfBondholders
+     * @return 
+     */
+    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany specificSearchParameters, Map<String, Double> shareUnitCriteria, 
+            Map<String, Integer> noOfShareholders, Map<String, Integer> noOfBondholders);
     
 }

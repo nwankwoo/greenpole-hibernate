@@ -5,7 +5,10 @@
  */
 package org.greenpole.hibernate.query.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
@@ -18,8 +21,10 @@ import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -187,5 +192,136 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         getTransaction().commit();
         return countAccounts > 0 || countCertificates > 0;
     }
+    
+    /**
+     * Gets the criteria for a search on all client companies in the database.
+     * @return the criteria for a search on all client companies
+     */
+    private Criteria getStartCriteria() {
+        return getSession().createCriteria(ClientCompany.class);
+    }
+    
+    /**
+     * Gets the criteria for a search on all client companies according specified object.
+     * @param baseCriteria the criteria, typically one for a search on all client companies in the database
+     * @param clientCompany the client company object containing search patterns
+     * @return the criteria for a search on all client companies
+     */
+    private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany) {
+        return baseCriteria.add(Example.create(clientCompany).enableLike());
+    }
+    
+    /**
+     * Gets the criteria for a search on all client companies according to specified unit prices.
+     * @param baseCriteria the criteria, typically one for a search on all client companies in the database (but not limited to)
+     * @param descriptorValue the value of the descriptor to determine what type of search to carry out [whether an exact search - with one value, or a range search - with two values]
+     * @param unitPriceCriteria the unit price value(s) to search for
+     * @return the criteria for a search on all client companies according to specified unit prices
+     */
+    private Criteria searchUnitPrice(Criteria baseCriteria, String descriptorValue, Map<String, Double> unitPriceCriteria) {
+        Criteria tempCriteria = baseCriteria; //save criteria state, in case it needs to be returned
+        baseCriteria.createCriteria("shareQuotations", JoinType.LEFT_OUTER_JOIN);
+        
+        if (descriptorValue.equalsIgnoreCase("exact")) {
+            double startUnit = unitPriceCriteria.get("start");
+            return baseCriteria.add(Restrictions.eq("unitPrice", startUnit));
+        }
+        
+        if (descriptorValue.equalsIgnoreCase("range")) {
+            double startUnit = unitPriceCriteria.get("start");
+            double endUnit = unitPriceCriteria.get("end");
+            return baseCriteria.add(Restrictions.ge("unitPrice", startUnit))
+                    .add(Restrictions.le("unitPrice", endUnit));
+        }
+        
+        return tempCriteria;
+    }
+    
+    /**
+     * Gets the list of client companies according to the specified number of shareholders.
+     * @param clientCompanies the pool of client companies to search from
+     * @param descriptorValue the value of the descriptor to determine what type of search to carry out [whether an exact search - with one value, or a range search - with two values]
+     * @param noOfShareholders the number of shareholders to search for
+     * @return the list of client companies according to the specified number of shareholders
+     */
+    private List<ClientCompany> searchNumberOfShareholders(List<ClientCompany> clientCompanies, String descriptorValue, Map<String, Integer> noOfShareholders) {
+        List<ClientCompany> searchResult = new ArrayList<>();
+        
+        if (descriptorValue.equalsIgnoreCase("exact")) {
+            int startNo = noOfShareholders.get("start");
+            for (ClientCompany cc : clientCompanies) {
+                if (cc.getHolderCompanyAccounts().size() >= startNo) {
+                    searchResult.add(cc);
+                }
+            }
+            return searchResult;
+        }
+        
+        if (descriptorValue.equalsIgnoreCase("range")) {
+            int startNo = noOfShareholders.get("start");
+            int endNo = noOfShareholders.get("end");
+            for (ClientCompany cc : clientCompanies) {
+                if (cc.getHolderCompanyAccounts().size() >= startNo && cc.getHolderCompanyAccounts().size() <= endNo) {
+                    searchResult.add(cc);
+                }
+            }
+            return searchResult;
+        }
+        
+        return clientCompanies;
+    }
+    
+    /**
+     * Gets the list of client companies according to the specified number of bond holders.
+     * @param clientCompanies the pool of client companies to search from
+     * @param descriptorValue the value of the descriptor to determine what type of search to carry out [whether an exact search - with one value, or a range search - with two values]
+     * @param noOfBondholders the number of bond holders to search for
+     * @return the list of client companies according to the specified number of bond holders
+     */
+    private List<ClientCompany> searchNumberOfBondholders(List<ClientCompany> clientCompanies, String descriptorValue, Map<String, Integer> noOfBondholders) {
+        List<ClientCompany> searchResult = new ArrayList<>();
+        int bondAccounts = 0;
+        
+        if (descriptorValue.equalsIgnoreCase("exact")) {
+            int startNo = noOfBondholders.get("start");
+            for (ClientCompany cc : clientCompanies) {
+                Iterator it = cc.getBondOffers().iterator();
+                while (it.hasNext()) {
+                    BondOffer bondOffer = (BondOffer) it.next();
+                    if (bondOffer.getHolderBondAccounts().size() > 0) {
+                        bondAccounts += bondOffer.getHolderBondAccounts().size();
+                    }
+                }
+                if (bondAccounts >= startNo) {
+                    searchResult.add(cc);
+                }
+            }
+            return searchResult;
+        }
 
+        if (descriptorValue.equalsIgnoreCase("range")) {
+            int startNo = noOfBondholders.get("start");
+            int endNo = noOfBondholders.get("end");
+            for (ClientCompany cc : clientCompanies) {
+                Iterator it = cc.getBondOffers().iterator();
+                while (it.hasNext()) {
+                    BondOffer bondOffer = (BondOffer) it.next();
+                    if (bondOffer.getHolderBondAccounts().size() > 0) {
+                        bondAccounts += bondOffer.getHolderBondAccounts().size();
+                    }
+                }
+                if (bondAccounts >= startNo && bondAccounts <= endNo) {
+                    searchResult.add(cc);
+                }
+            }
+            return searchResult;
+        }
+        
+        return clientCompanies;
+    }
+
+    @Override
+    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany specificSearchParameters, Map<String, Double> shareUnitCriteria, Map<String, Integer> noOfShareholders, Map<String, Integer> noOfBondholders) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

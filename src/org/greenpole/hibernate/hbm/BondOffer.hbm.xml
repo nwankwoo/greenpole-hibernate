@@ -30,5 +30,11 @@
         <property name="paymentPlan" type="string">
             <column name="payment_plan" length="50" />
         </property>
+        <set name="holderBondAccounts" table="HOLDER_BOND_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="bond_offer_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderBondAccount" />
+        </set>
     </class>
 </hibernate-mapping>
