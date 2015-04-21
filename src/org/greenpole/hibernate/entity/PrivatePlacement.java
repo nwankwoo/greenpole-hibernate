@@ -20,7 +20,7 @@ public class PrivatePlacement  implements java.io.Serializable {
      private int startingMinSubscrptn;
      private int continuingMinSubscrptn;
      private Double offerPrice;
-     private int offerSize;
+     private Double offerSize;
      private Date openingDate;
      private Date closingDate;
      private Set certificates = new HashSet(0);
@@ -29,7 +29,7 @@ public class PrivatePlacement  implements java.io.Serializable {
     public PrivatePlacement() {
     }
 
-    public PrivatePlacement(ClientCompany clientCompany, int totalSharesOnOffer, int methodOnOffer, int startingMinSubscrptn, int continuingMinSubscrptn, Double offerPrice, int offerSize, Date openingDate, Date closingDate, Set certificates, Set privatePlacementApplications) {
+    public PrivatePlacement(ClientCompany clientCompany, int totalSharesOnOffer, int methodOnOffer, int startingMinSubscrptn, int continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Set certificates, Set privatePlacementApplications) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOnOffer = methodOnOffer;
@@ -110,11 +110,11 @@ public class PrivatePlacement  implements java.io.Serializable {
     public void setOfferPrice(Double offerPrice) {
         this.offerPrice = offerPrice;
     }
-    public int getOfferSize() {
+    public Double getOfferSize() {
         return this.offerSize;
     }
     
-    public void setOfferSize(int offerSize) {
+    public void setOfferSize(Double offerSize) {
         this.offerSize = offerSize;
     }
     public Date getOpeningDate() {

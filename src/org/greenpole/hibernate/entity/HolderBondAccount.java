@@ -22,7 +22,9 @@ public class HolderBondAccount implements Serializable {
     private Holder holder;
     private HolderBondAccount holderBondAccount;
     private String chn;
-    private Double bondUnits;
+    private int bondUnits;
+    private Double startingPrincipalValue;
+    private Double remainingPrincipalValue;
     private String nubanAccount;
     private boolean merged;
     private boolean holderBondAccPrimary;
@@ -38,7 +40,7 @@ public class HolderBondAccount implements Serializable {
         this.holder = holder;
     }
 
-    public HolderBondAccount(HolderBondAccountId id, Bank bank, BondOffer bondOffer, Holder holder, HolderBondAccount holderBondAccount, String chn, Double bondUnits, String nubanAccount, boolean merged, boolean holderBondAccPrimary) {
+    public HolderBondAccount(HolderBondAccountId id, Bank bank, BondOffer bondOffer, Holder holder, HolderBondAccount holderBondAccount, String chn, int bondUnits, Double startingPrincipalValue, Double remainingPrincipalValue, String nubanAccount, boolean merged, boolean holderBondAccPrimary) {
         this.id = id;
         this.bank = bank;
         this.bondOffer = bondOffer;
@@ -46,6 +48,8 @@ public class HolderBondAccount implements Serializable {
         this.holderBondAccount = holderBondAccount;
         this.chn = chn;
         this.bondUnits = bondUnits;
+        this.startingPrincipalValue = startingPrincipalValue;
+        this.remainingPrincipalValue = remainingPrincipalValue;
         this.nubanAccount = nubanAccount;
         this.merged = merged;
         this.holderBondAccPrimary = holderBondAccPrimary;
@@ -107,12 +111,28 @@ public class HolderBondAccount implements Serializable {
         this.chn = chn;
     }
 
-    public Double getBondUnits() {
+    public int getBondUnits() {
         return bondUnits;
     }
 
-    public void setBondUnits(Double bondUnits) {
+    public void setBondUnits(int bondUnits) {
         this.bondUnits = bondUnits;
+    }
+
+    public Double getStartingPrincipalValue() {
+        return startingPrincipalValue;
+    }
+
+    public void setStartingPrincipalValue(Double startingPrincipalValue) {
+        this.startingPrincipalValue = startingPrincipalValue;
+    }
+
+    public Double getRemainingPrincipalValue() {
+        return remainingPrincipalValue;
+    }
+
+    public void setRemainingPrincipalValue(Double remainingPrincipalValue) {
+        this.remainingPrincipalValue = remainingPrincipalValue;
     }
 
     public String getNubanAccount() {

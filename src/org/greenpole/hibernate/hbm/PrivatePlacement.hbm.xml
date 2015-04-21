@@ -27,8 +27,8 @@
         <property name="offerPrice" type="java.lang.Double">
             <column name="offer_Price" precision="53" scale="0" />
         </property>
-        <property name="offerSize" type="int">
-            <column name="offer_Size" />
+        <property name="offerSize" type="java.lang.Double">
+            <column name="offer_Size" precision="53" scale="0" />
         </property>
         <property name="openingDate" type="date">
             <column name="opening_Date" length="10" />

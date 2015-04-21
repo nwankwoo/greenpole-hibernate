@@ -29,8 +29,8 @@
         <property name="chn" type="string">
             <column name="chn" length="50" />
         </property>
-        <property name="shareUnits" type="java.lang.Double">
-            <column name="share_units" precision="53" scale="0" />
+        <property name="shareUnits" type="int">
+            <column name="share_units" />
         </property>                
         <property name="esop" type="boolean">
             <column name="esop" />
