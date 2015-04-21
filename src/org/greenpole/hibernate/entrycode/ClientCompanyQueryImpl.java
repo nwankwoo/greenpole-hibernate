@@ -350,13 +350,13 @@ public class ClientCompanyQueryImpl {
    }
    
    /**
-    * Create Bondholder Account
+    * Create Bondholder Account, this method is subject to change to add the principalbond later
     * 
-     * @param firstName
-     * @param middleName
-     * @param lastName
-     * @param dob
-     * @param gender
+     * @param firstName , name of the bond owner
+     * @param middleName ,middlename of the bond owner
+     * @param lastName ,lastname of the bond owner
+     * @param dob   , date of birth of the bond owner
+     * @param gender 
      * @param residentialcity
      * @param residentialpostalcode
      * @param residentialstate
@@ -375,9 +375,9 @@ public class ClientCompanyQueryImpl {
      * @param bondholderpostaladdline4
      * @param bondholderpostaladdline2
      * @param bondholderpostaladdline3
-     * @param bhresidentaddrValidity
-     * @param bhpostaladdrValidity
-     * @param bhphoneaddrValidity
+     * @param bhresidentaddrValidity , show if still valid
+     * @param bhpostaladdrValidity  , show if still valid
+     * @param bhphoneaddrValidity , show if still valid
      * @return holderbondaccount
    */
    public HolderBondAccount createBondHolderAccount(String firstName, String middleName, String lastName, String gender, Date dob, String bondholderCHN,
@@ -385,7 +385,7 @@ public class ClientCompanyQueryImpl {
            String postalcity, String postalpostcode, String postalstate, String postalcountry, String bondholdernumber, String bondholderemail, 
            String bondholderresidentaddline1, int bondholderresidentaddline2, String bondholderresidentaddline3, String bondholderresidentaddline4, 
            String bondholderpostaladdline1, int bondholderpostaladdline2, String bondholderpostaladdline3, String bondholderpostaladdline4, 
-           boolean bhresidentaddrValidity, boolean bhpostaladdrValidity, boolean bhphoneaddrValidity ){
+           boolean bhresidentaddrValidity, boolean bhpostaladdrValidity, boolean bhphoneaddrValidity, double bondunits ){
        HolderBondAccount holderbondaccount = new HolderBondAccount();
        Holder bondHolder = new Holder();
        HolderResidentialAddress bondholderresidentialaddress = new HolderResidentialAddress();
@@ -442,6 +442,7 @@ public class ClientCompanyQueryImpl {
         setBondHolderEmails.add(bondholderemailaddr);
         //finally persist all the entries
         holderbondaccount.getId().setHolderId(bondHolder.getId()); //corresponding identifier to the Holder table to whom the bond belongs
+        holderbondaccount.setBondUnits(bondunits);
         holderbondaccount.getHolder().setHolderResidentialAddresses(setBondHolderResidentialAddresses);
         holderbondaccount.getHolder().setHolderPostalAddresses(setBondHolderPostalAddresses);
         holderbondaccount.getHolder().setHolderPhoneNumbers(setBondHolderPhonenumbers);
@@ -508,7 +509,7 @@ public class ClientCompanyQueryImpl {
      * @param adminpostaladdline4
      * @return 
     */
-    public Administrator persistAdministrator( int deceasedid, String firstName, String middleName, String lastName, 
+    public Administrator createAdministrator( int deceasedid, String firstName, String middleName, String lastName, 
            String adminresidentialcity, String adminresidentialpostalcode, String adminresidentialstate, String adminresidentialcountry, 
            String adminpostaladdresscity, String adminpostaladdrpostcode, String adminpostaladdrstate, String adminpostaladdrcountry, String adminfonenumber, 
            String adminemail, boolean adminphoneValidity, boolean adminresidentialValidity, boolean adminpostalAddressValidity, 
