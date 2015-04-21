@@ -207,8 +207,14 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
      * @param clientCompany the client company object containing search patterns
      * @return the criteria for a search on all client companies
      */
-    private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany) {
-        return baseCriteria.add(Example.create(clientCompany).enableLike());
+    private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany, ClientCompanyAddress ccAddress, ClientCompanyPhoneNumber ccPhone, ClientCompanyEmailAddress ccEmail) {
+        return baseCriteria.add(Example.create(clientCompany).enableLike())
+                .createCriteria("clientCompanyAddresses", JoinType.LEFT_OUTER_JOIN)
+                .add(Example.create(ccAddress).enableLike())
+                .createCriteria("clientCompanyPhoneNumbers", JoinType.LEFT_OUTER_JOIN)
+                .add(Example.create(ccPhone).enableLike())
+                .createCriteria("clientCompanyEmailAddresses", JoinType.LEFT_OUTER_JOIN)
+                .add(Example.create(ccEmail).enableLike());
     }
     
     /**
@@ -321,7 +327,9 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
-    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany specificSearchParameters, Map<String, Double> shareUnitCriteria, Map<String, Integer> noOfShareholders, Map<String, Integer> noOfBondholders) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams, ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams, Map<String, Double> shareUnitCriteria, Map<String, Integer> noOfShareholders, Map<String, Integer> noOfBondholders) {
+        startOperation();
+        Criteria criteria = getStartCriteria();
+        return null;
     }
 }
