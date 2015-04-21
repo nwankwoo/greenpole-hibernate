@@ -5,10 +5,37 @@
  */
 package org.greenpole.hibernate.entrycode;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import org.greenpole.hibernate.entity.Administrator;
+import org.greenpole.hibernate.entity.AdministratorEmailAddress;
+import org.greenpole.hibernate.entity.AdministratorPhoneNumber;
+import org.greenpole.hibernate.entity.AdministratorPostalAddress;
+import org.greenpole.hibernate.entity.AdministratorResidentialAddress;
+import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.ClientCompany;
+import org.greenpole.hibernate.entity.ClientCompanyAddress;
+import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
-import org.greenpole.hibernate.entity.ClientCompanyPhoneNumberId;
+import org.greenpole.hibernate.entity.Depository;
+import org.greenpole.hibernate.entity.Holder;
+import org.greenpole.hibernate.entity.HolderBondAccount;
+import org.greenpole.hibernate.entity.HolderEmailAddress;
+import org.greenpole.hibernate.entity.HolderPhoneNumber;
+import org.greenpole.hibernate.entity.HolderPostalAddress;
+import org.greenpole.hibernate.entity.HolderResidentialAddress;
+import org.greenpole.hibernate.entity.HolderSignature;
+import org.greenpole.hibernate.entity.PrivatePlacement;
+import org.greenpole.hibernate.entity.ShareQuotation;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
 
 /**
  *
@@ -25,21 +52,534 @@ public class ClientCompanyQueryImpl {
     }
     
     public void queryClientCompany(){}
-    
-    public void editClientCompany(int clientId){
-        queryClientCompany();
-        ClientCompany client = new ClientCompany();
-        client = (ClientCompany) session.get(ClientCompany.class, clientId); //fetch a particular client
-        //NOTE: Remember to add the clientcompanyAddress after the creation of the table
-        ClientCompanyPhoneNumber  ccNumber = new ClientCompanyPhoneNumber();
-        ClientCompanyPhoneNumberId ccfone = new ClientCompanyPhoneNumberId();
-        ccfone.setClientCompanyId(client.getId());
-        client.setName(null);
-        client.setCode(null);
-        client.setCeo(null);
-        client.setDepository(null);
-        client.setDepository(null);
+
+    /*********************/
+    public void queryClientCompanyWithOrCondition(List<String> userSearchParams, String userSearchTerm){
+        String input = userSearchTerm;
         
+        String searchQuery = "select id, depository, name, code, nseSector, ceo, "
+                + "secretary, valid, merged, clientCompanyPrimary from dbo.ClientCompany where ";
+        for(String searchParams : userSearchParams ){
+            searchQuery+= " " + searchParams + "like '%'" + input + "'%' OR";
+        }
+            searchQuery = searchQuery.substring(0, searchQuery.trim().length()-2).trim(); //remove the OR and spaces
+            System.out.println("Query written as" + searchQuery);
+            SQLQuery query = session.createSQLQuery(searchQuery);
+            query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP); //not printing
+            List results = query.list();
+            //return results;
+            for(Object objresults : results){
+            Map objectMap = (Map) objresults;
+            //    System.out.println(objectMap.get("id"));
+            }
+    }
+        
+    /**
+     *
+     * @param clientid , identifier id of the client company to update
+     * @param compname , name of the client company
+     * @param compcode , code of the client company 
+     * @param compceo , chief executive officer of the client company
+     * @param compsec , secretary of the client company
+     * @param state , state of the client company
+     * @param city , city of the client company
+     * @param country , country of the client company
+     * @param email , email of the client company
+     * @param clientphone , phone number of the client company
+     * @param depository , depository a client company belongs to
+     * @return clientcompany, returning object to the data access object class to update and persist
+     */
+    public ClientCompany editClientCompany(int clientid, String compname, String compcode, String compceo, String compsec, 
+            String state, String city, String country, String email, String clientphone, Depository depository){
+            ClientCompany clientcompany = (ClientCompany) session.get(ClientCompany.class, clientid); //fetch a particular client
+            ClientCompanyAddress ccaddress = (ClientCompanyAddress) session.get(ClientCompanyAddress.class, clientcompany.getId());
+            ClientCompanyEmailAddress clientemailaddress = (ClientCompanyEmailAddress) session.get(ClientCompanyEmailAddress.class, clientcompany.getId());
+            ClientCompanyPhoneNumber ccphonenumber = (ClientCompanyPhoneNumber) session.get(ClientCompanyPhoneNumber.class, clientcompany.getId());
+            //Depository depository = (Depository) session.get(Depository.class, clientcompany.getId());
+            //update the address
+            ccaddress.setCity(city);
+            ccaddress.setPostCode(compcode);
+            ccaddress.getId().setState(state);
+            ccaddress.getId().setCountry(country);
+            //update email address
+            clientemailaddress.getId().setEmailAddress(email);
+            //update clientcompany phone number
+            ccphonenumber.getId().setPhoneNumber(clientphone);
+            //update other direct company attributes
+            clientcompany.setName(compname);
+            clientcompany.setCode(compcode);
+            clientcompany.setCeo(compceo);
+            clientcompany.setSecretary(compsec);
+            clientcompany.setDepository(depository);
+
+            HashSet setclientcompanyAddress, setclientcompanyemail, setclientcompanyphonenumber;
+            setclientcompanyAddress = new HashSet();
+            setclientcompanyemail = new HashSet();
+            setclientcompanyphonenumber = new HashSet();
+
+            setclientcompanyAddress.add(ccaddress);
+            setclientcompanyemail.add(clientemailaddress);
+            setclientcompanyphonenumber.add(ccphonenumber);        
+            //finaly update and persist client attributes that were edited
+            clientcompany.setClientCompanyAddresses(setclientcompanyAddress);
+
+            return clientcompany;             
     }
     
+    /**
+     * Setup a bond offer for a ClientCompany
+     * @param companyid , identifier id of the client company to update
+     * @param title , title of the bond on offer
+     * @param bondunitprice , price of bond unit
+     * @param bondMaturity , the maturity date of the bond to be paid to the holder
+     * @param bondType , type of the bond on offer, Redeemable or fixed
+     * @param interestRate , the tax rate on bond to offer
+     * @param paymentPlan , method of payment
+     * @return BondOffer , returning object to the data access object class to persist
+     */
+   public BondOffer setUpBondOffer(int companyid, String title, double bondunitprice, Date bondMaturity, String bondType,
+           double interestRate, String paymentPlan ){
+       
+       ClientCompany client = (ClientCompany) session.get(ClientCompany.class, companyid);
+       client.setId(companyid);
+       //BondOffer bondoffer = new BondOffer(client, title, bondunitprice, bondMaturity, bondType, taxRate, paymentPlan);
+       BondOffer bondoffer = new BondOffer();
+       bondoffer.setTitle(title);
+       bondoffer.setBondUnitPrice(bondunitprice);
+       bondoffer.setBondMaturity(bondMaturity);
+       bondoffer.setBondType(bondType);
+       bondoffer.setInterestRate(interestRate);
+       bondoffer.setPaymentPlan(paymentPlan); 
+       bondoffer.setClientCompany(client);
+       return bondoffer;
+   }
+   
+   /**
+    * SETUP private placement
+     *
+     * @param companyid of the client company
+     * @param totalSharesOnOffer ,to share place on offer by the client company
+     * @param methodOnOffer , disbursement of the offer per offer price
+     * @param startingMinSubscrptn , starting the minimum subscription
+     * @param continuingMinSubscrptn , continuing minimum subscription 
+     * @param offerSize , multiplication of total share and offer price
+     * @param offerprice , price of the total offer by the client company
+     * @param startDate , the starting date of the offer
+     * @param endDate , the ending date of the offer
+     * @return privateplacement ,returning object to the data access object class to persist
+    */
+   public PrivatePlacement setupPrivatePlacement(int companyid, int totalSharesOnOffer, int methodOnOffer, int startingMinSubscrptn, 
+           int continuingMinSubscrptn, int offerSize, double offerprice, Date startDate, Date endDate){
+       ClientCompany clientcompany = (ClientCompany) session.get(ClientCompany.class, companyid);
+       clientcompany.setId(companyid);
+       PrivatePlacement privateplacement = new PrivatePlacement();
+       privateplacement.setTotalSharesOnOffer(totalSharesOnOffer);
+       privateplacement.setMethodOnOffer(methodOnOffer);
+       privateplacement.setStartingMinSubscrptn(startingMinSubscrptn);
+       privateplacement.setContinuingMinSubscrptn(continuingMinSubscrptn);
+       privateplacement.setOfferPrice(offerprice);
+       privateplacement.setOfferSize(offerSize);
+       privateplacement.setOpeningDate(startDate);
+       privateplacement.setClosingDate(endDate);
+       privateplacement.setClientCompany(clientcompany);
+       return privateplacement;
+   }
+   
+   /**
+    * Upload Share unit quotation
+     * @param quotationid , the precise quotation identifier id
+     * @param code , the code of the specified quotation
+     * @param unit_price , the current market selling price at point in time
+     * @return share_quote particular object to update
+    */
+    public ShareQuotation uploadShareQuotation(int quotationid, String code, double unit_price){
+       ScrollableResults quotationCursor = session.createQuery("from ShareQuotation").scroll();
+       
+       int count = 0;
+       ShareQuotation share_quotecursor = null;
+       while( quotationCursor.next() ){
+            share_quotecursor = (ShareQuotation) quotationCursor.get(0); //Get the <tt>i</tt>th object in the current row of results, without initializing any other results in the row.
+           share_quotecursor.setUnitPrice(unit_price);
+           
+           if(++count % 20 == 0){
+               session.flush();
+               session.clear();
+           }
+       }
+        return share_quotecursor;
+   }
+   
+    /**
+     * update the share quotation without
+     * without generalised features among the queries
+     * @param quotationid , the precise quotation identifier id
+     * @param code , the code of the specified quotation
+     * @param unit_price, the current market selling price at point in time
+     * @return share_quote, returning object to be updated
+     */
+   public ShareQuotation updateQuotation(int quotationid, double unit_price){
+       ShareQuotation share_quote = (ShareQuotation) session.get(ShareQuotation.class, quotationid);
+       share_quote.setUnitPrice(unit_price);
+       
+       return share_quote;
+   }
+   
+      public void uploadSignature(int holderid, String signaturePath, boolean holderSignaturePrimary){
+       Holder holder = new Holder();
+       holder.setId(holderid);
+       HolderSignature holdersignature = new HolderSignature();
+       holdersignature.setHolder(holder);
+       holdersignature.setSignaturePath(signaturePath);
+       holdersignature.setHolderSignaturePrimary(holderSignaturePrimary);
+   }
+   
+   /**
+    * Query Holder signature
+     * @param holderid
+     * @return 
+    */
+   public List queryHolderSignature(int holderid){
+       
+        List signtureList = null;
+        String searchQuery = "select holdersign.signaturePath from HolderSignature as holdersign, Holder as holder "
+               + "where holderSign.id = '" + holderid + "' and holder.id = '" + holderid + "'";
+        Query queryResults = session.createQuery(searchQuery);
+        signtureList = queryResults.list();
+        return signtureList; //the content signaturePath in the signatureList is a string, must be casted to String if iterating it
+   }
+   
+   /**
+    * Create Shareholder Account details Manually
+     * @param firstName
+     * @param middleName
+     * @param lastName
+     * @param type
+     * @param gender
+     * @param dob
+     * @param taxExempted
+     * @param holdercityaddress
+     * @param holdercodeaddress
+     * @param holderstateaddress
+     * @param holdercountryaddress
+     * @param holderpostalcityaddress
+     * @param holderpostalcodeaddress
+     * @param holderpostalstateaddress
+     * @param holderpostalcountryaddress
+     * @param holderphonenumber
+     * @param holderemailaddress
+     * @param shareholderresidentaddline1
+     * @param shareholderresidentaddline2
+     * @param shareholderresidentaddline3
+     * @param shareholderresidentaddline4
+     * @param shareholderpostaladdline1
+     * @param shareholderpostaladdline2
+     * @param shareholderpostaladdline3
+     * @param shareholderpostaladdline4
+     * @param shareholderresidentaddrValidity
+     * @param shareholderpostaladdrValidity
+     * @param shareholderphoneaddrValidity
+     * @return holderpersistence
+    */
+   public Holder createShareholder(String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, 
+           String holdercityaddress, String holdercodeaddress, String holderstateaddress, String holdercountryaddress, String holderpostalcityaddress, 
+           String holderpostalcodeaddress, String holderpostalstateaddress, String holderpostalcountryaddress, String holderphonenumber, String holderemailaddress, 
+           String shareholderresidentaddline1, int shareholderresidentaddline2, String shareholderresidentaddline3, String shareholderresidentaddline4, 
+           String shareholderpostaladdline1, int shareholderpostaladdline2, String shareholderpostaladdline3, String shareholderpostaladdline4, 
+           boolean shareholderresidentaddrValidity, boolean shareholderpostaladdrValidity, boolean shareholderphoneaddrValidity){
+       
+        Holder holderpersistence = new Holder();
+        HolderResidentialAddress holderresidentialaddress = new HolderResidentialAddress();
+        HolderPostalAddress holderpostaladdress = new HolderPostalAddress();
+        HolderPhoneNumber holderfonenumber = new HolderPhoneNumber();
+        HolderEmailAddress holderemailaddr = new HolderEmailAddress();
+       
+        //persist holder primary attributes
+        holderpersistence.setFirstName(firstName);
+        holderpersistence.setMiddleName(middleName);
+        holderpersistence.setLastName(lastName);
+        holderpersistence.setType(type);
+        holderpersistence.setGender(gender);
+        holderpersistence.setDob(dob);
+        holderpersistence.setTaxExempted(taxExempted);
+       //insert holder adddress in the HolderResidentialAddress object
+        holderresidentialaddress.getId().setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderResidentialAddress entity
+        holderresidentialaddress.setCity(holdercityaddress);
+        holderresidentialaddress.setPostCode(holdercodeaddress);
+        holderresidentialaddress.getId().setState(holderstateaddress);
+        holderresidentialaddress.getId().setCountry(holdercountryaddress);
+        holderresidentialaddress.getId().setAddressLine1(shareholderresidentaddline1);
+        holderresidentialaddress.setAddressLine2(shareholderresidentaddline2);
+        holderresidentialaddress.setAddressLine3(shareholderresidentaddline3);
+        holderresidentialaddress.setAddressLine4(shareholderresidentaddline4);
+        holderresidentialaddress.setIsPrimary(shareholderresidentaddrValidity);
+       //insert holder adddress in the HolderPostalAddress object
+        holderpostaladdress.getId().setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderPostalAddress entity
+        holderpostaladdress.setCity(holderpostalcityaddress);
+        holderpostaladdress.setPostCode(holderpostalcodeaddress);
+        holderpostaladdress.getId().setState(holderpostalstateaddress);
+        holderpostaladdress.getId().setCountry(holderpostalcountryaddress);
+        holderpostaladdress.getId().setAddressLine1(shareholderresidentaddline1);
+        holderpostaladdress.setAddressLine2(shareholderresidentaddline2);
+        holderpostaladdress.setAddressLine3(shareholderresidentaddline3);
+        holderpostaladdress.setAddressLine4(shareholderresidentaddline4);
+        holderpostaladdress.setIsPrimary(shareholderpostaladdrValidity);
+        //insert holder adddress in the HolderPhoneNumber object
+        holderfonenumber.getId().setHolderId(holderpersistence.getId());    //set the newly generated idetifier key in HolderPhoneNumber entity
+        holderfonenumber.getId().setPhoneNumber(holderphonenumber);
+        holderfonenumber.setIsPrimary(shareholderphoneaddrValidity);
+        //insert holder adddress in the HolderEmailAddress object
+        holderemailaddr.getId().setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderEmailAddress entity
+        holderemailaddr.getId().setEmailAddress(holderemailaddress);   
+        //Initialise the Hashset to contain set of addresses
+        HashSet setHolderPostalAddresses, setHolderEmails, setHolderPhonenumbers, setHolderResidentialAddresses;
+        setHolderResidentialAddresses = new HashSet();
+        setHolderResidentialAddresses.add(holderresidentialaddress);
+        setHolderPostalAddresses = new HashSet();
+        setHolderPostalAddresses.add(holderpostaladdress);
+        setHolderPhonenumbers = new HashSet();
+        setHolderPhonenumbers.add(holderfonenumber);
+        setHolderEmails = new HashSet();
+        setHolderEmails.add(holderemailaddr);
+        //persist the objects of the dependent models
+       holderpersistence.setHolderResidentialAddresses(setHolderResidentialAddresses);
+       holderpersistence.setHolderPostalAddresses(setHolderPostalAddresses);
+       holderpersistence.setHolderPhoneNumbers(setHolderPhonenumbers);
+       holderpersistence.setHolderEmailAddresses(setHolderEmails);      
+
+       return holderpersistence;
+   }
+   
+   /**
+    * Create Bondholder Account
+    * 
+     * @param firstName
+     * @param middleName
+     * @param lastName
+     * @param dob
+     * @param gender
+     * @param residentialcity
+     * @param residentialpostalcode
+     * @param residentialstate
+     * @param residentialcountry
+     * @param postalcity
+     * @param postalpostcode
+     * @param postalstate
+     * @param postalcountry
+     * @param bondholdernumber
+     * @param bondholderemail
+     * @param bondholderresidentaddline1
+     * @param bondholderresidentaddline2
+     * @param bondholderresidentaddline3
+     * @param bondholderresidentaddline4
+     * @param bondholderpostaladdline1
+     * @param bondholderpostaladdline4
+     * @param bondholderpostaladdline2
+     * @param bondholderpostaladdline3
+     * @param bhresidentaddrValidity
+     * @param bhpostaladdrValidity
+     * @param bhphoneaddrValidity
+     * @return holderbondaccount
+   */
+   public HolderBondAccount createBondHolderAccount(String firstName, String middleName, String lastName, String gender, Date dob, String bondholderCHN,
+           String residentialcity, String residentialpostalcode, String residentialstate, String residentialcountry, 
+           String postalcity, String postalpostcode, String postalstate, String postalcountry, String bondholdernumber, String bondholderemail, 
+           String bondholderresidentaddline1, int bondholderresidentaddline2, String bondholderresidentaddline3, String bondholderresidentaddline4, 
+           String bondholderpostaladdline1, int bondholderpostaladdline2, String bondholderpostaladdline3, String bondholderpostaladdline4, 
+           boolean bhresidentaddrValidity, boolean bhpostaladdrValidity, boolean bhphoneaddrValidity ){
+       HolderBondAccount holderbondaccount = new HolderBondAccount();
+       Holder bondHolder = new Holder();
+       HolderResidentialAddress bondholderresidentialaddress = new HolderResidentialAddress();
+       HolderPostalAddress bondholderpostaladdress = new HolderPostalAddress();
+       HolderPhoneNumber bondholderfonenumber = new HolderPhoneNumber();
+       HolderEmailAddress bondholderemailaddr = new HolderEmailAddress();       
+       //persist the primary attributes of the bond owner in the Holder entity
+       bondHolder.setFirstName(firstName);
+       bondHolder.setMiddleName(middleName);
+       bondHolder.setLastName(lastName);
+       bondHolder.setGender(gender);
+       bondHolder.setDob(dob);
+       bondHolder.setChn(bondholderCHN);
+       //bondunit, principalbondvalue,stockbroker, clientcompany buying from
+       //persist the attribute with residential address
+       bondholderresidentialaddress.getId().setHolderId(bondHolder.getId());
+       bondholderresidentialaddress.setCity(residentialcity);
+       bondholderresidentialaddress.setPostCode(residentialpostalcode);
+       bondholderresidentialaddress.getId().setState(residentialstate);
+       bondholderresidentialaddress.getId().setCountry(residentialcountry);
+       bondholderresidentialaddress.getId().setAddressLine1(bondholderresidentaddline1);
+       bondholderresidentialaddress.setAddressLine2(bondholderresidentaddline2);
+       bondholderresidentialaddress.setAddressLine3(bondholderresidentaddline3);
+       bondholderresidentialaddress.setAddressLine4(bondholderresidentaddline4);
+       bondholderresidentialaddress.setIsPrimary(bhresidentaddrValidity);
+       //persist the attribute with residential address
+       bondholderpostaladdress.setCity(postalcity);
+       bondholderpostaladdress.setPostCode(postalpostcode);
+       bondholderpostaladdress.getId().setHolderId(bondHolder.getId());
+       bondholderpostaladdress.getId().setState(postalstate);
+       bondholderpostaladdress.getId().setCountry(postalcountry);
+       bondholderpostaladdress.getId().setAddressLine1(bondholderpostaladdline1);
+       bondholderpostaladdress.setAddressLine2(bondholderpostaladdline2);
+       bondholderpostaladdress.setAddressLine3(bondholderpostaladdline3);
+       bondholderpostaladdress.setAddressLine4(bondholderpostaladdline4);
+       bondholderpostaladdress.setIsPrimary(bhpostaladdrValidity);
+       //persist the attribute with phone number
+       bondholderfonenumber.getId().setHolderId(bondHolder.getId());
+       bondholderfonenumber.getId().setPhoneNumber(bondholdernumber);
+       bondholderfonenumber.setIsPrimary(bhphoneaddrValidity);
+       //persist the attribute with email address
+       bondholderemailaddr.getId().setHolderId(bondHolder.getId());
+       bondholderemailaddr.getId().setEmailAddress(bondholderemail);
+       
+       //Initialise the Hashset to contain set of addresses
+        HashSet setBondHolderResidentialAddresses, setBondHolderPostalAddresses, setBondHolderPhonenumbers, setBondHolderEmails;
+        setBondHolderResidentialAddresses = new HashSet();
+        setBondHolderResidentialAddresses.add(bondholderresidentialaddress);
+        setBondHolderPostalAddresses = new HashSet();
+        setBondHolderPostalAddresses.add(bondholderpostaladdress);
+        setBondHolderPhonenumbers = new HashSet();
+        setBondHolderPhonenumbers.add(bondholderfonenumber);
+        setBondHolderEmails = new HashSet();
+        setBondHolderEmails.add(bondholderemailaddr);
+        //finally persist all the entries
+        holderbondaccount.getId().setHolderId(bondHolder.getId()); //corresponding identifier to the Holder table to whom the bond belongs
+        holderbondaccount.getHolder().setHolderResidentialAddresses(setBondHolderResidentialAddresses);
+        holderbondaccount.getHolder().setHolderPostalAddresses(setBondHolderPostalAddresses);
+        holderbondaccount.getHolder().setHolderPhoneNumbers(setBondHolderPhonenumbers);
+        holderbondaccount.getHolder().setHolderEmailAddresses(setBondHolderPostalAddresses);
+        
+       return holderbondaccount ;
+   }  
+   
+   /**
+     * Query Clientcompany with list of searchable attribute and <p>
+     * list of search terms from user
+     * @param defaultSearchableParams
+     * @param userSearchTerms
+     * @return resultList , the list of client company object: 
+     */
+    public List queryClientCompanyWithListParameters(List<String> defaultSearchableParams, List<String> userSearchTerms){
+        int searchableparamComparator = defaultSearchableParams.size();
+        int usersearchComparator= userSearchTerms.size();
+        String searchQuery = "";
+        if(searchableparamComparator == usersearchComparator){
+            searchQuery = "select name, code, ceo, city, email from ClientCompany where";
+            for(int i = 0; i < searchableparamComparator; i++){
+                
+                if(i == 0){
+                    searchQuery+=" " + defaultSearchableParams.get(i) + " like '%" + userSearchTerms.get(i) +"'%";
+                }
+                if(i > 0){
+                    searchQuery+=" AND" + defaultSearchableParams.get(i) + "like '%" +userSearchTerms.get(i)+ "%'";
+                }
+            } //end for-loop
+        
+        }   //end outer if
+        SQLQuery querySearch = session.createSQLQuery(searchQuery);
+        List resultList = querySearch.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP).list();
+        return resultList;
+    }
+
+    /**
+    * Create Administrator for Shareholder / Bondholder
+     * @param deceasedid
+     * @param firstName
+     * @param middleName
+     * @param lastName
+     * @param adminresidentialcity
+     * @param adminresidentialpostalcode
+     * @param adminresidentialstate
+     * @param adminresidentialcountry
+     * @param adminpostaladdresscity
+     * @param adminpostaladdrpostcode
+     * @param adminpostaladdrstate
+     * @param adminemail
+     * @param adminfonenumber
+     * @param adminpostaladdrcountry
+     * @param adminphoneValidity
+     * @param adminresidentialValidity
+     * @param adminpostalAddressValidity
+     * @param adminresidentaddline1
+     * @param adminresidentaddline2
+     * @param adminresidentaddline3
+     * @param adminresidentaddline4
+     * @param adminpostaladdline1
+     * @param adminpostaladdline3
+     * @param adminpostaladdline2
+     * @param adminpostaladdline4
+     * @return 
+    */
+    public Administrator persistAdministrator( int deceasedid, String firstName, String middleName, String lastName, 
+           String adminresidentialcity, String adminresidentialpostalcode, String adminresidentialstate, String adminresidentialcountry, 
+           String adminpostaladdresscity, String adminpostaladdrpostcode, String adminpostaladdrstate, String adminpostaladdrcountry, String adminfonenumber, 
+           String adminemail, boolean adminphoneValidity, boolean adminresidentialValidity, boolean adminpostalAddressValidity, 
+           String adminresidentaddline1, String adminresidentaddline2, String adminresidentaddline3, String adminresidentaddline4, 
+           String adminpostaladdline1, String adminpostaladdline2, String adminpostaladdline3, String adminpostaladdline4 ){
+
+        Administrator administrator = new Administrator();
+        Holder holder = new Holder();
+        AdministratorPhoneNumber administratorPhone = new AdministratorPhoneNumber();
+        AdministratorEmailAddress administratorEmail = new AdministratorEmailAddress();
+        AdministratorResidentialAddress administratorresidential = new AdministratorResidentialAddress();
+        AdministratorPostalAddress administratorpostaladdr = new AdministratorPostalAddress();
+        
+        administrator.setFirstName(firstName);
+        administrator.setMiddleName(middleName);
+        administrator.setLastName(lastName);
+        //the deceased holder
+        holder.setId(deceasedid); 
+        
+        administratorPhone.getId().setAdministratorId(administrator.getId());
+        administratorPhone.getId().setPhoneNumber(adminfonenumber);
+        administratorPhone.setIsPrimary(adminphoneValidity);
+        
+        administratorEmail.getId().setAdministratorId(administrator.getId());
+        administratorEmail.getId().setEmailAddress(adminemail);
+        administratorPhone.setIsPrimary(adminphoneValidity);
+        
+        administratorresidential.getId().setAdministratorId(administrator.getId());
+        administratorresidential.setCity(adminresidentialcity);
+        administratorresidential.setPostCode(adminresidentialpostalcode);
+        administratorresidential.setIsPrimary(adminresidentialValidity);
+        administratorresidential.getId().setState(adminresidentialstate);
+        administratorresidential.getId().setCountry(adminresidentialcountry);
+        administratorresidential.getId().setAddressLine1(adminresidentaddline1);
+        administratorresidential.setAddressLine2(adminresidentaddline2);
+        administratorresidential.setAddressLine3(adminresidentaddline3);
+        administratorresidential.setAddressLine4(adminresidentaddline4);
+        
+        administratorpostaladdr.getId().setAdministratorId(administrator.getId());
+        administratorpostaladdr.setCity(adminpostaladdresscity);
+        administratorpostaladdr.setPostCode(adminpostaladdrpostcode);
+        administratorpostaladdr.getId().setState(adminpostaladdrstate);
+        administratorpostaladdr.getId().setCountry(adminpostaladdrcountry);
+        administratorpostaladdr.setIsPrimary(adminpostalAddressValidity);
+        administratorpostaladdr.getId().setAddressLine1(adminpostaladdline1);
+        administratorpostaladdr.setAddressLine2(adminpostaladdline2);
+        administratorpostaladdr.setAddressLine3(adminpostaladdline3);
+        administratorpostaladdr.setAddressLine4(adminpostaladdline4);
+        
+        
+        HashSet setAdministratorFone, setAdministratorEmail, setAdministratorAddress, setAdministratorpostaladdr, setholder;
+        setAdministratorFone = new HashSet();
+        setAdministratorFone.add(administratorPhone);
+        setAdministratorEmail = new HashSet();
+        setAdministratorEmail.add(administratorEmail);
+        setAdministratorAddress = new HashSet();
+        setAdministratorAddress.add(administratorresidential);
+        setAdministratorpostaladdr = new HashSet();
+        setAdministratorpostaladdr.add(administratorpostaladdr);
+        setholder = new HashSet();
+        setholder.add(holder);
+
+        administrator.setAdministratorPhoneNumbers(setAdministratorFone);
+        administrator.setAdministratorEmailAddresses(setAdministratorEmail);
+        administrator.setAdministratorResidentialAddresses(setAdministratorAddress);
+        administrator.setAdministratorPostalAddresses(setAdministratorpostaladdr);
+        administrator.setHolders(setholder);
+        
+        return administrator;
+        
+    }
+
+   /*********************/
 }
