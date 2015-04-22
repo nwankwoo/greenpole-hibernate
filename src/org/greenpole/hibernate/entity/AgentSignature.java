@@ -12,14 +12,16 @@ public class AgentSignature  implements java.io.Serializable {
      private int id;
      private long versionId;
      private StockbrokerAgent stockbrokerAgent;
+     private String title;
      private String signaturePath;
      private boolean agentSignaturePrimary;
 
     public AgentSignature() {
     }
 
-    public AgentSignature(StockbrokerAgent stockbrokerAgent, String signaturePath, boolean agentSignaturePrimary) {
+    public AgentSignature(StockbrokerAgent stockbrokerAgent, String title, String signaturePath, boolean agentSignaturePrimary) {
        this.stockbrokerAgent = stockbrokerAgent;
+       this.title = title;
        this.signaturePath = signaturePath;
        this.agentSignaturePrimary = agentSignaturePrimary;
     }
@@ -54,6 +56,14 @@ public class AgentSignature  implements java.io.Serializable {
     
     public void setStockbrokerAgent(StockbrokerAgent stockbrokerAgent) {
         this.stockbrokerAgent = stockbrokerAgent;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
     public String getSignaturePath() {
         return this.signaturePath;

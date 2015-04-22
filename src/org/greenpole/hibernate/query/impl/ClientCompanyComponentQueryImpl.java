@@ -49,6 +49,17 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public boolean checkClientCompanyByCode(String companyCode) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.ilike("code", "%"+companyCode+"%"))
+                .setProjection(Projections.rowCount());
+        Long count =  (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
+    }
+    
+    @Override
     public boolean checkClientCompany(int clientCompanyId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
@@ -90,7 +101,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public void createAddress(ClientCompanyAddress address) {
         startOperation();
         createUpdateObject(address);
-        getTransaction();
+        getTransaction().commit();
     }
 
     @Override
@@ -180,6 +191,15 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         createUpdateObject(shareQuotation);
         getTransaction().commit();
+    }
+    
+    @Override
+    public void uploadShareQuotation(List<ShareQuotation> shareQuotations) {
+        startOperation();
+        
+        for (ShareQuotation quotation : shareQuotations) {
+            createUpdateObject(quotation);
+        }
     }
 
     @Override

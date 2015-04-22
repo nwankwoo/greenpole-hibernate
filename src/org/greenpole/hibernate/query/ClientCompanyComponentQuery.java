@@ -31,6 +31,13 @@ public interface ClientCompanyComponentQuery {
     
     /**
      * Checks the existence of a client company.
+     * @param companyCode company code to search for
+     * @return true, if company exists. Otherwise, false
+     */
+    public boolean checkClientCompanyByCode(String companyCode);
+    
+    /**
+     * Checks the existence of a client company.
      * @param clientCompanyId client company id to search with
      * @return true, if company exists. Otherwise, false
      */
@@ -120,6 +127,12 @@ public interface ClientCompanyComponentQuery {
      * @param shareQuotation the share quotation to be created
      */
     public void uploadShareQuotation(ShareQuotation shareQuotation);
+    
+    /**
+     * Creates a set of new share unit quotations.
+     * @param shareQuotations the share quotations to be created
+     */
+    public void uploadShareQuotation(List<ShareQuotation> shareQuotations);
     
     /**
      * Checks if a client company has shareholders tied to it.
