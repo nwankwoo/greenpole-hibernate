@@ -63,6 +63,13 @@ public interface ClientCompanyComponentQuery {
     public ClientCompany getClientCompany(Integer id);
     
     /**
+     * Gets a client company object by a specified code.
+     * @param code the client company code
+     * @return the client company object
+     */
+    public ClientCompany getClientCompany(String code);
+    
+    /**
      * Updates an existing client company in the database.
      * @param clientCompany the client company object model containing data
      * to be updated
@@ -131,8 +138,9 @@ public interface ClientCompanyComponentQuery {
     /**
      * Creates a set of new share unit quotations.
      * @param shareQuotations the share quotations to be created
+     * @return true, if creation is successful
      */
-    public void uploadShareQuotation(List<ShareQuotation> shareQuotations);
+    public boolean uploadShareQuotation(List<ShareQuotation> shareQuotations);
     
     /**
      * Checks if a client company has shareholders tied to it.

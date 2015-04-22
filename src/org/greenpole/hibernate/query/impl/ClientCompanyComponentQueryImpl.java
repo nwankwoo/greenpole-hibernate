@@ -20,6 +20,7 @@ import org.greenpole.hibernate.entity.PrivatePlacement;
 import org.greenpole.hibernate.entity.ShareQuotation;
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
+import org.greenpole.util.Descriptor;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
@@ -31,19 +32,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Akinwale Agbaje
- * Query implementations to do with client company requirements.
+ * @author Akinwale Agbaje Query implementations to do with client company
+ * requirements.
  */
-public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao implements ClientCompanyComponentQuery  {
+public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao implements ClientCompanyComponentQuery {
+
     private static final Logger logger = LoggerFactory.getLogger(ClientCompanyComponentQueryImpl.class);
 
     @Override
     public boolean checkClientCompany(String companyName) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.ilike("name", "%"+companyName+"%"))
+                .add(Restrictions.ilike("name", "%" + companyName + "%"))
                 .setProjection(Projections.rowCount());
-        Long count =  (Long) criteria.uniqueResult();
+        Long count = (Long) criteria.uniqueResult();
         getTransaction().commit();
         return count > 0;
     }
@@ -52,13 +54,13 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public boolean checkClientCompanyByCode(String companyCode) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.ilike("code", "%"+companyCode+"%"))
+                .add(Restrictions.ilike("code", "%" + companyCode + "%"))
                 .setProjection(Projections.rowCount());
-        Long count =  (Long) criteria.uniqueResult();
+        Long count = (Long) criteria.uniqueResult();
         getTransaction().commit();
         return count > 0;
     }
-    
+
     @Override
     public boolean checkClientCompany(int clientCompanyId) {
         startOperation();
@@ -69,13 +71,22 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         getTransaction().commit();
         return count > 0;
     }
-    
+
     @Override
     public ClientCompany getClientCompany(Integer id) {
         startOperation();
         ClientCompany cc = (ClientCompany) searchObject(ClientCompany.class, id);
         getTransaction().commit();
         return cc;
+    }
+
+    @Override
+    public ClientCompany getClientCompany(String code) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.eq("code", "%" + code + "%"));
+        getTransaction().commit();
+        return (ClientCompany) criteria.list().get(0);
     }
 
     @Override
@@ -119,7 +130,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
-    public boolean createOrUpdateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, 
+    public boolean createOrUpdateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses,
             List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers) {
         boolean created = false;
         try {
@@ -192,13 +203,22 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         createUpdateObject(shareQuotation);
         getTransaction().commit();
     }
-    
+
     @Override
-    public void uploadShareQuotation(List<ShareQuotation> shareQuotations) {
+    public boolean uploadShareQuotation(List<ShareQuotation> shareQuotations) {
         startOperation();
-        
-        for (ShareQuotation quotation : shareQuotations) {
-            createUpdateObject(quotation);
+        boolean created = false;
+        try {
+            shareQuotations.stream().forEach((quotation) -> {
+                createUpdateObject(quotation);
+            });
+            getTransaction().commit();
+            created = true;
+            return created;
+        } catch (Exception ex) {
+            logger.error("error uploading share quotations - ", ex);
+            getTransaction().rollback();
+            return created;
         }
     }
 
@@ -213,22 +233,28 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         getTransaction().commit();
         return countAccounts > 0 || countCertificates > 0;
     }
-    
+
     /**
      * Gets the criteria for a search on all client companies in the database.
+     *
      * @return the criteria for a search on all client companies
      */
     private Criteria getStartCriteria() {
         return getSession().createCriteria(ClientCompany.class, "cc");
     }
-    
+
     /**
-     * Gets the criteria for a search on all client companies according specified object.
-     * @param baseCriteria the criteria, typically one for a search on all client companies in the database
+     * Gets the criteria for a search on all client companies according
+     * specified object.
+     *
+     * @param baseCriteria the criteria, typically one for a search on all
+     * client companies in the database
      * @param clientCompany the client company object containing search patterns
-     * @param ccAddress the client company address object containing search patterns
+     * @param ccAddress the client company address object containing search
+     * patterns
      * @param ccPhone the client company phone object containing search patterns
-     * @param ccEmail the client company email address object containing search patterns
+     * @param ccEmail the client company email address object containing search
+     * patterns
      * @return the criteria for a search on all client companies
      */
     private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany, ClientCompanyAddress ccAddress, ClientCompanyPhoneNumber ccPhone, ClientCompanyEmailAddress ccEmail) {
@@ -240,43 +266,54 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
                 .createCriteria("cc.clientCompanyEmailAddresses", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccEmail).enableLike());
     }
-    
+
     /**
-     * Gets the criteria for a search on all client companies according to specified unit prices.
-     * @param baseCriteria the criteria, typically one for a search on all client companies in the database (but not limited to)
-     * @param descriptorValue the value of the descriptor to determine what type of search to carry out [whether an exact search - with one value, or a range search - with two values]
+     * Gets the criteria for a search on all client companies according to
+     * specified unit prices.
+     *
+     * @param baseCriteria the criteria, typically one for a search on all
+     * client companies in the database (but not limited to)
+     * @param descriptorValue the value of the descriptor to determine what type
+     * of search to carry out [whether an exact search - with one value, or a
+     * range search - with two values]
      * @param unitPriceCriteria the unit price value(s) to search for
-     * @return the criteria for a search on all client companies according to specified unit prices
+     * @return the criteria for a search on all client companies according to
+     * specified unit prices
      */
     private Criteria searchUnitPrice(Criteria baseCriteria, String descriptorValue, Map<String, Double> unitPriceCriteria) {
         Criteria tempCriteria = baseCriteria; //save criteria state, in case it needs to be returned
         baseCriteria.createCriteria("shareQuotations", JoinType.LEFT_OUTER_JOIN);
-        
+
         if (descriptorValue.equalsIgnoreCase("exact")) {
             double startUnit = unitPriceCriteria.get("start");
             return baseCriteria.add(Restrictions.eq("unitPrice", startUnit));
         }
-        
+
         if (descriptorValue.equalsIgnoreCase("range")) {
             double startUnit = unitPriceCriteria.get("start");
             double endUnit = unitPriceCriteria.get("end");
             return baseCriteria.add(Restrictions.ge("unitPrice", startUnit))
                     .add(Restrictions.le("unitPrice", endUnit));
         }
-        
+
         return tempCriteria;
     }
-    
+
     /**
-     * Gets the list of client companies according to the specified number of shareholders.
+     * Gets the list of client companies according to the specified number of
+     * shareholders.
+     *
      * @param clientCompanies the pool of client companies to search from
-     * @param descriptorValue the value of the descriptor to determine what type of search to carry out [whether an exact search - with one value, or a range search - with two values]
+     * @param descriptorValue the value of the descriptor to determine what type
+     * of search to carry out [whether an exact search - with one value, or a
+     * range search - with two values]
      * @param noOfShareholders the number of shareholders to search for
-     * @return the list of client companies according to the specified number of shareholders
+     * @return the list of client companies according to the specified number of
+     * shareholders
      */
     private List<ClientCompany> searchNumberOfShareholders(List<ClientCompany> clientCompanies, String descriptorValue, Map<String, Integer> noOfShareholders) {
         List<ClientCompany> searchResult = new ArrayList<>();
-        
+
         if (descriptorValue.equalsIgnoreCase("exact")) {
             int startNo = noOfShareholders.get("start");
             for (ClientCompany cc : clientCompanies) {
@@ -286,7 +323,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             }
             return searchResult;
         }
-        
+
         if (descriptorValue.equalsIgnoreCase("range")) {
             int startNo = noOfShareholders.get("start");
             int endNo = noOfShareholders.get("end");
@@ -297,21 +334,26 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             }
             return searchResult;
         }
-        
+
         return clientCompanies;
     }
-    
+
     /**
-     * Gets the list of client companies according to the specified number of bond holders.
+     * Gets the list of client companies according to the specified number of
+     * bond holders.
+     *
      * @param clientCompanies the pool of client companies to search from
-     * @param descriptorValue the value of the descriptor to determine what type of search to carry out [whether an exact search - with one value, or a range search - with two values]
+     * @param descriptorValue the value of the descriptor to determine what type
+     * of search to carry out [whether an exact search - with one value, or a
+     * range search - with two values]
      * @param noOfBondholders the number of bond holders to search for
-     * @return the list of client companies according to the specified number of bond holders
+     * @return the list of client companies according to the specified number of
+     * bond holders
      */
     private List<ClientCompany> searchNumberOfBondholders(List<ClientCompany> clientCompanies, String descriptorValue, Map<String, Integer> noOfBondholders) {
         List<ClientCompany> searchResult = new ArrayList<>();
         int bondAccounts = 0;
-        
+
         if (descriptorValue.equalsIgnoreCase("exact")) {
             int startNo = noOfBondholders.get("start");
             for (ClientCompany cc : clientCompanies) {
@@ -346,50 +388,35 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             }
             return searchResult;
         }
-        
+
         return clientCompanies;
-    }
-    
-    /**
-     * Breaks the descriptor into its individual search descriptions.
-     * @param descriptor the search description
-     * @return a map of the individual search descriptions
-     */
-    private Map<String, String> decipherDescriptor(String descriptor) {
-        Map<String, String> descriptorSplits = new HashMap<>();
-        String[] individualSplit = descriptor.split(";");
-        for (String singleDescriptor : individualSplit) {
-            String[] keyAndValue = singleDescriptor.split(":");
-            descriptorSplits.put(keyAndValue[0], keyAndValue[1]);
-        }
-        return descriptorSplits;
     }
 
     @Override
-    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams, 
-            ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams, 
+    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams,
+            ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams,
             Map<String, Double> shareUnitCriteria, Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria) {
         //descriptor=clientCompany:none;shareUnit:none;numberOfShareholders:none;numberOfBondholders:none
-        Map<String, String> descriptorSplits = decipherDescriptor(descriptor);
+        Map<String, String> descriptorSplits = Descriptor.decipherDescriptor(descriptor);
         String clientCompanyDescriptor = descriptorSplits.get("clientCompany");
         String shareUnitDescriptor = descriptorSplits.get("shareUnit");
         String numberOfShareholdersDescriptor = descriptorSplits.get("numberOfShareholders");
         String numberOfBondholdersDescriptor = descriptorSplits.get("numberOfBondholders");
-        
+
         startOperation();
         Criteria baseCriteria = getStartCriteria();
-        
+
         //we should assume the  result will consist of the base client company list
         List<ClientCompany> result = baseCriteria.list();
         Criteria clientCompanyUnitPriceCriteria;
         Criteria clientCompanySearchCriteria = baseCriteria; //client company search criteria must be initialised since it is being used in an isolated if statement
-                                                             //under the share unit price search (see if statement for clarification).
-        
+        //under the share unit price search (see if statement for clarification).
+
         if (clientCompanyDescriptor.equalsIgnoreCase("exact")) {
             clientCompanySearchCriteria = searchClientCompanyAccordingToObject(baseCriteria, ccSearchParams, ccAddressSearchParams, ccPhoneSearchParams, ccEmailSearchParams);
             result = clientCompanySearchCriteria.list();
         }
-        
+
         //if client company was searched for, pass client company search criteria into unit price search. Otherwise, use base criteria
         if (!shareUnitDescriptor.equalsIgnoreCase("none") && clientCompanyDescriptor.equalsIgnoreCase("exact")) {
             clientCompanyUnitPriceCriteria = searchUnitPrice(clientCompanySearchCriteria, shareUnitDescriptor, shareUnitCriteria);
@@ -398,17 +425,17 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             clientCompanyUnitPriceCriteria = searchUnitPrice(baseCriteria, shareUnitDescriptor, shareUnitCriteria);
             result = clientCompanyUnitPriceCriteria.list();
         }
-        
+
         if (!numberOfShareholdersDescriptor.equalsIgnoreCase("none")) {
             result = searchNumberOfShareholders(result, numberOfShareholdersDescriptor, noOfShareholdersCriteria);
         }
-        
+
         if (!numberOfBondholdersDescriptor.equalsIgnoreCase("none")) {
             result = searchNumberOfBondholders(result, numberOfBondholdersDescriptor, noOfBondholdersCriteria);
         }
-        
+
         getTransaction().commit();
-        
+
         return result;
     }
 }
