@@ -12,14 +12,16 @@ public class HolderSignature  implements java.io.Serializable {
      private int id;
      private long versionId;
      private Holder holder;
+     private String title;
      private String signaturePath;
      private boolean holderSignaturePrimary;
 
     public HolderSignature() {
     }
 
-    public HolderSignature(Holder holder, String signaturePath, boolean holderSignaturePrimary) {
+    public HolderSignature(Holder holder, String title, String signaturePath, boolean holderSignaturePrimary) {
        this.holder = holder;
+       this.title = title;
        this.signaturePath = signaturePath;
        this.holderSignaturePrimary = holderSignaturePrimary;
     }
@@ -54,6 +56,14 @@ public class HolderSignature  implements java.io.Serializable {
     
     public void setHolder(Holder holder) {
         this.holder = holder;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
     public String getSignaturePath() {
         return this.signaturePath;

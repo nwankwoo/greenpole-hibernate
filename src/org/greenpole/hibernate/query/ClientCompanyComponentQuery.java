@@ -31,6 +31,13 @@ public interface ClientCompanyComponentQuery {
     
     /**
      * Checks the existence of a client company.
+     * @param companyCode company code to search for
+     * @return true, if company exists. Otherwise, false
+     */
+    public boolean checkClientCompanyByCode(String companyCode);
+    
+    /**
+     * Checks the existence of a client company.
      * @param clientCompanyId client company id to search with
      * @return true, if company exists. Otherwise, false
      */
@@ -54,6 +61,13 @@ public interface ClientCompanyComponentQuery {
      * @return the client company object
      */
     public ClientCompany getClientCompany(Integer id);
+    
+    /**
+     * Gets a client company object by a specified code.
+     * @param code the client company code
+     * @return the client company object
+     */
+    public ClientCompany getClientCompany(String code);
     
     /**
      * Updates an existing client company in the database.
@@ -122,6 +136,13 @@ public interface ClientCompanyComponentQuery {
     public void uploadShareQuotation(ShareQuotation shareQuotation);
     
     /**
+     * Creates a set of new share unit quotations.
+     * @param shareQuotations the share quotations to be created
+     * @return true, if creation is successful
+     */
+    public boolean uploadShareQuotation(List<ShareQuotation> shareQuotations);
+    
+    /**
      * Checks if a client company has shareholders tied to it.
      * @param clientCompanyName the client company to check
      * @return true if the client company has more than one holder company account
@@ -130,15 +151,19 @@ public interface ClientCompanyComponentQuery {
     public boolean checkClientCompanyForShareholders(String clientCompanyName);
     
     /**
-     * Searches for list of client companies according to the provided search 
-     * @param descriptor
-     * @param searchTerms
-     * @param shareUnitCriteria
-     * @param noOfShareholders
-     * @param noOfBondholders
-     * @return 
+     * Searches for list of client companies according to the provided search parameters.
+     * @param descriptor the description of the type of search to carry out
+     * @param ccSearchParams the client company search parameters
+     * @param ccAddressSearchParams the client company address search parameters
+     * @param ccPhoneSearchParams the client company phone number search parameters
+     * @param ccEmailSearchParams the client company email address search parameters
+     * @param shareUnitCriteria the share unit search criteria
+     * @param noOfShareholdersCriteria the number of shareholders search criteria
+     * @param noOfBondholdersCriteria the number of bond holders search criteria
+     * @return the list of client companies according from the search
      */
-    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany specificSearchParameters, Map<String, Double> shareUnitCriteria, 
-            Map<String, Integer> noOfShareholders, Map<String, Integer> noOfBondholders);
+    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams,
+            ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams, Map<String, Double> shareUnitCriteria, 
+            Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria);
     
 }

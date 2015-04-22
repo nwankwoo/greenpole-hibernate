@@ -12,14 +12,16 @@ public class StockbrokerSignature  implements java.io.Serializable {
      private int id;
      private long versionId;
      private Stockbroker stockbroker;
+     private String title;
      private String signaturePath;
      private boolean stockbrokerSignPrimary;
 
     public StockbrokerSignature() {
     }
 
-    public StockbrokerSignature(Stockbroker stockbroker, String signaturePath, boolean stockbrokerSignPrimary) {
+    public StockbrokerSignature(Stockbroker stockbroker, String title, String signaturePath, boolean stockbrokerSignPrimary) {
        this.stockbroker = stockbroker;
+       this.title = title;
        this.signaturePath = signaturePath;
        this.stockbrokerSignPrimary = stockbrokerSignPrimary;
     }
@@ -54,6 +56,14 @@ public class StockbrokerSignature  implements java.io.Serializable {
     
     public void setStockbroker(Stockbroker stockbroker) {
         this.stockbroker = stockbroker;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
     public String getSignaturePath() {
         return this.signaturePath;

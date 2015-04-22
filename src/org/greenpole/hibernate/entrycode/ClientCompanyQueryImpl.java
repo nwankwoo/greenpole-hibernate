@@ -180,7 +180,7 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
        privateplacement.setStartingMinSubscrptn(startingMinSubscrptn);
        privateplacement.setContinuingMinSubscrptn(continuingMinSubscrptn);
        privateplacement.setOfferPrice(offerprice);
-       privateplacement.setOfferSize(offerSize);
+       //privateplacement.setOfferSize(offerSize);
        privateplacement.setOpeningDate(startDate);
        privateplacement.setClosingDate(endDate);
        privateplacement.setClientCompany(clientcompany);
@@ -446,7 +446,7 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
         setBondHolderEmails.add(bondholderemailaddr);
         //finally persist all the entries
         holderbondaccount.getId().setHolderId(bondHolder.getId()); //corresponding identifier to the Holder table to whom the bond belongs
-        holderbondaccount.setBondUnits(bondunits);
+        //holderbondaccount.setBondUnits(bondunits);
         holderbondaccount.getHolder().setHolderResidentialAddresses(setBondHolderResidentialAddresses);
         holderbondaccount.getHolder().setHolderPostalAddresses(setBondHolderPostalAddresses);
         holderbondaccount.getHolder().setHolderPhoneNumbers(setBondHolderPhonenumbers);

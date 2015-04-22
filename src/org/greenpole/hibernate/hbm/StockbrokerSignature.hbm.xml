@@ -12,6 +12,9 @@
         <many-to-one name="stockbroker" class="org.greenpole.hibernate.entity.Stockbroker" fetch="select">
             <column name="stockbroker_Id" />
         </many-to-one>
+        <property name="title" type="string">
+            <column name="title" />
+        </property>
         <property name="signaturePath" type="string">
             <column name="signature_Path" />
         </property>

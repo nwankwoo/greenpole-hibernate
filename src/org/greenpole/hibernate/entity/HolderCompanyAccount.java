@@ -18,7 +18,7 @@ public class HolderCompanyAccount  implements java.io.Serializable {
      private Holder holder;
      private HolderCompanyAccount holderCompanyAccount;
      private String chn;
-     private Double shareUnits;
+     private int shareUnits;
      private boolean esop;
      private boolean taxExempted;
      private String nubanAccount;
@@ -37,7 +37,7 @@ public class HolderCompanyAccount  implements java.io.Serializable {
         this.clientCompany = clientCompany;
         this.holder = holder;
     }
-    public HolderCompanyAccount(HolderCompanyAccountId id, Bank bank, ClientCompany clientCompany, Holder holder, HolderCompanyAccount holderCompanyAccount, String chn, Double shareUnits, boolean esop, boolean taxExempted, String nubanAccount, boolean merged, boolean holderCompAccPrimary, Set coupons, Set dividends, Set holderCompanyAccounts) {
+    public HolderCompanyAccount(HolderCompanyAccountId id, Bank bank, ClientCompany clientCompany, Holder holder, HolderCompanyAccount holderCompanyAccount, String chn, int shareUnits, boolean esop, boolean taxExempted, String nubanAccount, boolean merged, boolean holderCompAccPrimary, Set coupons, Set dividends, Set holderCompanyAccounts) {
        this.id = id;
        this.bank = bank;
        this.clientCompany = clientCompany;
@@ -116,11 +116,11 @@ public class HolderCompanyAccount  implements java.io.Serializable {
         this.chn = chn;
     }
 
-    public Double getShareUnits() {
+    public int getShareUnits() {
         return shareUnits;
     }
 
-    public void setShareUnits(Double shareUnits) {
+    public void setShareUnits(int shareUnits) {
         this.shareUnits = shareUnits;
     }
     public boolean isEsop() {
