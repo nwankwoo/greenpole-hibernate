@@ -23,7 +23,8 @@ public class PowerOfAttorney  implements java.io.Serializable {
 
     public PowerOfAttorney() {
     }
-
+    
+    
     public PowerOfAttorney(Holder holder, String title, String signaturePath, String type, Date startDate, Date endDate, String periodType, boolean powerOfAttorneyPrimary) {
        this.holder = holder;
        this.title = title;

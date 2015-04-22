@@ -89,7 +89,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public void createAddress(ClientCompanyAddress address) {
         startOperation();
         createUpdateObject(address);
-        getTransaction();
+        getTransaction().commit();
     }
 
     @Override

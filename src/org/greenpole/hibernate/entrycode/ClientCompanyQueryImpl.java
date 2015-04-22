@@ -5,6 +5,7 @@
  */
 package org.greenpole.hibernate.entrycode;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
+import org.greenpole.hibernate.entity.PowerOfAttorney;
 import org.greenpole.hibernate.entity.PrivatePlacement;
 import org.greenpole.hibernate.entity.ShareQuotation;
 import org.hibernate.Criteria;
@@ -34,14 +36,14 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
-import org.hibernate.criterion.Example;
-import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author Ahmad.Gbadamosi
  */
-public class ClientCompanyQueryImpl {
+public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
     
     Session session;
     ClientCompanyDao clientDao;
@@ -357,6 +359,7 @@ public class ClientCompanyQueryImpl {
      * @param lastName ,lastname of the bond owner
      * @param dob   , date of birth of the bond owner
      * @param gender 
+     * @param bondholderCHN 
      * @param residentialcity
      * @param residentialpostalcode
      * @param residentialstate
@@ -378,6 +381,7 @@ public class ClientCompanyQueryImpl {
      * @param bhresidentaddrValidity , show if still valid
      * @param bhpostaladdrValidity  , show if still valid
      * @param bhphoneaddrValidity , show if still valid
+     * @param bondunits
      * @return holderbondaccount
    */
    public HolderBondAccount createBondHolderAccount(String firstName, String middleName, String lastName, String gender, Date dob, String bondholderCHN,
@@ -452,7 +456,7 @@ public class ClientCompanyQueryImpl {
    }  
    
    /**
-     * Query Clientcompany with list of searchable attribute and <p>
+     * Query Clientcompany with list of searchable attribute and  <p>
      * list of search terms from user
      * @param defaultSearchableParams
      * @param userSearchTerms
@@ -582,5 +586,87 @@ public class ClientCompanyQueryImpl {
         
     }
 
-   /*********************/
-}
+   /*************SYSTEM ABOVE PULLED LAST APRIL/21/2015********/
+    
+    
+    /*
+    public HolderSignature uploadHolderSignature(int id, String signaturepath, boolean isprimary){
+        Holder holder = new Holder(id);
+        
+        HolderSignature signature = new HolderSignature();
+        signature.setHolder(holder);
+        signature.setSignaturePath(signaturepath);
+        signature.setHolderSignaturePrimary(isprimary);
+        
+        return signature;
+    }
+     */
+    
+    /*
+    public PowerOfAttorney uploadPowerOfAttorney(int holderid, String title, String signaturepath, String type, 
+            Date startDate, Date endDate, String periodLength, boolean isPOAPrimary){
+        PowerOfAttorney attorneydoc = new PowerOfAttorney();
+        attorneydoc.setHolder(holderid);
+        attorneydoc.setTitle(title);
+        attorneydoc.setSignaturePath(signaturepath);
+        attorneydoc.setType(type);
+        attorneydoc.setStartDate(startDate);
+        attorneydoc.setEndDate(endDate);
+        attorneydoc.setPeriodType(periodLength);
+        attorneydoc.setPowerOfAttorneyPrimary(isPOAPrimary);
+        
+        return attorneydoc;
+   }
+    */
+   
+    /**
+    *          Upload Shareholder / Bondholder Signature
+     * @param signature
+    */
+    public void uploadHolderSignature(HolderSignature signature){
+        startOperation();
+        createUpdateObject(signature);
+        getTransaction().commit();
+    }
+    
+    /**
+     * Query Shareholder / Bondholder Signature
+     * @param holderid
+     * @return 
+     */
+    public List queryHolderSignatureByHolderId(int holderid){
+        startOperation();
+        List<HolderSignature> receiveSignature = new ArrayList<>();
+        String searchQuery = "from HolderSignature as signature where signature.holder=" + holderid;
+        Query querySearch = getSession().createQuery(searchQuery);
+        receiveSignature = querySearch.list();
+        getTransaction().commit();
+        return receiveSignature;
+    }
+    
+    /**
+     *   Query Power of Attorney
+     */
+    public List queryPowerOfAttorneyById(int id){
+        
+        startOperation();
+        Criteria powerofattorney = getSession().createCriteria(PowerOfAttorney.class);
+        powerofattorney.add(Restrictions.idEq(id));
+        List result = powerofattorney.list();
+        getTransaction().commit();
+        return result;
+    }
+    
+    //work at home
+    public PowerOfAttorney queryPowerOfAttorneyByObject(int id){
+        
+        startOperation();
+        PowerOfAttorney powerofattorney = (PowerOfAttorney) searchObject(null, id);
+        getTransaction().commit();
+        return powerofattorney;
+    }
+    
+    /**
+     * Merge / Consolidate Shareholder Accounts
+     */
+   }

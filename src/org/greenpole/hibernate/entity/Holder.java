@@ -52,6 +52,11 @@ public class Holder  implements java.io.Serializable {
     public Holder() {
     }
 
+    public Holder(int id) {
+        this.id = id;
+    }
+    
+
     public Holder(Holder holder, int holderAcctNumber, String chn, String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, String pryAddress, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderBondAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators) {
        this.holder = holder;
        this.holderAcctNumber = holderAcctNumber;
@@ -88,6 +93,7 @@ public class Holder  implements java.io.Serializable {
        this.certificates = certificates;
        this.administrators = administrators;
     }
+    
    
     public int getId() {
         return this.id;
