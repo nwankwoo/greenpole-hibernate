@@ -137,12 +137,12 @@ public interface ClientCompanyComponentQuery {
      * @param ccPhoneSearchParams the client company phone number search parameters
      * @param ccEmailSearchParams the client company email address search parameters
      * @param shareUnitCriteria the share unit search criteria
-     * @param noOfShareholders the number of shareholders search criteria
-     * @param noOfBondholders the number of bond holders search criteria
+     * @param noOfShareholdersCriteria the number of shareholders search criteria
+     * @param noOfBondholdersCriteria the number of bond holders search criteria
      * @return the list of client companies according from the search
      */
     public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams,
             ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams, Map<String, Double> shareUnitCriteria, 
-            Map<String, Integer> noOfShareholders, Map<String, Integer> noOfBondholders);
+            Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria);
     
 }

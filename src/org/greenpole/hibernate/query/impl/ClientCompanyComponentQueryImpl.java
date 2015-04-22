@@ -6,6 +6,7 @@
 package org.greenpole.hibernate.query.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -198,22 +199,25 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
      * @return the criteria for a search on all client companies
      */
     private Criteria getStartCriteria() {
-        return getSession().createCriteria(ClientCompany.class);
+        return getSession().createCriteria(ClientCompany.class, "cc");
     }
     
     /**
      * Gets the criteria for a search on all client companies according specified object.
      * @param baseCriteria the criteria, typically one for a search on all client companies in the database
      * @param clientCompany the client company object containing search patterns
+     * @param ccAddress the client company address object containing search patterns
+     * @param ccPhone the client company phone object containing search patterns
+     * @param ccEmail the client company email address object containing search patterns
      * @return the criteria for a search on all client companies
      */
     private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany, ClientCompanyAddress ccAddress, ClientCompanyPhoneNumber ccPhone, ClientCompanyEmailAddress ccEmail) {
         return baseCriteria.add(Example.create(clientCompany).enableLike())
-                .createCriteria("clientCompanyAddresses", JoinType.LEFT_OUTER_JOIN)
+                .createCriteria("cc.clientCompanyAddresses", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccAddress).enableLike())
-                .createCriteria("clientCompanyPhoneNumbers", JoinType.LEFT_OUTER_JOIN)
+                .createCriteria("cc.clientCompanyPhoneNumbers", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccPhone).enableLike())
-                .createCriteria("clientCompanyEmailAddresses", JoinType.LEFT_OUTER_JOIN)
+                .createCriteria("cc.clientCompanyEmailAddresses", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccEmail).enableLike());
     }
     
@@ -256,7 +260,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         if (descriptorValue.equalsIgnoreCase("exact")) {
             int startNo = noOfShareholders.get("start");
             for (ClientCompany cc : clientCompanies) {
-                if (cc.getHolderCompanyAccounts().size() >= startNo) {
+                if (cc.getHolderCompanyAccounts().size() == startNo) {
                     searchResult.add(cc);
                 }
             }
@@ -298,7 +302,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
                         bondAccounts += bondOffer.getHolderBondAccounts().size();
                     }
                 }
-                if (bondAccounts >= startNo) {
+                if (bondAccounts == startNo) {
                     searchResult.add(cc);
                 }
             }
@@ -325,11 +329,66 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         
         return clientCompanies;
     }
+    
+    /**
+     * Breaks the descriptor into its individual search descriptions.
+     * @param descriptor the search description
+     * @return a map of the individual search descriptions
+     */
+    private Map<String, String> decipherDescriptor(String descriptor) {
+        Map<String, String> descriptorSplits = new HashMap<>();
+        String[] individualSplit = descriptor.split(";");
+        for (String singleDescriptor : individualSplit) {
+            String[] keyAndValue = singleDescriptor.split(":");
+            descriptorSplits.put(keyAndValue[0], keyAndValue[1]);
+        }
+        return descriptorSplits;
+    }
 
     @Override
-    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams, ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams, Map<String, Double> shareUnitCriteria, Map<String, Integer> noOfShareholders, Map<String, Integer> noOfBondholders) {
+    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams, 
+            ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams, 
+            Map<String, Double> shareUnitCriteria, Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria) {
+        //descriptor=clientCompany:none;shareUnit:none;numberOfShareholders:none;numberOfBondholders:none
+        Map<String, String> descriptorSplits = decipherDescriptor(descriptor);
+        String clientCompanyDescriptor = descriptorSplits.get("clientCompany");
+        String shareUnitDescriptor = descriptorSplits.get("shareUnit");
+        String numberOfShareholdersDescriptor = descriptorSplits.get("numberOfShareholders");
+        String numberOfBondholdersDescriptor = descriptorSplits.get("numberOfBondholders");
+        
         startOperation();
-        Criteria criteria = getStartCriteria();
-        return null;
+        Criteria baseCriteria = getStartCriteria();
+        
+        //we should assume the  result will consist of the base client company list
+        List<ClientCompany> result = baseCriteria.list();
+        Criteria clientCompanyUnitPriceCriteria;
+        Criteria clientCompanySearchCriteria = baseCriteria; //client company search criteria must be initialised since it is being used in an isolated if statement
+                                                             //under the share unit price search (see if statement for clarification).
+        
+        if (clientCompanyDescriptor.equalsIgnoreCase("exact")) {
+            clientCompanySearchCriteria = searchClientCompanyAccordingToObject(baseCriteria, ccSearchParams, ccAddressSearchParams, ccPhoneSearchParams, ccEmailSearchParams);
+            result = clientCompanySearchCriteria.list();
+        }
+        
+        //if client company was searched for, pass client company search criteria into unit price search. Otherwise, use base criteria
+        if (!shareUnitDescriptor.equalsIgnoreCase("none") && clientCompanyDescriptor.equalsIgnoreCase("exact")) {
+            clientCompanyUnitPriceCriteria = searchUnitPrice(clientCompanySearchCriteria, shareUnitDescriptor, shareUnitCriteria);
+            result = clientCompanyUnitPriceCriteria.list();
+        } else if (!shareUnitDescriptor.equalsIgnoreCase("none") && !clientCompanyDescriptor.equalsIgnoreCase("exact")) {
+            clientCompanyUnitPriceCriteria = searchUnitPrice(baseCriteria, shareUnitDescriptor, shareUnitCriteria);
+            result = clientCompanyUnitPriceCriteria.list();
+        }
+        
+        if (!numberOfShareholdersDescriptor.equalsIgnoreCase("none")) {
+            result = searchNumberOfShareholders(result, numberOfShareholdersDescriptor, noOfShareholdersCriteria);
+        }
+        
+        if (!numberOfBondholdersDescriptor.equalsIgnoreCase("none")) {
+            result = searchNumberOfBondholders(result, numberOfBondholdersDescriptor, noOfBondholdersCriteria);
+        }
+        
+        getTransaction().commit();
+        
+        return result;
     }
 }
