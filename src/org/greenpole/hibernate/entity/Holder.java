@@ -48,11 +48,13 @@ public class Holder  implements java.io.Serializable {
      private Set cautions = new HashSet(0);
      private Set certificates = new HashSet(0);
      private Set administrators = new HashSet(0);
+     private Set holderChanges = new HashSet(0);
+     private Set accountConsolidations = new HashSet(0);
 
     public Holder() {
     }
 
-    public Holder(Holder holder, int holderAcctNumber, String chn, String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, String pryAddress, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderBondAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators) {
+    public Holder(Holder holder, int holderAcctNumber, String chn, String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, String pryAddress, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderBondAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators, Set holderChanges, Set accountConsolidations) {
        this.holder = holder;
        this.holderAcctNumber = holderAcctNumber;
        this.chn = chn;
@@ -87,6 +89,8 @@ public class Holder  implements java.io.Serializable {
        this.cautions = cautions;
        this.certificates = certificates;
        this.administrators = administrators;
+       this.holderChanges = holderChanges;
+       this.accountConsolidations = accountConsolidations;
     }
    
     public int getId() {
@@ -354,6 +358,22 @@ public class Holder  implements java.io.Serializable {
     
     public void setAdministrators(Set administrators) {
         this.administrators = administrators;
+    }
+
+    public Set getHolderChanges() {
+        return holderChanges;
+    }
+
+    public void setHolderChanges(Set holderChanges) {
+        this.holderChanges = holderChanges;
+    }
+
+    public Set getAccountConsolidations() {
+        return accountConsolidations;
+    }
+
+    public void setAccountConsolidations(Set accountConsolidations) {
+        this.accountConsolidations = accountConsolidations;
     }
 
 

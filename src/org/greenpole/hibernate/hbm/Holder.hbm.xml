@@ -178,5 +178,17 @@
                 <column name="administrator_id" not-null="true" />
             </many-to-many>
         </set>
+        <set name="holderChanges" table="HOLDER_CHANGES" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderChanges" />
+        </set>        
+        <set name="accountConsolidations" table="ACCOUNT_CONSOLIDATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.AccountConsolidation" />
+        </set>
     </class>
 </hibernate-mapping>
