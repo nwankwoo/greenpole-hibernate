@@ -3,13 +3,14 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-    <property name="hibernate.connection.url">jdbc:sqlserver://100.100.100.3:1433;databaseName=greenpole</property>
+    <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=greenpole</property>
     <property name="hibernate.connection.username">sa</property>
-    <property name="hibernate.connection.password">Password1</property>
+    <property name="hibernate.connection.password">Disemb0died!!2</property>
     <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+    <!--
     <mapping resource="org/greenpole/hibernate/hbm/HolderVoting.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/PowerOfAttorney.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/PrivatePlacement.hbm.xml"/>
@@ -77,5 +78,6 @@
     <mapping resource="org/greenpole/hibernate/hbm/ClientCompanyAddress.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/NseSector.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/HolderBondAccount.hbm.xml"/>
+    -->
   </session-factory>
 </hibernate-configuration>

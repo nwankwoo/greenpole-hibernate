@@ -10,7 +10,7 @@
         </id>
         <version name="versionId" type="long"/>
         <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" fetch="select">
-            <column name="secondary_holder_id" />
+            <column name="pry_holder_id" />
         </many-to-one>
         <property name="holderAcctNumber" type="int">
             <column name="holder_acct_number" unique="true" />
