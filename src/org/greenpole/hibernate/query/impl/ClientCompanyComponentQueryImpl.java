@@ -138,6 +138,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             //create client company
             createUpdateObject(clientCompany);
             //create addresses
+            //addresses.stream().map((ClientCompanyAddress address) ->
             addresses.stream().map((address) -> {
                 address.getId().setClientCompanyId(clientCompany.getId());
                 return address;
