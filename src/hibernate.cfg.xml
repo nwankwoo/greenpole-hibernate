@@ -81,5 +81,6 @@
     <mapping resource="org/greenpole/hibernate/hbm/AuditLog.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/CompanyAccountConsolidation.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/AccountConsolidation.hbm.xml"/>
+    <mapping resource="org/greenpole/hibernate/hbm/HolderChangeType.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

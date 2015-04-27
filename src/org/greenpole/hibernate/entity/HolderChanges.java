@@ -14,17 +14,17 @@ public class HolderChanges  implements java.io.Serializable {
      private long versionId;
      private String initialForm;
      private String currentForm;
-     private String changeType;
+     private HolderChangeType holderChangeType;
      private Date changeDate;
      private Holder holder;
 
     public HolderChanges() {
     }
 
-    public HolderChanges(String initialForm, String currentForm, String changeType, Date changeDate, Holder holder) {
+    public HolderChanges(String initialForm, String currentForm, HolderChangeType holderChangeType, Date changeDate, Holder holder) {
        this.initialForm = initialForm;
        this.currentForm = currentForm;
-       this.changeType = changeType;
+       this.holderChangeType = holderChangeType;
        this.changeDate = changeDate;
        this.holder = holder;
     }
@@ -67,12 +67,12 @@ public class HolderChanges  implements java.io.Serializable {
     public void setCurrentForm(String currentForm) {
         this.currentForm = currentForm;
     }
-    public String getChangeType() {
-        return this.changeType;
+    public HolderChangeType getHolderChangeType() {
+        return this.holderChangeType;
     }
     
-    public void setChangeType(String changeType) {
-        this.changeType = changeType;
+    public void setHolderChangeType(HolderChangeType holderChangeType) {
+        this.holderChangeType = holderChangeType;
     }
     public Date getChangeDate() {
         return this.changeDate;

@@ -88,6 +88,15 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         getTransaction().commit();
         return (ClientCompany) criteria.list().get(0);
     }
+    
+    @Override
+    public ClientCompany getClientCompanyByName(String name) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.eq("name", "%" + name + "%"));
+        getTransaction().commit();
+        return (ClientCompany) criteria.list().get(0);
+    }
 
     @Override
     public void editClientCompany(ClientCompany clientCompany) {
@@ -127,6 +136,33 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         createUpdateObject(phoneNumber);
         getTransaction().commit();
+    }
+
+    @Override
+    public List<ClientCompanyAddress> getClientCompanyAddress(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyAddress.class)
+                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        getTransaction().commit();
+        return criteria.list();
+    }
+
+    @Override
+    public List<ClientCompanyEmailAddress> getClientCompanyEmailAddress(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyEmailAddress.class)
+                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        getTransaction().commit();
+        return criteria.list();
+    }
+
+    @Override
+    public List<ClientCompanyPhoneNumber> getClientCompanyPhoneNumber(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyPhoneNumber.class)
+                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        getTransaction().commit();
+        return criteria.list();
     }
 
     @Override

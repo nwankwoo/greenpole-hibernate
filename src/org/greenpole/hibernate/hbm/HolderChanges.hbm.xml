@@ -15,9 +15,9 @@
         <property name="currentForm" type="string">
             <column name="current_form" length="500" />
         </property>
-        <property name="changeType" type="string">
-            <column name="change_type" length="300" />
-        </property>
+        <many-to-one name="holderChangeType" class="org.greenpole.hibernate.entity.HolderChangeType" fetch="select">
+            <column name="change_type_id" />
+        </many-to-one>
         <property name="changeDate" type="date">
             <column name="change_date" length="10" />
         </property>
