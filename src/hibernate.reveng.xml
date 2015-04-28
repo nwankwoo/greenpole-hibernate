@@ -6,7 +6,7 @@
     <type-mapping>
         <sql-type jdbc-type="BIT" hibernate-type="boolean"/>
         <sql-type jdbc-type="INTEGER" hibernate-type="int"/>
-    </type-mapping>  
+    </type-mapping>
     
     <table-filter match-name="CLIENT_COMPANY_ADDRESS"/>
     <table-filter match-name="PRIVATE_PLACEMENT_APPLICATION"/>
@@ -65,6 +65,47 @@
     <table-filter match-name="NOTIFICATION"/>
     <table-filter match-name="NSE_SECTOR"/>
     <table-filter match-name="HOLDER_BOND_ACCOUNT"/>
+    <table-filter match-name="AUDIT_LOG"/>
+    <table-filter match-name="HOLDER_CHANGES"/>
+    <table-filter match-name="ACCOUNT_CONSOLIDATION"/>
+    <table-filter match-name="COMPANY_ACCOUNT_CONSOLIDATION"/>
+    <table-filter match-name="HOLDER_CHANGE_TYPE"/>
+    
+    <table name="AUDIT_LOG" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="HOLDER_CHANGES" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="HOLDER_CHANGE_TYPE" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="ACCOUNT_CONSOLIDATION" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="COMPANY_ACCOUNT_CONSOLIDATION" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
     
     <table name="NSE_SECTOR" catalog="greenpole" schema="dbo">
         <primary-key>

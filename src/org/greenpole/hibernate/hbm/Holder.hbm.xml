@@ -10,7 +10,7 @@
         </id>
         <version name="versionId" type="long"/>
         <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" fetch="select">
-            <column name="secondary_holder_id" />
+            <column name="pry_holder_id" />
         </many-to-one>
         <property name="holderAcctNumber" type="int">
             <column name="holder_acct_number" unique="true" />
@@ -177,6 +177,18 @@
             <many-to-many entity-name="org.greenpole.hibernate.entity.Administrator">
                 <column name="administrator_id" not-null="true" />
             </many-to-many>
+        </set>
+        <set name="holderChanges" table="HOLDER_CHANGES" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderChanges" />
+        </set>        
+        <set name="accountConsolidations" table="ACCOUNT_CONSOLIDATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.AccountConsolidation" />
         </set>
     </class>
 </hibernate-mapping>

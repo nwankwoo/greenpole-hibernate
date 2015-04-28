@@ -63,6 +63,13 @@ public interface ClientCompanyComponentQuery {
     public ClientCompany getClientCompany(Integer id);
     
     /**
+     * Gets a client company object by a specified name.
+     * @param name the client company's name
+     * @return the client company object
+     */
+    public ClientCompany getClientCompanyByName(String name);
+    
+    /**
      * Gets a client company object by a specified code.
      * @param code the client company code
      * @return the client company object
@@ -104,6 +111,27 @@ public interface ClientCompanyComponentQuery {
      * @param phoneNumber the client company's phone number
      */
     public void createPhoneNumber(ClientCompanyPhoneNumber phoneNumber);
+    
+    /**
+     * Gets the addresses of a client company.
+     * @param clientCompanyId the client company id
+     * @return the list of the client company's addresses
+     */
+    public List<ClientCompanyAddress> getClientCompanyAddress(int clientCompanyId);
+    
+    /**
+     * Gets the email addresses of a client company.
+     * @param clientCompanyId the client company id
+     * @return the list of the client company's email addresses
+     */
+    public List<ClientCompanyEmailAddress> getClientCompanyEmailAddress(int clientCompanyId);
+    
+    /**
+     * Gets the phone numbers of a client company.
+     * @param clientCompanyId the client company id
+     * @return the list of the client company's phone numbers
+     */
+    public List<ClientCompanyPhoneNumber> getClientCompanyPhoneNumber(int clientCompanyId);
     
     /**
      * Sets up a bond offer.
@@ -154,16 +182,12 @@ public interface ClientCompanyComponentQuery {
      * Searches for list of client companies according to the provided search parameters.
      * @param descriptor the description of the type of search to carry out
      * @param ccSearchParams the client company search parameters
-     * @param ccAddressSearchParams the client company address search parameters
-     * @param ccPhoneSearchParams the client company phone number search parameters
-     * @param ccEmailSearchParams the client company email address search parameters
      * @param shareUnitCriteria the share unit search criteria
      * @param noOfShareholdersCriteria the number of shareholders search criteria
      * @param noOfBondholdersCriteria the number of bond holders search criteria
      * @return the list of client companies according from the search
      */
-    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams,
-            ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams, Map<String, Double> shareUnitCriteria, 
+    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, Map<String, Double> shareUnitCriteria, 
             Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria);
     
 }

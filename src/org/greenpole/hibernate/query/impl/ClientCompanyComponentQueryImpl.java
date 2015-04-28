@@ -6,10 +6,10 @@
 package org.greenpole.hibernate.query.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.management.Descriptor;
 import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
@@ -88,6 +88,15 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         getTransaction().commit();
         return (ClientCompany) criteria.list().get(0);
     }
+    
+    @Override
+    public ClientCompany getClientCompanyByName(String name) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.eq("name", "%" + name + "%"));
+        getTransaction().commit();
+        return (ClientCompany) criteria.list().get(0);
+    }
 
     @Override
     public void editClientCompany(ClientCompany clientCompany) {
@@ -127,6 +136,33 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         createUpdateObject(phoneNumber);
         getTransaction().commit();
+    }
+
+    @Override
+    public List<ClientCompanyAddress> getClientCompanyAddress(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyAddress.class)
+                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        getTransaction().commit();
+        return criteria.list();
+    }
+
+    @Override
+    public List<ClientCompanyEmailAddress> getClientCompanyEmailAddress(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyEmailAddress.class)
+                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        getTransaction().commit();
+        return criteria.list();
+    }
+
+    @Override
+    public List<ClientCompanyPhoneNumber> getClientCompanyPhoneNumber(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyPhoneNumber.class)
+                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        getTransaction().commit();
+        return criteria.list();
     }
 
     @Override
@@ -236,7 +272,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
 
     /**
      * Gets the criteria for a search on all client companies in the database.
-     *
      * @return the criteria for a search on all client companies
      */
     private Criteria getStartCriteria() {
@@ -246,7 +281,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     /**
      * Gets the criteria for a search on all client companies according
      * specified object.
-     *
      * @param baseCriteria the criteria, typically one for a search on all
      * client companies in the database
      * @param clientCompany the client company object containing search patterns
@@ -257,7 +291,15 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
      * patterns
      * @return the criteria for a search on all client companies
      */
-    private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany, ClientCompanyAddress ccAddress, ClientCompanyPhoneNumber ccPhone, ClientCompanyEmailAddress ccEmail) {
+    private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany) {
+        List<ClientCompanyAddress> cc_address_list = new ArrayList<>(clientCompany.getClientCompanyAddresses());
+        List<ClientCompanyPhoneNumber> cc_phone_list = new ArrayList<>(clientCompany.getClientCompanyPhoneNumbers());
+        List<ClientCompanyEmailAddress> cc_email_list = new ArrayList<>(clientCompany.getClientCompanyEmailAddresses());
+        
+        ClientCompanyAddress ccAddress = cc_address_list.get(0);
+        ClientCompanyPhoneNumber ccPhone = cc_phone_list.get(0);
+        ClientCompanyEmailAddress ccEmail = cc_email_list.get(0);
+        
         return baseCriteria.add(Example.create(clientCompany).enableLike())
                 .createCriteria("cc.clientCompanyAddresses", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccAddress).enableLike())
@@ -270,7 +312,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     /**
      * Gets the criteria for a search on all client companies according to
      * specified unit prices.
-     *
      * @param baseCriteria the criteria, typically one for a search on all
      * client companies in the database (but not limited to)
      * @param descriptorValue the value of the descriptor to determine what type
@@ -302,7 +343,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     /**
      * Gets the list of client companies according to the specified number of
      * shareholders.
-     *
      * @param clientCompanies the pool of client companies to search from
      * @param descriptorValue the value of the descriptor to determine what type
      * of search to carry out [whether an exact search - with one value, or a
@@ -341,7 +381,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     /**
      * Gets the list of client companies according to the specified number of
      * bond holders.
-     *
      * @param clientCompanies the pool of client companies to search from
      * @param descriptorValue the value of the descriptor to determine what type
      * of search to carry out [whether an exact search - with one value, or a
@@ -393,9 +432,8 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
-    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, ClientCompanyAddress ccAddressSearchParams,
-            ClientCompanyPhoneNumber ccPhoneSearchParams, ClientCompanyEmailAddress ccEmailSearchParams,
-            Map<String, Double> shareUnitCriteria, Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria) {
+    public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, Map<String, Double> shareUnitCriteria,
+            Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria) {
         //descriptor=clientCompany:none;shareUnit:none;numberOfShareholders:none;numberOfBondholders:none
         Map<String, String> descriptorSplits = Descriptor.decipherDescriptor(descriptor);
         String clientCompanyDescriptor = descriptorSplits.get("clientCompany");
@@ -413,7 +451,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         //under the share unit price search (see if statement for clarification).
 
         if (clientCompanyDescriptor.equalsIgnoreCase("exact")) {
-            clientCompanySearchCriteria = searchClientCompanyAccordingToObject(baseCriteria, ccSearchParams, ccAddressSearchParams, ccPhoneSearchParams, ccEmailSearchParams);
+            clientCompanySearchCriteria = searchClientCompanyAccordingToObject(baseCriteria, ccSearchParams);
             result = clientCompanySearchCriteria.list();
         }
 
