@@ -40,7 +40,6 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -599,6 +598,96 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
 
    /*************SYSTEM ABOVE PULLED LAST APRIL/21/2015********/
     /**
+     * Create Shareholder account[manual creation]
+     * @param holder to be created and persisted
+     * @param residentialaddresses list of residential addresses if any or one or many
+     * @param postaladdresses list of postal addresses if any or one or many
+     * @param emailaddresses list of email addresses if any or one or many
+     * @param fonenumbers list of phone numbers if any or one or many
+     * @param companyaccount company account to be created and persisted
+     * @return boolean type to know if the commands were persisted or failed
+     */
+    public boolean createShareholder(Holder holder, List<HolderResidentialAddress> residentialaddresses, List<HolderPostalAddress> postaladdresses, 
+            List<HolderEmailAddress> emailaddresses, List<HolderPhoneNumber> fonenumbers, HolderCompanyAccount companyaccount){
+        
+        boolean recordcreated = false;
+        try{
+            startOperation();
+            createUpdateObject(holder);
+            for( HolderResidentialAddress address : residentialaddresses ){
+                address.getId().setHolderId(holder.getId());
+                createUpdateObject(address);
+            }
+            for( HolderPostalAddress postal : postaladdresses ){
+                postal.getId().setHolderId(holder.getId());
+                createUpdateObject(postal);
+            }
+            for( HolderEmailAddress email : emailaddresses ){
+                email.getId().setHolderId(holder.getId());
+                createUpdateObject(email);
+            }
+            for( HolderPhoneNumber phone : fonenumbers ){
+                phone.getId().setHolderId(holder.getId());
+                createUpdateObject(phone);
+            }
+            //persist holdercompanyobject
+            createUpdateObject(companyaccount);
+            getTransaction().commit();
+            recordcreated = true;
+            return recordcreated;
+        }catch(HibernateException he){
+            getTransaction().rollback();
+            logger.info("holder creation encountered error(s) in the process and could not effect your commands - ", he);
+            return recordcreated;
+        }
+    }
+    
+    /**
+     * Create Bondholder account[manual creation]
+     * @param holder to be created and persisted
+     * @param residentialaddresses list of residential addresses if any or one or many
+     * @param postaladdresses list of postal addresses if any or one or many
+     * @param emailaddresses list of email addresses if any or one or many
+     * @param fonenumbers list of phone numbers if any or one or many
+     * @param bondaccount
+     * @return boolean type to know if the commands were persisted or failed
+     */
+    public boolean createBondHolder(Holder holder, List<HolderResidentialAddress> residentialaddresses, List<HolderPostalAddress> postaladdresses, 
+            List<HolderEmailAddress> emailaddresses, List<HolderPhoneNumber> fonenumbers, HolderBondAccount bondaccount){
+        
+        boolean recordcreated = false;
+        try{
+            startOperation();
+            createUpdateObject(holder);
+            for( HolderResidentialAddress address : residentialaddresses ){
+                address.getId().setHolderId(holder.getId());
+                createUpdateObject(address);
+            }
+            for( HolderPostalAddress postal : postaladdresses ){
+                postal.getId().setHolderId(holder.getId());
+                createUpdateObject(postal);
+            }
+            for( HolderEmailAddress email : emailaddresses ){
+                email.getId().setHolderId(holder.getId());
+                createUpdateObject(email);
+            }
+            for( HolderPhoneNumber phone : fonenumbers ){
+                phone.getId().setHolderId(holder.getId());
+                createUpdateObject(phone);
+            }
+            //persist holdercompanyobject
+            createUpdateObject(bondaccount);
+            getTransaction().commit();
+            recordcreated = true;
+            return recordcreated;
+        }catch(HibernateException he){
+            getTransaction().rollback();
+            logger.info("holder creation encountered error(s) in the process and could not effect your commands - ", he);
+            return recordcreated;
+        }
+    }
+    
+    /**
     *          Upload Shareholder / Bondholder Signature
      * @param signature
     */
@@ -647,19 +736,6 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
     }
     
     /**
-     * Merge / Consolidate Shareholder Accounts
-     */
-    
-    
-    
-   /**
-    * View report on consolidation of Shareholder Accounts
-    
-    public List viewConsolidatedHolderAccount(List<HolderCompanyAccount> holdercompanyaccount){
-    
-    }*/
-    
-    /**
      * Edit Shareholder / Bondholder Account details
      *An overloaded updateShareholderAccount that takes only objects of
      * Holder, and list of HolderEmailAddress, HolderPhoneNumber, HolderResidentialAddress, HolderPostalAddress
@@ -676,33 +752,19 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
         boolean updaterecord = false;
 	try{
 	startOperation();
-	if(holder != null)
-		createUpdateObject(holder);
-
-	if(holderemails != null){
-		for(HolderEmailAddress email : holderemails)
-		{
-			createUpdateObject(email);
-		}//end email for-loop
-	} //end email if
-	if(holderphones != null){
-		for(HolderPhoneNumber phone : holderphones){
-			createUpdateObject(phone);
-		}//end phone for-loop
-	}//end phone if
-	if(holderpostaladdresses != null){
-		for (HolderPostalAddress postal : holderpostaladdresses )
-		{	
-			createUpdateObject(postal);
-		} //end postal for-loop
-	}//end postaladdress if
-	if (holderresidentialaddresses != null)
-	{	
-		for ( HolderResidentialAddress resident : holderresidentialaddresses )
-		{	
-			createUpdateObject(resident);
-		} //end resident for-loop
-	}//end resident if
+        createUpdateObject(holder);
+        for(HolderEmailAddress email : holderemails){
+            createUpdateObject(email);
+	}//end email for-loop
+        holderphones.stream().forEach((phone) -> {
+            createUpdateObject(phone);
+        }); //end phone for-loop
+        holderpostaladdresses.stream().forEach((postal) -> {
+            createUpdateObject(postal);
+        }); //end postal for-loop
+        holderresidentialaddresses.stream().forEach((resident) -> {
+            createUpdateObject(resident);
+        }); //end resident for-loop
 	getTransaction().commit();
 	updaterecord = true;
 	return updaterecord;
@@ -711,123 +773,6 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
             logger.info("error updating holder records - ", he);
             return updaterecord;
 	}
-    }
-    
-    /**
-     * Edit Shareholder / Bondholder Account details
-     * An overloaded updateShareholderAccount that takes only objects of
-     * Holder, and list of HolderEmailAddress, HolderPhoneNumber, HolderResidentialAddress
-     * @param holder
-     * @param holderemail
-     * @param holderphone
-     * @param holderresidentialaddress
-     * @return 
-     */
-    public boolean updateShareholderAccount(Holder holder, List<HolderEmailAddress> holderemail, List<HolderPhoneNumber> holderphone, 
-             List<HolderResidentialAddress> holderresidentialaddress){
-        boolean updated = false;
-        
-        try{
-        startOperation();
-        //update holder changes
-        createUpdateObject(holder);
-        //update holder mail address
-        createUpdateObject(holderemail);
-        //update holder phone number
-        createUpdateObject(holderphone);
-        //update holder residential address
-        createUpdateObject(holderresidentialaddress);
-        
-        getTransaction().commit();
-        updated = true;
-        return updated;
-        
-        }catch(HibernateException he){
-        logger.info("error updating holder details", he);
-        getTransaction().rollback();
-        return updated;
-        }
-    }
-
-    /**
-     * Edit Shareholder / Bondholder Account details
-     * An overloaded updateShareholderAccount that takes only objects of
-     * Holder, and list of HolderEmailAddress, HolderPhoneNumber, HolderPostalAddress
-     * @param holder
-     * @param holderemail
-     * @param holderphone
-     * @param holderpostaladdress
-     * @return 
-     */
-    public boolean updateShareholderAccount(List<HolderPostalAddress> holderpostaladdress, List<HolderPhoneNumber> holderphone, 
-            List<HolderEmailAddress> holderemail,   Holder holder){
-        boolean updaterecord = false;
-	try{
-	startOperation();
-	if(holder != null)
-		createUpdateObject(holder);
-
-	if(holderemail != null){
-		for(HolderEmailAddress email : holderemail)
-		{
-			createUpdateObject(email);
-		}//end email for-loop
-	} //end email if
-	if(holderphone != null){
-		for(HolderPhoneNumber phone : holderphone){
-			createUpdateObject(phone);
-		}//end phone for-loop
-	}//end phone if
-	if(holderpostaladdress != null){
-		for (HolderPostalAddress postal : holderpostaladdress )
-		{	
-			createUpdateObject(postal);
-		} //end postal for-loop
-	}//end postaladdress if
-	getTransaction().commit();
-	updaterecord = true;
-	return updaterecord;
-	}catch(HibernateException he){
-            getTransaction().rollback();
-            logger.info("error updating holder records - ", he);
-            return updaterecord;
-	}
-    }
-    
-    /**
-     * Edit Shareholder / Bondholder Account details
-     * An overloaded updateShareholderAccount that takes only objects of
-     * Holder, and list of HolderEmailAddress, HolderPhoneNumber, HolderResidentialAddress
-     * @param holder
-     * @param holderemail
-     * @param holderphone
-     * @param holderresidentialaddress
-     * @return 
-     */
-    public boolean updateShareholderAccount( List<HolderPhoneNumber> holderphone, 
-             List<HolderResidentialAddress> holderresidentialaddress, Holder holder, List<HolderEmailAddress> holderemail){
-        boolean updated = false;
-        
-        try{
-        startOperation();
-        //update holder changes
-        createUpdateObject(holder);
-        //update holder mail address
-        createUpdateObject(holderemail);
-        //update holder phone number
-        createUpdateObject(holderphone);
-        //update holder residential address
-        createUpdateObject(holderresidentialaddress);
-        
-        getTransaction().commit();
-        updated = true;
-        return updated;
-        
-        }catch(HibernateException he){
-        logger.info("error updating holder details", he);
-        getTransaction().rollback();
-        return updated;
-        }
     }
     
     /**
@@ -1005,5 +950,17 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
             return transferUpdated;
         }
     }
+    /* ******************* LAST UPDATED ON APRIL 27TH, 2015****************** */
+    /**
+     * Merge / Consolidate Shareholder Accounts
+     */
     
+    
+    
+   /**
+    * View report on consolidation of Shareholder Accounts
+    
+    public List viewConsolidatedHolderAccount(List<HolderCompanyAccount> holdercompanyaccount){
+    
+    }*/
    }
