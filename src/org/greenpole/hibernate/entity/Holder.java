@@ -92,6 +92,7 @@ public class Holder  implements java.io.Serializable {
        this.holderChanges = holderChanges;
        this.accountConsolidations = accountConsolidations;
     }
+    
    
     public int getId() {
         return this.id;
