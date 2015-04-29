@@ -30,7 +30,6 @@ public class HolderCompanyAccount  implements java.io.Serializable {
 
     public HolderCompanyAccount() {
     }
-
 	
     public HolderCompanyAccount(HolderCompanyAccountId id, ClientCompany clientCompany, Holder holder) {
         this.id = id;
