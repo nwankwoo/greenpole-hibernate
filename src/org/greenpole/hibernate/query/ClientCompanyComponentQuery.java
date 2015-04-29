@@ -50,7 +50,7 @@ public interface ClientCompanyComponentQuery {
      * @param addresses the client company's addresses
      * @param emailAddresses the client company's email addresses
      * @param phoneNumbers the client company's phone numbers
-     * @return true if the creation was successful
+     * @return true if the creation / update was successful
      */
     public boolean createOrUpdateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, 
             List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers);
@@ -75,16 +75,6 @@ public interface ClientCompanyComponentQuery {
      * @return the client company object
      */
     public ClientCompany getClientCompany(String code);
-    
-    /**
-     * Updates an existing client company in the database.
-     * @param clientCompany the client company object model containing data
-     * to be updated
-     * @deprecated outdated method. Use {@link #createOrUpdateClientCompany(org.greenpole.hibernate.entity.ClientCompany, org.greenpole.hibernate.entity.ClientCompanyAddress, org.greenpole.hibernate.entity.ClientCompanyEmailAddress, org.greenpole.hibernate.entity.ClientCompanyPhoneNumber)}
-     * instead
-     */
-    @Deprecated
-    public void editClientCompany(ClientCompany clientCompany);
     
     /**
      * Retrieves the unique identifier of the client company according to the
@@ -185,7 +175,7 @@ public interface ClientCompanyComponentQuery {
      * @param shareUnitCriteria the share unit search criteria
      * @param noOfShareholdersCriteria the number of shareholders search criteria
      * @param noOfBondholdersCriteria the number of bond holders search criteria
-     * @return the list of client companies according from the search
+     * @return the list of client companies from the search
      */
     public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, Map<String, Double> shareUnitCriteria, 
             Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria);

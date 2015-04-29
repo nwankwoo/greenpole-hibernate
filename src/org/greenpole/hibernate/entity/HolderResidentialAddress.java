@@ -12,7 +12,7 @@ public class HolderResidentialAddress  implements java.io.Serializable {
      private HolderResidentialAddressId id;
      private long versionId;
      private Holder holder;
-     private int addressLine2;
+     private String addressLine2;
      private String addressLine3;
      private String addressLine4;
      private String postCode;
@@ -27,7 +27,7 @@ public class HolderResidentialAddress  implements java.io.Serializable {
         this.id = id;
         this.holder = holder;
     }
-    public HolderResidentialAddress(HolderResidentialAddressId id, Holder holder, int addressLine2, String addressLine3, String addressLine4, String postCode, String city, boolean isPrimary) {
+    public HolderResidentialAddress(HolderResidentialAddressId id, Holder holder, String addressLine2, String addressLine3, String addressLine4, String postCode, String city, boolean isPrimary) {
        this.id = id;
        this.holder = holder;
        this.addressLine2 = addressLine2;
@@ -69,11 +69,11 @@ public class HolderResidentialAddress  implements java.io.Serializable {
     public void setHolder(Holder holder) {
         this.holder = holder;
     }
-    public int getAddressLine2() {
+    public String getAddressLine2() {
         return this.addressLine2;
     }
     
-    public void setAddressLine2(int addressLine2) {
+    public void setAddressLine2(String addressLine2) {
         this.addressLine2 = addressLine2;
     }
     public String getAddressLine3() {

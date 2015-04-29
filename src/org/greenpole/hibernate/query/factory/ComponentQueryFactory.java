@@ -9,6 +9,7 @@ import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.query.GeneralComponentQuery;
 import org.greenpole.hibernate.query.impl.ClientCompanyComponentQueryImpl;
 import org.greenpole.hibernate.query.impl.GeneralComponentQueryImpl;
+import org.greenpole.hibernate.query.impl.HolderComponentQueryImpl;
 
 /**
  *
@@ -22,6 +23,14 @@ public class ComponentQueryFactory {
      */
     public static ClientCompanyComponentQuery getClientCompanyQuery() {
         return new ClientCompanyComponentQueryImpl();
+    }
+    
+    /**
+     * Creates a new holder component query implementation.
+     * @return a new holder component query implementation
+     */
+    public static HolderComponentQueryImpl getHolderComponentQuery() {
+        return new HolderComponentQueryImpl();
     }
     
     /**
