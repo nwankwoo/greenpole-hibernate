@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.management.Descriptor;
 import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
@@ -96,13 +95,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
                 .add(Restrictions.eq("name", "%" + name + "%"));
         getTransaction().commit();
         return (ClientCompany) criteria.list().get(0);
-    }
-
-    @Override
-    public void editClientCompany(ClientCompany clientCompany) {
-        startOperation();
-        createUpdateObject(clientCompany);
-        getTransaction().commit();
     }
 
     @Override
@@ -300,13 +292,41 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         ClientCompanyPhoneNumber ccPhone = cc_phone_list.get(0);
         ClientCompanyEmailAddress ccEmail = cc_email_list.get(0);
         
-        return baseCriteria.add(Example.create(clientCompany).enableLike())
-                .createCriteria("cc.clientCompanyAddresses", JoinType.LEFT_OUTER_JOIN)
-                .add(Example.create(ccAddress).enableLike())
-                .createCriteria("cc.clientCompanyPhoneNumbers", JoinType.LEFT_OUTER_JOIN)
-                .add(Example.create(ccPhone).enableLike())
-                .createCriteria("cc.clientCompanyEmailAddresses", JoinType.LEFT_OUTER_JOIN)
-                .add(Example.create(ccEmail).enableLike());
+        baseCriteria.add(Example.create(clientCompany).enableLike())
+                .createCriteria("cc.clientCompanyAddresses", "a", JoinType.LEFT_OUTER_JOIN)
+                .add(Example.create(ccAddress).enableLike().ignoreCase())
+                .createCriteria("cc.clientCompanyPhoneNumbers", "p", JoinType.LEFT_OUTER_JOIN)
+                .add(Example.create(ccPhone).enableLike().ignoreCase())
+                .createCriteria("cc.clientCompanyEmailAddresses", "e", JoinType.LEFT_OUTER_JOIN)
+                .add(Example.create(ccEmail).enableLike().ignoreCase());
+        
+        //for address id
+        String addy_addressLine1 = ccAddress.getId().getAddressLine1();
+        if (addy_addressLine1 != null) {
+            baseCriteria.add(Restrictions.ilike("a.id.addressLine1", addy_addressLine1));
+        }
+        String addy_state = ccAddress.getId().getState();
+        if (addy_state != null) {
+            baseCriteria.add(Restrictions.ilike("a.id.state", addy_state));
+        }
+        String addy_country = ccAddress.getId().getCountry();
+        if (addy_country != null) {
+            baseCriteria.add(Restrictions.ilike("a.id.country", addy_country));
+        }
+        
+        //for phone id
+        String phoneNumber = ccPhone.getId().getPhoneNumber();
+        if (phoneNumber != null) {
+            baseCriteria.add(Restrictions.ilike("p.id.phoneNumber", phoneNumber));
+        }
+        
+        //for email id
+        String emailAddress = ccEmail.getId().getEmailAddress();
+        if (emailAddress != null) {
+            baseCriteria.add(Restrictions.ilike("e.id.emailAddress", emailAddress));
+        }
+        
+        return baseCriteria;
     }
 
     /**

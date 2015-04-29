@@ -22,8 +22,8 @@
         <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" update="false" insert="false" fetch="select">
             <column name="holder_id" not-null="true" />
         </many-to-one>
-        <property name="addressLine2" type="int">
-            <column name="address_line_2" />
+        <property name="addressLine2" type="string">
+            <column name="address_line_2" length="50" />
         </property>
         <property name="addressLine3" type="string">
             <column name="address_line_3" length="50" />
