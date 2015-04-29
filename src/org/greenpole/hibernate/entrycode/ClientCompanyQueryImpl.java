@@ -297,7 +297,7 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
    public Holder createShareholder(String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, 
            String holdercityaddress, String holdercodeaddress, String holderstateaddress, String holdercountryaddress, String holderpostalcityaddress, 
            String holderpostalcodeaddress, String holderpostalstateaddress, String holderpostalcountryaddress, String holderphonenumber, String holderemailaddress, 
-           String shareholderresidentaddline1, int shareholderresidentaddline2, String shareholderresidentaddline3, String shareholderresidentaddline4, 
+           String shareholderresidentaddline1, String shareholderresidentaddline2, String shareholderresidentaddline3, String shareholderresidentaddline4, 
            String shareholderpostaladdline1, int shareholderpostaladdline2, String shareholderpostaladdline3, String shareholderpostaladdline4, 
            boolean shareholderresidentaddrValidity, boolean shareholderpostaladdrValidity, boolean shareholderphoneaddrValidity){
        
@@ -399,8 +399,8 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
    public HolderBondAccount createBondHolderAccount(String firstName, String middleName, String lastName, String gender, Date dob, String bondholderCHN,
            String residentialcity, String residentialpostalcode, String residentialstate, String residentialcountry, 
            String postalcity, String postalpostcode, String postalstate, String postalcountry, String bondholdernumber, String bondholderemail, 
-           String bondholderresidentaddline1, int bondholderresidentaddline2, String bondholderresidentaddline3, String bondholderresidentaddline4, 
-           String bondholderpostaladdline1, int bondholderpostaladdline2, String bondholderpostaladdline3, String bondholderpostaladdline4, 
+           String bondholderresidentaddline1, String bondholderresidentaddline2, String bondholderresidentaddline3, String bondholderresidentaddline4, 
+           String bondholderpostaladdline1, String bondholderpostaladdline2, String bondholderpostaladdline3, String bondholderpostaladdline4, 
            boolean bhresidentaddrValidity, boolean bhpostaladdrValidity, boolean bhphoneaddrValidity, double bondunits ){
        HolderBondAccount holderbondaccount = new HolderBondAccount();
        Holder bondHolder = new Holder();
