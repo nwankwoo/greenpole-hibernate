@@ -6,6 +6,7 @@
 package org.greenpole.hibernate.query.impl;
 
 import java.util.List;
+import java.util.Map;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
 import org.greenpole.hibernate.entity.HolderChanges;
@@ -111,9 +112,9 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public HolderBondAccount getHolderBondAccount(String chn) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
-    public List<Holder> queryHolderAccount(String descriptor, Holder searchParams) {
+    public List<Holder> queryHolderAccount(String descriptor, Holder searchParams, Map<String, Integer> shareUnits_search, Map<String, Integer> totalHoldings_search) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
