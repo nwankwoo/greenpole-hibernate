@@ -5,6 +5,7 @@
  */
 package org.greenpole.hibernate.entrycode;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -22,30 +23,36 @@ import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
 import org.greenpole.hibernate.entity.Depository;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
+import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.HolderEmailAddress;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
+import org.greenpole.hibernate.entity.PowerOfAttorney;
 import org.greenpole.hibernate.entity.PrivatePlacement;
 import org.greenpole.hibernate.entity.ShareQuotation;
+import org.greenpole.hibernate.query.impl.ClientCompanyComponentQueryImpl;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
-import org.hibernate.criterion.Example;
-import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Ahmad.Gbadamosi
  */
-public class ClientCompanyQueryImpl {
+public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
     
     Session session;
     ClientCompanyDao clientDao;
-    
+    private static final Logger logger = LoggerFactory.getLogger(ClientCompanyComponentQueryImpl.class);
     public void persistClientCompany(){
         ClientCompany client = new ClientCompany();
         clientDao.create(client);
@@ -67,11 +74,16 @@ public class ClientCompanyQueryImpl {
             SQLQuery query = session.createSQLQuery(searchQuery);
             query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP); //not printing
             List results = query.list();
-            //return results;
-            for(Object objresults : results){
-            Map objectMap = (Map) objresults;
-            //    System.out.println(objectMap.get("id"));
-            }
+        //return results;
+            results.stream().forEach((objresults) -> {
+                Map objectMap = (Map) objresults;
+                System.out.println(objectMap.get("id"));
+                /*
+                for(Object objresults : results){
+                Map objectMap = (Map) objresults;
+                
+                */
+        });
     }
         
     /**
@@ -357,6 +369,7 @@ public class ClientCompanyQueryImpl {
      * @param lastName ,lastname of the bond owner
      * @param dob   , date of birth of the bond owner
      * @param gender 
+     * @param bondholderCHN 
      * @param residentialcity
      * @param residentialpostalcode
      * @param residentialstate
@@ -378,6 +391,7 @@ public class ClientCompanyQueryImpl {
      * @param bhresidentaddrValidity , show if still valid
      * @param bhpostaladdrValidity  , show if still valid
      * @param bhphoneaddrValidity , show if still valid
+     * @param bondunits
      * @return holderbondaccount
    */
    public HolderBondAccount createBondHolderAccount(String firstName, String middleName, String lastName, String gender, Date dob, String bondholderCHN,
@@ -452,7 +466,7 @@ public class ClientCompanyQueryImpl {
    }  
    
    /**
-     * Query Clientcompany with list of searchable attribute and <p>
+     * Query Clientcompany with list of searchable attribute and  <p>
      * list of search terms from user
      * @param defaultSearchableParams
      * @param userSearchTerms
@@ -582,5 +596,371 @@ public class ClientCompanyQueryImpl {
         
     }
 
-   /*********************/
-}
+   /*************SYSTEM ABOVE PULLED LAST APRIL/21/2015********/
+    /**
+     * Create Shareholder account[manual creation]
+     * @param holder to be created and persisted
+     * @param residentialaddresses list of residential addresses if any or one or many
+     * @param postaladdresses list of postal addresses if any or one or many
+     * @param emailaddresses list of email addresses if any or one or many
+     * @param fonenumbers list of phone numbers if any or one or many
+     * @param companyaccount company account to be created and persisted
+     * @return boolean type to know if the commands were persisted or failed
+     */
+    public boolean createShareholder(Holder holder, List<HolderResidentialAddress> residentialaddresses, List<HolderPostalAddress> postaladdresses, 
+            List<HolderEmailAddress> emailaddresses, List<HolderPhoneNumber> fonenumbers, HolderCompanyAccount companyaccount){
+        
+        boolean recordcreated = false;
+        try{
+            startOperation();
+            createUpdateObject(holder);
+            for( HolderResidentialAddress address : residentialaddresses ){
+                address.getId().setHolderId(holder.getId());
+                createUpdateObject(address);
+            }
+            for( HolderPostalAddress postal : postaladdresses ){
+                postal.getId().setHolderId(holder.getId());
+                createUpdateObject(postal);
+            }
+            for( HolderEmailAddress email : emailaddresses ){
+                email.getId().setHolderId(holder.getId());
+                createUpdateObject(email);
+            }
+            for( HolderPhoneNumber phone : fonenumbers ){
+                phone.getId().setHolderId(holder.getId());
+                createUpdateObject(phone);
+            }
+            //persist holdercompanyobject
+            createUpdateObject(companyaccount);
+            getTransaction().commit();
+            recordcreated = true;
+            return recordcreated;
+        }catch(HibernateException he){
+            getTransaction().rollback();
+            logger.info("holder creation encountered error(s) in the process and could not effect your commands - ", he);
+            return recordcreated;
+        }
+    }
+    
+    /**
+     * Create Bondholder account[manual creation]
+     * @param holder to be created and persisted
+     * @param residentialaddresses list of residential addresses if any or one or many
+     * @param postaladdresses list of postal addresses if any or one or many
+     * @param emailaddresses list of email addresses if any or one or many
+     * @param fonenumbers list of phone numbers if any or one or many
+     * @param bondaccount
+     * @return boolean type to know if the commands were persisted or failed
+     */
+    public boolean createBondHolder(Holder holder, List<HolderResidentialAddress> residentialaddresses, List<HolderPostalAddress> postaladdresses, 
+            List<HolderEmailAddress> emailaddresses, List<HolderPhoneNumber> fonenumbers, HolderBondAccount bondaccount){
+        
+        boolean recordcreated = false;
+        try{
+            startOperation();
+            createUpdateObject(holder);
+            for( HolderResidentialAddress address : residentialaddresses ){
+                address.getId().setHolderId(holder.getId());
+                createUpdateObject(address);
+            }
+            for( HolderPostalAddress postal : postaladdresses ){
+                postal.getId().setHolderId(holder.getId());
+                createUpdateObject(postal);
+            }
+            for( HolderEmailAddress email : emailaddresses ){
+                email.getId().setHolderId(holder.getId());
+                createUpdateObject(email);
+            }
+            for( HolderPhoneNumber phone : fonenumbers ){
+                phone.getId().setHolderId(holder.getId());
+                createUpdateObject(phone);
+            }
+            //persist holdercompanyobject
+            createUpdateObject(bondaccount);
+            getTransaction().commit();
+            recordcreated = true;
+            return recordcreated;
+        }catch(HibernateException he){
+            getTransaction().rollback();
+            logger.info("holder creation encountered error(s) in the process and could not effect your commands - ", he);
+            return recordcreated;
+        }
+    }
+    
+    /**
+    *          Upload Shareholder / Bondholder Signature
+     * @param signature
+    */
+    public void uploadHolderSignature(HolderSignature signature){
+        startOperation();
+        createUpdateObject(signature);
+        getTransaction().commit();
+    }
+    
+    /**
+     * Query Shareholder / Bondholder Signature
+     * @param holderid
+     * @return 
+     */
+    public List queryHolderSignatureByHolderId(int holderid){
+        startOperation();
+        List<HolderSignature> receiveSignature = new ArrayList<>();
+        String searchQuery = "from HolderSignature as signature where signature.holder=" + holderid;
+        Query querySearch = getSession().createQuery(searchQuery);
+        receiveSignature = querySearch.list();
+        getTransaction().commit();
+        return receiveSignature;
+    }
+    
+    /**
+     *   Query Power of Attorney
+     * @param id
+     * @return 
+     */
+    public List queryPowerOfAttorneyById(int id){
+        
+        startOperation();
+        Criteria powerofattorney = getSession().createCriteria(PowerOfAttorney.class);
+        powerofattorney.add(Restrictions.idEq(id));
+        List result = powerofattorney.list();
+        getTransaction().commit();
+        return result;
+    }
+    
+    public PowerOfAttorney queryPowerOfAttorneyByObject(int id){
+        
+        startOperation();
+        PowerOfAttorney powerofattorney = (PowerOfAttorney) searchObject(null, id);
+        getTransaction().commit();
+        return powerofattorney;
+    }
+    
+    /**
+     * Edit Shareholder / Bondholder Account details
+     *An overloaded updateShareholderAccount that takes only objects of
+     * Holder, and list of HolderEmailAddress, HolderPhoneNumber, HolderResidentialAddress, HolderPostalAddress
+     * @param holder
+     * @param holderemails
+     * @param holderphones
+     * @param holderpostaladdresses
+     * @param holderresidentialaddresses
+     * @return 
+    */
+    public boolean updateShareholderAccount(Holder holder, List<HolderEmailAddress> holderemails, List<HolderPhoneNumber> holderphones, 
+            List<HolderPostalAddress> holderpostaladdresses, List<HolderResidentialAddress> holderresidentialaddresses){
+        
+        boolean updaterecord = false;
+	try{
+	startOperation();
+        createUpdateObject(holder);
+        for(HolderEmailAddress email : holderemails){
+            createUpdateObject(email);
+	}//end email for-loop
+        holderphones.stream().forEach((phone) -> {
+            createUpdateObject(phone);
+        }); //end phone for-loop
+        holderpostaladdresses.stream().forEach((postal) -> {
+            createUpdateObject(postal);
+        }); //end postal for-loop
+        holderresidentialaddresses.stream().forEach((resident) -> {
+            createUpdateObject(resident);
+        }); //end resident for-loop
+	getTransaction().commit();
+	updaterecord = true;
+	return updaterecord;
+	}catch(HibernateException he){
+            getTransaction().rollback();
+            logger.info("error updating holder records - ", he);
+            return updaterecord;
+	}
+    }
+    
+    /**
+     * Store Shareholder / Bondholder NUBAN account number
+     * @param holderaccount 
+     */
+    public void storeShareHolderNUBAN(HolderCompanyAccount holderaccount){
+        startOperation();
+        createUpdateObject(holderaccount);
+        getTransaction().commit();
+    }
+    
+    /**
+     * Store Shareholder / Bondholder NUBAN account number
+     * @param bondaccount
+     */
+    public void storeBondHolderNUBAN(HolderBondAccount bondaccount){
+        startOperation();
+        createUpdateObject(bondaccount);
+        getTransaction().commit();
+    }
+    
+    /**
+     * Change Shareholder NUBAN account number by specific identifier id
+     * @param id
+     * @param nubantochange
+     * @return 
+     */
+    public boolean changeShareHolderNUBANAccountById(int id, String nubantochange){
+        //load the HolderCompanyAccount from db with identifier, obtain pessimistic lock to prevent two simultaneous update for the same person
+        boolean updated = false;
+        try{
+        startOperation();
+        HolderCompanyAccount shareholderaccount = 
+                ( HolderCompanyAccount ) session.get( HolderCompanyAccount.class, id, LockOptions.UPGRADE);
+        shareholderaccount.setNubanAccount(nubantochange);
+            createUpdateObject( shareholderaccount );
+        getTransaction().commit();
+        updated = true;
+        return updated;
+        }catch(HibernateException he){
+            logger.info("error updating NUBAN number", he);
+            getTransaction().rollback();
+            return updated;
+        }
+    }
+    
+    /**
+     * Change Shareholder NUBAN account number by taken object as parameter
+     * @param shareholderaccount
+     * @return 
+     */
+    public boolean changeShareHolderNUBANAccountByObject( HolderCompanyAccount shareholderaccount ){
+        //load the HolderCompanyAccount from db with identifier, obtain pessimistic lock to prevent two simultaneous update for the same person
+        boolean updated = false;
+        try{
+        startOperation();
+        createUpdateObject( shareholderaccount );
+        getTransaction().commit();
+        updated = true;
+        return updated;
+        }catch(HibernateException he){
+            logger.info("error updating NUBAN number", he);
+            getTransaction().rollback();
+            return updated;
+        }
+    }
+    
+    /**
+     * Change Bondholder NUBAN account number by specific identifier id
+     * @param id
+     * @param nubantochange
+     * @return ,true if update is successful and false otherwise
+     */
+    public boolean changeBondHolderNUBANAccountById(int id, String nubantochange){
+        //load the HolderCompanyAccount from db with identifier, obtain pessimistic lock to prevent two simultaneous update for the same person
+        boolean updated = false;
+        try{
+        startOperation();
+        HolderBondAccount holderbondaccount = 
+                ( HolderBondAccount ) session.get( HolderBondAccount.class, id, LockOptions.UPGRADE);
+        holderbondaccount.setNubanAccount(nubantochange);
+        createUpdateObject( holderbondaccount );
+        getTransaction().commit();
+        updated = true;
+        return updated;
+        }catch(HibernateException he){
+            logger.info( "error updating NUBAN number", he );
+            getTransaction().rollback();
+            return updated;
+        }
+    }
+    
+    /**
+     * Change Bondholder NUBAN account number by taken object as parameter
+     * @param holderbondaccount , sent object containing changes
+     * @return , true if update is successful and false otherwise
+     */
+    public boolean changeBondHolderNUBANAccountByObject(HolderBondAccount holderbondaccount){
+        //load the HolderCompanyAccount from db with identifier, obtain pessimistic lock to prevent two simultaneous update for the same person
+        boolean updated = false;
+        try{
+            startOperation();
+            createUpdateObject(holderbondaccount);
+            getTransaction().commit();
+            updated = true;
+            return updated;
+        }catch(HibernateException he){
+            logger.info("error updating NUBAN number", he);
+            getTransaction().rollback();
+            return updated;
+        }
+        
+    }
+    
+    /**
+     * Query to load the source and destination shareholder account during Transferring, from which <p>
+     * other attributes can be extracted
+     * @param holdercompanyaccount
+     * @return 
+     */
+    public HolderCompanyAccount getShareHolderAccount(int holdercompanyaccount){
+        startOperation();
+        HolderCompanyAccount holderaccount = 
+                (HolderCompanyAccount) searchObject(HolderCompanyAccount.class, holdercompanyaccount);
+        getTransaction().commit();
+        return holderaccount;
+    }
+    
+    /**
+     * Transfer Share Units between Shareholder Company Accounts
+     * @param holderaccount
+     * @return 
+     */
+    public boolean transferShareunit(HolderCompanyAccount holderaccount){
+        boolean transferUpdated = false;
+        try{
+            startOperation();
+            createUpdateObject(holderaccount);
+            getTransaction().commit();
+            transferUpdated = true;
+            return transferUpdated;
+        }catch(HibernateException he){
+            logger.info("error transfering the share units between the two shareholder's accounts", he);
+            getTransaction().rollback();
+            return transferUpdated;
+        }
+    }
+    
+    /**
+     * Query to load the source and destination bond holder account,<p>
+     * during Transferring from which other attributes can be extracted
+     * @param holdercompanyaccount
+     * @return 
+     */
+    public HolderBondAccount getHolderBondAccount(int holdercompanyaccount){
+        startOperation();
+        HolderBondAccount holderaccount = 
+                (HolderBondAccount) searchObject(HolderBondAccount.class, holdercompanyaccount);
+        getTransaction().commit();
+        return holderaccount;
+    }
+    
+    public boolean transferBondunit(HolderBondAccount holderbondaccount){
+        boolean transferUpdated = false;
+        try{
+            startOperation();
+            createUpdateObject(holderbondaccount);
+            getTransaction().commit();
+            transferUpdated = true;
+            return transferUpdated;
+        }catch(HibernateException he){
+            logger.info("error transfering the bond unit between the two bondholder's accounts", he);
+            getTransaction().rollback();
+            return transferUpdated;
+        }
+    }
+    /* ******************* LAST UPDATED ON APRIL 27TH, 2015****************** */
+    /**
+     * Merge / Consolidate Shareholder Accounts
+     */
+    
+    
+    
+   /**
+    * View report on consolidation of Shareholder Accounts
+    
+    public List viewConsolidatedHolderAccount(List<HolderCompanyAccount> holdercompanyaccount){
+    
+    }*/
+   }

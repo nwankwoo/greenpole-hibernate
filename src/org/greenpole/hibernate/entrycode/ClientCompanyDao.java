@@ -30,7 +30,7 @@ public class ClientCompanyDao extends GeneralisedAbstractDao{
      * @return
      * @throws DataAccessLayerException
      */
-    public ClientCompany getClientCompany(String cc) throws DataAccessLayerException{
+    public ClientCompany getClientCompany(int cc) throws DataAccessLayerException{
         return (ClientCompany)super.searchObject(ClientCompany.class, cc);
     }
     

@@ -5,7 +5,9 @@
  */
 package org.greenpole.hibernate.entrycode;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.greenpole.hibernate.exception.DataAccessLayerException;
 import org.greenpole.hibernate.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -20,24 +22,25 @@ import org.hibernate.Transaction;
  *<p>objects (concrete classes) and from which, implements complete
  * details of the methods in the inherited abstract class<p>
  * is a concrete class that implements the abstract class
- * @see ClientCompanyDao
+ * @see ClientCompanyQueryImpl
  */
 public abstract class GeneralisedAbstractDao {
-    
     private Session session;
-    private Transaction tx; 
-    
+    private Transaction tx;
+
     /**
      * Operational method for hibernate to obtain a session and <p>
      * start a hibernate transaction, applied to a sequence of operation
      */
     public void startOperation(){
         session = HibernateUtil.getSessionFactory().getCurrentSession();
-        tx = session.beginTransaction();  //use hibernate api to manage and demarcate transaction
+        tx = session.beginTransaction();
     }
 
     /**
-     * Gets the hibernate session.
+     * Gets the current hibernate session.
+     * Ensure that the method {@link #startOperation()} has been called before
+     * calling this method.
      * @return the hibernate session
      */
     public Session getSession() {
@@ -46,59 +49,69 @@ public abstract class GeneralisedAbstractDao {
 
     /**
      * Gets the hibernate transaction.
+     * Ensure that the method {@link #startOperation()} has been called before
+     * calling this method.
      * @return the hibernate transaction
      */
-    public Transaction getTx() {
+    public Transaction getTransaction() {
         return tx;
     }
     
     /**
      * 
-     * @param e
+     * @param ex
      * @throws DataAccessLayerException 
+     * @deprecated exceptions / rollbacks will not be handled this way. If a 
+     * rollback must occur, it should be called explicitly within the running
+     * method.
      */
-    protected void handleException(HibernateException e) throws DataAccessLayerException{
+    @Deprecated
+    private void handleException(String information, HibernateException ex) throws DataAccessLayerException{
         HibernateUtil.rollback(tx);
-        throw new DataAccessLayerException(e);
+        throw new DataAccessLayerException(information, ex);
     }
     
     
     /**
-     * Utility save or update method that persist the our objects
-     * @param object
+     * Saves or updates a hibernate object in the database.
+     * The {@link #startOperation()} method must be explicitly called, along
+     * with the {@link #getSession()} and {@link #getTransaction()} to commit.
+     * @param object a hibernate entity
      */
-    protected void createUpdateObject(Object object){
-        try{
-            startOperation();
-            session.saveOrUpdate(object);
-            session.getTransaction();
-            tx.commit();
-        }catch(HibernateException he){
-            HibernateUtil.rollback(tx);
-            throw new DataAccessLayerException(he);
-        }
+    public void createUpdateObject(Object object){
+        session.saveOrUpdate(object);
     } 
     /**
-     * Return the component instance of the given entity class 
+     * Returns the component instance of the given entity class 
      * with the given identifier, or null if there is no such 
-     * persistent instance
-     * @return obj
+     * persistent instance.
+     * The {@link #startOperation()} method must be explicitly called, along
+     * with the {@link #getSession()} and {@link #getTransaction()} to commit.
+     * @param clz the entity class
+     * @param id the id of the object to retrieve
+     * @return the object of the entity class
      */
-    protected Object searchObject(Class classObj, String searchParams){
-        Object object = null;
-        
-        startOperation();
-        session.get(classObj, searchParams);  //get is used over load, becuase load cannot handle non-identifier searchParams
-        tx.commit();
+    public Object searchObject(Class clz, Integer id){
+        Object object = session.get(clz, id);
         return object;
     }
     
-    protected List searchAll(Class classObj){
-        List objects = null;
-        startOperation();
-        Query query = session.createQuery("from" + classObj.getName());
-        objects = query.list();
-        tx.commit();
+    /**
+     * Returns all component instances of the given entity class.
+     * The {@link #startOperation()} method must be explicitly called, along
+     * with the {@link #getSession()} and {@link #getTransaction()} to commit.
+     * @param clz the entity class
+     * @return a list of objects of the entity class
+     */
+    public List searchAll(Class clz){
+        Query query = session.createQuery("FROM " + clz.getName());
+        List objects = query.list();
         return objects;
+    }
+    
+    public List searchObjectList(Class clz, Integer id){
+        List<Object> sampleobjtolist = new ArrayList<>();
+        Object object = session.get(clz, id);
+        return sampleobjtolist;
     }
 }
