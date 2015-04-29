@@ -16,6 +16,7 @@ public class Administrator  implements java.io.Serializable {
      private String firstName;
      private String middleName;
      private String lastName;
+     private String pryAddress;
      private Set administratorPhoneNumbers = new HashSet(0);
      private Set administratorResidentialAddresses = new HashSet(0);
      private Set holders = new HashSet(0);
@@ -25,10 +26,11 @@ public class Administrator  implements java.io.Serializable {
     public Administrator() {
     }
 
-    public Administrator(String firstName, String middleName, String lastName, Set administratorPhoneNumbers, Set administratorResidentialAddresses, Set holders, Set administratorEmailAddresses, Set administratorPostalAddresses) {
+    public Administrator(String firstName, String middleName, String lastName, String pryAddress, Set administratorPhoneNumbers, Set administratorResidentialAddresses, Set holders, Set administratorEmailAddresses, Set administratorPostalAddresses) {
        this.firstName = firstName;
        this.middleName = middleName;
        this.lastName = lastName;
+       this.pryAddress = pryAddress;
        this.administratorPhoneNumbers = administratorPhoneNumbers;
        this.administratorResidentialAddresses = administratorResidentialAddresses;
        this.holders = holders;
@@ -80,6 +82,14 @@ public class Administrator  implements java.io.Serializable {
     
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPryAddress() {
+        return pryAddress;
+    }
+
+    public void setPryAddress(String pryAddress) {
+        this.pryAddress = pryAddress;
     }
     public Set getAdministratorPhoneNumbers() {
         return this.administratorPhoneNumbers;

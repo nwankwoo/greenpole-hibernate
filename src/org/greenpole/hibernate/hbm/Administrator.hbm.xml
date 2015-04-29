@@ -18,6 +18,9 @@
         <property name="lastName" type="string">
             <column name="last_Name" length="50" />
         </property>
+        <property name="pryAddress" type="string">
+            <column name="pry_address" length="50" />
+        </property>
         <set name="administratorPhoneNumbers" table="ADMINISTRATOR_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="administrator_id" not-null="true" />
