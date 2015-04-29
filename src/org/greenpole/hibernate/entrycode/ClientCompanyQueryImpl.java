@@ -20,9 +20,11 @@ import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
+import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Depository;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
+import org.greenpole.hibernate.entity.HolderChanges;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.HolderEmailAddress;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
@@ -950,17 +952,157 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
             return transferUpdated;
         }
     }
-    /* ******************* LAST UPDATED ON APRIL 27TH, 2015****************** */
-    /**
-     * Merge / Consolidate Shareholder Accounts
-     */
-    
-    
+    /* ******************* LAST UPDATED ON APRIL 28TH, 2015****************** */  
     
    /**
     * View report on consolidation of Shareholder Accounts
+    * first overloaded method to search all accounts merged between range of date
+     * @param startdate
+     * @param enddate
+     * @return list of consolidated accounts
+    */
+    public List<CompanyAccountConsolidation> viewConsolidatedHolderAccount(Date startdate, Date enddate){
+        startOperation();
+        List<CompanyAccountConsolidation> listofconsolidatedaccounts = null;
+        String searchQuery = "from CompanyAccountConsolidation as cac where cac.mergeDate between '" + startdate + "and'" + enddate +"'";
+        Query querySearch = getSession().createQuery(searchQuery);
+        listofconsolidatedaccounts = (List<CompanyAccountConsolidation>) querySearch.list();
+        getTransaction().commit();
+        return listofconsolidatedaccounts;
+    }
     
-    public List viewConsolidatedHolderAccount(List<HolderCompanyAccount> holdercompanyaccount){
+    /**
+    * View report on consolidation of Shareholder Accounts
+    * second overloaded with only the merged date as taken parameter
+     * @param mergeddate
+     * @return list of consolidated accounts 
+    */
+    public List<CompanyAccountConsolidation> viewConsolidatedHolderAccount( Date mergeddate ){
+        startOperation();
+        List<CompanyAccountConsolidation> listofconsolidatedaccounts = null;
+        String searchQuery = "from CompanyAccountConsolidation as cac where cac.mergeDate" + mergeddate;
+        Query querySearch = getSession().createQuery(searchQuery);
+        listofconsolidatedaccounts = (List<CompanyAccountConsolidation>) querySearch.list();
+        getTransaction().commit();
+        return listofconsolidatedaccounts;
+    }
     
-    }*/
-   }
+    /**
+     * View report on consolidation of Shareholder Accounts;
+     * All account merged before searching date
+     * @param mergebeforesearchingdate , search parameter
+     * @return list of consolidated accounts
+     */
+    public List<CompanyAccountConsolidation> viewConsolidatedHolderAccountBefore( Date mergebeforesearchingdate ){
+        startOperation();
+        List<CompanyAccountConsolidation> listofconsolidatedaccounts = null;
+        Criteria criteriaEntity = getSession().createCriteria(CompanyAccountConsolidation.class);
+        criteriaEntity.add( Restrictions.lt("mergeDate", mergebeforesearchingdate) );
+        listofconsolidatedaccounts = (List<CompanyAccountConsolidation>) criteriaEntity.list();
+        getTransaction().commit();
+        return listofconsolidatedaccounts;
+    }
+    
+    /**
+     * View report on consolidation of Shareholder Accounts;
+     * All accounts merged after searching date
+     * @param mergeaftersearchingdate , search parameter
+     * @return list of consolidated accounts
+     */
+    public List<CompanyAccountConsolidation> viewConsolidatedHolderAccountAfter( Date mergeaftersearchingdate ){
+        startOperation();
+        List<CompanyAccountConsolidation> listofconsolidatedaccounts = null;
+        Criteria criteriaEntity = getSession().createCriteria(CompanyAccountConsolidation.class);
+        criteriaEntity.add( Restrictions.gt("mergeDate", mergeaftersearchingdate) );
+        listofconsolidatedaccounts = (List<CompanyAccountConsolidation>) criteriaEntity.list();
+        getTransaction().commit();
+        return listofconsolidatedaccounts;
+    }
+    
+    /**
+    * View Report on Shareholder/Bondholder Account details editing
+    * first overloaded method to search all accounts edited between range of dates
+     * @param startdate
+     * @param enddate
+     * @return list of edited accounts
+    */
+    public List<HolderChanges> viewEditedHolderAccount( Date startdate, Date enddate ){
+        startOperation();
+        List<HolderChanges> listofeditedholderaccounts = null;
+        String searchQuery = "from HolderChanges as holderchange where holderchange.changeDate between '" + startdate + "and'" + enddate +"'";
+        Query querySearch = getSession().createQuery(searchQuery);
+        listofeditedholderaccounts = (List<HolderChanges>) querySearch.list();
+        getTransaction().commit();
+        return listofeditedholderaccounts;
+    }
+    
+    /**
+     * View Report on Shareholder/Bondholder Account details editing 
+     * second overloaded with only the edited date as taken parameter
+     * @param editeddate
+     * @return list of edited accounts
+     */
+    public List<HolderChanges> viewEditedHolderAccount( Date editeddate ){
+        startOperation();
+        List<HolderChanges> listofeditedholderaccounts = null;
+        String searchQuery = "from HolderChanges as holderchange where holderchange.changeDate" + editeddate;
+        Query querySearch = getSession().createQuery(searchQuery);
+        listofeditedholderaccounts = (List<HolderChanges>) querySearch.list();
+        getTransaction().commit();
+        return listofeditedholderaccounts;
+    }
+    
+    /**
+     * View report on consolidation of Shareholder Accounts;
+     * All account merged before searching date
+     * @param editbeforesearchingdate , search parameter
+     * @return list of edited accounts
+     */
+    public List<HolderChanges> viewEditedHolderAccountBefore( Date editbeforesearchingdate ){
+        startOperation();
+        List<HolderChanges> listofeditedholderaccounts = null;
+        Criteria criteriaEntity = getSession().createCriteria(HolderChanges.class);
+        criteriaEntity.add( Restrictions.lt("changeDate", editbeforesearchingdate) );
+        listofeditedholderaccounts = (List<HolderChanges>) criteriaEntity.list();
+        getTransaction().commit();
+        return listofeditedholderaccounts;
+    }
+    
+    /**
+     * View report on consolidation of Shareholder Accounts;
+     * All accounts merged after searching date
+     * @param editaftersearchingdate , search parameter
+     * @return list of edited accounts
+     */
+    public List<HolderChanges> vieweditedHolderAccountAfter( Date editaftersearchingdate ){
+        startOperation();
+        List<HolderChanges> listofeditedholderaccounts = null;
+        Criteria criteriaEntity = getSession().createCriteria(HolderChanges.class);
+        criteriaEntity.add( Restrictions.gt("changeDate", editaftersearchingdate) );
+        listofeditedholderaccounts = (List<HolderChanges>) criteriaEntity.list();
+        getTransaction().commit();
+        return listofeditedholderaccounts;
+    }
+    
+    
+    /**
+     * Merge / Consolidate Shareholder Accounts
+     * @param accountconsole
+     * @return 
+    
+    //public boolean mergeHolderAccounts( HolderCompanyAccount primaryaccount, List<HolderCompanyAccount> secondaryaccounts )
+    public boolean mergeHolderAccounts( CompanyAccountConsolidation accountconsole ){
+    boolean isAccountsMerged = false;
+    try{
+        startOperation();
+        createUpdateObject(accountconsole);
+        getTransaction().commit();
+        isAccountsMerged = true;
+        return isAccountsMerged;
+    }catch(HibernateException he){
+        getTransaction().rollback();
+        logger.info("error to persist the merging process, please review! - ", he);
+        return isAccountsMerged;
+        }
+    } */
+}
