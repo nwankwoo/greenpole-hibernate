@@ -14,25 +14,23 @@ public class PowerOfAttorney  implements java.io.Serializable {
      private long versionId;
      private Holder holder;
      private String title;
-     private String signaturePath;
+     private String filePath;
      private String type;
      private Date startDate;
      private Date endDate;
-     private String periodType;
      private boolean powerOfAttorneyPrimary;
 
     public PowerOfAttorney() {
     }
     
     
-    public PowerOfAttorney(Holder holder, String title, String signaturePath, String type, Date startDate, Date endDate, String periodType, boolean powerOfAttorneyPrimary) {
+    public PowerOfAttorney(Holder holder, String title, String filePath, String type, Date startDate, Date endDate, boolean powerOfAttorneyPrimary) {
        this.holder = holder;
        this.title = title;
-       this.signaturePath = signaturePath;
+       this.filePath = filePath;
        this.type = type;
        this.startDate = startDate;
        this.endDate = endDate;
-       this.periodType = periodType;
        this.powerOfAttorneyPrimary = powerOfAttorneyPrimary;
     }
    
@@ -74,12 +72,12 @@ public class PowerOfAttorney  implements java.io.Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getSignaturePath() {
-        return this.signaturePath;
+    public String getFilePath() {
+        return this.filePath;
     }
     
-    public void setSignaturePath(String signaturePath) {
-        this.signaturePath = signaturePath;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
     public String getType() {
         return this.type;
@@ -101,13 +99,6 @@ public class PowerOfAttorney  implements java.io.Serializable {
     
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-    public String getPeriodType() {
-        return this.periodType;
-    }
-    
-    public void setPeriodType(String periodType) {
-        this.periodType = periodType;
     }
     public boolean isPowerOfAttorneyPrimary() {
         return this.powerOfAttorneyPrimary;

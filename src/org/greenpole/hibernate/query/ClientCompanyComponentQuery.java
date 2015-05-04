@@ -44,16 +44,33 @@ public interface ClientCompanyComponentQuery {
     public boolean checkClientCompany(int clientCompanyId);
     
     /**
-     * Creates a new client company, or updates an existing one in the database.
+     * Creates a new client company in the database.
      * @param clientCompany the client company object model containing data
      * to be added
      * @param addresses the client company's addresses
      * @param emailAddresses the client company's email addresses
      * @param phoneNumbers the client company's phone numbers
-     * @return true if the creation / update was successful
+     * @return true if the creation was successful
      */
-    public boolean createOrUpdateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, 
+    public boolean createClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, 
             List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers);
+    
+    /**
+     * Updates an existing client company in the database
+     * @param clientCompany the client company object model containing data
+     * to be added
+     * @param addresses the client company's addresses to be edited
+     * @param emailAddresses the client company's email addresses to be edited
+     * @param phoneNumbers the client company's phone numbers to be edited
+     * @param addressesToRemove the client company's addresses to be removed
+     * @param emailAddressesToRemove the client company's email addresses to be removed
+     * @param phoneNumbersToRemove the client company's phone numbers to be removed
+     * @return true if update was successful
+     */
+    public boolean updateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, 
+            List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers,
+            List<ClientCompanyAddress> addressesToRemove, List<ClientCompanyEmailAddress> emailAddressesToRemove,
+            List<ClientCompanyPhoneNumber> phoneNumbersToRemove);
     
     /**
      * Gets a client company object by a specified id.

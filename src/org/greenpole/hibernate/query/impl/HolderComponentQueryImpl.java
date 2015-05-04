@@ -5,12 +5,14 @@
  */
 package org.greenpole.hibernate.query.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
 import org.greenpole.hibernate.entity.HolderChanges;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
+import org.greenpole.hibernate.entity.HolderEmailAddress;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
@@ -115,6 +117,36 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     
     @Override
     public List<Holder> queryHolderAccount(String descriptor, Holder searchParams, Map<String, Integer> shareUnits_search, Map<String, Integer> totalHoldings_search) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<HolderResidentialAddress> getHolderResidentialAddress(int holderId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<HolderPostalAddress> getHolderPostalAddress(int holderId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<HolderPhoneNumber> getHolderPhoneNumbers(int holderId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<HolderEmailAddress> getHolderEmailAddresses(int holderId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean transferShareUnits(HolderCompanyAccount sender, HolderCompanyAccount receiver, int shareUnits) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean transferBondUnits(HolderBondAccount sender, HolderBondAccount receiver, int bondUnits, double unitPrice) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

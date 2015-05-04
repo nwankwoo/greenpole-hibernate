@@ -158,7 +158,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
-    public boolean createOrUpdateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses,
+    public boolean createClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses,
             List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers) {
         boolean created = false;
         try {
@@ -193,6 +193,65 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             logger.error("error creating client company - ", ex);
             getTransaction().rollback();
             return created;
+        }
+    }
+
+    @Override
+    public boolean updateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers, List<ClientCompanyAddress> addressesToRemove, List<ClientCompanyEmailAddress> emailAddressesToRemove, List<ClientCompanyPhoneNumber> phoneNumbersToRemove) {
+        boolean updated = false;
+        try {
+            startOperation();
+            //create client company
+            createUpdateObject(clientCompany);
+            //create addresses
+            addresses.stream().map((address) -> {
+                address.getId().setClientCompanyId(clientCompany.getId());
+                return address;
+            }).forEach((addy) -> {
+                createUpdateObject(addy);
+            });
+            //create email addresses
+            emailAddresses.stream().map((email) -> {
+                email.getId().setClientCompanyId(clientCompany.getId());
+                return email;
+            }).forEach((email) -> {
+                createUpdateObject(email);
+            });
+            //create phone numbers
+            phoneNumbers.stream().map((phone) -> {
+                phone.getId().setClientCompanyId(clientCompany.getId());
+                return phone;
+            }).forEach((phone) -> {
+                createUpdateObject(phone);
+            });
+            //remove addresses
+            addressesToRemove.stream().map((addy) -> {
+                addy.getId().setClientCompanyId(clientCompany.getId());
+                return addy;
+            }).forEach((addy) -> {
+                removeObject(addy);
+            });
+            //remove email addresses
+            emailAddressesToRemove.stream().map((email) -> {
+                email.getId().setClientCompanyId(clientCompany.getId());
+                return email;
+            }).forEach((email) -> {
+                removeObject(email);
+            });
+            //remove phone numbers
+            phoneNumbersToRemove.stream().map((phone) -> {
+                phone.getId().setClientCompanyId(clientCompany.getId());
+                return phone;
+            }).forEach((phone) -> {
+                removeObject(phone);
+            });
+            getTransaction().commit();
+            updated = true;
+            return updated;
+        } catch (Exception ex) {
+            logger.error("error updating client company - ", ex);
+            getTransaction().rollback();
+            return updated;
         }
     }
 
@@ -343,18 +402,18 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
      */
     private Criteria searchUnitPrice(Criteria baseCriteria, String descriptorValue, Map<String, Double> unitPriceCriteria) {
         Criteria tempCriteria = baseCriteria; //save criteria state, in case it needs to be returned
-        baseCriteria.createCriteria("shareQuotations", JoinType.LEFT_OUTER_JOIN);
+        baseCriteria.createCriteria("cc.shareQuotations", "s", JoinType.LEFT_OUTER_JOIN);
 
         if (descriptorValue.equalsIgnoreCase("exact")) {
             double startUnit = unitPriceCriteria.get("start");
-            return baseCriteria.add(Restrictions.eq("unitPrice", startUnit));
+            return baseCriteria.add(Restrictions.eq("s.unitPrice", startUnit));
         }
 
         if (descriptorValue.equalsIgnoreCase("range")) {
             double startUnit = unitPriceCriteria.get("start");
             double endUnit = unitPriceCriteria.get("end");
-            return baseCriteria.add(Restrictions.ge("unitPrice", startUnit))
-                    .add(Restrictions.le("unitPrice", endUnit));
+            return baseCriteria.add(Restrictions.ge("s.unitPrice", startUnit))
+                    .add(Restrictions.le("s.unitPrice", endUnit));
         }
 
         return tempCriteria;

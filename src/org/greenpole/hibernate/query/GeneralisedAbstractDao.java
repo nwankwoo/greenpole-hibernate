@@ -75,7 +75,7 @@ public abstract class GeneralisedAbstractDao {
      * Saves or updates a hibernate object in the database.
      * The {@link #startOperation()} method must be explicitly called, along
      * with the {@link #getSession()} and {@link #getTransaction()} to commit.
-     * @param object a hibernate entity
+     * @param object a hibernate entity object
      */
     public void createUpdateObject(Object object){
         session.saveOrUpdate(object);
@@ -106,5 +106,13 @@ public abstract class GeneralisedAbstractDao {
         Query query = session.createQuery("FROM " + clz.getName());
         List objects = query.list();
         return objects;
+    }
+    
+    /**
+     * Removes a hibernate entity object from the database.
+     * @param object a hibernate entity object
+     */
+    public void removeObject(Object object) {
+        session.delete(object);
     }
 }

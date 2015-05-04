@@ -5,6 +5,7 @@
  */
 package org.greenpole.hibernate.query;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.greenpole.hibernate.entity.Holder;
@@ -12,9 +13,11 @@ import org.greenpole.hibernate.entity.HolderBondAccount;
 import org.greenpole.hibernate.entity.HolderChangeType;
 import org.greenpole.hibernate.entity.HolderChanges;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
+import org.greenpole.hibernate.entity.HolderEmailAddress;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
+import org.hibernate.id.IdentifierGeneratorHelper;
 
 /**
  *
@@ -186,5 +189,52 @@ public interface HolderComponentQuery {
      */
     public List<Holder> queryHolderAccount(String descriptor, Holder searchParams, Map<String, Integer> shareUnits_search,
             Map<String, Integer> totalHoldings_search);
+    
+    /**
+     * Gets the holder's residential addresses.
+     * @param holderId the holder's id
+     * @return the list of the holder's residential addresses
+     */
+    public List<HolderResidentialAddress> getHolderResidentialAddress(int holderId);
+    
+    /**
+     * Gets the holder's residential addresses.
+     * @param holderId the holder's id
+     * @return the list of the holder's residential addresses
+     */
+    public List<HolderPostalAddress> getHolderPostalAddress(int holderId);
+    
+    /**
+     * Gets the holder's residential addresses.
+     * @param holderId the holder's id
+     * @return the list of the holder's residential addresses
+     */
+    public List<HolderPhoneNumber> getHolderPhoneNumbers(int holderId);
+    
+    /**
+     * Gets the holder's residential addresses.
+     * @param holderId the holder's id
+     * @return the list of the holder's residential addresses
+     */
+    public List<HolderEmailAddress> getHolderEmailAddresses(int holderId);
+    
+    /**
+     * Transfers share units from one holder company account to another.
+     * @param sender the holder company account sending the share units
+     * @param receiver the holder company account receiving the share units
+     * @param shareUnits the share units to be sent
+     * @return true, if transaction was successful. Otherwise, false
+     */
+    public boolean transferShareUnits(HolderCompanyAccount sender, HolderCompanyAccount receiver, int shareUnits);
+    
+    /**
+     * Transfers bond units from one holder bond account to another.
+     * @param sender the holder bond account sending the bond units
+     * @param receiver the holder bond account receiving the bond units
+     * @param bondUnits the bond units to be sent
+     * @param unitPrice the price per bond unit
+     * @return true, if transaction was successful. Otherwise, false
+     */
+    public boolean transferBondUnits(HolderBondAccount sender, HolderBondAccount receiver, int bondUnits, double unitPrice);
     
 }

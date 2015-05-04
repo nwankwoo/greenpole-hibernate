@@ -15,8 +15,8 @@
         <property name="title" type="string">
             <column name="title" length="50" />
         </property>
-        <property name="signaturePath" type="string">
-            <column name="signature_Path" />
+        <property name="filePath" type="string">
+            <column name="file_Path" />
         </property>
         <property name="type" type="string">
             <column name="type" length="50" />
@@ -26,9 +26,6 @@
         </property>
         <property name="endDate" type="date">
             <column name="end_Date" length="10" />
-        </property>
-        <property name="periodType" type="string">
-            <column name="period_Type" length="50" />
         </property>
         <property name="powerOfAttorneyPrimary" type="boolean">
             <column name="power_of_Attorney_Primary" />
