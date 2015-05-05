@@ -17,10 +17,8 @@ public class HolderCompanyAccount  implements java.io.Serializable {
      private ClientCompany clientCompany;
      private Holder holder;
      private HolderCompanyAccount holderCompanyAccount;
-     private String chn;
      private int shareUnits;
      private boolean esop;
-     private boolean taxExempted;
      private String nubanAccount;
      private boolean merged;
      private boolean holderCompAccPrimary;
@@ -36,16 +34,14 @@ public class HolderCompanyAccount  implements java.io.Serializable {
         this.clientCompany = clientCompany;
         this.holder = holder;
     }
-    public HolderCompanyAccount(HolderCompanyAccountId id, Bank bank, ClientCompany clientCompany, Holder holder, HolderCompanyAccount holderCompanyAccount, String chn, int shareUnits, boolean esop, boolean taxExempted, String nubanAccount, boolean merged, boolean holderCompAccPrimary, Set coupons, Set dividends, Set holderCompanyAccounts) {
+    public HolderCompanyAccount(HolderCompanyAccountId id, Bank bank, ClientCompany clientCompany, Holder holder, HolderCompanyAccount holderCompanyAccount, int shareUnits, boolean esop, String nubanAccount, boolean merged, boolean holderCompAccPrimary, Set coupons, Set dividends, Set holderCompanyAccounts) {
        this.id = id;
        this.bank = bank;
        this.clientCompany = clientCompany;
        this.holder = holder;
        this.holderCompanyAccount = holderCompanyAccount;
-       this.chn = chn;
        this.shareUnits = shareUnits;
        this.esop = esop;
-       this.taxExempted = taxExempted;
        this.nubanAccount = nubanAccount;
        this.merged = merged;
        this.holderCompAccPrimary = holderCompAccPrimary;
@@ -107,13 +103,6 @@ public class HolderCompanyAccount  implements java.io.Serializable {
     public void setHolderCompanyAccount(HolderCompanyAccount holderCompanyAccount) {
         this.holderCompanyAccount = holderCompanyAccount;
     }
-    public String getChn() {
-        return this.chn;
-    }
-    
-    public void setChn(String chn) {
-        this.chn = chn;
-    }
 
     public int getShareUnits() {
         return shareUnits;
@@ -128,13 +117,6 @@ public class HolderCompanyAccount  implements java.io.Serializable {
     
     public void setEsop(boolean esop) {
         this.esop = esop;
-    }
-    public boolean isTaxExempted() {
-        return this.taxExempted;
-    }
-    
-    public void setTaxExempted(boolean taxExempted) {
-        this.taxExempted = taxExempted;
     }
     public String getNubanAccount() {
         return this.nubanAccount;

@@ -237,4 +237,35 @@ public interface HolderComponentQuery {
      */
     public boolean transferBondUnits(HolderBondAccount sender, HolderBondAccount receiver, int bondUnits, double unitPrice);
     
+    /**
+     * Checks if holder has any company account.
+     * @param holderId the holder's id
+     * @return true, if holder has one or more company accounts
+     */
+    public boolean hasCompanyAccount(int holderId);
+    
+    /**
+     * Checks if a holder has any bond account.
+     * @param holderId the holder's id
+     * @return true, if holder has one or more bond accounts
+     */
+    public boolean hasBondAccount(int holderId);
+    
+    /**
+     * Gets all company accounts for a holder.
+     * @param holderId the holder's id
+     * @return list of all company accounts for a holder
+     */
+    public List<HolderCompanyAccount> getAllHolderCompanyAccounts(int holderId);
+    
+    /**
+     * Gets all bond accounts for a holder.
+     * @param holderId the holder's id
+     * @return list of all bond accounts for a holder
+     */
+    public List<HolderBondAccount> getAllHolderBondAccounts(int holderId);
+    
+    public boolean mergeHolderAccounts(Holder primaryHolder, List<Holder> secondaryHolders, List<HolderCompanyAccount> secHolderCompAccts,
+            List<HolderBondAccount> secHolderBondAccts);
+    
 }

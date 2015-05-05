@@ -21,7 +21,6 @@ public class HolderBondAccount implements Serializable {
     private BondOffer bondOffer;
     private Holder holder;
     private HolderBondAccount holderBondAccount;
-    private String chn;
     private int bondUnits;
     private Double startingPrincipalValue;
     private Double remainingPrincipalValue;
@@ -40,13 +39,12 @@ public class HolderBondAccount implements Serializable {
         this.holder = holder;
     }
 
-    public HolderBondAccount(HolderBondAccountId id, Bank bank, BondOffer bondOffer, Holder holder, HolderBondAccount holderBondAccount, String chn, int bondUnits, Double startingPrincipalValue, Double remainingPrincipalValue, String nubanAccount, boolean merged, boolean holderBondAccPrimary) {
+    public HolderBondAccount(HolderBondAccountId id, Bank bank, BondOffer bondOffer, Holder holder, HolderBondAccount holderBondAccount, int bondUnits, Double startingPrincipalValue, Double remainingPrincipalValue, String nubanAccount, boolean merged, boolean holderBondAccPrimary) {
         this.id = id;
         this.bank = bank;
         this.bondOffer = bondOffer;
         this.holder = holder;
         this.holderBondAccount = holderBondAccount;
-        this.chn = chn;
         this.bondUnits = bondUnits;
         this.startingPrincipalValue = startingPrincipalValue;
         this.remainingPrincipalValue = remainingPrincipalValue;
@@ -101,14 +99,6 @@ public class HolderBondAccount implements Serializable {
 
     public void setHolderBondAccount(HolderBondAccount holderBondAccount) {
         this.holderBondAccount = holderBondAccount;
-    }
-
-    public String getChn() {
-        return chn;
-    }
-
-    public void setChn(String chn) {
-        this.chn = chn;
     }
 
     public int getBondUnits() {

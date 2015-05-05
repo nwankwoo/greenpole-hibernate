@@ -1,6 +1,9 @@
 package org.greenpole.hibernate.entity;
 // Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -16,16 +19,18 @@ public class Caution  implements java.io.Serializable {
      private String description;
      private String type;
      private boolean active;
+     private Date cautionDate;
 
     public Caution() {
     }
 
-    public Caution(Holder holder, String title, String description, String type, boolean active) {
+    public Caution(Holder holder, String title, String description, String type, boolean active, Date cautionDate) {
        this.holder = holder;
        this.title = title;
        this.description = description;
        this.type = type;
        this.active = active;
+       this.cautionDate = cautionDate;
     }
    
     public int getId() {
@@ -86,6 +91,14 @@ public class Caution  implements java.io.Serializable {
     
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Date getCautionDate() {
+        return cautionDate;
+    }
+
+    public void setCautionDate(Date cautionDate) {
+        this.cautionDate = cautionDate;
     }
 
 

@@ -25,5 +25,8 @@
         <property name="active" type="boolean">
             <column name="active" />
         </property>
+        <property name="cautionDate" type="date">
+            <column name="caution_date" length="10" />
+        </property>
     </class>
 </hibernate-mapping>
