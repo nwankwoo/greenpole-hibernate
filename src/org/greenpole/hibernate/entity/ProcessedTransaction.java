@@ -16,16 +16,18 @@ public class ProcessedTransaction  implements java.io.Serializable {
      private ClientCompany clientCompany;
      private int cscsTransactionId;
      private String companyName;
+     private String transactionType;
      private Set processedTransactionHolders = new HashSet(0);
 
     public ProcessedTransaction() {
     }
 
-    public ProcessedTransaction(ClientCompany clientCompany, int cscsTransactionId, String companyName, Set processedTransactionHolders) {
+    public ProcessedTransaction(ClientCompany clientCompany, int cscsTransactionId, String companyName, String transactionType, Set processedTransactionHolders) {
        this.clientCompany = clientCompany;
        this.cscsTransactionId = cscsTransactionId;
        this.companyName = companyName;
        this.processedTransactionHolders = processedTransactionHolders;
+       this.transactionType = transactionType;
     }
    
     public int getId() {
@@ -72,6 +74,14 @@ public class ProcessedTransaction  implements java.io.Serializable {
     
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
     public Set getProcessedTransactionHolders() {
         return this.processedTransactionHolders;

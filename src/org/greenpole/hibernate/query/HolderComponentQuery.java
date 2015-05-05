@@ -265,7 +265,29 @@ public interface HolderComponentQuery {
      */
     public List<HolderBondAccount> getAllHolderBondAccounts(int holderId);
     
+    /**
+     * Merges a list of secondary holder accounts to a primary holder account, while moving company / bond accounts
+     * from the secondary holder accounts to the primary holder account.
+     * @param primaryHolder the primary holder account
+     * @param secondaryHolders the list of secondary holder accounts
+     * @param secHolderCompAccts the list of company accounts tied to the secondary holder accounts
+     * @param secHolderBondAccts the list of legitimate bond accounts tied to the secondary holder accounts
+     * @return true if merge was successful. Otherwise, false
+     */
     public boolean mergeHolderAccounts(Holder primaryHolder, List<Holder> secondaryHolders, List<HolderCompanyAccount> secHolderCompAccts,
             List<HolderBondAccount> secHolderBondAccts);
     
+    /**
+     * Gets the secondary holder accounts of a primary holder account
+     * @param holderId the primary holder account's id
+     * @return a list of secondary holder accounts
+     */
+    public List<Holder> getSecondaryHolderAccounts(int holderId);
+    
+    /**
+     * Check that a secondary holder has a record in the account consolidation table.
+     * @param holderId the secondary holder id
+     * @return true if record exists. Otherwise, false
+     */
+    public boolean checkInConsolidation(int holderId);
 }

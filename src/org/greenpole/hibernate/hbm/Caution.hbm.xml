@@ -28,5 +28,8 @@
         <property name="cautionDate" type="date">
             <column name="caution_date" length="10" />
         </property>
+        <property name="uncautionDate" type="date">
+            <column name="uncaution_date" length="10" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -15,6 +15,9 @@
         <property name="forCompanyId" type="int">
             <column name="for_company_id" />
         </property>
+        <property name="forBondOfferId" type="int">
+            <column name="for_bond_offer_id" />
+        </property>
         <property name="tiedToInitialHolderId" type="int">
             <column name="tied_to_initial_holder_id" />
         </property>

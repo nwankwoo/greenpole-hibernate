@@ -20,17 +20,19 @@ public class Caution  implements java.io.Serializable {
      private String type;
      private boolean active;
      private Date cautionDate;
+     private Date uncautionDate;
 
     public Caution() {
     }
 
-    public Caution(Holder holder, String title, String description, String type, boolean active, Date cautionDate) {
+    public Caution(Holder holder, String title, String description, String type, boolean active, Date cautionDate, Date uncautionDate) {
        this.holder = holder;
        this.title = title;
        this.description = description;
        this.type = type;
        this.active = active;
        this.cautionDate = cautionDate;
+       this.uncautionDate = uncautionDate;
     }
    
     public int getId() {
@@ -99,6 +101,14 @@ public class Caution  implements java.io.Serializable {
 
     public void setCautionDate(Date cautionDate) {
         this.cautionDate = cautionDate;
+    }
+
+    public Date getUncautionDate() {
+        return uncautionDate;
+    }
+
+    public void setUncautionDate(Date uncautionDate) {
+        this.uncautionDate = uncautionDate;
     }
 
 

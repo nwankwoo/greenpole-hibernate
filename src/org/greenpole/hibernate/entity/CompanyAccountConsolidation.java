@@ -14,6 +14,7 @@ public class CompanyAccountConsolidation  implements java.io.Serializable {
      private long versionId;
      private AccountConsolidation accountConsolidation;
      private int forCompanyId;
+     private int forBondOfferId;
      private int tiedToInitialHolderId;
      private int tiedToCurrentHolderId;
      private String initialChn;
@@ -28,9 +29,10 @@ public class CompanyAccountConsolidation  implements java.io.Serializable {
     public CompanyAccountConsolidation() {
     }
 
-    public CompanyAccountConsolidation(AccountConsolidation accountConsolidation, int forCompanyId, int tiedToInitialHolderId, int tiedToCurrentHolderId, String initialChn, String currentChn, int bondShareUnit, boolean transfer, int receiverUnitState, int receiverStartUnit, int unitAfterTransfer, Date mergeDate) {
+    public CompanyAccountConsolidation(AccountConsolidation accountConsolidation, int forCompanyId, int forBondOfferId, int tiedToInitialHolderId, int tiedToCurrentHolderId, String initialChn, String currentChn, int bondShareUnit, boolean transfer, int receiverUnitState, int receiverStartUnit, int unitAfterTransfer, Date mergeDate) {
        this.accountConsolidation = accountConsolidation;
        this.forCompanyId = forCompanyId;
+       this.forBondOfferId = forBondOfferId;
        this.tiedToInitialHolderId = tiedToInitialHolderId;
        this.tiedToCurrentHolderId = tiedToCurrentHolderId;
        this.initialChn = initialChn;
@@ -80,6 +82,14 @@ public class CompanyAccountConsolidation  implements java.io.Serializable {
     
     public void setForCompanyId(int forCompanyId) {
         this.forCompanyId = forCompanyId;
+    }
+
+    public int getForBondOfferId() {
+        return forBondOfferId;
+    }
+
+    public void setForBondOfferId(int forBondOfferId) {
+        this.forBondOfferId = forBondOfferId;
     }
     public int getTiedToInitialHolderId() {
         return this.tiedToInitialHolderId;
