@@ -8,6 +8,7 @@ package org.greenpole.hibernate.query;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
 import org.greenpole.hibernate.entity.HolderChangeType;
@@ -278,6 +279,14 @@ public interface HolderComponentQuery {
             List<HolderBondAccount> secHolderBondAccts);
     
     /**
+     * Demerges a list of secondary holder accounts from a primary holder account.
+     * @param primaryHolder the primary holder account to demerge from
+     * @param secondaryAcctInfo consolidation information on the secondary holder accounts
+     * @return true if demerge was successful. Otherwise, false
+     */
+    public boolean demergeHolderAccounts(Holder primaryHolder, Map<Holder, List<CompanyAccountConsolidation>> secondaryAcctInfo);
+    
+    /**
      * Gets the secondary holder accounts of a primary holder account
      * @param holderId the primary holder account's id
      * @return a list of secondary holder accounts
@@ -290,4 +299,33 @@ public interface HolderComponentQuery {
      * @return true if record exists. Otherwise, false
      */
     public boolean checkInConsolidation(int holderId);
+    
+    /**
+     * Check that a secondary holder has a record in the company account consolidation table.
+     * @param holderId the secondary holder id
+     * @return true if record exists. Otherwise, false
+     */
+    public boolean checkInCompAcctConsolidation(int holderId);
+    
+    /**
+     * Check that a primary holder has secondary holders tied to it.
+     * @param holderId the primary holder id
+     * @return true if primary holder has secondary holders tied to it. Otherwise, false
+     */
+    public boolean checkSecondaryHolders(int holderId);
+    
+    /**
+     * Gets the list of company account consolidations of a secondary holder.
+     * @param holderId the secondary holder id
+     * @return the list of company account consolidations
+     */
+    public List<CompanyAccountConsolidation> getCompanyAccountMerges(int holderId);
+    
+    /**
+     * Gets the final unit after merge transfer between company accounts.
+     * @param holderId the primary holder id (who holds the transfered units)
+     * @param companyId the id of the company for which the account concerns
+     * @return the final unit after merge transfer between company accounts
+     */
+    public int getFinalUnitAfterTransfer(int holderId, int companyId);
 }
