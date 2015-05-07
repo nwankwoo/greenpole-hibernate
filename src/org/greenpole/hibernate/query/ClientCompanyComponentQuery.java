@@ -186,6 +186,13 @@ public interface ClientCompanyComponentQuery {
     public boolean checkClientCompanyForShareholders(String clientCompanyName);
     
     /**
+     * Checks if a client company has an open private placement.
+     * @param clientCompanyId the company id
+     * @return true if there is an open private placement. Otherwise, false
+     */
+    public boolean checkOpenPrivatePlacement(int clientCompanyId);
+    
+    /**
      * Searches for list of client companies according to the provided search parameters.
      * @param descriptor the description of the type of search to carry out
      * @param ccSearchParams the client company search parameters

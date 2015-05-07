@@ -39,6 +39,9 @@
         <property name="closingDate" type="date">
             <column name="closing_Date" length="10" />
         </property>
+        <property name="rightsClosed" type="boolean">
+            <column name="rights_closed" />
+        </property>
         <set name="rightsIssueApplications" table="RIGHTS_ISSUE_APPLICATION" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="rights_issue_id" />

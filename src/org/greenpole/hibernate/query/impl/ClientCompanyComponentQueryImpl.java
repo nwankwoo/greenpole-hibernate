@@ -555,4 +555,9 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
 
         return result;
     }
+
+    @Override
+    public boolean checkOpenPrivatePlacement(int clientCompanyId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -8,6 +8,7 @@ package org.greenpole.hibernate.query.impl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import org.greenpole.hibernate.entity.AccountConsolidation;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
@@ -208,6 +209,16 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
 
     @Override
     public int getFinalUnitAfterTransfer(int holderId, int companyId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<AccountConsolidation> getAllHolderAccountConsolidation(String descriptor, String startDate, String endDate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<CompanyAccountConsolidation> getCompAcctConsolidation(int acctConsolidationId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

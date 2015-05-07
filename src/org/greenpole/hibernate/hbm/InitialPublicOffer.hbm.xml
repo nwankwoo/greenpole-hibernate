@@ -36,6 +36,9 @@
         <property name="closingDate" type="date">
             <column name="closing_Date" length="10" />
         </property>
+        <property name="ipoClosed" type="boolean">
+            <column name="ipo_closed" />
+        </property>
         <set name="ipoApplications" table="IPO_APPLICATION" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ipo_id" />

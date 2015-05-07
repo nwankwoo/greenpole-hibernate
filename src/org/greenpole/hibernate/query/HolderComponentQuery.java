@@ -8,6 +8,7 @@ package org.greenpole.hibernate.query;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import org.greenpole.hibernate.entity.AccountConsolidation;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
@@ -328,4 +329,20 @@ public interface HolderComponentQuery {
      * @return the final unit after merge transfer between company accounts
      */
     public int getFinalUnitAfterTransfer(int holderId, int companyId);
+
+    /**
+     * Gets all account consolidation according to specified dates.
+     * @param descriptor the description of the type of search to carry out 
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return a list of account consolidation records
+     */
+    public List<AccountConsolidation> getAllHolderAccountConsolidation(String descriptor, String startDate, String endDate);
+    
+    /**
+     * Gets all company account consolidation according to the specified account consolidation id.
+     * @param acctConsolidationId the account consolidation id
+     * @return a list of company account consolidation records
+     */
+    public List<CompanyAccountConsolidation> getCompAcctConsolidation(int acctConsolidationId);
 }

@@ -36,6 +36,9 @@
         <property name="closingDate" type="date">
             <column name="closing_Date" length="10" />
         </property>
+        <property name="placementClosed" type="boolean">
+            <column name="placement_closed" />
+        </property>
         <set name="certificates" table="CERTIFICATE" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="priv_Plcmnt_Id" />

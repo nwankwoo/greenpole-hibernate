@@ -23,13 +23,14 @@ public class PrivatePlacement  implements java.io.Serializable {
      private Double offerSize;
      private Date openingDate;
      private Date closingDate;
+     private boolean placementClosed;
      private Set certificates = new HashSet(0);
      private Set privatePlacementApplications = new HashSet(0);
 
     public PrivatePlacement() {
     }
 
-    public PrivatePlacement(ClientCompany clientCompany, int totalSharesOnOffer, int methodOnOffer, int startingMinSubscrptn, int continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Set certificates, Set privatePlacementApplications) {
+    public PrivatePlacement(ClientCompany clientCompany, int totalSharesOnOffer, int methodOnOffer, int startingMinSubscrptn, int continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean placementClosed, Set certificates, Set privatePlacementApplications) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOnOffer = methodOnOffer;
@@ -39,6 +40,7 @@ public class PrivatePlacement  implements java.io.Serializable {
        this.offerSize = offerSize;
        this.openingDate = openingDate;
        this.closingDate = closingDate;
+       this.placementClosed = placementClosed;
        this.certificates = certificates;
        this.privatePlacementApplications = privatePlacementApplications;
     }
@@ -126,6 +128,14 @@ public class PrivatePlacement  implements java.io.Serializable {
     }
     public Date getClosingDate() {
         return this.closingDate;
+    }
+
+    public boolean isPlacementClosed() {
+        return placementClosed;
+    }
+
+    public void setPlacementClosed(boolean placementClosed) {
+        this.placementClosed = placementClosed;
     }
     
     public void setClosingDate(Date closingDate) {

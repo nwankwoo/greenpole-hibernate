@@ -24,13 +24,14 @@ public class RightsIssue  implements java.io.Serializable {
      private Date qualifyDate;
      private Date openingDate;
      private Date closingDate;
+     private boolean rightsClosed;
      private Set rightsIssueApplications = new HashSet(0);
      private Set certificates = new HashSet(0);
 
     public RightsIssue() {
     }
 
-    public RightsIssue(ClientCompany clientCompany, int totalSharesOnIssue, String methodOnOffer, Double issuePrice, int issueSize, int qualifyShareUnit, int alottedUnitPerQualifyUnit, Date qualifyDate, Date openingDate, Date closingDate, Set rightsIssueApplications, Set certificates) {
+    public RightsIssue(ClientCompany clientCompany, int totalSharesOnIssue, String methodOnOffer, Double issuePrice, int issueSize, int qualifyShareUnit, int alottedUnitPerQualifyUnit, Date qualifyDate, Date openingDate, Date closingDate, boolean rightsClosed, Set rightsIssueApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnIssue = totalSharesOnIssue;
        this.methodOnOffer = methodOnOffer;
@@ -41,6 +42,7 @@ public class RightsIssue  implements java.io.Serializable {
        this.qualifyDate = qualifyDate;
        this.openingDate = openingDate;
        this.closingDate = closingDate;
+       this.rightsClosed = rightsClosed;
        this.rightsIssueApplications = rightsIssueApplications;
        this.certificates = certificates;
     }
@@ -138,6 +140,14 @@ public class RightsIssue  implements java.io.Serializable {
     
     public void setClosingDate(Date closingDate) {
         this.closingDate = closingDate;
+    }
+
+    public boolean isRightsClosed() {
+        return rightsClosed;
+    }
+
+    public void setRightsClosed(boolean rightsClosed) {
+        this.rightsClosed = rightsClosed;
     }
     public Set getRightsIssueApplications() {
         return this.rightsIssueApplications;
