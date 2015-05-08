@@ -295,18 +295,22 @@ public interface HolderComponentQuery {
     public List<Holder> getSecondaryHolderAccounts(int holderId);
     
     /**
-     * Check that a secondary holder has a record in the account consolidation table.
-     * @param holderId the secondary holder id
+     * Check that a secondary holder has a record in the account consolidation table, against
+     * a primary holder.
+     * @param pryHolderId the primary holder id
+     * @param secHolderId the secondary holder id
      * @return true if record exists. Otherwise, false
      */
-    public boolean checkInConsolidation(int holderId);
+    public boolean checkInConsolidation(int pryHolderId, int secHolderId);
     
     /**
-     * Check that a secondary holder has a record in the company account consolidation table.
-     * @param holderId the secondary holder id
+     * Check that a secondary holder has a record in the company account consolidation table, against
+     * a primary holder.
+     * @param pryHolderId the primary holder id
+     * @param secHolderId the secondary holder id
      * @return true if record exists. Otherwise, false
      */
-    public boolean checkInCompAcctConsolidation(int holderId);
+    public boolean checkInCompAcctConsolidation(int pryHolderId, int secHolderId);
     
     /**
      * Check that a primary holder has secondary holders tied to it.

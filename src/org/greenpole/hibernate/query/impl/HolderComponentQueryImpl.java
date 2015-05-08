@@ -188,12 +188,12 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     }
 
     @Override
-    public boolean checkInConsolidation(int holderId) {
+    public boolean checkInConsolidation(int pryHolderId, int secHolderId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean checkInCompAcctConsolidation(int holderId) {
+    public boolean checkInCompAcctConsolidation(int pryHolderId, int secHolderId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
