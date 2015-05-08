@@ -78,10 +78,11 @@ public interface HolderComponentQuery {
      * @param residentialAddresses the holder's residential addresses
      * @param postalAddresses the holder's postal addresses
      * @param phoneNumbers the holder's phone numbers
+     * @param changes recordable changes made to the holder account
      * @return true, if update transaction is successful
      */
     public boolean updateHolderAccount(Holder holder, List<HolderResidentialAddress> residentialAddresses, List<HolderPostalAddress> postalAddresses,
-            List<HolderPhoneNumber> phoneNumbers);
+            List<HolderPhoneNumber> phoneNumbers, List<HolderChanges> changes);
     
     /**
      * Checks the existence of a holder.
