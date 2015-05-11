@@ -9,6 +9,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.greenpole.hibernate.entity.AccountConsolidation;
+import org.greenpole.hibernate.entity.Administrator;
+import org.greenpole.hibernate.entity.AdministratorPhoneNumber;
+import org.greenpole.hibernate.entity.AdministratorPostalAddress;
+import org.greenpole.hibernate.entity.AdministratorResidentialAddress;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
@@ -19,6 +23,7 @@ import org.greenpole.hibernate.entity.HolderEmailAddress;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
+import org.greenpole.hibernate.entity.PowerOfAttorney;
 import org.hibernate.id.IdentifierGeneratorHelper;
 
 /**
@@ -33,11 +38,12 @@ public interface HolderComponentQuery {
      * @param holderCompanyAccount the holder company account to create
      * @param residentialAddresses the holder's residential address
      * @param postalAddresses the holder's postal address
+     * @param emailAddresses the holder's email address
      * @param phoneNumbers the holder's phone number
      * @return true, if create transaction is successful
      */
     public boolean createHolderAccount(Holder holder, HolderCompanyAccount holderCompanyAccount, List<HolderResidentialAddress> residentialAddresses,
-            List<HolderPostalAddress> postalAddresses, List<HolderPhoneNumber> phoneNumbers);
+            List<HolderPostalAddress> postalAddresses, List<HolderEmailAddress> emailAddresses, List<HolderPhoneNumber> phoneNumbers);
     
     /**
      * Creates a new / updates an existing holder company account (for shareholder).
@@ -53,11 +59,12 @@ public interface HolderComponentQuery {
      * @param holderBondAccount the holder bond account to create
      * @param residentialAddresses the holder's residential addresses
      * @param postalAddresses the holder's postal addresses
+     * @param emailAddresses the holder's email address
      * @param phoneNumbers the holder's phone numbers
      * @return true, if create transaction is successful
      */
     public boolean createHolderAccount(Holder holder, HolderBondAccount holderBondAccount, List<HolderResidentialAddress> residentialAddresses,
-            List<HolderPostalAddress> postalAddresses, List<HolderPhoneNumber> phoneNumbers);
+            List<HolderPostalAddress> postalAddresses, List<HolderEmailAddress> emailAddresses, List<HolderPhoneNumber> phoneNumbers);
     
     /**
      * Creates a new / updates an existing holder bond account (for bondholder).
@@ -78,11 +85,12 @@ public interface HolderComponentQuery {
      * @param residentialAddresses the holder's residential addresses
      * @param postalAddresses the holder's postal addresses
      * @param phoneNumbers the holder's phone numbers
+     * @param emailAddresses the holder's email address
      * @param changes recordable changes made to the holder account
      * @return true, if update transaction is successful
      */
     public boolean updateHolderAccount(Holder holder, List<HolderResidentialAddress> residentialAddresses, List<HolderPostalAddress> postalAddresses,
-            List<HolderPhoneNumber> phoneNumbers, List<HolderChanges> changes);
+            List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderChanges> changes);
     
     /**
      * Checks the existence of a holder.
@@ -350,4 +358,29 @@ public interface HolderComponentQuery {
      * @return a list of company account consolidation records
      */
     public List<CompanyAccountConsolidation> getCompAcctConsolidation(int acctConsolidationId);
+    
+    /**
+     * Creates administrators for a holder.
+     * @param holder the holder object which holds all administrator objects
+     * @return true if creation is successful. Otherwise, false
+     */
+    public boolean createAdministratorForHolder(Holder holder);
+    
+    /**
+     * Checks the status of a holder's current power of attorney.
+     * The holder's current power of attorney should be the power of attorney that
+     * has its primary attribute set to true.
+     * @param holderId the holder's id
+     * @return true if successful. Otherwise, false
+     */
+    public boolean checkCurrentPowerOfAttorney(int holderId);
+    
+    /**
+     * Gets a holder's current power of attorney.
+     * The holder's current power of attorney should be the power of attorney that
+     * has its primary attribute set to true.
+     * @param holderId
+     * @return 
+     */
+    public PowerOfAttorney getCurrentPowerOfAttorney(int holderId);
 }
