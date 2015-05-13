@@ -380,7 +380,36 @@ public interface HolderComponentQuery {
      * The holder's current power of attorney should be the power of attorney that
      * has its primary attribute set to true.
      * @param holderId
-     * @return 
+     * @return holder's current power of attorney
      */
     public PowerOfAttorney getCurrentPowerOfAttorney(int holderId);
+    
+    /**
+     * Uploads a new power of attorney to replace the current power of attorney (if there is one).
+     * @param newPoa the new power of attorney
+     * @param currentPoa the current (soon to be old) power of attorney
+     * @return true if upload successful. Otherwise, false
+     */
+    public boolean uploadPowerOfAttorney(PowerOfAttorney newPoa, PowerOfAttorney currentPoa);
+    
+    /**
+     * Gets a power of attorney belonging to a holder.
+     * @param attorneyId the power of attorney id
+     * @return the holder's power of attorney
+     */
+    public PowerOfAttorney getHolderPowerOfAttorney(int attorneyId);
+    
+    /**
+     * Gets all powers of attorney for a specified holder.
+     * @param holderId the holder's id
+     * @return the list of the holder's powers of attorney
+     */
+    public List<PowerOfAttorney> getAllHolderPowerOfAttorney(int holderId);
+    
+    /**
+     * Checks the existence of a bank in the database.
+     * @param bankId the bank's id
+     * @return true if bank exists. Otherwise, false
+     */
+    public boolean checkBank(int bankId);
 }

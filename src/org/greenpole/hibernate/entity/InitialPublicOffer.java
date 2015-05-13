@@ -16,7 +16,7 @@ public class InitialPublicOffer  implements java.io.Serializable {
      private long versionId;
      private ClientCompany clientCompany;
      private int totalSharesOnOffer;
-     private String methodOnOffer;
+     private String methodOfOffer;
      private int startingMinSub;
      private int contMinSub;
      private Double offerPrice;
@@ -30,10 +30,10 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public InitialPublicOffer() {
     }
 
-    public InitialPublicOffer(ClientCompany clientCompany, int totalSharesOnOffer, String methodOnOffer, int startingMinSub, int contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean ipoClosed, Set ipoApplications, Set certificates) {
+    public InitialPublicOffer(ClientCompany clientCompany, int totalSharesOnOffer, String methodOfOffer, int startingMinSub, int contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean ipoClosed, Set ipoApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
-       this.methodOnOffer = methodOnOffer;
+       this.methodOfOffer = methodOfOffer;
        this.startingMinSub = startingMinSub;
        this.contMinSub = contMinSub;
        this.offerPrice = offerPrice;
@@ -83,12 +83,12 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public void setTotalSharesOnOffer(int totalSharesOnOffer) {
         this.totalSharesOnOffer = totalSharesOnOffer;
     }
-    public String getMethodOnOffer() {
-        return this.methodOnOffer;
+    public String getMethodOfOffer() {
+        return this.methodOfOffer;
     }
     
-    public void setMethodOnOffer(String methodOnOffer) {
-        this.methodOnOffer = methodOnOffer;
+    public void setMethodOfOffer(String methodOfOffer) {
+        this.methodOfOffer = methodOfOffer;
     }
     public int getStartingMinSub() {
         return this.startingMinSub;
