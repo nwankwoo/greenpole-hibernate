@@ -10,6 +10,7 @@
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+    <!--
     <mapping resource="org/greenpole/hibernate/hbm/HolderVoting.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/PowerOfAttorney.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/PrivatePlacement.hbm.xml"/>
@@ -82,5 +83,6 @@
     <mapping resource="org/greenpole/hibernate/hbm/CompanyAccountConsolidation.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/AccountConsolidation.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/HolderChangeType.hbm.xml"/>
+    -->
   </session-factory>
 </hibernate-configuration>

@@ -18,6 +18,7 @@ import org.greenpole.hibernate.entity.HolderEmailAddress;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
+import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.greenpole.hibernate.query.HolderComponentQuery;
@@ -50,6 +51,11 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
 
     @Override
     public boolean updateHolderAccount(Holder holder, List<HolderResidentialAddress> residentialAddresses, List<HolderPostalAddress> postalAddresses, List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderChanges> changes) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateHolderAccountForTranspose(Holder holder) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -239,7 +245,22 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     }
 
     @Override
+    public boolean checkCurrentSignature(int holderId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public HolderSignature getCurrentSignature(int holderId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public boolean uploadPowerOfAttorney(PowerOfAttorney newPoa, PowerOfAttorney currentPoa) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean uploadHolderSignature(HolderSignature newSig, HolderSignature currentSig) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

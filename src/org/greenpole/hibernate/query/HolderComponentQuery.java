@@ -23,6 +23,7 @@ import org.greenpole.hibernate.entity.HolderEmailAddress;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
+import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
 import org.hibernate.id.IdentifierGeneratorHelper;
 
@@ -91,6 +92,14 @@ public interface HolderComponentQuery {
      */
     public boolean updateHolderAccount(Holder holder, List<HolderResidentialAddress> residentialAddresses, List<HolderPostalAddress> postalAddresses,
             List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderChanges> changes);
+    
+    /**
+     * Updates an existing holder account (for shareholder and bondholder).
+     * This method should only be used when trying to transpose a holder's name, thus
+     * no need to update the holder's address and co.
+     * @param holder the holder
+     */
+    public void updateHolderAccountForTranspose(Holder holder);
     
     /**
      * Checks the existence of a holder.
@@ -385,12 +394,34 @@ public interface HolderComponentQuery {
     public PowerOfAttorney getCurrentPowerOfAttorney(int holderId);
     
     /**
+     * Checks the status of a holder's current signature.
+     * @param holderId the holder's id
+     * @return true if successful. Otherwise, false
+     */
+    public boolean checkCurrentSignature(int holderId);
+    
+    /**
+     * Gets a holder's current signature.
+     * @param holderId the holder's id
+     * @return holder's current signature
+     */
+    public HolderSignature getCurrentSignature(int holderId);
+    
+    /**
      * Uploads a new power of attorney to replace the current power of attorney (if there is one).
      * @param newPoa the new power of attorney
      * @param currentPoa the current (soon to be old) power of attorney
      * @return true if upload successful. Otherwise, false
      */
     public boolean uploadPowerOfAttorney(PowerOfAttorney newPoa, PowerOfAttorney currentPoa);
+    
+    /**
+     * Uploads a new holder signature to replace the current holder signature (if there is one).
+     * @param newSig the new holder signature
+     * @param currentSig the current (soon to be old) holder signature=
+     * @return true if upload successful. Otherwise, false
+     */
+    public boolean uploadHolderSignature(HolderSignature newSig, HolderSignature currentSig);
     
     /**
      * Gets a power of attorney belonging to a holder.
