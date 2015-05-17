@@ -20,7 +20,7 @@ public class Holder  implements java.io.Serializable {
      private String firstName;
      private String middleName;
      private String lastName;
-     private String type;
+     private HolderType holderType;
      private String gender;
      private Date dob;
      private boolean taxExempted;
@@ -54,14 +54,14 @@ public class Holder  implements java.io.Serializable {
     public Holder() {
     }
 
-    public Holder(Holder holder, int holderAcctNumber, String chn, String firstName, String middleName, String lastName, String type, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, String pryAddress, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderBondAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators, Set holderChanges, Set accountConsolidations) {
+    public Holder(Holder holder, int holderAcctNumber, String chn, String firstName, String middleName, String lastName, HolderType holderType, String gender, Date dob, boolean taxExempted, boolean merged, boolean pryHolder, String pryAddress, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set holderCompanyAccounts, Set holderBondAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators, Set holderChanges, Set accountConsolidations) {
        this.holder = holder;
        this.holderAcctNumber = holderAcctNumber;
        this.chn = chn;
        this.firstName = firstName;
        this.middleName = middleName;
        this.lastName = lastName;
-       this.type = type;
+       this.holderType = holderType;
        this.gender = gender;
        this.dob = dob;
        this.taxExempted = taxExempted;
@@ -162,12 +162,12 @@ public class Holder  implements java.io.Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public String getType() {
-        return this.type;
+    public HolderType getType() {
+        return this.holderType;
     }
     
-    public void setType(String type) {
-        this.type = type;
+    public void setType(HolderType type) {
+        this.holderType = type;
     }
     public String getGender() {
         return this.gender;

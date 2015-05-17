@@ -20,20 +20,20 @@ public class BondOffer  implements java.io.Serializable {
      private Date bondMaturity;
      private String bondType;
      private Double interestRate;
-     private String paymentPlan;
+     private BondOfferPaymentPlan bondOfferPaymentPlan;
      private Set holderBondAccounts = new HashSet(0);
 
     public BondOffer() {
     }
 
-    public BondOffer(ClientCompany clientCompany, String title, Double bondUnitPrice, Date bondMaturity, String bondType, Double interestRate, String paymentPlan, Set holderBondAccounts) {
+    public BondOffer(ClientCompany clientCompany, String title, Double bondUnitPrice, Date bondMaturity, String bondType, Double interestRate, BondOfferPaymentPlan bondOfferPaymentPlan, Set holderBondAccounts) {
        this.clientCompany = clientCompany;
        this.title = title;
        this.bondUnitPrice = bondUnitPrice;
        this.bondMaturity = bondMaturity;
        this.bondType = bondType;
        this.interestRate = interestRate;
-       this.paymentPlan = paymentPlan;
+       this.bondOfferPaymentPlan = bondOfferPaymentPlan;
        this.holderBondAccounts = holderBondAccounts;
     }
    
@@ -104,12 +104,12 @@ public class BondOffer  implements java.io.Serializable {
     public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
     }
-    public String getPaymentPlan() {
-        return this.paymentPlan;
+    public BondOfferPaymentPlan getPaymentPlan() {
+        return this.bondOfferPaymentPlan;
     }
     
-    public void setPaymentPlan(String paymentPlan) {
-        this.paymentPlan = paymentPlan;
+    public void setPaymentPlan(BondOfferPaymentPlan paymentPlan) {
+        this.bondOfferPaymentPlan = paymentPlan;
     }
 
     public Set getHolderBondAccounts() {

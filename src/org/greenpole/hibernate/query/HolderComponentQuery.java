@@ -13,6 +13,7 @@ import org.greenpole.hibernate.entity.Administrator;
 import org.greenpole.hibernate.entity.AdministratorPhoneNumber;
 import org.greenpole.hibernate.entity.AdministratorPostalAddress;
 import org.greenpole.hibernate.entity.AdministratorResidentialAddress;
+import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
@@ -24,6 +25,7 @@ import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
+import org.greenpole.hibernate.entity.HolderType;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
 import org.hibernate.id.IdentifierGeneratorHelper;
 
@@ -443,4 +445,16 @@ public interface HolderComponentQuery {
      * @return true if bank exists. Otherwise, false
      */
     public boolean checkBank(int bankId);
+    
+    /**
+     * Gets all available holder types.
+     * @return a list of all holder types
+     */
+    public List<HolderType> getAllHolderTypes();
+    
+    /**
+     * Gets all available bond offer payment plans.
+     * @return a list of all bond offer payment plans
+     */
+    public List<BondOfferPaymentPlan> getAllBondOfferPaymentPlans();
 }

@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.greenpole.hibernate.entity.AccountConsolidation;
+import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
@@ -19,6 +20,7 @@ import org.greenpole.hibernate.entity.HolderPhoneNumber;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
+import org.greenpole.hibernate.entity.HolderType;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.greenpole.hibernate.query.HolderComponentQuery;
@@ -276,6 +278,16 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
 
     @Override
     public boolean checkBank(int bankId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<HolderType> getAllHolderTypes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<BondOfferPaymentPlan> getAllBondOfferPaymentPlans() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

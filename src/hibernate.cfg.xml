@@ -83,6 +83,8 @@
     <mapping resource="org/greenpole/hibernate/hbm/CompanyAccountConsolidation.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/AccountConsolidation.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/HolderChangeType.hbm.xml"/>
+    <mapping resource="org/greenpole/hibernate/hbm/HolderType.hbm.xml"/>
+    <mapping resource="org/greenpole/hibernate/hbm/BondOfferPaymentPlan.hbm.xml"/>
     -->
   </session-factory>
 </hibernate-configuration>

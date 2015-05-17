@@ -27,9 +27,9 @@
         <property name="interestRate" type="java.lang.Double">
             <column name="interest_rate" precision="53" scale="0" />
         </property>
-        <property name="paymentPlan" type="string">
-            <column name="payment_plan" length="50" />
-        </property>
+        <many-to-one name="bondOfferPaymentPlan" class="org.greenpole.hibernate.entity.BondOfferPaymentPlan" fetch="select">
+            <column name="payment_plan_id" />
+        </many-to-one>
         <set name="holderBondAccounts" table="HOLDER_BOND_ACCOUNT" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="bond_offer_id" not-null="true" />
