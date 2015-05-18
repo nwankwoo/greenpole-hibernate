@@ -7,7 +7,7 @@
         <sql-type jdbc-type="BIT" hibernate-type="boolean"/>
         <sql-type jdbc-type="INTEGER" hibernate-type="int"/>
     </type-mapping>
-    <!--
+    
     <table-filter match-name="CLIENT_COMPANY_ADDRESS"/>
     <table-filter match-name="PRIVATE_PLACEMENT_APPLICATION"/>
     <table-filter match-name="CLIENT_COMPANY_PHONE_NUMBER"/>
@@ -72,7 +72,6 @@
     <table-filter match-name="HOLDER_CHANGE_TYPE"/>
     <table-filter match-name="BOND_OFFER_PAYMENT_PLAN"/>
     <table-filter match-name="HOLDER_TYPE"/>
-    -->
     <table-filter match-name="BOND_TYPE"/>
     
     <table name="BOND_TYPE" catalog="greenpole" schema="dbo">

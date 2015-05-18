@@ -8,6 +8,8 @@ package org.greenpole.hibernate.query;
 import java.util.List;
 import java.util.Map;
 import org.greenpole.hibernate.entity.BondOffer;
+import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
+import org.greenpole.hibernate.entity.BondType;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
@@ -203,5 +205,17 @@ public interface ClientCompanyComponentQuery {
      */
     public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, Map<String, Double> shareUnitCriteria, 
             Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria);
+    
+    /**
+     * Gets all available bond types.
+     * @return a list of all available bond types 
+     */
+    public List<BondType> getAllBondTypes();
+    
+    /**
+     * Gets all available bond offer payment plans.
+     * @return a list of available bond offer payment plans
+     */
+    public List<BondOfferPaymentPlan> getAllBondOfferPaymentPlans();
     
 }

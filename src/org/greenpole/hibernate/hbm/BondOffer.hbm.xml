@@ -30,6 +30,9 @@
         <many-to-one name="bondOfferPaymentPlan" class="org.greenpole.hibernate.entity.BondOfferPaymentPlan" fetch="select">
             <column name="payment_plan_id" />
         </many-to-one>
+        <many-to-one name="bondType" class="org.greenpole.hibernate.entity.BondType" fetch="select">
+            <column name="bond_type_id" />
+        </many-to-one>
         <set name="holderBondAccounts" table="HOLDER_BOND_ACCOUNT" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="bond_offer_id" not-null="true" />

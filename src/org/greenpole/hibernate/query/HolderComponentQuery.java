@@ -202,14 +202,14 @@ public interface HolderComponentQuery {
     public HolderBondAccount getHolderBondAccount(String chn);
     
     /**
-     * Searches for list of holders according to the provided search parameters.
+     * Searches for list of shareholders according to the provided search parameters.
      * @param descriptor the description of the type of search to carry out
-     * @param searchParams the holder search parameters
+     * @param searchParams the shareholder search parameters
      * @param shareUnits_search the share units search criteria
      * @param totalHoldings_search the total holdings search criteria
      * @return the list of holders from the search
      */
-    public List<Holder> queryHolderAccount(String descriptor, Holder searchParams, Map<String, Integer> shareUnits_search,
+    public List<Holder> queryShareholderAccount(String descriptor, Holder searchParams, Map<String, Integer> shareUnits_search,
             Map<String, Integer> totalHoldings_search);
     
     /**

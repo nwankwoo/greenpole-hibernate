@@ -10,10 +10,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.greenpole.hibernate.entity.BondOffer;
+import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
+import org.greenpole.hibernate.entity.BondType;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
+import org.greenpole.hibernate.entity.HolderBondAccount;
+import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.InitialPublicOffer;
 import org.greenpole.hibernate.entity.PrivatePlacement;
 import org.greenpole.hibernate.entity.ShareQuotation;
@@ -335,11 +339,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
      * @param baseCriteria the criteria, typically one for a search on all
      * client companies in the database
      * @param clientCompany the client company object containing search patterns
-     * @param ccAddress the client company address object containing search
-     * patterns
-     * @param ccPhone the client company phone object containing search patterns
-     * @param ccEmail the client company email address object containing search
-     * patterns
      * @return the criteria for a search on all client companies
      */
     private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany) {
@@ -436,7 +435,13 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         if (descriptorValue.equalsIgnoreCase("exact")) {
             int startNo = noOfShareholders.get("start");
             for (ClientCompany cc : clientCompanies) {
-                if (cc.getHolderCompanyAccounts().size() == startNo) {
+                List<HolderCompanyAccount> acct_list = new ArrayList<>(cc.getHolderCompanyAccounts());
+                int count = 0;
+                for (HolderCompanyAccount hca : acct_list) {
+                    if (hca.getShareUnits() > 0)
+                        ++count;
+                }
+                if (count == startNo) {
                     searchResult.add(cc);
                 }
             }
@@ -447,7 +452,13 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             int startNo = noOfShareholders.get("start");
             int endNo = noOfShareholders.get("end");
             for (ClientCompany cc : clientCompanies) {
-                if (cc.getHolderCompanyAccounts().size() >= startNo && cc.getHolderCompanyAccounts().size() <= endNo) {
+                List<HolderCompanyAccount> acct_list = new ArrayList<>(cc.getHolderCompanyAccounts());
+                int count = 0;
+                for (HolderCompanyAccount hca : acct_list) {
+                    if (hca.getShareUnits() > 0)
+                        ++count;
+                }
+                if (count >= startNo && count <= endNo) {
                     searchResult.add(cc);
                 }
             }
@@ -478,8 +489,10 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
                 Iterator it = cc.getBondOffers().iterator();
                 while (it.hasNext()) {
                     BondOffer bondOffer = (BondOffer) it.next();
-                    if (bondOffer.getHolderBondAccounts().size() > 0) {
-                        bondAccounts += bondOffer.getHolderBondAccounts().size();
+                    List<HolderBondAccount> bond_list = new ArrayList<>(bondOffer.getHolderBondAccounts());
+                    for (HolderBondAccount hba : bond_list) {
+                        if (hba.getBondUnits() > 0)
+                            ++bondAccounts;
                     }
                 }
                 if (bondAccounts == startNo) {
@@ -496,8 +509,10 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
                 Iterator it = cc.getBondOffers().iterator();
                 while (it.hasNext()) {
                     BondOffer bondOffer = (BondOffer) it.next();
-                    if (bondOffer.getHolderBondAccounts().size() > 0) {
-                        bondAccounts += bondOffer.getHolderBondAccounts().size();
+                    List<HolderBondAccount> bond_list = new ArrayList<>(bondOffer.getHolderBondAccounts());
+                    for (HolderBondAccount hba : bond_list) {
+                        if (hba.getBondUnits() > 0)
+                            ++bondAccounts;
                     }
                 }
                 if (bondAccounts >= startNo && bondAccounts <= endNo) {
@@ -513,6 +528,11 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     @Override
     public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, Map<String, Double> shareUnitCriteria,
             Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria) {
+        //intial shareholder object, in case holder isnt searched
+        ClientCompany initialCC = new ClientCompany();
+        initialCC.setClientCompanyPrimary(true);
+        initialCC.setMerged(false);
+        
         //descriptor=clientCompany:none;shareUnit:none;numberOfShareholders:none;numberOfBondholders:none
         Map<String, String> descriptorSplits = Descriptor.decipherDescriptor(descriptor);
         String clientCompanyDescriptor = descriptorSplits.get("clientCompany");
@@ -532,6 +552,8 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         if (clientCompanyDescriptor.equalsIgnoreCase("exact")) {
             clientCompanySearchCriteria = searchClientCompanyAccordingToObject(baseCriteria, ccSearchParams);
             result = clientCompanySearchCriteria.list();
+        } else {
+            baseCriteria.add(Example.create(initialCC).enableLike());
         }
 
         //if client company was searched for, pass client company search criteria into unit price search. Otherwise, use base criteria
@@ -558,6 +580,16 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
 
     @Override
     public boolean checkOpenPrivatePlacement(int clientCompanyId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<BondType> getAllBondTypes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<BondOfferPaymentPlan> getAllBondOfferPaymentPlans() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
