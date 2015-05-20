@@ -161,9 +161,9 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
        bondoffer.setTitle(title);
        bondoffer.setBondUnitPrice(bondunitprice);
        bondoffer.setBondMaturity(bondMaturity);
-       bondoffer.setBondType(bondType);
+       //bondoffer.setBondType(bondType);
        bondoffer.setInterestRate(interestRate);
-       bondoffer.setPaymentPlan(paymentPlan); 
+       //bondoffer.setPaymentPlan(paymentPlan); 
        bondoffer.setClientCompany(client);
        return bondoffer;
    }
@@ -311,7 +311,7 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
         holderpersistence.setFirstName(firstName);
         holderpersistence.setMiddleName(middleName);
         holderpersistence.setLastName(lastName);
-        holderpersistence.setType(type);
+        //holderpersistence.setType(type);
         holderpersistence.setGender(gender);
         holderpersistence.setDob(dob);
         holderpersistence.setTaxExempted(taxExempted);

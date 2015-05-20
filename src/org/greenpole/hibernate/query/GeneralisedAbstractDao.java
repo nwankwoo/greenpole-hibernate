@@ -5,6 +5,7 @@
  */
 package org.greenpole.hibernate.query;
 
+import java.io.Serializable;
 import java.util.List;
 import org.greenpole.hibernate.exception.DataAccessLayerException;
 import org.greenpole.hibernate.util.HibernateUtil;
@@ -90,7 +91,7 @@ public abstract class GeneralisedAbstractDao {
      * @param id the id of the object to retrieve
      * @return the object of the entity class
      */
-    public Object searchObject(Class clz, Integer id){
+    public Object searchObject(Class clz, Serializable id){
         Object object = session.get(clz, id);
         return object;
     }

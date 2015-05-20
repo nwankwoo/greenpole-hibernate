@@ -207,6 +207,13 @@ public interface ClientCompanyComponentQuery {
             Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria);
     
     /**
+     * Gets a bond offer by the specified id.
+     * @param bondOfferId the bond offer id
+     * @return the bond offer object
+     */
+    public BondOffer getBondOffer(int bondOfferId);
+    
+    /**
      * Gets all available bond types.
      * @return a list of all available bond types 
      */

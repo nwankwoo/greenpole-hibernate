@@ -5,19 +5,13 @@
  */
 package org.greenpole.hibernate.query;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.greenpole.hibernate.entity.AccountConsolidation;
-import org.greenpole.hibernate.entity.Administrator;
-import org.greenpole.hibernate.entity.AdministratorPhoneNumber;
-import org.greenpole.hibernate.entity.AdministratorPostalAddress;
-import org.greenpole.hibernate.entity.AdministratorResidentialAddress;
 import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
-import org.greenpole.hibernate.entity.HolderChangeType;
 import org.greenpole.hibernate.entity.HolderChanges;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.HolderEmailAddress;
@@ -27,7 +21,6 @@ import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.HolderType;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
-import org.hibernate.id.IdentifierGeneratorHelper;
 
 /**
  *
@@ -89,11 +82,17 @@ public interface HolderComponentQuery {
      * @param postalAddresses the holder's postal addresses
      * @param phoneNumbers the holder's phone numbers
      * @param emailAddresses the holder's email address
+     * @param deletedResAddresses the holder's residential addresses to be deleted
+     * @param deletedPosAddresses the holder's postal addresses to be deleted
+     * @param deletedPhoneNumbers the holder's phone numbers to be deleted
+     * @param deletedEmailAddresses the holder's email address to be deleted
      * @param changes recordable changes made to the holder account
      * @return true, if update transaction is successful
      */
     public boolean updateHolderAccount(Holder holder, List<HolderResidentialAddress> residentialAddresses, List<HolderPostalAddress> postalAddresses,
-            List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderChanges> changes);
+            List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderResidentialAddress> deletedResAddresses,
+            List<HolderPostalAddress> deletedPosAddresses, List<HolderPhoneNumber> deletedPhoneNumbers, List<HolderEmailAddress> deletedEmailAddresses,  
+            List<HolderChanges> changes);
     
     /**
      * Updates an existing holder account (for shareholder and bondholder).
@@ -134,28 +133,15 @@ public interface HolderComponentQuery {
     public boolean checkHolderBondAccount(int holderId, int bondOfferId);
     
     /**
-     * Checks the existence of a holder company account.
-     * @param chn the holder's chn
-     * @return true, if the holder company account exists. Otherwise, false
-     */
-    public boolean checkHolderCompanyAccount(String chn);
-    
-    /**
-     * Checks the existence of a holder bond account.
-     * @param chn the holder's chn
-     * @return true, if the holder bond account exists. Otherwise, false
-     */
-    public boolean checkHolderBondAccount(String chn);
-    
-    /**
      * Queries the holder changes according to the search parameters.
      * @param descriptor the description of the type of search to carry out
      * @param searchParams the holder changes search parameter
      * @param startDate the start date of the search
      * @param endDate the end date of the search
+     * @param dateFormat the format with which the dates are set to
      * @return the list of holder changes from the search
      */
-    public List<HolderChanges> queryHolderChanges(String descriptor, HolderChanges searchParams, String startDate, String endDate);
+    public List<HolderChanges> queryHolderChanges(String descriptor, HolderChanges searchParams, String startDate, String endDate, String dateFormat);
     
     /**
      * Gets the holder object according to the specified id.
@@ -188,29 +174,26 @@ public interface HolderComponentQuery {
     public HolderBondAccount getHolderBondAccount(int holderId, int bondOfferId);
     
     /**
-     * Gets the holder company account object according to the specified chn.
-     * @param chn the holder's chn
-     * @return the holder company account object
-     */
-    public HolderCompanyAccount getHolderCompanyAccount(String chn);
-    
-    /**
-     * Gets the holder bond account object according to the specified chn.
-     * @param chn the holder's chn
-     * @return the holder bond account object
-     */
-    public HolderBondAccount getHolderBondAccount(String chn);
-    
-    /**
      * Searches for list of shareholders according to the provided search parameters.
      * @param descriptor the description of the type of search to carry out
      * @param searchParams the shareholder search parameters
      * @param shareUnits_search the share units search criteria
-     * @param totalHoldings_search the total holdings search criteria
+     * @param totalShareHoldings_search the total share holdings search criteria
      * @return the list of holders from the search
      */
     public List<Holder> queryShareholderAccount(String descriptor, Holder searchParams, Map<String, Integer> shareUnits_search,
-            Map<String, Integer> totalHoldings_search);
+            Map<String, Integer> totalShareHoldings_search);
+    
+    /**
+     * Searches for list of bond-holders according to the provided search parameters.
+     * @param descriptor the description of the type of search to carry out
+     * @param searchParams the bond-holder search parameters
+     * @param bondUnits_search the bond units search criteria
+     * @param totalBondHoldings_search the total bond holdings search criteria
+     * @return the list of holders from the search
+     */
+    public List<Holder> queryBondholderAccount(String descriptor, Holder searchParams, Map<String, Integer> bondUnits_search,
+            Map<String, Integer> totalBondHoldings_search);
     
     /**
      * Gets the holder's residential addresses.
@@ -297,7 +280,7 @@ public interface HolderComponentQuery {
      * @return true if merge was successful. Otherwise, false
      */
     public boolean mergeHolderAccounts(Holder primaryHolder, List<Holder> secondaryHolders, List<HolderCompanyAccount> secHolderCompAccts,
-            List<HolderBondAccount> secHolderBondAccts);
+            List<HolderBondAccount> secHolderBondAccts, String pryHolderOriginalValues);
     
     /**
      * Demerges a list of secondary holder accounts from a primary holder account.
@@ -347,21 +330,23 @@ public interface HolderComponentQuery {
     public List<CompanyAccountConsolidation> getCompanyAccountMerges(int holderId);
     
     /**
-     * Gets the final unit after merge transfer between company accounts.
+     * Gets the final unit after merge transfer between company/bond accounts.
      * @param holderId the primary holder id (who holds the transfered units)
-     * @param companyId the id of the company for which the account concerns
+     * @param compOrBondId the id of the company/bond offer for which the account concerns
+     * @param isShare if the final unit is for a share transfer or bond
      * @return the final unit after merge transfer between company accounts
      */
-    public int getFinalUnitAfterTransfer(int holderId, int companyId);
+    public int getFinalUnitAfterTransfer(int holderId, int compOrBondId, boolean isShare);
 
     /**
      * Gets all account consolidation according to specified dates.
      * @param descriptor the description of the type of search to carry out 
      * @param startDate the start date
      * @param endDate the end date
+     * @param dateFormat the format of dates
      * @return a list of account consolidation records
      */
-    public List<AccountConsolidation> getAllHolderAccountConsolidation(String descriptor, String startDate, String endDate);
+    public List<AccountConsolidation> getAllHolderAccountConsolidation(String descriptor, String startDate, String endDate, String dateFormat);
     
     /**
      * Gets all company account consolidation according to the specified account consolidation id.
@@ -451,10 +436,4 @@ public interface HolderComponentQuery {
      * @return a list of all holder types
      */
     public List<HolderType> getAllHolderTypes();
-    
-    /**
-     * Gets all available bond offer payment plans.
-     * @return a list of all bond offer payment plans
-     */
-    public List<BondOfferPaymentPlan> getAllBondOfferPaymentPlans();
 }

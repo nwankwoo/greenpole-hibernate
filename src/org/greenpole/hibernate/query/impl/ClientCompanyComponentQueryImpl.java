@@ -39,14 +39,13 @@ import org.slf4j.LoggerFactory;
  * requirements.
  */
 public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao implements ClientCompanyComponentQuery {
-
     private static final Logger logger = LoggerFactory.getLogger(ClientCompanyComponentQueryImpl.class);
 
     @Override
     public boolean checkClientCompany(String companyName) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.ilike("name", "%" + companyName + "%"))
+                .add(Restrictions.eq("name", companyName))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
         getTransaction().commit();
@@ -57,7 +56,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public boolean checkClientCompanyByCode(String companyCode) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.ilike("code", "%" + companyCode + "%"))
+                .add(Restrictions.eq("code", companyCode))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
         getTransaction().commit();
@@ -87,18 +86,20 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public ClientCompany getClientCompany(String code) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.eq("code", "%" + code + "%"));
+                .add(Restrictions.eq("code", code));
+        ClientCompany cc = (ClientCompany) criteria.list().get(0);
         getTransaction().commit();
-        return (ClientCompany) criteria.list().get(0);
+        return cc;
     }
     
     @Override
     public ClientCompany getClientCompanyByName(String name) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.eq("name", "%" + name + "%"));
+                .add(Restrictions.eq("name", name));
+        ClientCompany cc = (ClientCompany) criteria.list().get(0);
         getTransaction().commit();
-        return (ClientCompany) criteria.list().get(0);
+        return cc;
     }
 
     @Override
@@ -139,8 +140,9 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompanyAddress.class)
                 .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        List<ClientCompanyAddress> addy_list = criteria.list();
         getTransaction().commit();
-        return criteria.list();
+        return addy_list;
     }
 
     @Override
@@ -148,8 +150,9 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompanyEmailAddress.class)
                 .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        List<ClientCompanyEmailAddress> email_list = criteria.list();
         getTransaction().commit();
-        return criteria.list();
+        return email_list;
     }
 
     @Override
@@ -157,8 +160,9 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompanyPhoneNumber.class)
                 .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+        List<ClientCompanyPhoneNumber> phone_list = criteria.list();
         getTransaction().commit();
-        return criteria.list();
+        return phone_list;
     }
 
     @Override
@@ -201,54 +205,74 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
-    public boolean updateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers, List<ClientCompanyAddress> addressesToRemove, List<ClientCompanyEmailAddress> emailAddressesToRemove, List<ClientCompanyPhoneNumber> phoneNumbersToRemove) {
+    public boolean updateClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses, List<ClientCompanyEmailAddress> emailAddresses,
+            List<ClientCompanyPhoneNumber> phoneNumbers, List<ClientCompanyAddress> addressesToRemove, 
+            List<ClientCompanyEmailAddress> emailAddressesToRemove, List<ClientCompanyPhoneNumber> phoneNumbersToRemove) {
         boolean updated = false;
         try {
             startOperation();
             //create client company
             createUpdateObject(clientCompany);
             //create addresses
-            addresses.stream().map((address) -> {
-                address.getId().setClientCompanyId(clientCompany.getId());
-                return address;
-            }).forEach((addy) -> {
-                createUpdateObject(addy);
-            });
+            if (addresses != null) {
+                addresses.stream().map((address) -> {
+                    address.getId().setClientCompanyId(clientCompany.getId());
+                    return address;
+                }).forEach((addy) -> {
+                    createUpdateObject(addy);
+                });
+            }
+            
             //create email addresses
-            emailAddresses.stream().map((email) -> {
-                email.getId().setClientCompanyId(clientCompany.getId());
-                return email;
-            }).forEach((email) -> {
-                createUpdateObject(email);
-            });
+            if (emailAddresses != null) {
+                emailAddresses.stream().map((email) -> {
+                    email.getId().setClientCompanyId(clientCompany.getId());
+                    return email;
+                }).forEach((email) -> {
+                    createUpdateObject(email);
+                });
+            }
+            
             //create phone numbers
-            phoneNumbers.stream().map((phone) -> {
-                phone.getId().setClientCompanyId(clientCompany.getId());
-                return phone;
-            }).forEach((phone) -> {
-                createUpdateObject(phone);
-            });
+            if (phoneNumbers != null) {
+                phoneNumbers.stream().map((phone) -> {
+                    phone.getId().setClientCompanyId(clientCompany.getId());
+                    return phone;
+                }).forEach((phone) -> {
+                    createUpdateObject(phone);
+                });
+            }
+            
             //remove addresses
-            addressesToRemove.stream().map((addy) -> {
-                addy.getId().setClientCompanyId(clientCompany.getId());
-                return addy;
-            }).forEach((addy) -> {
-                removeObject(addy);
-            });
+            if (addressesToRemove != null) {
+                addressesToRemove.stream().map((addy) -> {
+                    addy.getId().setClientCompanyId(clientCompany.getId());
+                    return addy;
+                }).forEach((addy) -> {
+                    removeObject(addy);
+                });
+            }
+            
             //remove email addresses
-            emailAddressesToRemove.stream().map((email) -> {
-                email.getId().setClientCompanyId(clientCompany.getId());
-                return email;
-            }).forEach((email) -> {
-                removeObject(email);
-            });
+            if (emailAddressesToRemove != null) {
+                emailAddressesToRemove.stream().map((email) -> {
+                    email.getId().setClientCompanyId(clientCompany.getId());
+                    return email;
+                }).forEach((email) -> {
+                    removeObject(email);
+                });
+            }
+            
             //remove phone numbers
-            phoneNumbersToRemove.stream().map((phone) -> {
-                phone.getId().setClientCompanyId(clientCompany.getId());
-                return phone;
-            }).forEach((phone) -> {
-                removeObject(phone);
-            });
+            if (phoneNumbersToRemove != null) {
+                phoneNumbersToRemove.stream().map((phone) -> {
+                    phone.getId().setClientCompanyId(clientCompany.getId());
+                    return phone;
+                }).forEach((phone) -> {
+                    removeObject(phone);
+                });
+            }
+            
             getTransaction().commit();
             updated = true;
             return updated;
@@ -579,17 +603,36 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public BondOffer getBondOffer(int bondOfferId) {
+        startOperation();
+        BondOffer bo = (BondOffer) searchObject(BondOffer.class, bondOfferId);
+        getTransaction().commit();
+        return bo;
+    }
+
+    @Override
     public boolean checkOpenPrivatePlacement(int clientCompanyId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        startOperation();
+        Criteria criteria = getSession().createCriteria(PrivatePlacement.class)
+                .add(Restrictions.eq("clientCompany.id", clientCompanyId))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        return count > 0;
     }
 
     @Override
     public List<BondType> getAllBondTypes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        startOperation();
+        List<BondType> bt_list = searchAll(BondType.class);
+        getTransaction().commit();
+        return bt_list;
     }
 
     @Override
     public List<BondOfferPaymentPlan> getAllBondOfferPaymentPlans() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        startOperation();
+        List<BondOfferPaymentPlan> plans = searchAll(BondOfferPaymentPlan.class);
+        getTransaction().commit();
+        return plans;
     }
 }
