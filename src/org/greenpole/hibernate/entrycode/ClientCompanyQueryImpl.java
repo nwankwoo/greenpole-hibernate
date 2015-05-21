@@ -163,7 +163,7 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
        bondoffer.setBondMaturity(bondMaturity);
        //bondoffer.setBondType(bondType);
        bondoffer.setInterestRate(interestRate);
-       //bondoffer.setPaymentPlan(paymentPlan); 
+       //bondoffer.setbondOfferPaymentPlan(paymentPlan); 
        bondoffer.setClientCompany(client);
        return bondoffer;
    }

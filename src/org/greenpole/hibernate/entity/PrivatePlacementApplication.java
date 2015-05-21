@@ -20,12 +20,14 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
      private String issuingHouse;
      private Double sharesSubscribedValue;
      private Double returnMoney;
-     private boolean cancelled;
+     private boolean processingPayment;
+     private boolean approved;
+     private boolean canceled;
 
     public PrivatePlacementApplication() {
     }
 
-    public PrivatePlacementApplication(ClearingHouse clearingHouse, Holder holder, PrivatePlacement privatePlacement, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double returnMoney, boolean cancelled) {
+    public PrivatePlacementApplication(ClearingHouse clearingHouse, Holder holder, PrivatePlacement privatePlacement, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.privatePlacement = privatePlacement;
@@ -35,7 +37,9 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
        this.issuingHouse = issuingHouse;
        this.sharesSubscribedValue = sharesSubscribedValue;
        this.returnMoney = returnMoney;
-       this.cancelled = cancelled;
+       this.processingPayment = processingPayment;
+       this.approved = approved;
+       this.canceled = canceled;
     }
    
     public int getId() {
@@ -126,12 +130,28 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
     public void setReturnMoney(Double returnMoney) {
         this.returnMoney = returnMoney;
     }
-    public boolean isCancelled() {
-        return this.cancelled;
+
+    public boolean isProcessingPayment() {
+        return processingPayment;
+    }
+
+    public void setProcessingPayment(boolean processingPayment) {
+        this.processingPayment = processingPayment;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+    public boolean isCanceled() {
+        return this.canceled;
     }
     
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 
 

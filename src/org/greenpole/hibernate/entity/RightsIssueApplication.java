@@ -24,12 +24,14 @@ public class RightsIssueApplication  implements java.io.Serializable {
      private Double totalValue;
      private int totalSharesRenounced;
      private Double returnMoney;
+     private boolean processingPayment;
+     private boolean approved;
      private boolean cancelled;
 
     public RightsIssueApplication() {
     }
 
-    public RightsIssueApplication(ClearingHouse clearingHouse, Holder holder, RightsIssue rightsIssue, String issuer, int sharesSubscribed, int additionalSharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double additionalSharesSubValue, Double totalValue, int totalSharesRenounced, Double returnMoney, boolean cancelled) {
+    public RightsIssueApplication(ClearingHouse clearingHouse, Holder holder, RightsIssue rightsIssue, String issuer, int sharesSubscribed, int additionalSharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double additionalSharesSubValue, Double totalValue, int totalSharesRenounced, Double returnMoney, boolean processingPayment, boolean approved, boolean cancelled) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.rightsIssue = rightsIssue;
@@ -43,6 +45,8 @@ public class RightsIssueApplication  implements java.io.Serializable {
        this.totalValue = totalValue;
        this.totalSharesRenounced = totalSharesRenounced;
        this.returnMoney = returnMoney;
+       this.processingPayment = processingPayment;
+       this.approved = approved;
        this.cancelled = cancelled;
     }
    
@@ -160,6 +164,21 @@ public class RightsIssueApplication  implements java.io.Serializable {
     
     public void setReturnMoney(Double returnMoney) {
         this.returnMoney = returnMoney;
+    }
+    public boolean isProcessingPayment() {
+        return processingPayment;
+    }
+
+    public void setProcessingPayment(boolean processingPayment) {
+        this.processingPayment = processingPayment;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
     public boolean isCancelled() {
         return this.cancelled;

@@ -48,6 +48,12 @@
         <property name="returnMoney" type="java.lang.Double">
             <column name="return_money" precision="53" scale="0" />
         </property>
+        <property name="processingPayment" type="boolean">
+            <column name="processing_payment"/>
+        </property>
+        <property name="approved" type="boolean">
+            <column name="approved"/>
+        </property>
         <property name="cancelled" type="boolean">
             <column name="cancelled" />
         </property>

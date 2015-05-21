@@ -75,6 +75,18 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public boolean clientCompanyIsValid(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.eq("valid", "true"))
+                .add(Restrictions.idEq(clientCompanyId))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
+    }
+
+    @Override
     public ClientCompany getClientCompany(Integer id) {
         startOperation();
         ClientCompany cc = (ClientCompany) searchObject(ClientCompany.class, id);
@@ -288,6 +300,18 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         createUpdateObject(bondOffer);
         getTransaction().commit();
+    }
+
+    @Override
+    public boolean bondOfferIsValid(int bondOfferId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(BondOffer.class)
+                .add(Restrictions.eq("valid", "true"))
+                .add(Restrictions.idEq(bondOfferId))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
     }
 
     @Override

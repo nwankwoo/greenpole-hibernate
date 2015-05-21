@@ -46,6 +46,13 @@ public interface ClientCompanyComponentQuery {
     public boolean checkClientCompany(int clientCompanyId);
     
     /**
+     * Checks the valid status of a client company.
+     * @param clientCompanyId the client company id
+     * @return true, if company is valid. Otherwise, false.
+     */
+    public boolean clientCompanyIsValid(int clientCompanyId);
+    
+    /**
      * Creates a new client company in the database.
      * @param clientCompany the client company object model containing data
      * to be added
@@ -147,6 +154,13 @@ public interface ClientCompanyComponentQuery {
      * @param bondOffer the bond offer to be created
      */
     public void createBondOffer(BondOffer bondOffer);
+    
+    /**
+     * Checks the valid status of a bond offer.
+     * @param bondOfferId the bond offer id
+     * @return true, if bond offer is valid. Otherwise, false
+     */
+    public boolean bondOfferIsValid(int bondOfferId);
     
     /**
      * Sets up an initial public offer.

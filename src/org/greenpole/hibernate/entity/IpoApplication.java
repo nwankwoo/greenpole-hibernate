@@ -20,12 +20,14 @@ public class IpoApplication  implements java.io.Serializable {
      private String issuingHouse;
      private Double sharesSubscribedValue;
      private Double returnMoney;
+     private boolean processingPayment;
+     private boolean approved;
      private boolean cancelled;
 
     public IpoApplication() {
     }
 
-    public IpoApplication(ClearingHouse clearingHouse, Holder holder, InitialPublicOffer initialPublicOffer, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double returnMoney, boolean cancelled) {
+    public IpoApplication(ClearingHouse clearingHouse, Holder holder, InitialPublicOffer initialPublicOffer, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double returnMoney, boolean processingPayment, boolean approved, boolean cancelled) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.initialPublicOffer = initialPublicOffer;
@@ -35,6 +37,8 @@ public class IpoApplication  implements java.io.Serializable {
        this.issuingHouse = issuingHouse;
        this.sharesSubscribedValue = sharesSubscribedValue;
        this.returnMoney = returnMoney;
+       this.processingPayment = processingPayment;
+       this.approved = approved;
        this.cancelled = cancelled;
     }
    
@@ -124,6 +128,21 @@ public class IpoApplication  implements java.io.Serializable {
     
     public void setReturnMoney(Double returnMoney) {
         this.returnMoney = returnMoney;
+    }
+    public boolean isProcessingPayment() {
+        return processingPayment;
+    }
+
+    public void setProcessingPayment(boolean processingPayment) {
+        this.processingPayment = processingPayment;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
     public boolean isCancelled() {
         return this.cancelled;

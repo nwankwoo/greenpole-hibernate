@@ -20,19 +20,21 @@ public class BondOffer  implements java.io.Serializable {
      private Date bondMaturity;
      private BondType bondType;
      private Double interestRate;
+     private boolean valid;
      private BondOfferPaymentPlan bondOfferPaymentPlan;
      private Set holderBondAccounts = new HashSet(0);
 
     public BondOffer() {
     }
 
-    public BondOffer(ClientCompany clientCompany, String title, Double bondUnitPrice, Date bondMaturity, BondType bondType, Double interestRate, BondOfferPaymentPlan bondOfferPaymentPlan, Set holderBondAccounts) {
+    public BondOffer(ClientCompany clientCompany, String title, Double bondUnitPrice, Date bondMaturity, BondType bondType, Double interestRate, boolean valid, BondOfferPaymentPlan bondOfferPaymentPlan, Set holderBondAccounts) {
        this.clientCompany = clientCompany;
        this.title = title;
        this.bondUnitPrice = bondUnitPrice;
        this.bondMaturity = bondMaturity;
        this.bondType = bondType;
        this.interestRate = interestRate;
+       this.valid = valid;
        this.bondOfferPaymentPlan = bondOfferPaymentPlan;
        this.holderBondAccounts = holderBondAccounts;
     }
@@ -104,11 +106,19 @@ public class BondOffer  implements java.io.Serializable {
     public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
     }
-    public BondOfferPaymentPlan getPaymentPlan() {
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+    public BondOfferPaymentPlan getbondOfferPaymentPlan() {
         return this.bondOfferPaymentPlan;
     }
     
-    public void setPaymentPlan(BondOfferPaymentPlan paymentPlan) {
+    public void setbondOfferPaymentPlan(BondOfferPaymentPlan paymentPlan) {
         this.bondOfferPaymentPlan = paymentPlan;
     }
 
