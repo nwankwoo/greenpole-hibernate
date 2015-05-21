@@ -1,6 +1,9 @@
 package org.greenpole.hibernate.entity;
 // Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -24,11 +27,12 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
      private boolean processingPayment;
      private boolean approved;
      private boolean canceled;
+     private Date dateApplied;
 
     public PrivatePlacementApplication() {
     }
 
-    public PrivatePlacementApplication(ClearingHouse clearingHouse, Holder holder, PrivatePlacement privatePlacement, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, int sharesAdjusted, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled) {
+    public PrivatePlacementApplication(ClearingHouse clearingHouse, Holder holder, PrivatePlacement privatePlacement, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, int sharesAdjusted, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled, Date dateApplied) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.privatePlacement = privatePlacement;
@@ -42,6 +46,7 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
        this.processingPayment = processingPayment;
        this.approved = approved;
        this.canceled = canceled;
+       this.dateApplied = dateApplied;
     }
    
     public int getId() {
@@ -162,6 +167,14 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
     
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
+    }
+
+    public Date getDateApplied() {
+        return dateApplied;
+    }
+
+    public void setDateApplied(Date dateApplied) {
+        this.dateApplied = dateApplied;
     }
 
 

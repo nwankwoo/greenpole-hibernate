@@ -38,6 +38,9 @@
         <property name="nubanAccount" type="string">
             <column name="nuban_Account" length="50" />
         </property>
+        <property name="dateApplied" type="date">
+            <column name="date_applied" length="10" />
+        </property>
         <property name="merged" type="boolean">
             <column name="merged" />
         </property>

@@ -47,5 +47,8 @@
     <property name="canceled" type="boolean">
       <column name="cancelled"/>
     </property>
+    <property name="dateApplied" type="date">
+        <column name="date_applied" length="10" />
+    </property>
   </class>
 </hibernate-mapping>

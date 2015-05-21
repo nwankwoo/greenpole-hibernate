@@ -1,6 +1,9 @@
 package org.greenpole.hibernate.entity;
 // Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -28,12 +31,13 @@ public class RightsIssueApplication  implements java.io.Serializable {
      private Double returnMoney;
      private boolean processingPayment;
      private boolean approved;
-     private boolean cancelled;
+     private boolean canceled;
+     private Date dateApplied;
 
     public RightsIssueApplication() {
     }
 
-    public RightsIssueApplication(ClearingHouse clearingHouse, Holder holder, RightsIssue rightsIssue, String issuer, int totalHoldings, int allottedRights, int sharesSubscribed, int additionalSharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double additionalSharesSubValue, Double totalValue, int totalSharesRenounced, Double returnMoney, boolean processingPayment, boolean approved, boolean cancelled) {
+    public RightsIssueApplication(ClearingHouse clearingHouse, Holder holder, RightsIssue rightsIssue, String issuer, int totalHoldings, int allottedRights, int sharesSubscribed, int additionalSharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double additionalSharesSubValue, Double totalValue, int totalSharesRenounced, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled, Date dateApplied) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.rightsIssue = rightsIssue;
@@ -51,7 +55,8 @@ public class RightsIssueApplication  implements java.io.Serializable {
        this.returnMoney = returnMoney;
        this.processingPayment = processingPayment;
        this.approved = approved;
-       this.cancelled = cancelled;
+       this.canceled = canceled;
+       this.dateApplied = dateApplied;
     }
    
     public int getId() {
@@ -200,14 +205,21 @@ public class RightsIssueApplication  implements java.io.Serializable {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
-    public boolean isCancelled() {
-        return this.cancelled;
+    public boolean isCanceled() {
+        return this.canceled;
     }
     
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+    
+    public Date getDateApplied() {
+        return dateApplied;
     }
 
+    public void setDateApplied(Date dateApplied) {
+        this.dateApplied = dateApplied;
+    }
 
 
 

@@ -1,6 +1,9 @@
 package org.greenpole.hibernate.entity;
 // Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -23,12 +26,13 @@ public class IpoApplication  implements java.io.Serializable {
      private Double returnMoney;
      private boolean processingPayment;
      private boolean approved;
-     private boolean cancelled;
+     private boolean canceled;
+     private Date dateApplied;
 
     public IpoApplication() {
     }
 
-    public IpoApplication(ClearingHouse clearingHouse, Holder holder, InitialPublicOffer initialPublicOffer, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, int sharesAdjusted, Double returnMoney, boolean processingPayment, boolean approved, boolean cancelled) {
+    public IpoApplication(ClearingHouse clearingHouse, Holder holder, InitialPublicOffer initialPublicOffer, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, int sharesAdjusted, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled, Date dateApplied) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.initialPublicOffer = initialPublicOffer;
@@ -41,7 +45,8 @@ public class IpoApplication  implements java.io.Serializable {
        this.returnMoney = returnMoney;
        this.processingPayment = processingPayment;
        this.approved = approved;
-       this.cancelled = cancelled;
+       this.canceled = canceled;
+       this.dateApplied = dateApplied;
     }
    
     public int getId() {
@@ -153,12 +158,20 @@ public class IpoApplication  implements java.io.Serializable {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
-    public boolean isCancelled() {
-        return this.cancelled;
+    public boolean isCanceled() {
+        return this.canceled;
     }
     
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
+    public Date getDateApplied() {
+        return dateApplied;
+    }
+
+    public void setDateApplied(Date dateApplied) {
+        this.dateApplied = dateApplied;
     }
 
 

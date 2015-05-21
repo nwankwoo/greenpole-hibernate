@@ -6,6 +6,7 @@
 package org.greenpole.hibernate.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ public class HolderBondAccount implements Serializable {
     private Double startingPrincipalValue;
     private Double remainingPrincipalValue;
     private String nubanAccount;
+    private Date dateApplied;
     private boolean merged;
     private boolean holderBondAccPrimary;
     private Set coupons = new HashSet(0);
@@ -39,7 +41,7 @@ public class HolderBondAccount implements Serializable {
         this.holder = holder;
     }
 
-    public HolderBondAccount(HolderBondAccountId id, Bank bank, BondOffer bondOffer, Holder holder, HolderBondAccount holderBondAccount, int bondUnits, Double startingPrincipalValue, Double remainingPrincipalValue, String nubanAccount, boolean merged, boolean holderBondAccPrimary) {
+    public HolderBondAccount(HolderBondAccountId id, Bank bank, BondOffer bondOffer, Holder holder, HolderBondAccount holderBondAccount, int bondUnits, Double startingPrincipalValue, Double remainingPrincipalValue, String nubanAccount, Date dateApplied, boolean merged, boolean holderBondAccPrimary) {
         this.id = id;
         this.bank = bank;
         this.bondOffer = bondOffer;
@@ -49,6 +51,7 @@ public class HolderBondAccount implements Serializable {
         this.startingPrincipalValue = startingPrincipalValue;
         this.remainingPrincipalValue = remainingPrincipalValue;
         this.nubanAccount = nubanAccount;
+        this.dateApplied = dateApplied;
         this.merged = merged;
         this.holderBondAccPrimary = holderBondAccPrimary;
     }
@@ -131,6 +134,14 @@ public class HolderBondAccount implements Serializable {
 
     public void setNubanAccount(String nubanAccount) {
         this.nubanAccount = nubanAccount;
+    }
+
+    public Date getDateApplied() {
+        return dateApplied;
+    }
+
+    public void setDateApplied(Date dateApplied) {
+        this.dateApplied = dateApplied;
     }
 
     public boolean isMerged() {
