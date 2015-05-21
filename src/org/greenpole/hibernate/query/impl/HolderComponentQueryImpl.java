@@ -1342,6 +1342,14 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         getTransaction().commit();
         return type_list;
     }
+
+    @Override
+    public List<TransactionType> getAllTransactionTypes() {
+        startOperation();
+        List<TransactionType> type_list = searchAll(TransactionType.class);
+        getTransaction().commit();
+        return type_list;
+    }
     
     /**
      * Gets the criteria for a search on all holders in the database.

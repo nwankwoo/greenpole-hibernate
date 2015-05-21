@@ -21,6 +21,7 @@ import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.HolderType;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
+import org.greenpole.hibernate.entity.TransactionType;
 
 /**
  *
@@ -437,4 +438,10 @@ public interface HolderComponentQuery {
      * @return a list of all holder types
      */
     public List<HolderType> getAllHolderTypes();
+    
+    /**
+     * Gets all available transaction types.
+     * @return a list of all transaction types
+     */
+    public List<TransactionType> getAllTransactionTypes();
 }
