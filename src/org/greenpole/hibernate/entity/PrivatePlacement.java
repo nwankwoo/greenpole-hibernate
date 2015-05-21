@@ -24,13 +24,15 @@ public class PrivatePlacement  implements java.io.Serializable {
      private Date openingDate;
      private Date closingDate;
      private boolean placementClosed;
+     private Double tax;
+     private Double interestRate;
      private Set certificates = new HashSet(0);
      private Set privatePlacementApplications = new HashSet(0);
 
     public PrivatePlacement() {
     }
 
-    public PrivatePlacement(ClientCompany clientCompany, int totalSharesOnOffer, int methodOnOffer, int startingMinSubscrptn, int continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean placementClosed, Set certificates, Set privatePlacementApplications) {
+    public PrivatePlacement(ClientCompany clientCompany, int totalSharesOnOffer, int methodOnOffer, int startingMinSubscrptn, int continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean placementClosed, Double tax, Double interestRate, Set certificates, Set privatePlacementApplications) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOnOffer = methodOnOffer;
@@ -41,6 +43,8 @@ public class PrivatePlacement  implements java.io.Serializable {
        this.openingDate = openingDate;
        this.closingDate = closingDate;
        this.placementClosed = placementClosed;
+       this.tax = tax;
+       this.interestRate = interestRate;
        this.certificates = certificates;
        this.privatePlacementApplications = privatePlacementApplications;
     }
@@ -128,6 +132,21 @@ public class PrivatePlacement  implements java.io.Serializable {
     }
     public Date getClosingDate() {
         return this.closingDate;
+    }
+    public Double getTax() {
+        return tax;
+    }
+
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+
+    public Double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
     }
 
     public boolean isPlacementClosed() {

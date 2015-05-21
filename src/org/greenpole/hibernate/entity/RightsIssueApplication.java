@@ -15,6 +15,8 @@ public class RightsIssueApplication  implements java.io.Serializable {
      private Holder holder;
      private RightsIssue rightsIssue;
      private String issuer;
+     private int totalHoldings;
+     private int allotedRights;
      private int sharesSubscribed;
      private int additionalSharesSubscribed;
      private Double amountPaid;
@@ -31,11 +33,13 @@ public class RightsIssueApplication  implements java.io.Serializable {
     public RightsIssueApplication() {
     }
 
-    public RightsIssueApplication(ClearingHouse clearingHouse, Holder holder, RightsIssue rightsIssue, String issuer, int sharesSubscribed, int additionalSharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double additionalSharesSubValue, Double totalValue, int totalSharesRenounced, Double returnMoney, boolean processingPayment, boolean approved, boolean cancelled) {
+    public RightsIssueApplication(ClearingHouse clearingHouse, Holder holder, RightsIssue rightsIssue, String issuer, int totalHoldings, int allottedRights, int sharesSubscribed, int additionalSharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double additionalSharesSubValue, Double totalValue, int totalSharesRenounced, Double returnMoney, boolean processingPayment, boolean approved, boolean cancelled) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.rightsIssue = rightsIssue;
        this.issuer = issuer;
+       this.totalHoldings = totalHoldings;
+       this.allotedRights = allottedRights;
        this.sharesSubscribed = sharesSubscribed;
        this.additionalSharesSubscribed = additionalSharesSubscribed;
        this.amountPaid = amountPaid;
@@ -101,6 +105,22 @@ public class RightsIssueApplication  implements java.io.Serializable {
     
     public void setIssuer(String issuer) {
         this.issuer = issuer;
+    }
+
+    public int getTotalHoldings() {
+        return totalHoldings;
+    }
+
+    public void setTotalHoldings(int totalHoldings) {
+        this.totalHoldings = totalHoldings;
+    }
+
+    public int getAllotedRights() {
+        return allotedRights;
+    }
+
+    public void setAllotedRights(int allotedRights) {
+        this.allotedRights = allotedRights;
     }
     public int getSharesSubscribed() {
         return this.sharesSubscribed;

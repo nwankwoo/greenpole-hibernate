@@ -18,20 +18,22 @@ public class RightsIssue  implements java.io.Serializable {
      private int totalSharesOnIssue;
      private String methodOnOffer;
      private Double issuePrice;
-     private int issueSize;
+     private Double issueSize;
      private int qualifyShareUnit;
      private int alottedUnitPerQualifyUnit;
      private Date qualifyDate;
      private Date openingDate;
      private Date closingDate;
      private boolean rightsClosed;
+     private Double tax;
+     private Double interestRate;
      private Set rightsIssueApplications = new HashSet(0);
      private Set certificates = new HashSet(0);
 
     public RightsIssue() {
     }
 
-    public RightsIssue(ClientCompany clientCompany, int totalSharesOnIssue, String methodOnOffer, Double issuePrice, int issueSize, int qualifyShareUnit, int alottedUnitPerQualifyUnit, Date qualifyDate, Date openingDate, Date closingDate, boolean rightsClosed, Set rightsIssueApplications, Set certificates) {
+    public RightsIssue(ClientCompany clientCompany, int totalSharesOnIssue, String methodOnOffer, Double issuePrice, Double issueSize, int qualifyShareUnit, int alottedUnitPerQualifyUnit, Date qualifyDate, Date openingDate, Date closingDate, boolean rightsClosed, Double tax, Double interestRate, Set rightsIssueApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnIssue = totalSharesOnIssue;
        this.methodOnOffer = methodOnOffer;
@@ -43,6 +45,8 @@ public class RightsIssue  implements java.io.Serializable {
        this.openingDate = openingDate;
        this.closingDate = closingDate;
        this.rightsClosed = rightsClosed;
+       this.tax = tax;
+       this.interestRate = interestRate;
        this.rightsIssueApplications = rightsIssueApplications;
        this.certificates = certificates;
     }
@@ -99,11 +103,11 @@ public class RightsIssue  implements java.io.Serializable {
     public void setIssuePrice(Double issuePrice) {
         this.issuePrice = issuePrice;
     }
-    public int getIssueSize() {
+    public Double getIssueSize() {
         return this.issueSize;
     }
     
-    public void setIssueSize(int issueSize) {
+    public void setIssueSize(Double issueSize) {
         this.issueSize = issueSize;
     }
     public int getQualifyShareUnit() {
@@ -148,6 +152,22 @@ public class RightsIssue  implements java.io.Serializable {
 
     public void setRightsClosed(boolean rightsClosed) {
         this.rightsClosed = rightsClosed;
+    }
+
+    public Double getTax() {
+        return tax;
+    }
+
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+
+    public Double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
     }
     public Set getRightsIssueApplications() {
         return this.rightsIssueApplications;

@@ -39,6 +39,12 @@
         <property name="placementClosed" type="boolean">
             <column name="placement_closed" />
         </property>
+        <property name="tax" type="java.lang.Double">
+            <column name="tax" precision="53" scale="0" />
+        </property>
+        <property name="interestRate" type="java.lang.Double">
+            <column name="interest_rate" precision="53" scale="0" />
+        </property>
         <set name="certificates" table="CERTIFICATE" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="priv_Plcmnt_Id" />

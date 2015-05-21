@@ -38,6 +38,12 @@
     <property name="ipoClosed" type="boolean">
       <column name="ipo_closed"/>
     </property>
+    <property name="tax" type="java.lang.Double">
+        <column name="tax" precision="53" scale="0" />
+    </property>
+    <property name="interestRate" type="java.lang.Double">
+        <column name="interest_rate" precision="53" scale="0" />
+    </property>
     <set fetch="select" inverse="true" lazy="true" name="ipoApplications" table="IPO_APPLICATION">
       <key>
         <column name="ipo_id"/>

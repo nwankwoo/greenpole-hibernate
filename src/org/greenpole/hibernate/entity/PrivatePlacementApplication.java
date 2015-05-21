@@ -19,6 +19,7 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
      private Double amountPaid;
      private String issuingHouse;
      private Double sharesSubscribedValue;
+     private int sharesAdjusted;
      private Double returnMoney;
      private boolean processingPayment;
      private boolean approved;
@@ -27,7 +28,7 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
     public PrivatePlacementApplication() {
     }
 
-    public PrivatePlacementApplication(ClearingHouse clearingHouse, Holder holder, PrivatePlacement privatePlacement, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled) {
+    public PrivatePlacementApplication(ClearingHouse clearingHouse, Holder holder, PrivatePlacement privatePlacement, String issuer, int sharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, int sharesAdjusted, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.privatePlacement = privatePlacement;
@@ -36,6 +37,7 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
        this.amountPaid = amountPaid;
        this.issuingHouse = issuingHouse;
        this.sharesSubscribedValue = sharesSubscribedValue;
+       this.sharesAdjusted = sharesAdjusted;
        this.returnMoney = returnMoney;
        this.processingPayment = processingPayment;
        this.approved = approved;
@@ -122,6 +124,14 @@ public class PrivatePlacementApplication  implements java.io.Serializable {
     
     public void setSharesSubscribedValue(Double sharesSubscribedValue) {
         this.sharesSubscribedValue = sharesSubscribedValue;
+    }
+
+    public int getSharesAdjusted() {
+        return sharesAdjusted;
+    }
+
+    public void setSharesAdjusted(int sharesAdjusted) {
+        this.sharesAdjusted = sharesAdjusted;
     }
     public Double getReturnMoney() {
         return this.returnMoney;

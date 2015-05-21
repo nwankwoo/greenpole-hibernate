@@ -21,6 +21,12 @@
         <property name="issuer" type="string">
             <column name="issuer" length="200" />
         </property>
+        <property name="totalHoldings" type="int">
+            <column name="total_holdings" />
+        </property>
+        <property name="allottedRights" type="int">
+            <column name="allotted_rights" />
+        </property>
         <property name="sharesSubscribed" type="int">
             <column name="shares_subscribed" />
         </property>

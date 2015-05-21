@@ -24,13 +24,15 @@ public class InitialPublicOffer  implements java.io.Serializable {
      private Date openingDate;
      private Date closingDate;
      private boolean ipoClosed;
+     private Double tax;
+     private Double interestRate;
      private Set ipoApplications = new HashSet(0);
      private Set certificates = new HashSet(0);
 
     public InitialPublicOffer() {
     }
 
-    public InitialPublicOffer(ClientCompany clientCompany, int totalSharesOnOffer, String methodOfOffer, int startingMinSub, int contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean ipoClosed, Set ipoApplications, Set certificates) {
+    public InitialPublicOffer(ClientCompany clientCompany, int totalSharesOnOffer, String methodOfOffer, int startingMinSub, int contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean ipoClosed, Double tax, Double interestRate, Set ipoApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOfOffer = methodOfOffer;
@@ -41,6 +43,8 @@ public class InitialPublicOffer  implements java.io.Serializable {
        this.openingDate = openingDate;
        this.closingDate = closingDate;
        this.ipoClosed = ipoClosed;
+       this.tax = tax;
+       this.interestRate = interestRate;
        this.ipoApplications = ipoApplications;
        this.certificates = certificates;
     }
@@ -131,6 +135,29 @@ public class InitialPublicOffer  implements java.io.Serializable {
     
     public void setClosingDate(Date closingDate) {
         this.closingDate = closingDate;
+    }
+
+    public boolean isIpoClosed() {
+        return ipoClosed;
+    }
+
+    public void setIpoClosed(boolean ipoClosed) {
+        this.ipoClosed = ipoClosed;
+    }
+    public Double getTax() {
+        return tax;
+    }
+
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+
+    public Double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
     }
     public Set getIpoApplications() {
         return this.ipoApplications;

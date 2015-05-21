@@ -33,6 +33,9 @@
         <property name="sharesSubscribedValue" type="java.lang.Double">
             <column name="shares_subscribed_value" precision="53" scale="0" />
         </property>
+        <property name="sharesAdjusted" type="int">
+            <column name="shares_adjusted" />
+        </property>
         <property name="returnMoney" type="java.lang.Double">
             <column name="return_money" precision="53" scale="0" />
         </property>

@@ -46,6 +46,13 @@ public interface ClientCompanyComponentQuery {
     public boolean checkClientCompany(int clientCompanyId);
     
     /**
+     * Checks the existence of a client company while ignoring its valid status.
+     * @param clientCompanyId client company id to search with
+     * @return true, if company exists. Otherwise, false
+     */
+    public boolean checkClientCompanyIgnoreValid(int clientCompanyId);
+    
+    /**
      * Checks the valid status of a client company.
      * @param clientCompanyId the client company id
      * @return true, if company is valid. Otherwise, false.

@@ -1,5 +1,7 @@
 #check against database
-*added share units and bond units to holder company account and holder bond account respectively
-*removed code from share quotations
-*added valid variable to bond offer
-*added processingpay and approved variables to ipo / private placement / rights issue applications
+*add share units and bond units to holder company account and holder bond account respectively = done
+*remove code from share quotations =  done
+*add valid variable to bond offer = done
+*add processingpay and approved variables to ipo / private placement / rights issue applications = done
+*add adjusted value for ipo/private placement application = done
+*add total holdings and allotted rights to rights issue application = done
