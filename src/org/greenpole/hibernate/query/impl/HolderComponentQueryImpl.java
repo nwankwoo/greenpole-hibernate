@@ -43,7 +43,11 @@ import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.HolderType;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
+import org.greenpole.hibernate.entity.ProcessedTransaction;
+import org.greenpole.hibernate.entity.ProcessedTransactionHolder;
+import org.greenpole.hibernate.entity.ProcessedTransactionHolderId;
 import org.greenpole.hibernate.entity.Stockbroker;
+import org.greenpole.hibernate.entity.TransactionType;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.greenpole.hibernate.query.HolderComponentQuery;
 import org.greenpole.util.Descriptor;
@@ -584,10 +588,21 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     }
 
     @Override
-    public boolean transferShareUnits(HolderCompanyAccount sender, HolderCompanyAccount receiver, int shareUnits) {
+    public boolean transferShareUnits(HolderCompanyAccount sender, HolderCompanyAccount receiver, int shareUnits, int transferTypeId) {
         boolean transferred = false;
         try {
+            ProcessedTransaction pt = new ProcessedTransaction();
+            ProcessedTransactionHolder pt_sender = new ProcessedTransactionHolder();
+            ProcessedTransactionHolderId pt_sender_id = new ProcessedTransactionHolderId();
+            ProcessedTransactionHolder pt_receiver = new ProcessedTransactionHolder();
+            ProcessedTransactionHolderId pt_receiver_id = new ProcessedTransactionHolderId();
+            
             startOperation();
+            
+            sender = (HolderCompanyAccount) getSession().merge(sender);
+            receiver = (HolderCompanyAccount) getSession().merge(receiver);
+            TransactionType type = (TransactionType) searchObject(TransactionType.class, transferTypeId);
+            
             int senderUnits = sender.getShareUnits();
             sender.setShareUnits(senderUnits - shareUnits);
             createUpdateObject(receiver);
@@ -595,6 +610,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             int receiverUnits = receiver.getShareUnits();
             receiver.setShareUnits(receiverUnits + shareUnits);
             createUpdateObject(receiver);
+            
+            processTransactionShareTransfer(pt, sender, type, pt_sender_id, pt_sender, shareUnits, pt_receiver_id, receiver, pt_receiver);
 
             getTransaction().commit();
             transferred = true;
@@ -607,7 +624,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     }
 
     @Override
-    public boolean transferBondUnits(HolderBondAccount sender, HolderBondAccount receiver, int bondUnits, double unitPrice) {
+    public boolean transferBondUnits(HolderBondAccount sender, HolderBondAccount receiver, int bondUnits, double unitPrice, int transferTypeId) {
         boolean transferred = false;
         
         int unitsAfter;
@@ -615,7 +632,17 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         double formerStartingPrincipalValue;
         
         try {
+            ProcessedTransaction pt = new ProcessedTransaction();
+            ProcessedTransactionHolder pt_sender = new ProcessedTransactionHolder();
+            ProcessedTransactionHolderId pt_sender_id = new ProcessedTransactionHolderId();
+            ProcessedTransactionHolder pt_receiver = new ProcessedTransactionHolder();
+            ProcessedTransactionHolderId pt_receiver_id = new ProcessedTransactionHolderId();
+            
             startOperation();
+            
+            sender = (HolderBondAccount) getSession().merge(sender);
+            receiver = (HolderBondAccount) getSession().merge(receiver);
+            TransactionType type = (TransactionType) searchObject(TransactionType.class, transferTypeId);
             
             int senderUnits = sender.getBondUnits();
             unitsAfter = senderUnits - bondUnits;
@@ -634,6 +661,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             receiver.setStartingPrincipalValue(formerStartingPrincipalValue + newPrincipalValue);
             receiver.setRemainingPrincipalValue(newPrincipalValue);
             createUpdateObject(receiver);
+            
+            processTransactionBondTransfer(pt, sender, type, pt_sender_id, pt_sender, bondUnits, pt_receiver_id, receiver, pt_receiver);
             
             getTransaction().commit();
             transferred = true;
@@ -1667,5 +1696,76 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         
         return holders;
     }
+
+    /**
+     * See {@link #transferBondUnits(org.greenpole.hibernate.entity.HolderBondAccount, org.greenpole.hibernate.entity.HolderBondAccount, int, double, int) }
+     */
+    private void processTransactionBondTransfer(ProcessedTransaction pt, HolderBondAccount sender, TransactionType type, ProcessedTransactionHolderId pt_sender_id, ProcessedTransactionHolder pt_sender, int bondUnits, ProcessedTransactionHolderId pt_receiver_id, HolderBondAccount receiver, ProcessedTransactionHolder pt_receiver) {
+        //set transaction overall
+        pt.setCscsTransactionId(0);
+        pt.setCompanyName(sender.getBondOffer().getTitle());//record bond title under company name
+        pt.setClientCompany(sender.getBondOffer().getClientCompany());
+        pt.setTransactionType(type);
+        createUpdateObject(pt);
+        
+        //set transaction for sender
+        pt_sender_id.setHolderId(sender.getId().getHolderId());
+        pt_sender_id.setTransactionId(pt.getId());
+        pt_sender.setId(pt_sender_id);
+        pt_sender.setHolder(sender.getHolder());
+        pt_sender.setHolderName(sender.getHolder().getFirstName() + " " + sender.getHolder().getLastName());
+        pt_sender.setHolderChn(sender.getHolder().getChn());
+        pt_sender.setUnits(bondUnits);
+        pt_sender.setUnitType("bond");
+        pt_sender.setFromTo("from");
+        createUpdateObject(pt_sender);
+        
+        //set transaction for receiver
+        pt_receiver_id.setHolderId(receiver.getId().getHolderId());
+        pt_receiver_id.setTransactionId(pt.getId());
+        pt_receiver.setProcessedTransaction(pt);
+        pt_receiver.setHolder(receiver.getHolder());
+        pt_receiver.setHolderName(receiver.getHolder().getFirstName() + " " + receiver.getHolder().getLastName());
+        pt_receiver.setHolderChn(receiver.getHolder().getChn());
+        pt_receiver.setUnits(bondUnits);
+        pt_receiver.setUnitType("bond");
+        pt_receiver.setFromTo("to");
+        createUpdateObject(pt_receiver);
+    }
     
+    /**
+     * See {@link #transferShareUnits(org.greenpole.hibernate.entity.HolderCompanyAccount, org.greenpole.hibernate.entity.HolderCompanyAccount, int, int) }
+     */
+    private void processTransactionShareTransfer(ProcessedTransaction pt, HolderCompanyAccount sender, TransactionType type, ProcessedTransactionHolderId pt_sender_id, ProcessedTransactionHolder pt_sender, int shareUnits, ProcessedTransactionHolderId pt_receiver_id, HolderCompanyAccount receiver, ProcessedTransactionHolder pt_receiver) {
+        //set transaction overall
+        pt.setCscsTransactionId(0);
+        pt.setCompanyName(sender.getClientCompany().getName());
+        pt.setClientCompany(sender.getClientCompany());
+        pt.setTransactionType(type);
+        createUpdateObject(pt);
+        
+        //set transaction for sender
+        pt_sender_id.setHolderId(sender.getId().getHolderId());
+        pt_sender_id.setTransactionId(pt.getId());
+        pt_sender.setId(pt_sender_id);
+        pt_sender.setHolder(sender.getHolder());
+        pt_sender.setHolderName(sender.getHolder().getFirstName() + " " + sender.getHolder().getLastName());
+        pt_sender.setHolderChn(sender.getHolder().getChn());
+        pt_sender.setUnits(shareUnits);
+        pt_sender.setUnitType("shares");
+        pt_sender.setFromTo("from");
+        createUpdateObject(pt_sender);
+        
+        //set transaction for receiver
+        pt_receiver_id.setHolderId(receiver.getId().getHolderId());
+        pt_receiver_id.setTransactionId(pt.getId());
+        pt_receiver.setProcessedTransaction(pt);
+        pt_receiver.setHolder(receiver.getHolder());
+        pt_receiver.setHolderName(receiver.getHolder().getFirstName() + " " + receiver.getHolder().getLastName());
+        pt_receiver.setHolderChn(receiver.getHolder().getChn());
+        pt_receiver.setUnits(shareUnits);
+        pt_receiver.setUnitType("share");
+        pt_receiver.setFromTo("to");
+        createUpdateObject(pt_receiver);
+    }
 }

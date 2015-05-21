@@ -18,9 +18,9 @@
         <property name="companyName" type="string">
             <column name="company_name" />
         </property>
-        <property name="transactionType" type="string">
-            <column name="transaction_type" length="50" />
-        </property>
+        <many-to-one name="transactionType" class="org.greenpole.hibernate.entity.TransactionType" fetch="select">
+            <column name="transaction_type_id" />
+        </many-to-one>
         <set name="processedTransactionHolders" table="PROCESSED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="transaction_id" not-null="true" />

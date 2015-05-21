@@ -228,9 +228,10 @@ public interface HolderComponentQuery {
      * @param sender the holder company account sending the share units
      * @param receiver the holder company account receiving the share units
      * @param shareUnits the share units to be sent
+     * @param transferTypeId the type of transfer
      * @return true, if transaction was successful. Otherwise, false
      */
-    public boolean transferShareUnits(HolderCompanyAccount sender, HolderCompanyAccount receiver, int shareUnits);
+    public boolean transferShareUnits(HolderCompanyAccount sender, HolderCompanyAccount receiver, int shareUnits, int transferTypeId);
     
     /**
      * Transfers bond units from one holder bond account to another.
@@ -240,7 +241,7 @@ public interface HolderComponentQuery {
      * @param unitPrice the price per bond unit
      * @return true, if transaction was successful. Otherwise, false
      */
-    public boolean transferBondUnits(HolderBondAccount sender, HolderBondAccount receiver, int bondUnits, double unitPrice);
+    public boolean transferBondUnits(HolderBondAccount sender, HolderBondAccount receiver, int bondUnits, double unitPrice, int transferTypeId);
     
     /**
      * Checks if holder has any company account.

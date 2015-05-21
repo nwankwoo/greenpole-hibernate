@@ -73,6 +73,14 @@
     <table-filter match-name="BOND_OFFER_PAYMENT_PLAN"/>
     <table-filter match-name="HOLDER_TYPE"/>
     <table-filter match-name="BOND_TYPE"/>
+    <table-filter match-name="TRANSACTION_TYPE"/>
+    
+    <table name="TRANSACTION_TYPE" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
     
     <table name="BOND_TYPE" catalog="greenpole" schema="dbo">
         <primary-key>

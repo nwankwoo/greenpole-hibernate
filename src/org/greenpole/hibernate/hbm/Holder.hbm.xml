@@ -27,9 +27,6 @@
         <property name="lastName" type="string">
             <column name="last_name" length="200" />
         </property>
-        <property name="type" type="string">
-            <column name="type" length="100" />
-        </property>
         <many-to-one name="holderType" class="org.greenpole.hibernate.entity.HolderType" fetch="select">
             <column name="type_id" />
         </many-to-one>

@@ -21,9 +21,6 @@
         <property name="bondMaturity" type="date">
             <column name="bond_maturity" length="10" />
         </property>
-        <property name="bondType" type="string">
-            <column name="bond_type" length="50" />
-        </property>
         <property name="interestRate" type="java.lang.Double">
             <column name="interest_rate" precision="53" scale="0" />
         </property>
