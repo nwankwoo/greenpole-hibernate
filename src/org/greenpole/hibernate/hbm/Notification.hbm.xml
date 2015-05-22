@@ -30,5 +30,8 @@
         <property name="attendedTo" type="boolean">
             <column name="attended_to" />
         </property>
+        <property name="writeOff" type="boolean">
+            <column name="write_off" />
+        </property>
     </class>
 </hibernate-mapping>

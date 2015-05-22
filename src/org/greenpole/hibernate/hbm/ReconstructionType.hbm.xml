@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-May-2015 16:13:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.ReconstructionType" optimistic-lock="version" schema="dbo" table="RECONSTRUCTION_TYPE">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <version name="versionId" type="long"/>
+    <property name="type" type="string">
+      <column length="50" name="type"/>
+    </property>
+    <property name="description" type="string">
+      <column length="300" name="description"/>
+    </property>
+    <set name="reconstructions" table="RECONSTRUCTION" inverse="true" lazy="true" fetch="select">
+        <key>
+            <column name="reconstruction_type_id" />
+        </key>
+        <one-to-many class="org.greenpole.hibernate.entity.Reconstruction" />
+    </set>
+  </class>
+</hibernate-mapping>

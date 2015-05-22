@@ -32,6 +32,9 @@
     <property name="additionalSharesSubscribed" type="int">
       <column name="additional_shares_subscribed"/>
     </property>
+    <property name="additionalSharesGiven" type="int">
+      <column name="additional_shares_given"/>
+    </property>
     <property name="amountPaid" type="java.lang.Double">
       <column name="amount_paid" precision="53" scale="0"/>
     </property>
@@ -43,6 +46,9 @@
     </property>
     <property name="additionalSharesSubValue" type="java.lang.Double">
       <column name="additional_shares_sub_value" precision="53" scale="0"/>
+    </property>
+    <property name="additionalSharesGivenValue" type="java.lang.Double">
+      <column name="additional_shares_given_value" precision="53" scale="0"/>
     </property>
     <property name="totalValue" type="java.lang.Double">
       <column name="total_value" precision="53" scale="0"/>

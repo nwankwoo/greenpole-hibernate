@@ -5,3 +5,7 @@
 *add processingpay and approved variables to ipo / private placement / rights issue applications = done
 *add adjusted value for ipo/private placement application = done
 *add total holdings and allotted rights to rights issue application = done
+*add 'additional shares given' and 'additional shares given value' variables to rights issue application = done
+*add 'qualify share unit' and 'action share unit' to reconstruction = done
+*add 'write off' variable to notification = done
+*add reconstruction type and link with reconstruction = done

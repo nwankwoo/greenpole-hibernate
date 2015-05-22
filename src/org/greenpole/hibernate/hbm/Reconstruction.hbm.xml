@@ -1,25 +1,27 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entity.Reconstruction" table="RECONSTRUCTION" schema="dbo" catalog="greenpole" optimistic-lock="version">
-        <id name="id" type="int">
-            <column name="id" />
-            <generator class="identity"></generator>
-        </id>
-        <version name="versionId" type="long"/>
-        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
-            <column name="client_company_id" />
-        </many-to-one>
-        <property name="reconstructionType" type="string">
-            <column name="reconstruction_type" length="50" />
-        </property>
-        <property name="shareRatio" type="int">
-            <column name="share_ratio" />
-        </property>
-        <property name="increaseOrDecrease" type="string">
-            <column name="increase_or_decrease" length="50" />
-        </property>
-    </class>
+  <class catalog="greenpole" name="org.greenpole.hibernate.entity.Reconstruction" optimistic-lock="version" schema="dbo" table="RECONSTRUCTION">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <version name="versionId" type="long"/>
+    <many-to-one class="org.greenpole.hibernate.entity.ClientCompany" fetch="select" name="clientCompany">
+      <column name="client_company_id"/>
+    </many-to-one>
+    <many-to-one name="reconstructionType" class="org.greenpole.hibernate.entity.ReconstructionType" fetch="select">
+        <column name="reconstruction_type_id" />
+    </many-to-one>
+    <property name="qualifyShareUnit" type="int">
+      <column name="qualify_share_ratio"/>
+    </property>
+    <property name="actionShareUnit" type="int">
+      <column name="action_share_ratio"/>
+    </property>
+    <property name="increaseOrDecrease" type="string">
+      <column length="50" name="increase_or_decrease"/>
+    </property>
+  </class>
 </hibernate-mapping>

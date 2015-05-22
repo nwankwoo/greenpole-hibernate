@@ -18,11 +18,12 @@ public class Notification  implements java.io.Serializable {
      private String fromType;
      private String toType;
      private boolean attendedTo;
+     private boolean writeOff;
 
     public Notification() {
     }
 
-    public Notification(String fileName, String description, String sentFrom, String sentTo, String fromType, String toType, boolean attendedTo) {
+    public Notification(String fileName, String description, String sentFrom, String sentTo, String fromType, String toType, boolean attendedTo, boolean writeOff) {
        this.fileName = fileName;
        this.description = description;
        this.sentFrom = sentFrom;
@@ -30,6 +31,7 @@ public class Notification  implements java.io.Serializable {
        this.fromType = fromType;
        this.toType = toType;
        this.attendedTo = attendedTo;
+       this.writeOff = writeOff;
     }
    
     public int getId() {
@@ -104,6 +106,14 @@ public class Notification  implements java.io.Serializable {
     
     public void setAttendedTo(boolean attendedTo) {
         this.attendedTo = attendedTo;
+    }
+
+    public boolean isWriteOff() {
+        return writeOff;
+    }
+
+    public void setWriteOff(boolean writeOff) {
+        this.writeOff = writeOff;
     }
 
 

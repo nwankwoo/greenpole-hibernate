@@ -12,17 +12,19 @@ public class Reconstruction  implements java.io.Serializable {
      private int id;   
      private long versionId;
      private ClientCompany clientCompany;
-     private String reconstructionType;
-     private int shareRatio;
+     private ReconstructionType reconstructionType;
+     private int qualifyShareUnit;
+     private int actionShareUnit;
      private String increaseOrDecrease;
 
     public Reconstruction() {
     }
 
-    public Reconstruction(ClientCompany clientCompany, String reconstructionType, int shareRatio, String increaseOrDecrease) {
+    public Reconstruction(ClientCompany clientCompany, ReconstructionType reconstructionType, int qualifyShareUnit, int actionShareUnit, String increaseOrDecrease) {
        this.clientCompany = clientCompany;
        this.reconstructionType = reconstructionType;
-       this.shareRatio = shareRatio;
+       this.qualifyShareUnit = qualifyShareUnit;
+       this.actionShareUnit = actionShareUnit;
        this.increaseOrDecrease = increaseOrDecrease;
     }
    
@@ -57,19 +59,27 @@ public class Reconstruction  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public String getReconstructionType() {
+    public ReconstructionType getReconstructionType() {
         return this.reconstructionType;
     }
     
-    public void setReconstructionType(String reconstructionType) {
+    public void setReconstructionType(ReconstructionType reconstructionType) {
         this.reconstructionType = reconstructionType;
     }
-    public int getShareRatio() {
-        return this.shareRatio;
+    public int getQualifyShareUnit() {
+        return this.qualifyShareUnit;
     }
     
-    public void setShareRatio(int shareRatio) {
-        this.shareRatio = shareRatio;
+    public void setQualifyShareUnit(int qualifyShareUnit) {
+        this.qualifyShareUnit = qualifyShareUnit;
+    }
+
+    public int getActionShareUnit() {
+        return actionShareUnit;
+    }
+
+    public void setActionShareUnit(int actionShareUnit) {
+        this.actionShareUnit = actionShareUnit;
     }
     public String getIncreaseOrDecrease() {
         return this.increaseOrDecrease;

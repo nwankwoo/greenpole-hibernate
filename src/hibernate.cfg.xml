@@ -86,5 +86,7 @@
     <mapping resource="org/greenpole/hibernate/hbm/BondOfferPaymentPlan.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/BondType.hbm.xml"/>
     <mapping resource="org/greenpole/hibernate/hbm/TransactionType.hbm.xml"/>
+    <mapping resource="org/greenpole/hibernate/hbm/ReconstructionType.hbm.xml"/>
+    <mapping/>
   </session-factory>
 </hibernate-configuration>

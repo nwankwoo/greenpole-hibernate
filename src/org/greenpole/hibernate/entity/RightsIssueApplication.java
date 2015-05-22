@@ -22,10 +22,12 @@ public class RightsIssueApplication  implements java.io.Serializable {
      private int allotedRights;
      private int sharesSubscribed;
      private int additionalSharesSubscribed;
+     private int additionalSharesGiven;
      private Double amountPaid;
      private String issuingHouse;
      private Double sharesSubscribedValue;
      private Double additionalSharesSubValue;
+     private Double additionalSharesGivenValue;
      private Double totalValue;
      private int totalSharesRenounced;
      private Double returnMoney;
@@ -37,7 +39,7 @@ public class RightsIssueApplication  implements java.io.Serializable {
     public RightsIssueApplication() {
     }
 
-    public RightsIssueApplication(ClearingHouse clearingHouse, Holder holder, RightsIssue rightsIssue, String issuer, int totalHoldings, int allottedRights, int sharesSubscribed, int additionalSharesSubscribed, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double additionalSharesSubValue, Double totalValue, int totalSharesRenounced, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled, Date dateApplied) {
+    public RightsIssueApplication(ClearingHouse clearingHouse, Holder holder, RightsIssue rightsIssue, String issuer, int totalHoldings, int allottedRights, int sharesSubscribed, int additionalSharesSubscribed, int additionalSharesGiven, Double amountPaid, String issuingHouse, Double sharesSubscribedValue, Double additionalSharesSubValue, Double additionalSharesGivenValue, Double totalValue, int totalSharesRenounced, Double returnMoney, boolean processingPayment, boolean approved, boolean canceled, Date dateApplied) {
        this.clearingHouse = clearingHouse;
        this.holder = holder;
        this.rightsIssue = rightsIssue;
@@ -46,10 +48,12 @@ public class RightsIssueApplication  implements java.io.Serializable {
        this.allotedRights = allottedRights;
        this.sharesSubscribed = sharesSubscribed;
        this.additionalSharesSubscribed = additionalSharesSubscribed;
+       this.additionalSharesGiven = additionalSharesGiven;
        this.amountPaid = amountPaid;
        this.issuingHouse = issuingHouse;
        this.sharesSubscribedValue = sharesSubscribedValue;
        this.additionalSharesSubValue = additionalSharesSubValue;
+       this.additionalSharesGivenValue = additionalSharesGivenValue;
        this.totalValue = totalValue;
        this.totalSharesRenounced = totalSharesRenounced;
        this.returnMoney = returnMoney;
@@ -141,6 +145,14 @@ public class RightsIssueApplication  implements java.io.Serializable {
     public void setAdditionalSharesSubscribed(int additionalSharesSubscribed) {
         this.additionalSharesSubscribed = additionalSharesSubscribed;
     }
+
+    public int getAdditionalSharesGiven() {
+        return additionalSharesGiven;
+    }
+
+    public void setAdditionalSharesGiven(int additionalSharesGiven) {
+        this.additionalSharesGiven = additionalSharesGiven;
+    }
     public Double getAmountPaid() {
         return this.amountPaid;
     }
@@ -164,6 +176,14 @@ public class RightsIssueApplication  implements java.io.Serializable {
     }
     public Double getAdditionalSharesSubValue() {
         return this.additionalSharesSubValue;
+    }
+
+    public Double getAdditionalSharesGivenValue() {
+        return additionalSharesGivenValue;
+    }
+
+    public void setAdditionalSharesGivenValue(Double additionalSharesGivenValue) {
+        this.additionalSharesGivenValue = additionalSharesGivenValue;
     }
     
     public void setAdditionalSharesSubValue(Double additionalSharesSubValue) {
