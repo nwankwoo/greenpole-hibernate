@@ -30,7 +30,8 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
     public List<Notification> getNotificationsForReceiver(String userId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("sentTo", userId));
+                .add(Restrictions.eq("sentTo", userId))
+                .add(Restrictions.eq("writeOff", "false"));
         List<Notification> resultList = criteria.list();
         getTransaction().commit();
         return resultList;
@@ -40,7 +41,8 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
     public List<Notification> getNotificationsForSender(String userId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("sentFrom", userId));
+                .add(Restrictions.eq("sentFrom", userId))
+                .add(Restrictions.eq("writeOff", "false"));
         List<Notification> resultList = criteria.list();
         getTransaction().commit();
         return resultList;
@@ -50,7 +52,8 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
     public Notification getNotification(String notificationCode) {
         startOperation();
         Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("fileName", notificationCode));
+                .add(Restrictions.eq("fileName", notificationCode))
+                .add(Restrictions.eq("writeOff", "false"));
         Notification result = (Notification) criteria.list().get(0);
         getTransaction().commit();
         return result;
@@ -62,6 +65,7 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
         Criteria criteria = getSession().createCriteria(Notification.class)
                 .add(Restrictions.eq("fileName", notificationCode))
                 .add(Restrictions.eq("attendedTo", "false"))
+                .add(Restrictions.eq("writeOff", "false"))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
         getTransaction().commit();
@@ -73,6 +77,7 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
         startOperation();
         Criteria criteria = getSession().createCriteria(Notification.class)
                 .add(Restrictions.eq("fileName", notificationCode))
+                .add(Restrictions.eq("writeOff", "false"))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
         getTransaction().commit();
