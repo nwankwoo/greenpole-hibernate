@@ -162,12 +162,12 @@ public class Holder  implements java.io.Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public HolderType getType() {
+    public HolderType getHolderType() {
         return this.holderType;
     }
     
-    public void setType(HolderType type) {
-        this.holderType = type;
+    public void setHolderType(HolderType holderType) {
+        this.holderType = holderType;
     }
     public String getGender() {
         return this.gender;

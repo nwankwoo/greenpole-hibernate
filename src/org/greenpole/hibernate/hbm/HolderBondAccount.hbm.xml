@@ -44,8 +44,8 @@
         <property name="merged" type="boolean">
             <column name="merged" />
         </property>
-        <property name="holderCompAccPrimary" type="boolean">
-            <column name="holder_comp_acc_Primary" />
+        <property name="holderBondAccPrimary" type="boolean">
+            <column name="holder_bond_acc_Primary" />
         </property>
         <set name="coupons" table="COUPON" inverse="true" lazy="true" fetch="select">
             <key>

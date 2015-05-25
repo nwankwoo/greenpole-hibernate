@@ -24,9 +24,6 @@
         <property name="code" type="string">
             <column name="code" length="50" unique="true" />
         </property>
-        <property name="nseSector" type="string">
-            <column name="nse_Sector" />
-        </property>
         <property name="ceo" type="string">
             <column name="ceo" />
         </property>

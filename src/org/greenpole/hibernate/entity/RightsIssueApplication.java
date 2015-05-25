@@ -19,7 +19,7 @@ public class RightsIssueApplication  implements java.io.Serializable {
      private RightsIssue rightsIssue;
      private String issuer;
      private int totalHoldings;
-     private int allotedRights;
+     private int allottedRights;
      private int sharesSubscribed;
      private int additionalSharesSubscribed;
      private int additionalSharesGiven;
@@ -45,7 +45,7 @@ public class RightsIssueApplication  implements java.io.Serializable {
        this.rightsIssue = rightsIssue;
        this.issuer = issuer;
        this.totalHoldings = totalHoldings;
-       this.allotedRights = allottedRights;
+       this.allottedRights = allottedRights;
        this.sharesSubscribed = sharesSubscribed;
        this.additionalSharesSubscribed = additionalSharesSubscribed;
        this.additionalSharesGiven = additionalSharesGiven;
@@ -124,12 +124,12 @@ public class RightsIssueApplication  implements java.io.Serializable {
         this.totalHoldings = totalHoldings;
     }
 
-    public int getAllotedRights() {
-        return allotedRights;
+    public int getAllottedRights() {
+        return allottedRights;
     }
 
-    public void setAllotedRights(int allotedRights) {
-        this.allotedRights = allotedRights;
+    public void setAllottedRights(int allottedRights) {
+        this.allottedRights = allottedRights;
     }
     public int getSharesSubscribed() {
         return this.sharesSubscribed;

@@ -7,6 +7,8 @@ package org.greenpole.hibernate.query;
 
 import java.util.List;
 import org.greenpole.hibernate.entity.Notification;
+import org.greenpole.hibernate.entity.UserAccess;
+import org.greenpole.hibernate.entity.UserAccount;
 
 /**
  *
@@ -14,6 +16,12 @@ import org.greenpole.hibernate.entity.Notification;
  * Contains queries that cut across all components.
  */
 public interface GeneralComponentQuery {
+    
+    /**
+     * Test connection.
+     */
+    public void testConnection();
+    
     /**
      * Registers a new notification record in the database.
      * @param notification the notification to be registered
@@ -61,5 +69,33 @@ public interface GeneralComponentQuery {
      * @return true, if notification exists. Otherwise, false
      */
     public boolean checkNotificationIgnoreAttended(String notificationCode);
+    
+    /**
+     * Checks that a user is valid.
+     * @param userId the user's id, typically an email address
+     * @return true, if user exists. Otherwise, false
+     */
+    public boolean checkValidUser(String userId);
+    
+    /**
+     * Checks that user exists in database.
+     * @param userId the user's id, typically an email address
+     * @return true, if user exists. Otherwise, false
+     */
+    public boolean checkUser(String userId);
+    
+    /**
+     * Gets a user's account information
+     * @param userId the user's id, typically an email address
+     * @return the user's account information
+     */
+    public UserAccount getUserAccount(String userId);
+    
+    /**
+     * Gets a user's access information.
+     * @param userId the user's id, typically an email address
+     * @return the user's access information
+     */
+    public UserAccess getUserAccess(String userId);
     
 }

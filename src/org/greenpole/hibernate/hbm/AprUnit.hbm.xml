@@ -9,7 +9,7 @@
             <generator class="identity"></generator>
         </id>
         <version name="versionId" type="long"/>
-        <many-to-one name="aprDepartment" class="org.greenpole.hibernate.backup_entity.AprDepartment" fetch="select">
+        <many-to-one name="aprDepartment" class="org.greenpole.hibernate.entity.AprDepartment" fetch="select">
             <column name="dept_id" />
         </many-to-one>
         <property name="name" type="string">
