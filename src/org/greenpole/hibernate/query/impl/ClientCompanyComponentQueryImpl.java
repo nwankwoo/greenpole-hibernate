@@ -67,7 +67,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public boolean checkClientCompany(int clientCompanyId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.eq("valid", "true"))
+                .add(Restrictions.eq("valid", true))
                 .add(Restrictions.idEq(clientCompanyId))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
@@ -90,7 +90,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public boolean clientCompanyIsValid(int clientCompanyId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompany.class)
-                .add(Restrictions.eq("valid", "true"))
+                .add(Restrictions.eq("valid", true))
                 .add(Restrictions.idEq(clientCompanyId))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
@@ -318,7 +318,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     public boolean bondOfferIsValid(int bondOfferId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(BondOffer.class)
-                .add(Restrictions.eq("valid", "true"))
+                .add(Restrictions.eq("valid", true))
                 .add(Restrictions.idEq(bondOfferId))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();

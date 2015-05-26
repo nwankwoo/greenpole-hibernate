@@ -5,7 +5,6 @@
  */
 package org.greenpole.hibernate.query.impl;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import org.greenpole.hibernate.entity.AccountConsolidation;
 import org.greenpole.hibernate.entity.Administrator;
 import org.greenpole.hibernate.entity.AdministratorEmailAddress;
@@ -26,8 +24,6 @@ import org.greenpole.hibernate.entity.AdministratorPostalAddressId;
 import org.greenpole.hibernate.entity.AdministratorResidentialAddress;
 import org.greenpole.hibernate.entity.AdministratorResidentialAddressId;
 import org.greenpole.hibernate.entity.Bank;
-import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
-import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
@@ -1055,7 +1051,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkInCompAcctConsolidation(int pryHolderId, int secHolderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .add(Restrictions.eq("accountConsolidation.demerge", "false"))
+                .add(Restrictions.eq("accountConsolidation.demerge", false))
                 .add(Restrictions.eq("tiedToCurrentHolderId", pryHolderId))
                 .add(Restrictions.eq("tiedToInitialHolderId", secHolderId))
                 .setProjection(Projections.rowCount());
@@ -1079,7 +1075,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<CompanyAccountConsolidation> getCompanyAccountMerges(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .add(Restrictions.eq("accountConsolidation.demerge", "false"))
+                .add(Restrictions.eq("accountConsolidation.demerge", false))
                 .add(Restrictions.eq("tiedToInitialHolderId", holderId));
         List<CompanyAccountConsolidation> resultlist = criteria.list();
         getTransaction().commit();
@@ -1092,13 +1088,13 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         Criteria criteria;
         if (isShare) {
             criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                    .add(Restrictions.eq("accountConsolidation.demerge", "false"))
+                    .add(Restrictions.eq("accountConsolidation.demerge", false))
                     .add(Restrictions.eq("tiedToCurrentHolderId", holderId))
                     .add(Restrictions.eq("forCompanyId", compOrBondId))
                     .setProjection(Projections.max("unitAfterTransfer"));
         } else {
             criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                    .add(Restrictions.eq("accountConsolidation.demerge", "false"))
+                    .add(Restrictions.eq("accountConsolidation.demerge", false))
                     .add(Restrictions.eq("tiedToCurrentHolderId", holderId))
                     .add(Restrictions.eq("forBondOfferId", compOrBondId))
                     .setProjection(Projections.max("unitAfterTransfer"));
@@ -1169,7 +1165,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<CompanyAccountConsolidation> getCompAcctConsolidation(int acctConsolidationId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .add(Restrictions.eq("accountConsolidation.demerge", "false"))
+                .add(Restrictions.eq("accountConsolidation.demerge", false))
                 .add(Restrictions.eq("accountConsolidation.id", acctConsolidationId));
         List<CompanyAccountConsolidation> resultlist = criteria.list();
         getTransaction().commit();
@@ -1230,7 +1226,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkCurrentPowerOfAttorney(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
-                .add(Restrictions.eq("powerOfAttorneyPrimary", "true"))
+                .add(Restrictions.eq("powerOfAttorneyPrimary", true))
                 .add(Restrictions.eq("holder.id", holderId))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
@@ -1242,7 +1238,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public PowerOfAttorney getCurrentPowerOfAttorney(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
-                .add(Restrictions.eq("powerOfAttorneyPrimary", "true"))
+                .add(Restrictions.eq("powerOfAttorneyPrimary", true))
                 .add(Restrictions.eq("holder.id", holderId));
         PowerOfAttorney poa = (PowerOfAttorney) criteria.list().get(0);
         getTransaction().commit();
@@ -1253,7 +1249,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkCurrentSignature(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderSignature.class)
-                .add(Restrictions.eq("holderSignaturePrimary", "true"))
+                .add(Restrictions.eq("holderSignaturePrimary", true))
                 .add(Restrictions.eq("holder.id", holderId))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
@@ -1265,7 +1261,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public HolderSignature getCurrentSignature(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderSignature.class)
-                .add(Restrictions.eq("holderSignaturePrimary", "true"))
+                .add(Restrictions.eq("holderSignaturePrimary", true))
                 .add(Restrictions.eq("holder.id", holderId));
         HolderSignature hs = (HolderSignature) criteria.list().get(0);
         getTransaction().commit();
