@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 2, 2015 11:49:16 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.HolderBonus" table="HOLDER_BONUS" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <composite-id name="id" class="org.greenpole.hibernate.entity.HolderBonusId">
+            <key-property name="holderId" type="int">
+                <column name="holder_id" />
+            </key-property>
+            <key-property name="shareBonusId" type="int">
+                <column name="share_bonus_id" />
+            </key-property>
+        </composite-id>
+        <version name="versionId" type="long"/>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" update="false" insert="false" fetch="select">
+            <column name="holder_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="shareBonus" class="org.greenpole.hibernate.entity.ShareBonus" update="false" insert="false" fetch="select">
+            <column name="share_bonus_id" not-null="true" />
+        </many-to-one>
+        <property name="totalHoldings" type="int">
+            <column name="total_holdings" />
+        </property>
+        <property name="bonusUnits" type="int">
+            <column name="bonus_units" />
+        </property>
+        <property name="dateGiven" type="date">
+            <column name="date_given" length="10" />
+        </property>
+        <property name="added" type="boolean">
+            <column name="added" />
+        </property>
+    </class>
+</hibernate-mapping>
