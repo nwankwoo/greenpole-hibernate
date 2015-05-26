@@ -588,13 +588,14 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     @Override
     public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, Map<String, Double> shareUnitCriteria,
             Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria) {
+        Descriptor descriptorUtil = new Descriptor();
         //intial shareholder object, in case holder isnt searched
         ClientCompany initialCC = new ClientCompany();
         initialCC.setClientCompanyPrimary(true);
         initialCC.setMerged(false);
         
         //descriptor=clientCompany:none;shareUnit:none;numberOfShareholders:none;numberOfBondholders:none
-        Map<String, String> descriptorSplits = Descriptor.decipherDescriptor(descriptor);
+        Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
         String clientCompanyDescriptor = descriptorSplits.get("clientCompany");
         String shareUnitDescriptor = descriptorSplits.get("shareUnit");
         String numberOfShareholdersDescriptor = descriptorSplits.get("numberOfShareholders");

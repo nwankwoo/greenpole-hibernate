@@ -81,6 +81,20 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
     }
 
     @Override
+    public boolean checkNotificationAgainstUser(String userId, String notificationCode) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(Notification.class)
+                .add(Restrictions.eq("sentTo", userId))
+                .add(Restrictions.eq("fileName", notificationCode))
+                .add(Restrictions.eq("attendedTo", false))
+                .add(Restrictions.eq("writeOff", false))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
+    }
+
+    @Override
     public boolean checkNotificationIgnoreAttended(String notificationCode) {
         startOperation();
         Criteria criteria = getSession().createCriteria(Notification.class)

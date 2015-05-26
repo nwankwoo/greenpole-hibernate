@@ -62,6 +62,14 @@ public interface GeneralComponentQuery {
     public boolean checkNotification(String notificationCode);
     
     /**
+     * Checks the existence of a notification that belongs to the specified user.
+     * @param userId the user's id
+     * @param notificationCode the notification code
+     * @return true, if notification belongs to user. Otherwise, false
+     */
+    public boolean checkNotificationAgainstUser(String userId, String notificationCode);
+    
+    /**
      * Checks the existence of a notification in the database.
      * NOTE: this method ignores the attended check as done in
      * {@link #checkNotification(java.lang.String) }

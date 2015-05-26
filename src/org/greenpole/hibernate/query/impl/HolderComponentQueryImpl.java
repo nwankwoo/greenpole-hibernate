@@ -453,13 +453,15 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     
     @Override
     public List<Holder> queryShareholderAccount(String descriptor, Holder searchParams, Map<String, Integer> shareUnits_search, Map<String, Integer> totalShareHoldings_search) {
+        Descriptor descriptorUtil = new Descriptor();
+        
         //intial shareholder object, in case holder isnt searched
         Holder initialHolder = new Holder();
         initialHolder.setPryHolder(true);
         initialHolder.setMerged(false);
         
         //descriptor must be (default value) = holder:none;units:none;totalHoldings:none
-        Map<String, String> descriptorSplits = Descriptor.decipherDescriptor(descriptor);
+        Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
         String holderDescriptor = descriptorSplits.get("holder");
         String unitsDescriptor = descriptorSplits.get("units");
         String totalHoldingsDescriptor = descriptorSplits.get("totalHoldings");
@@ -501,13 +503,15 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
 
     @Override
     public List<Holder> queryBondholderAccount(String descriptor, Holder searchParams, Map<String, Integer> bondUnits_search, Map<String, Integer> totalBondHoldings_search) {
+        Descriptor descriptorUtil = new Descriptor();
+        
         //intial shareholder object, in case holder isnt searched
         Holder initialHolder = new Holder();
         initialHolder.setPryHolder(true);
         initialHolder.setMerged(false);
         
         //descriptor must be (default value) = holder:none;units:none;totalHoldings:none
-        Map<String, String> descriptorSplits = Descriptor.decipherDescriptor(descriptor);
+        Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
         String holderDescriptor = descriptorSplits.get("holder");
         String unitsDescriptor = descriptorSplits.get("units");
         String totalHoldingsDescriptor = descriptorSplits.get("totalHoldings");
