@@ -70,6 +70,14 @@ public interface GeneralComponentQuery {
     public boolean checkNotificationAgainstUser(String userId, String notificationCode);
     
     /**
+     * Checks that notification code is tied to the sent to/from persons.
+     * @param userId the user's id
+     * @param notificationCode the notification code
+     * @return true, if notification code is tied to the sent to/from persons
+     */
+    public boolean checkFromToSame(String userId, String notificationCode);
+    
+    /**
      * Checks the existence of a notification in the database.
      * NOTE: this method ignores the attended check as done in
      * {@link #checkNotification(java.lang.String) }
