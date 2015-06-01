@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,10 +13,10 @@ public class ClearingHouse  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private String name;
      private Double brokerage;
-     private boolean appCleared;
+     private Boolean appCleared;
      private Date submissionDate;
      private Set privatePlacementApplications = new HashSet(0);
      private Set ipoApplications = new HashSet(0);
@@ -25,7 +25,7 @@ public class ClearingHouse  implements java.io.Serializable {
     public ClearingHouse() {
     }
 
-    public ClearingHouse(String name, Double brokerage, boolean appCleared, Date submissionDate, Set privatePlacementApplications, Set ipoApplications, Set rightsIssueApplications) {
+    public ClearingHouse(String name, Double brokerage, Boolean appCleared, Date submissionDate, Set privatePlacementApplications, Set ipoApplications, Set rightsIssueApplications) {
        this.name = name;
        this.brokerage = brokerage;
        this.appCleared = appCleared;
@@ -41,24 +41,13 @@ public class ClearingHouse  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
-    } 
-    
-    /**
-     * A getter for ClearingHouse object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
     }
-    /**
-     * A setter for ClearingHouse object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    public Long getVersion() {
+        return this.version;
+    }
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public String getName() {
         return this.name;
@@ -74,11 +63,11 @@ public class ClearingHouse  implements java.io.Serializable {
     public void setBrokerage(Double brokerage) {
         this.brokerage = brokerage;
     }
-    public boolean isAppCleared() {
+    public Boolean getAppCleared() {
         return this.appCleared;
     }
     
-    public void setAppCleared(boolean appCleared) {
+    public void setAppCleared(Boolean appCleared) {
         this.appCleared = appCleared;
     }
     public Date getSubmissionDate() {

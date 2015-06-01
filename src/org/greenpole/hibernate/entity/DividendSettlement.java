@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -10,19 +10,19 @@ public class DividendSettlement  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private DividendDeclared dividendDeclared;
      private Double totalDivAmtDec;
      private Double totalDivAmtPaid;
      private Double totalDivAmtUnpaid;
      private Double totalDivAmtLeft;
-     private int shareholdersPaid;
-     private int shareholdersUnpaid;
+     private Integer shareholdersPaid;
+     private Integer shareholdersUnpaid;
 
     public DividendSettlement() {
     }
 
-    public DividendSettlement(DividendDeclared dividendDeclared, Double totalDivAmtDec, Double totalDivAmtPaid, Double totalDivAmtUnpaid, Double totalDivAmtLeft, int shareholdersPaid, int shareholdersUnpaid) {
+    public DividendSettlement(DividendDeclared dividendDeclared, Double totalDivAmtDec, Double totalDivAmtPaid, Double totalDivAmtUnpaid, Double totalDivAmtLeft, Integer shareholdersPaid, Integer shareholdersUnpaid) {
        this.dividendDeclared = dividendDeclared;
        this.totalDivAmtDec = totalDivAmtDec;
        this.totalDivAmtPaid = totalDivAmtPaid;
@@ -39,23 +39,12 @@ public class DividendSettlement  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
-    /**
-     * A getter for DividendSettlement object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for DividendSettlement object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public DividendDeclared getDividendDeclared() {
         return this.dividendDeclared;
@@ -92,18 +81,18 @@ public class DividendSettlement  implements java.io.Serializable {
     public void setTotalDivAmtLeft(Double totalDivAmtLeft) {
         this.totalDivAmtLeft = totalDivAmtLeft;
     }
-    public int getShareholdersPaid() {
+    public Integer getShareholdersPaid() {
         return this.shareholdersPaid;
     }
     
-    public void setShareholdersPaid(int shareholdersPaid) {
+    public void setShareholdersPaid(Integer shareholdersPaid) {
         this.shareholdersPaid = shareholdersPaid;
     }
-    public int getShareholdersUnpaid() {
+    public Integer getShareholdersUnpaid() {
         return this.shareholdersUnpaid;
     }
     
-    public void setShareholdersUnpaid(int shareholdersUnpaid) {
+    public void setShareholdersUnpaid(Integer shareholdersUnpaid) {
         this.shareholdersUnpaid = shareholdersUnpaid;
     }
 

@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,7 +12,7 @@ public class StockbrokerAgent  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private Stockbroker stockbroker;
      private String firstName;
      private String middleName;
@@ -39,22 +39,12 @@ public class StockbrokerAgent  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for StockbrokerAgent object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for StockbrokerAgent object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public Stockbroker getStockbroker() {
         return this.stockbroker;

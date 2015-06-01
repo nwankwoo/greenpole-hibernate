@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.CertificateLodgement" table="CERTIFICATE_LODGEMENT" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <property name="controlNumber" type="int">
+            <column name="control_number" not-null="true" unique="true" />
+        </property>
+        <property name="title" type="string">
+            <column name="title" />
+        </property>
+        <property name="date" type="date">
+            <column name="date" length="10" />
+        </property>
+        <property name="certificateNumber" type="string">
+            <column name="certificate_number" length="50" />
+        </property>
+        <property name="holdings" type="java.lang.Integer">
+            <column name="holdings" />
+        </property>
+        <property name="shareholderName" type="string">
+            <column name="shareholder_name" />
+        </property>
+        <property name="chn" type="string">
+            <column name="chn" length="50" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="50" />
+        </property>
+        <property name="processed" type="java.lang.Boolean">
+            <column name="processed" />
+        </property>
+        <set name="certificates" table="CERTIFICATE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cert_lodgmt_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Certificate" />
+        </set>
+    </class>
+</hibernate-mapping>

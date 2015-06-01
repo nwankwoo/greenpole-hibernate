@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,17 +13,17 @@ public class InitialPublicOffer  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
-     private int totalSharesOnOffer;
+     private Integer totalSharesOnOffer;
      private String methodOfOffer;
-     private int startingMinSub;
-     private int contMinSub;
+     private Integer startingMinSub;
+     private Integer contMinSub;
      private Double offerPrice;
      private Double offerSize;
      private Date openingDate;
      private Date closingDate;
-     private boolean ipoClosed;
+     private Boolean ipoClosed;
      private Double tax;
      private Double interestRate;
      private Set ipoApplications = new HashSet(0);
@@ -32,7 +32,7 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public InitialPublicOffer() {
     }
 
-    public InitialPublicOffer(ClientCompany clientCompany, int totalSharesOnOffer, String methodOfOffer, int startingMinSub, int contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean ipoClosed, Double tax, Double interestRate, Set ipoApplications, Set certificates) {
+    public InitialPublicOffer(ClientCompany clientCompany, Integer totalSharesOnOffer, String methodOfOffer, Integer startingMinSub, Integer contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Boolean ipoClosed, Double tax, Double interestRate, Set ipoApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOfOffer = methodOfOffer;
@@ -56,22 +56,12 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for InitialPublicOffer object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for InitialPublicOffer object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -80,11 +70,11 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public int getTotalSharesOnOffer() {
+    public Integer getTotalSharesOnOffer() {
         return this.totalSharesOnOffer;
     }
     
-    public void setTotalSharesOnOffer(int totalSharesOnOffer) {
+    public void setTotalSharesOnOffer(Integer totalSharesOnOffer) {
         this.totalSharesOnOffer = totalSharesOnOffer;
     }
     public String getMethodOfOffer() {
@@ -94,18 +84,18 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public void setMethodOfOffer(String methodOfOffer) {
         this.methodOfOffer = methodOfOffer;
     }
-    public int getStartingMinSub() {
+    public Integer getStartingMinSub() {
         return this.startingMinSub;
     }
     
-    public void setStartingMinSub(int startingMinSub) {
+    public void setStartingMinSub(Integer startingMinSub) {
         this.startingMinSub = startingMinSub;
     }
-    public int getContMinSub() {
+    public Integer getContMinSub() {
         return this.contMinSub;
     }
     
-    public void setContMinSub(int contMinSub) {
+    public void setContMinSub(Integer contMinSub) {
         this.contMinSub = contMinSub;
     }
     public Double getOfferPrice() {
@@ -136,26 +126,24 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public void setClosingDate(Date closingDate) {
         this.closingDate = closingDate;
     }
-
-    public boolean isIpoClosed() {
-        return ipoClosed;
+    public Boolean getIpoClosed() {
+        return this.ipoClosed;
     }
-
-    public void setIpoClosed(boolean ipoClosed) {
+    
+    public void setIpoClosed(Boolean ipoClosed) {
         this.ipoClosed = ipoClosed;
     }
     public Double getTax() {
-        return tax;
+        return this.tax;
     }
-
+    
     public void setTax(Double tax) {
         this.tax = tax;
     }
-
     public Double getInterestRate() {
-        return interestRate;
+        return this.interestRate;
     }
-
+    
     public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
     }

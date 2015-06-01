@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 26-Apr-2015 06:13:16 by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,25 +11,25 @@ public class CompanyAccountConsolidation  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private AccountConsolidation accountConsolidation;
-     private int forCompanyId;
-     private int forBondOfferId;
-     private int tiedToInitialHolderId;
-     private int tiedToCurrentHolderId;
+     private Integer forCompanyId;
+     private Integer forBondOfferId;
+     private Integer tiedToInitialHolderId;
+     private Integer tiedToCurrentHolderId;
      private String initialChn;
      private String currentChn;
-     private int bondShareUnit;
-     private boolean transfer;
-     private int receiverUnitState;
-     private int receiverStartUnit;
-     private int unitAfterTransfer;
+     private Integer bondShareUnit;
+     private Boolean transfer;
+     private Integer receiverUnitState;
+     private Integer receiverStartUnit;
+     private Integer unitAfterTransfer;
      private Date mergeDate;
 
     public CompanyAccountConsolidation() {
     }
 
-    public CompanyAccountConsolidation(AccountConsolidation accountConsolidation, int forCompanyId, int forBondOfferId, int tiedToInitialHolderId, int tiedToCurrentHolderId, String initialChn, String currentChn, int bondShareUnit, boolean transfer, int receiverUnitState, int receiverStartUnit, int unitAfterTransfer, Date mergeDate) {
+    public CompanyAccountConsolidation(AccountConsolidation accountConsolidation, Integer forCompanyId, Integer forBondOfferId, Integer tiedToInitialHolderId, Integer tiedToCurrentHolderId, String initialChn, String currentChn, Integer bondShareUnit, Boolean transfer, Integer receiverUnitState, Integer receiverStartUnit, Integer unitAfterTransfer, Date mergeDate) {
        this.accountConsolidation = accountConsolidation;
        this.forCompanyId = forCompanyId;
        this.forBondOfferId = forBondOfferId;
@@ -52,22 +52,12 @@ public class CompanyAccountConsolidation  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for Administrator object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Administrator object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public AccountConsolidation getAccountConsolidation() {
         return this.accountConsolidation;
@@ -76,33 +66,32 @@ public class CompanyAccountConsolidation  implements java.io.Serializable {
     public void setAccountConsolidation(AccountConsolidation accountConsolidation) {
         this.accountConsolidation = accountConsolidation;
     }
-    public int getForCompanyId() {
+    public Integer getForCompanyId() {
         return this.forCompanyId;
     }
     
-    public void setForCompanyId(int forCompanyId) {
+    public void setForCompanyId(Integer forCompanyId) {
         this.forCompanyId = forCompanyId;
     }
-
-    public int getForBondOfferId() {
-        return forBondOfferId;
+    public Integer getForBondOfferId() {
+        return this.forBondOfferId;
     }
-
-    public void setForBondOfferId(int forBondOfferId) {
+    
+    public void setForBondOfferId(Integer forBondOfferId) {
         this.forBondOfferId = forBondOfferId;
     }
-    public int getTiedToInitialHolderId() {
+    public Integer getTiedToInitialHolderId() {
         return this.tiedToInitialHolderId;
     }
     
-    public void setTiedToInitialHolderId(int tiedToInitialHolderId) {
+    public void setTiedToInitialHolderId(Integer tiedToInitialHolderId) {
         this.tiedToInitialHolderId = tiedToInitialHolderId;
     }
-    public int getTiedToCurrentHolderId() {
+    public Integer getTiedToCurrentHolderId() {
         return this.tiedToCurrentHolderId;
     }
     
-    public void setTiedToCurrentHolderId(int tiedToCurrentHolderId) {
+    public void setTiedToCurrentHolderId(Integer tiedToCurrentHolderId) {
         this.tiedToCurrentHolderId = tiedToCurrentHolderId;
     }
     public String getInitialChn() {
@@ -119,39 +108,39 @@ public class CompanyAccountConsolidation  implements java.io.Serializable {
     public void setCurrentChn(String currentChn) {
         this.currentChn = currentChn;
     }
-    public int getBondShareUnit() {
+    public Integer getBondShareUnit() {
         return this.bondShareUnit;
     }
     
-    public void setBondShareUnit(int bondShareUnit) {
+    public void setBondShareUnit(Integer bondShareUnit) {
         this.bondShareUnit = bondShareUnit;
     }
-    public boolean isTransfer() {
+    public Boolean getTransfer() {
         return this.transfer;
     }
     
-    public void setTransfer(boolean transfer) {
+    public void setTransfer(Boolean transfer) {
         this.transfer = transfer;
     }
-    public int getReceiverUnitState() {
+    public Integer getReceiverUnitState() {
         return this.receiverUnitState;
     }
     
-    public void setReceiverUnitState(int receiverUnitState) {
+    public void setReceiverUnitState(Integer receiverUnitState) {
         this.receiverUnitState = receiverUnitState;
     }
-    public int getReceiverStartUnit() {
+    public Integer getReceiverStartUnit() {
         return this.receiverStartUnit;
     }
     
-    public void setReceiverStartUnit(int receiverStartUnit) {
+    public void setReceiverStartUnit(Integer receiverStartUnit) {
         this.receiverStartUnit = receiverStartUnit;
     }
-    public int getUnitAfterTransfer() {
+    public Integer getUnitAfterTransfer() {
         return this.unitAfterTransfer;
     }
     
-    public void setUnitAfterTransfer(int unitAfterTransfer) {
+    public void setUnitAfterTransfer(Integer unitAfterTransfer) {
         this.unitAfterTransfer = unitAfterTransfer;
     }
     public Date getMergeDate() {

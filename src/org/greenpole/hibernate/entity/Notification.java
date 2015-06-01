@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -10,20 +10,20 @@ public class Notification  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private String fileName;
      private String description;
      private String sentFrom;
      private String sentTo;
      private String fromType;
      private String toType;
-     private boolean attendedTo;
-     private boolean writeOff;
+     private Boolean attendedTo;
+     private Boolean writeOff;
 
     public Notification() {
     }
 
-    public Notification(String fileName, String description, String sentFrom, String sentTo, String fromType, String toType, boolean attendedTo, boolean writeOff) {
+    public Notification(String fileName, String description, String sentFrom, String sentTo, String fromType, String toType, Boolean attendedTo, Boolean writeOff) {
        this.fileName = fileName;
        this.description = description;
        this.sentFrom = sentFrom;
@@ -41,22 +41,12 @@ public class Notification  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for Notification object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Notification object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public String getFileName() {
         return this.fileName;
@@ -100,19 +90,18 @@ public class Notification  implements java.io.Serializable {
     public void setToType(String toType) {
         this.toType = toType;
     }
-    public boolean isAttendedTo() {
+    public Boolean getAttendedTo() {
         return this.attendedTo;
     }
     
-    public void setAttendedTo(boolean attendedTo) {
+    public void setAttendedTo(Boolean attendedTo) {
         this.attendedTo = attendedTo;
     }
-
-    public boolean isWriteOff() {
-        return writeOff;
+    public Boolean getWriteOff() {
+        return this.writeOff;
     }
-
-    public void setWriteOff(boolean writeOff) {
+    
+    public void setWriteOff(Boolean writeOff) {
         this.writeOff = writeOff;
     }
 

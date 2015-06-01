@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.Notification" table="NOTIFICATION" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <property name="fileName" type="string">
+            <column name="file_name" length="50" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="300" />
+        </property>
+        <property name="sentFrom" type="string">
+            <column name="sent_from" length="50" />
+        </property>
+        <property name="sentTo" type="string">
+            <column name="sent_to" length="50" />
+        </property>
+        <property name="fromType" type="string">
+            <column name="from_type" length="50" />
+        </property>
+        <property name="toType" type="string">
+            <column name="to_type" length="50" />
+        </property>
+        <property name="attendedTo" type="java.lang.Boolean">
+            <column name="attended_to" />
+        </property>
+        <property name="writeOff" type="java.lang.Boolean">
+            <column name="write_off" />
+        </property>
+    </class>
+</hibernate-mapping>

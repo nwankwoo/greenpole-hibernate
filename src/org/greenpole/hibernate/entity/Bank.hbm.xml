@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.Bank" table="BANK" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <property name="bankName" type="string">
+            <column name="bank_Name" length="50" />
+        </property>
+        <property name="bankCode" type="string">
+            <column name="bank_Code" length="50" unique="true" />
+        </property>
+        <set name="holderBondAccounts" table="HOLDER_BOND_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="bank_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderBondAccount" />
+        </set>
+        <set name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="bank_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount" />
+        </set>
+    </class>
+</hibernate-mapping>

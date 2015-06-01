@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,29 +13,29 @@ public class BondOffer  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
+     private BondOfferPaymentPlan bondOfferPaymentPlan;
+     private BondType bondType;
      private ClientCompany clientCompany;
      private String title;
      private Double bondUnitPrice;
      private Date bondMaturity;
-     private BondType bondType;
      private Double interestRate;
-     private boolean valid;
-     private BondOfferPaymentPlan bondOfferPaymentPlan;
+     private Boolean valid;
      private Set holderBondAccounts = new HashSet(0);
 
     public BondOffer() {
     }
 
-    public BondOffer(ClientCompany clientCompany, String title, Double bondUnitPrice, Date bondMaturity, BondType bondType, Double interestRate, boolean valid, BondOfferPaymentPlan bondOfferPaymentPlan, Set holderBondAccounts) {
+    public BondOffer(BondOfferPaymentPlan bondOfferPaymentPlan, BondType bondType, ClientCompany clientCompany, String title, Double bondUnitPrice, Date bondMaturity, Double interestRate, Boolean valid, Set holderBondAccounts) {
+       this.bondOfferPaymentPlan = bondOfferPaymentPlan;
+       this.bondType = bondType;
        this.clientCompany = clientCompany;
        this.title = title;
        this.bondUnitPrice = bondUnitPrice;
        this.bondMaturity = bondMaturity;
-       this.bondType = bondType;
        this.interestRate = interestRate;
        this.valid = valid;
-       this.bondOfferPaymentPlan = bondOfferPaymentPlan;
        this.holderBondAccounts = holderBondAccounts;
     }
    
@@ -46,23 +46,26 @@ public class BondOffer  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
-    /**
-     * A getter for BobdOffer object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for BondOffer object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+    public BondOfferPaymentPlan getBondOfferPaymentPlan() {
+        return this.bondOfferPaymentPlan;
+    }
+    
+    public void setBondOfferPaymentPlan(BondOfferPaymentPlan bondOfferPaymentPlan) {
+        this.bondOfferPaymentPlan = bondOfferPaymentPlan;
+    }
+    public BondType getBondType() {
+        return this.bondType;
+    }
+    
+    public void setBondType(BondType bondType) {
+        this.bondType = bondType;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -92,13 +95,6 @@ public class BondOffer  implements java.io.Serializable {
     public void setBondMaturity(Date bondMaturity) {
         this.bondMaturity = bondMaturity;
     }
-    public BondType getBondType() {
-        return this.bondType;
-    }
-    
-    public void setBondType(BondType bondType) {
-        this.bondType = bondType;
-    }
     public Double getInterestRate() {
         return this.interestRate;
     }
@@ -106,26 +102,17 @@ public class BondOffer  implements java.io.Serializable {
     public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
     }
-
-    public boolean isValid() {
-        return valid;
-    }
-
-    public void setValid(boolean valid) {
-        this.valid = valid;
-    }
-    public BondOfferPaymentPlan getbondOfferPaymentPlan() {
-        return this.bondOfferPaymentPlan;
+    public Boolean getValid() {
+        return this.valid;
     }
     
-    public void setbondOfferPaymentPlan(BondOfferPaymentPlan paymentPlan) {
-        this.bondOfferPaymentPlan = paymentPlan;
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
-
     public Set getHolderBondAccounts() {
-        return holderBondAccounts;
+        return this.holderBondAccounts;
     }
-
+    
     public void setHolderBondAccounts(Set holderBondAccounts) {
         this.holderBondAccounts = holderBondAccounts;
     }

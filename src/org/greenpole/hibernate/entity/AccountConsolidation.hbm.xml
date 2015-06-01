@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.AccountConsolidation" table="ACCOUNT_CONSOLIDATION" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" fetch="select">
+            <column name="holder_id" />
+        </many-to-one>
+        <property name="holderName" type="string">
+            <column name="holder_name" length="300" />
+        </property>
+        <property name="mergedToHolderId" type="java.lang.Integer">
+            <column name="merged_to_holder_id" />
+        </property>
+        <property name="mergedToHolderName" type="string">
+            <column name="merged_to_holder_name" length="300" />
+        </property>
+        <property name="mergeDate" type="date">
+            <column name="merge_date" length="10" />
+        </property>
+        <property name="demerge" type="java.lang.Boolean">
+            <column name="demerge" />
+        </property>
+        <property name="additionalChanges" type="string">
+            <column name="additional_changes" length="300" />
+        </property>
+        <property name="demergeDate" type="date">
+            <column name="demerge_date" length="10" />
+        </property>
+        <set name="companyAccountConsolidations" table="COMPANY_ACCOUNT_CONSOLIDATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="acct_consolidation_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.CompanyAccountConsolidation" />
+        </set>
+    </class>
+</hibernate-mapping>

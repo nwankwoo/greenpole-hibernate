@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,11 +12,11 @@ public class Stockbroker  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private String name;
      private String cscsAccNo;
-     private boolean active;
-     private boolean valid;
+     private Boolean active;
+     private Boolean valid;
      private Set stockbrokerAddresses = new HashSet(0);
      private Set stockbrokerPhoneNumbers = new HashSet(0);
      private Set holders = new HashSet(0);
@@ -27,7 +27,7 @@ public class Stockbroker  implements java.io.Serializable {
     public Stockbroker() {
     }
 
-    public Stockbroker(String name, String cscsAccNo, boolean active, boolean valid, Set stockbrokerAddresses, Set stockbrokerPhoneNumbers, Set holders, Set stockbrokerAgents, Set stockbrokerSignatures, Set stockbrokerEmailAddresses) {
+    public Stockbroker(String name, String cscsAccNo, Boolean active, Boolean valid, Set stockbrokerAddresses, Set stockbrokerPhoneNumbers, Set holders, Set stockbrokerAgents, Set stockbrokerSignatures, Set stockbrokerEmailAddresses) {
        this.name = name;
        this.cscsAccNo = cscsAccNo;
        this.active = active;
@@ -47,22 +47,12 @@ public class Stockbroker  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-        /**
-     * A getter for Stockbroker object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Stockbroker object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public String getName() {
         return this.name;
@@ -78,18 +68,18 @@ public class Stockbroker  implements java.io.Serializable {
     public void setCscsAccNo(String cscsAccNo) {
         this.cscsAccNo = cscsAccNo;
     }
-    public boolean isActive() {
+    public Boolean getActive() {
         return this.active;
     }
     
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
-    public boolean isValid() {
+    public Boolean getValid() {
         return this.valid;
     }
     
-    public void setValid(boolean valid) {
+    public void setValid(Boolean valid) {
         this.valid = valid;
     }
     public Set getStockbrokerAddresses() {

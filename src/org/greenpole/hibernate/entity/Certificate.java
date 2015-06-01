@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,7 +13,7 @@ public class Certificate  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private CertificateLodgement certificateLodgement;
      private ClientCompany clientCompany;
      private Holder holder;
@@ -21,23 +21,23 @@ public class Certificate  implements java.io.Serializable {
      private PrivatePlacement privatePlacement;
      private RightsIssue rightsIssue;
      private ShareBonus shareBonus;
-     private int certificateNumber;
-     private int shareVolume;
-     private int bondHolding;
+     private Integer certificateNumber;
+     private Integer shareVolume;
+     private Integer bondHolding;
      private String holderName;
      private String holderAddress;
      private String issuingCompName;
      private Date issueDate;
      private String certNarration;
-     private boolean cancelled;
-     private boolean claimed;
-     private boolean immobStatus;
+     private Boolean cancelled;
+     private Boolean claimed;
+     private Boolean immobStatus;
      private Set certificateVerifications = new HashSet(0);
 
     public Certificate() {
     }
 
-    public Certificate(CertificateLodgement certificateLodgement, ClientCompany clientCompany, Holder holder, InitialPublicOffer initialPublicOffer, PrivatePlacement privatePlacement, RightsIssue rightsIssue, ShareBonus shareBonus, int certificateNumber, int shareVolume, int bondHolding, String holderName, String holderAddress, String issuingCompName, Date issueDate, String certNarration, boolean cancelled, boolean claimed, boolean immobStatus, Set certificateVerifications) {
+    public Certificate(CertificateLodgement certificateLodgement, ClientCompany clientCompany, Holder holder, InitialPublicOffer initialPublicOffer, PrivatePlacement privatePlacement, RightsIssue rightsIssue, ShareBonus shareBonus, Integer certificateNumber, Integer shareVolume, Integer bondHolding, String holderName, String holderAddress, String issuingCompName, Date issueDate, String certNarration, Boolean cancelled, Boolean claimed, Boolean immobStatus, Set certificateVerifications) {
        this.certificateLodgement = certificateLodgement;
        this.clientCompany = clientCompany;
        this.holder = holder;
@@ -66,23 +66,12 @@ public class Certificate  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
-    /**
-     * A getter for Certificate object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Certificate object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public CertificateLodgement getCertificateLodgement() {
         return this.certificateLodgement;
@@ -133,25 +122,25 @@ public class Certificate  implements java.io.Serializable {
     public void setShareBonus(ShareBonus shareBonus) {
         this.shareBonus = shareBonus;
     }
-    public int getCertificateNumber() {
+    public Integer getCertificateNumber() {
         return this.certificateNumber;
     }
     
-    public void setCertificateNumber(int certificateNumber) {
+    public void setCertificateNumber(Integer certificateNumber) {
         this.certificateNumber = certificateNumber;
     }
-    public int getShareVolume() {
+    public Integer getShareVolume() {
         return this.shareVolume;
     }
     
-    public void setShareVolume(int shareVolume) {
+    public void setShareVolume(Integer shareVolume) {
         this.shareVolume = shareVolume;
     }
-    public int getBondHolding() {
+    public Integer getBondHolding() {
         return this.bondHolding;
     }
     
-    public void setBondHolding(int bondHolding) {
+    public void setBondHolding(Integer bondHolding) {
         this.bondHolding = bondHolding;
     }
     public String getHolderName() {
@@ -189,25 +178,25 @@ public class Certificate  implements java.io.Serializable {
     public void setCertNarration(String certNarration) {
         this.certNarration = certNarration;
     }
-    public boolean isCancelled() {
+    public Boolean getCancelled() {
         return this.cancelled;
     }
     
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(Boolean cancelled) {
         this.cancelled = cancelled;
     }
-    public boolean isClaimed() {
+    public Boolean getClaimed() {
         return this.claimed;
     }
     
-    public void setClaimed(boolean claimed) {
+    public void setClaimed(Boolean claimed) {
         this.claimed = claimed;
     }
-    public boolean isImmobStatus() {
+    public Boolean getImmobStatus() {
         return this.immobStatus;
     }
     
-    public void setImmobStatus(boolean immobStatus) {
+    public void setImmobStatus(Boolean immobStatus) {
         this.immobStatus = immobStatus;
     }
     public Set getCertificateVerifications() {

@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,7 +13,7 @@ public class UserAccount  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private AprDepartment aprDepartment;
      private AprUnit aprUnit;
      private String firstName;
@@ -30,15 +30,19 @@ public class UserAccount  implements java.io.Serializable {
     public UserAccount() {
     }
 
-    public UserAccount(AprDepartment aprDepartment, AprUnit aprUnit, String firstName, String middleName, String lastName, Date dob, String gender, String position) {
-        this.aprDepartment = aprDepartment;
-        this.aprUnit = aprUnit;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.gender = gender;
-        this.position = position;
+    public UserAccount(AprDepartment aprDepartment, AprUnit aprUnit, String firstName, String middleName, String lastName, Date dob, String gender, String position, Set groups, Set requirementFunctions, Set userAccesses, Set requirements) {
+       this.aprDepartment = aprDepartment;
+       this.aprUnit = aprUnit;
+       this.firstName = firstName;
+       this.middleName = middleName;
+       this.lastName = lastName;
+       this.dob = dob;
+       this.gender = gender;
+       this.position = position;
+       this.groups = groups;
+       this.requirementFunctions = requirementFunctions;
+       this.userAccesses = userAccesses;
+       this.requirements = requirements;
     }
    
     public int getId() {
@@ -48,42 +52,31 @@ public class UserAccount  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public String getFirstName() {
-        return this.firstName;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A getter for UserAccount object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
-    /**
-     * A setter for UserAccount object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
-    }
-
     public AprDepartment getAprDepartment() {
-        return aprDepartment;
+        return this.aprDepartment;
     }
-
+    
     public void setAprDepartment(AprDepartment aprDepartment) {
         this.aprDepartment = aprDepartment;
     }
-
     public AprUnit getAprUnit() {
-        return aprUnit;
+        return this.aprUnit;
     }
-
+    
     public void setAprUnit(AprUnit aprUnit) {
         this.aprUnit = aprUnit;
     }
+    public String getFirstName() {
+        return this.firstName;
+    }
+    
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

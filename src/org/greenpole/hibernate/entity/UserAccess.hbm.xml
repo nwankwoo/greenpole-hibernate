@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.UserAccess" table="USER_ACCESS" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="userAccount" class="org.greenpole.hibernate.entity.UserAccount" fetch="select">
+            <column name="user_account_id" unique="true" />
+        </many-to-one>
+        <property name="email" type="string">
+            <column name="email" length="200" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" />
+        </property>
+        <property name="userType" type="string">
+            <column name="user_type" length="50" />
+        </property>
+        <property name="maxIndividualShareHolding" type="java.lang.Integer">
+            <column name="max_individual_share_holding" />
+        </property>
+        <property name="maxTotalShareHolding" type="java.lang.Integer">
+            <column name="max_total_share_holding" />
+        </property>
+        <property name="suspended" type="java.lang.Boolean">
+            <column name="suspended" />
+        </property>
+        <property name="releaseSuspension" type="timestamp">
+            <column name="release_suspension" length="23" />
+        </property>
+        <property name="locked" type="java.lang.Boolean">
+            <column name="locked" />
+        </property>
+        <property name="expired" type="java.lang.Boolean">
+            <column name="expired" />
+        </property>
+        <property name="expiredPassword1" type="string">
+            <column name="expired_password_1" />
+        </property>
+        <property name="expiredPassword2" type="string">
+            <column name="expired_password_2" />
+        </property>
+        <property name="expiredPassword3" type="string">
+            <column name="expired_password_3" />
+        </property>
+        <property name="expiredPassword4" type="string">
+            <column name="expired_password_4" />
+        </property>
+    </class>
+</hibernate-mapping>

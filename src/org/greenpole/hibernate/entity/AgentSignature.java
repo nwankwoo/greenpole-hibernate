@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -10,16 +10,16 @@ public class AgentSignature  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private StockbrokerAgent stockbrokerAgent;
      private String title;
      private String signaturePath;
-     private boolean agentSignaturePrimary;
+     private Boolean agentSignaturePrimary;
 
     public AgentSignature() {
     }
 
-    public AgentSignature(StockbrokerAgent stockbrokerAgent, String title, String signaturePath, boolean agentSignaturePrimary) {
+    public AgentSignature(StockbrokerAgent stockbrokerAgent, String title, String signaturePath, Boolean agentSignaturePrimary) {
        this.stockbrokerAgent = stockbrokerAgent;
        this.title = title;
        this.signaturePath = signaturePath;
@@ -33,22 +33,12 @@ public class AgentSignature  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-        /**
-     * A getter for AgentSignature object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for AgentSignature object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public StockbrokerAgent getStockbrokerAgent() {
         return this.stockbrokerAgent;
@@ -57,11 +47,10 @@ public class AgentSignature  implements java.io.Serializable {
     public void setStockbrokerAgent(StockbrokerAgent stockbrokerAgent) {
         this.stockbrokerAgent = stockbrokerAgent;
     }
-
     public String getTitle() {
-        return title;
+        return this.title;
     }
-
+    
     public void setTitle(String title) {
         this.title = title;
     }
@@ -72,11 +61,11 @@ public class AgentSignature  implements java.io.Serializable {
     public void setSignaturePath(String signaturePath) {
         this.signaturePath = signaturePath;
     }
-    public boolean isAgentSignaturePrimary() {
+    public Boolean getAgentSignaturePrimary() {
         return this.agentSignaturePrimary;
     }
     
-    public void setAgentSignaturePrimary(boolean agentSignaturePrimary) {
+    public void setAgentSignaturePrimary(Boolean agentSignaturePrimary) {
         this.agentSignaturePrimary = agentSignaturePrimary;
     }
 

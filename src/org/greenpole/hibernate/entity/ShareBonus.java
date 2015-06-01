@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,23 +13,25 @@ public class ShareBonus  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
      private String title;
      private Date qualifyDate;
-     private int qualifyShareUnit;
-     private int bonusUnitPerQualifyUnit;
+     private Integer qualifyShareUnit;
+     private Integer bonusUnitPerQualifyUnit;
+     private Set holderBonuses = new HashSet(0);
      private Set certificates = new HashSet(0);
 
     public ShareBonus() {
     }
 
-    public ShareBonus(ClientCompany clientCompany, String title, Date qualifyDate, int qualifyShareUnit, int bonusUnitPerQualifyUnit, Set certificates) {
+    public ShareBonus(ClientCompany clientCompany, String title, Date qualifyDate, Integer qualifyShareUnit, Integer bonusUnitPerQualifyUnit, Set holderBonuses, Set certificates) {
        this.clientCompany = clientCompany;
        this.title = title;
        this.qualifyDate = qualifyDate;
        this.qualifyShareUnit = qualifyShareUnit;
        this.bonusUnitPerQualifyUnit = bonusUnitPerQualifyUnit;
+       this.holderBonuses = holderBonuses;
        this.certificates = certificates;
     }
    
@@ -40,22 +42,12 @@ public class ShareBonus  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-     /**
-     * A getter for ShareBonus object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for ShareBonus object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -78,19 +70,26 @@ public class ShareBonus  implements java.io.Serializable {
     public void setQualifyDate(Date qualifyDate) {
         this.qualifyDate = qualifyDate;
     }
-    public int getQualifyShareUnit() {
+    public Integer getQualifyShareUnit() {
         return this.qualifyShareUnit;
     }
     
-    public void setQualifyShareUnit(int qualifyShareUnit) {
+    public void setQualifyShareUnit(Integer qualifyShareUnit) {
         this.qualifyShareUnit = qualifyShareUnit;
     }
-    public int getBonusUnitPerQualifyUnit() {
+    public Integer getBonusUnitPerQualifyUnit() {
         return this.bonusUnitPerQualifyUnit;
     }
     
-    public void setBonusUnitPerQualifyUnit(int bonusUnitPerQualifyUnit) {
+    public void setBonusUnitPerQualifyUnit(Integer bonusUnitPerQualifyUnit) {
         this.bonusUnitPerQualifyUnit = bonusUnitPerQualifyUnit;
+    }
+    public Set getHolderBonuses() {
+        return this.holderBonuses;
+    }
+    
+    public void setHolderBonuses(Set holderBonuses) {
+        this.holderBonuses = holderBonuses;
     }
     public Set getCertificates() {
         return this.certificates;

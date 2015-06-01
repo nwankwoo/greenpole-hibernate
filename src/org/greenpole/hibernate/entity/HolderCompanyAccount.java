@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,29 +12,29 @@ public class HolderCompanyAccount  implements java.io.Serializable {
 
 
      private HolderCompanyAccountId id;
-     private long versionId;
+     private Long version;
      private Bank bank;
      private ClientCompany clientCompany;
      private Holder holder;
      private HolderCompanyAccount holderCompanyAccount;
-     private int shareUnits;
-     private boolean esop;
+     private Integer shareUnits;
+     private Boolean esop;
      private String nubanAccount;
-     private boolean merged;
-     private boolean holderCompAccPrimary;
-     private Set coupons = new HashSet(0);
+     private Boolean merged;
+     private Boolean holderCompAccPrimary;
      private Set dividends = new HashSet(0);
      private Set holderCompanyAccounts = new HashSet(0);
 
     public HolderCompanyAccount() {
     }
+
 	
     public HolderCompanyAccount(HolderCompanyAccountId id, ClientCompany clientCompany, Holder holder) {
         this.id = id;
         this.clientCompany = clientCompany;
         this.holder = holder;
     }
-    public HolderCompanyAccount(HolderCompanyAccountId id, Bank bank, ClientCompany clientCompany, Holder holder, HolderCompanyAccount holderCompanyAccount, int shareUnits, boolean esop, String nubanAccount, boolean merged, boolean holderCompAccPrimary, Set coupons, Set dividends, Set holderCompanyAccounts) {
+    public HolderCompanyAccount(HolderCompanyAccountId id, Bank bank, ClientCompany clientCompany, Holder holder, HolderCompanyAccount holderCompanyAccount, Integer shareUnits, Boolean esop, String nubanAccount, Boolean merged, Boolean holderCompAccPrimary, Set dividends, Set holderCompanyAccounts) {
        this.id = id;
        this.bank = bank;
        this.clientCompany = clientCompany;
@@ -45,7 +45,6 @@ public class HolderCompanyAccount  implements java.io.Serializable {
        this.nubanAccount = nubanAccount;
        this.merged = merged;
        this.holderCompAccPrimary = holderCompAccPrimary;
-       this.coupons = coupons;
        this.dividends = dividends;
        this.holderCompanyAccounts = holderCompanyAccounts;
     }
@@ -57,23 +56,12 @@ public class HolderCompanyAccount  implements java.io.Serializable {
     public void setId(HolderCompanyAccountId id) {
         this.id = id;
     }
-    
-    /**
-     * A getter for HolderCompanyAccount object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for HolderCompanyAccount object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public Bank getBank() {
         return this.bank;
@@ -103,19 +91,18 @@ public class HolderCompanyAccount  implements java.io.Serializable {
     public void setHolderCompanyAccount(HolderCompanyAccount holderCompanyAccount) {
         this.holderCompanyAccount = holderCompanyAccount;
     }
-
-    public int getShareUnits() {
-        return shareUnits;
+    public Integer getShareUnits() {
+        return this.shareUnits;
     }
-
-    public void setShareUnits(int shareUnits) {
+    
+    public void setShareUnits(Integer shareUnits) {
         this.shareUnits = shareUnits;
     }
-    public boolean isEsop() {
+    public Boolean getEsop() {
         return this.esop;
     }
     
-    public void setEsop(boolean esop) {
+    public void setEsop(Boolean esop) {
         this.esop = esop;
     }
     public String getNubanAccount() {
@@ -125,26 +112,19 @@ public class HolderCompanyAccount  implements java.io.Serializable {
     public void setNubanAccount(String nubanAccount) {
         this.nubanAccount = nubanAccount;
     }
-    public boolean isMerged() {
+    public Boolean getMerged() {
         return this.merged;
     }
     
-    public void setMerged(boolean merged) {
+    public void setMerged(Boolean merged) {
         this.merged = merged;
     }
-    public boolean isHolderCompAccPrimary() {
+    public Boolean getHolderCompAccPrimary() {
         return this.holderCompAccPrimary;
     }
     
-    public void setHolderCompAccPrimary(boolean holderCompAccPrimary) {
+    public void setHolderCompAccPrimary(Boolean holderCompAccPrimary) {
         this.holderCompAccPrimary = holderCompAccPrimary;
-    }
-    public Set getCoupons() {
-        return this.coupons;
-    }
-    
-    public void setCoupons(Set coupons) {
-        this.coupons = coupons;
     }
     public Set getDividends() {
         return this.dividends;

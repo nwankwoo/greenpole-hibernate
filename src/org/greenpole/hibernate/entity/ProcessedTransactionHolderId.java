@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -27,7 +27,6 @@ public class ProcessedTransactionHolderId  implements java.io.Serializable {
     public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
     }
-    
     public int getHolderId() {
         return this.holderId;
     }
@@ -35,6 +34,7 @@ public class ProcessedTransactionHolderId  implements java.io.Serializable {
     public void setHolderId(int holderId) {
         this.holderId = holderId;
     }
+
 
    public boolean equals(Object other) {
          if ( (this == other ) ) return true;

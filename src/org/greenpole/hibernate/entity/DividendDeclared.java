@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,14 +13,14 @@ public class DividendDeclared  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
      private String yearType;
      private byte[] issueType;
      private Date qualifyDate;
      private Double withholdingTaxRateInd;
      private Double withholdingTaxRateCorp;
-     private int yearEnding;
+     private Integer yearEnding;
      private Date datePayable;
      private Double rate;
      private Set dividends = new HashSet(0);
@@ -29,7 +29,7 @@ public class DividendDeclared  implements java.io.Serializable {
     public DividendDeclared() {
     }
 
-    public DividendDeclared(ClientCompany clientCompany, String yearType, byte[] issueType, Date qualifyDate, Double withholdingTaxRateInd, Double withholdingTaxRateCorp, int yearEnding, Date datePayable, Double rate, Set dividends, Set dividendSettlements) {
+    public DividendDeclared(ClientCompany clientCompany, String yearType, byte[] issueType, Date qualifyDate, Double withholdingTaxRateInd, Double withholdingTaxRateCorp, Integer yearEnding, Date datePayable, Double rate, Set dividends, Set dividendSettlements) {
        this.clientCompany = clientCompany;
        this.yearType = yearType;
        this.issueType = issueType;
@@ -50,22 +50,12 @@ public class DividendDeclared  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for DividendDeclared object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for DividendDeclared object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -109,11 +99,11 @@ public class DividendDeclared  implements java.io.Serializable {
     public void setWithholdingTaxRateCorp(Double withholdingTaxRateCorp) {
         this.withholdingTaxRateCorp = withholdingTaxRateCorp;
     }
-    public int getYearEnding() {
+    public Integer getYearEnding() {
         return this.yearEnding;
     }
     
-    public void setYearEnding(int yearEnding) {
+    public void setYearEnding(Integer yearEnding) {
         this.yearEnding = yearEnding;
     }
     public Date getDatePayable() {

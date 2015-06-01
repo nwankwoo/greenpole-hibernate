@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 26-Apr-2015 06:13:16 by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,10 +11,10 @@ public class AuditLog  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private String userId;
      private String functionPerformed;
-     private boolean approverRequired;
+     private Boolean approverRequired;
      private String designatedApprover;
      private String affectedEntityType;
      private String entityName;
@@ -23,7 +23,7 @@ public class AuditLog  implements java.io.Serializable {
     public AuditLog() {
     }
 
-    public AuditLog(String userId, String functionPerformed, boolean approverRequired, String designatedApprover, String affectedEntityType, String entityName, Date dateTime) {
+    public AuditLog(String userId, String functionPerformed, Boolean approverRequired, String designatedApprover, String affectedEntityType, String entityName, Date dateTime) {
        this.userId = userId;
        this.functionPerformed = functionPerformed;
        this.approverRequired = approverRequired;
@@ -40,22 +40,12 @@ public class AuditLog  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for Administrator object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Administrator object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public String getUserId() {
         return this.userId;
@@ -71,11 +61,11 @@ public class AuditLog  implements java.io.Serializable {
     public void setFunctionPerformed(String functionPerformed) {
         this.functionPerformed = functionPerformed;
     }
-    public boolean isApproverRequired() {
+    public Boolean getApproverRequired() {
         return this.approverRequired;
     }
     
-    public void setApproverRequired(boolean approverRequired) {
+    public void setApproverRequired(Boolean approverRequired) {
         this.approverRequired = approverRequired;
     }
     public String getDesignatedApprover() {

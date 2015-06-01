@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,22 +12,22 @@ public class ProcessedTransaction  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
-     private int cscsTransactionId;
-     private String companyName;
      private TransactionType transactionType;
+     private Integer cscsTransactionId;
+     private String companyName;
      private Set processedTransactionHolders = new HashSet(0);
 
     public ProcessedTransaction() {
     }
 
-    public ProcessedTransaction(ClientCompany clientCompany, int cscsTransactionId, String companyName, TransactionType transactionType, Set processedTransactionHolders) {
+    public ProcessedTransaction(ClientCompany clientCompany, TransactionType transactionType, Integer cscsTransactionId, String companyName, Set processedTransactionHolders) {
        this.clientCompany = clientCompany;
+       this.transactionType = transactionType;
        this.cscsTransactionId = cscsTransactionId;
        this.companyName = companyName;
        this.processedTransactionHolders = processedTransactionHolders;
-       this.transactionType = transactionType;
     }
    
     public int getId() {
@@ -37,22 +37,12 @@ public class ProcessedTransaction  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for ProcessedTransaction object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for ProcessedTransaction object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -61,11 +51,18 @@ public class ProcessedTransaction  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public int getCscsTransactionId() {
+    public TransactionType getTransactionType() {
+        return this.transactionType;
+    }
+    
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+    public Integer getCscsTransactionId() {
         return this.cscsTransactionId;
     }
     
-    public void setCscsTransactionId(int cscsTransactionId) {
+    public void setCscsTransactionId(Integer cscsTransactionId) {
         this.cscsTransactionId = cscsTransactionId;
     }
     public String getCompanyName() {
@@ -74,14 +71,6 @@ public class ProcessedTransaction  implements java.io.Serializable {
     
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
-    }
-
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
     }
     public Set getProcessedTransactionHolders() {
         return this.processedTransactionHolders;

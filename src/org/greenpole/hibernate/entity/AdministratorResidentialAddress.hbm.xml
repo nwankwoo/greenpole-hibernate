@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.AdministratorResidentialAddress" table="ADMINISTRATOR_RESIDENTIAL_ADDRESS" schema="dbo" catalog="greenpole">
+        <composite-id name="id" class="org.greenpole.hibernate.entity.AdministratorResidentialAddressId">
+            <key-property name="administratorId" type="int">
+                <column name="administrator_id" />
+            </key-property>
+            <key-property name="addressLine1" type="string">
+                <column name="address_line_1" length="50" />
+            </key-property>
+            <key-property name="state" type="string">
+                <column name="state" length="50" />
+            </key-property>
+            <key-property name="country" type="string">
+                <column name="country" length="50" />
+            </key-property>
+        </composite-id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="administrator" class="org.greenpole.hibernate.entity.Administrator" update="false" insert="false" fetch="select">
+            <column name="administrator_id" not-null="true" />
+        </many-to-one>
+        <property name="addressLine2" type="string">
+            <column name="address_line_2" length="50" />
+        </property>
+        <property name="addressLine3" type="string">
+            <column name="address_line_3" length="50" />
+        </property>
+        <property name="addressLine4" type="string">
+            <column name="address_line_4" length="50" />
+        </property>
+        <property name="postCode" type="string">
+            <column name="post_code" length="50" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="50" />
+        </property>
+        <property name="isPrimary" type="java.lang.Boolean">
+            <column name="is_primary" />
+        </property>
+    </class>
+</hibernate-mapping>

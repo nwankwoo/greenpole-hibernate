@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.TransactionType" table="TRANSACTION_TYPE" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <property name="type" type="string">
+            <column name="type" length="50" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="300" />
+        </property>
+        <set name="processedTransactions" table="PROCESSED_TRANSACTION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="transaction_type_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ProcessedTransaction" />
+        </set>
+    </class>
+</hibernate-mapping>

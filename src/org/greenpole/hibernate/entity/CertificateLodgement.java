@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,16 +13,16 @@ public class CertificateLodgement  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private int controlNumber;
      private String title;
      private Date date;
      private String certificateNumber;
-     private int holdings;
+     private Integer holdings;
      private String shareholderName;
      private String chn;
      private String status;
-     private boolean processed;
+     private Boolean processed;
      private Set certificates = new HashSet(0);
 
     public CertificateLodgement() {
@@ -32,7 +32,7 @@ public class CertificateLodgement  implements java.io.Serializable {
     public CertificateLodgement(int controlNumber) {
         this.controlNumber = controlNumber;
     }
-    public CertificateLodgement(int controlNumber, String title, Date date, String certificateNumber, int holdings, String shareholderName, String chn, String status, boolean processed, Set certificates) {
+    public CertificateLodgement(int controlNumber, String title, Date date, String certificateNumber, Integer holdings, String shareholderName, String chn, String status, Boolean processed, Set certificates) {
        this.controlNumber = controlNumber;
        this.title = title;
        this.date = date;
@@ -52,23 +52,12 @@ public class CertificateLodgement  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
-    /**
-     * A getter for CertificateLodgement object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for CertificateLodgement object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public int getControlNumber() {
         return this.controlNumber;
@@ -98,11 +87,11 @@ public class CertificateLodgement  implements java.io.Serializable {
     public void setCertificateNumber(String certificateNumber) {
         this.certificateNumber = certificateNumber;
     }
-    public int getHoldings() {
+    public Integer getHoldings() {
         return this.holdings;
     }
     
-    public void setHoldings(int holdings) {
+    public void setHoldings(Integer holdings) {
         this.holdings = holdings;
     }
     public String getShareholderName() {
@@ -126,11 +115,11 @@ public class CertificateLodgement  implements java.io.Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-    public boolean isProcessed() {
+    public Boolean getProcessed() {
         return this.processed;
     }
     
-    public void setProcessed(boolean processed) {
+    public void setProcessed(Boolean processed) {
         this.processed = processed;
     }
     public Set getCertificates() {

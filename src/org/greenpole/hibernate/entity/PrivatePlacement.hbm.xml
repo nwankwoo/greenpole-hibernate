@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.PrivatePlacement" table="PRIVATE_PLACEMENT" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
+            <column name="client_Company_Id" />
+        </many-to-one>
+        <property name="totalSharesOnOffer" type="java.lang.Integer">
+            <column name="total_Shares_on_Offer" />
+        </property>
+        <property name="methodOnOffer" type="java.lang.Integer">
+            <column name="method_On_Offer" />
+        </property>
+        <property name="startingMinSubscrptn" type="java.lang.Integer">
+            <column name="starting_Min_subscrptn" />
+        </property>
+        <property name="continuingMinSubscrptn" type="java.lang.Integer">
+            <column name="continuing_Min_subscrptn" />
+        </property>
+        <property name="offerPrice" type="java.lang.Double">
+            <column name="offer_Price" precision="18" />
+        </property>
+        <property name="offerSize" type="java.lang.Double">
+            <column name="offer_Size" precision="18" />
+        </property>
+        <property name="openingDate" type="date">
+            <column name="opening_Date" length="10" />
+        </property>
+        <property name="closingDate" type="date">
+            <column name="closing_Date" length="10" />
+        </property>
+        <property name="placementClosed" type="java.lang.Boolean">
+            <column name="placement_closed" />
+        </property>
+        <property name="tax" type="java.lang.Double">
+            <column name="tax" precision="18" />
+        </property>
+        <property name="interestRate" type="java.lang.Double">
+            <column name="interest_rate" precision="18" />
+        </property>
+        <set name="certificates" table="CERTIFICATE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="priv_Plcmnt_Id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Certificate" />
+        </set>
+        <set name="privatePlacementApplications" table="PRIVATE_PLACEMENT_APPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="private_placement_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.PrivatePlacementApplication" />
+        </set>
+    </class>
+</hibernate-mapping>

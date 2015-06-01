@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.IpoApplication" table="IPO_APPLICATION" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="clearingHouse" class="org.greenpole.hibernate.entity.ClearingHouse" fetch="select">
+            <column name="clearing_house_id" />
+        </many-to-one>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" fetch="select">
+            <column name="holder_id" />
+        </many-to-one>
+        <many-to-one name="initialPublicOffer" class="org.greenpole.hibernate.entity.InitialPublicOffer" fetch="select">
+            <column name="ipo_id" />
+        </many-to-one>
+        <property name="issuer" type="string">
+            <column name="issuer" />
+        </property>
+        <property name="sharesSubscribed" type="java.lang.Integer">
+            <column name="shares_subscribed" />
+        </property>
+        <property name="amountPaid" type="java.lang.Double">
+            <column name="amount_paid" precision="53" scale="0" />
+        </property>
+        <property name="issuingHouse" type="string">
+            <column name="issuing_house" />
+        </property>
+        <property name="sharesSubscribedValue" type="java.lang.Double">
+            <column name="shares_subscribed_value" precision="53" scale="0" />
+        </property>
+        <property name="sharesAdjusted" type="java.lang.Integer">
+            <column name="shares_adjusted" />
+        </property>
+        <property name="returnMoney" type="java.lang.Double">
+            <column name="return_money" precision="53" scale="0" />
+        </property>
+        <property name="processingPayment" type="java.lang.Boolean">
+            <column name="processing_payment" />
+        </property>
+        <property name="approved" type="java.lang.Boolean">
+            <column name="approved" />
+        </property>
+        <property name="canceled" type="java.lang.Boolean">
+            <column name="canceled" />
+        </property>
+        <property name="dateApplied" type="date">
+            <column name="date_applied" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

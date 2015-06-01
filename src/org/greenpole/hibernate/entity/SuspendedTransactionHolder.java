@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -10,12 +10,12 @@ public class SuspendedTransactionHolder  implements java.io.Serializable {
 
 
      private SuspendedTransactionHolderId id;
-     private long versionId;
+     private Long version;
      private Holder holder;
      private SuspendedTransaction suspendedTransaction;
      private String holderName;
      private String holderChn;
-     private int units;
+     private Integer units;
      private String unitType;
      private String fromTo;
 
@@ -28,7 +28,7 @@ public class SuspendedTransactionHolder  implements java.io.Serializable {
         this.holder = holder;
         this.suspendedTransaction = suspendedTransaction;
     }
-    public SuspendedTransactionHolder(SuspendedTransactionHolderId id, Holder holder, SuspendedTransaction suspendedTransaction, String holderName, String holderChn, int units, String unitType, String fromTo) {
+    public SuspendedTransactionHolder(SuspendedTransactionHolderId id, Holder holder, SuspendedTransaction suspendedTransaction, String holderName, String holderChn, Integer units, String unitType, String fromTo) {
        this.id = id;
        this.holder = holder;
        this.suspendedTransaction = suspendedTransaction;
@@ -46,22 +46,12 @@ public class SuspendedTransactionHolder  implements java.io.Serializable {
     public void setId(SuspendedTransactionHolderId id) {
         this.id = id;
     }
-      /**
-     * A getter for SuspendedTransactionHolder object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for SuspendedTransactionHolder object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public Holder getHolder() {
         return this.holder;
@@ -91,11 +81,11 @@ public class SuspendedTransactionHolder  implements java.io.Serializable {
     public void setHolderChn(String holderChn) {
         this.holderChn = holderChn;
     }
-    public int getUnits() {
+    public Integer getUnits() {
         return this.units;
     }
     
-    public void setUnits(int units) {
+    public void setUnits(Integer units) {
         this.units = units;
     }
     public String getUnitType() {

@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 26-Apr-2015 06:13:16 by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,22 +11,22 @@ public class HolderChanges  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
+     private Holder holder;
+     private HolderChangeType holderChangeType;
      private String initialForm;
      private String currentForm;
-     private HolderChangeType holderChangeType;
      private Date changeDate;
-     private Holder holder;
 
     public HolderChanges() {
     }
 
-    public HolderChanges(String initialForm, String currentForm, HolderChangeType holderChangeType, Date changeDate, Holder holder) {
+    public HolderChanges(Holder holder, HolderChangeType holderChangeType, String initialForm, String currentForm, Date changeDate) {
+       this.holder = holder;
+       this.holderChangeType = holderChangeType;
        this.initialForm = initialForm;
        this.currentForm = currentForm;
-       this.holderChangeType = holderChangeType;
        this.changeDate = changeDate;
-       this.holder = holder;
     }
    
     public int getId() {
@@ -36,22 +36,26 @@ public class HolderChanges  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for Administrator object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Administrator object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+    public Holder getHolder() {
+        return this.holder;
+    }
+    
+    public void setHolder(Holder holder) {
+        this.holder = holder;
+    }
+    public HolderChangeType getHolderChangeType() {
+        return this.holderChangeType;
+    }
+    
+    public void setHolderChangeType(HolderChangeType holderChangeType) {
+        this.holderChangeType = holderChangeType;
     }
     public String getInitialForm() {
         return this.initialForm;
@@ -67,13 +71,6 @@ public class HolderChanges  implements java.io.Serializable {
     public void setCurrentForm(String currentForm) {
         this.currentForm = currentForm;
     }
-    public HolderChangeType getHolderChangeType() {
-        return this.holderChangeType;
-    }
-    
-    public void setHolderChangeType(HolderChangeType holderChangeType) {
-        this.holderChangeType = holderChangeType;
-    }
     public Date getChangeDate() {
         return this.changeDate;
     }
@@ -82,13 +79,8 @@ public class HolderChanges  implements java.io.Serializable {
         this.changeDate = changeDate;
     }
 
-    public Holder getHolder() {
-        return holder;
-    }
 
-    public void setHolder(Holder holder) {
-        this.holder = holder;
-    }
+
 
 }
 

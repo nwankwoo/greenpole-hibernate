@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.CompanyAccountConsolidation" table="COMPANY_ACCOUNT_CONSOLIDATION" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="accountConsolidation" class="org.greenpole.hibernate.entity.AccountConsolidation" fetch="select">
+            <column name="acct_consolidation_id" />
+        </many-to-one>
+        <property name="forCompanyId" type="java.lang.Integer">
+            <column name="for_company_id" />
+        </property>
+        <property name="forBondOfferId" type="java.lang.Integer">
+            <column name="for_bond_offer_id" />
+        </property>
+        <property name="tiedToInitialHolderId" type="java.lang.Integer">
+            <column name="tied_to_initial_holder_id" />
+        </property>
+        <property name="tiedToCurrentHolderId" type="java.lang.Integer">
+            <column name="tied_to_current_holder_id" />
+        </property>
+        <property name="initialChn" type="string">
+            <column name="initial_chn" length="50" />
+        </property>
+        <property name="currentChn" type="string">
+            <column name="current_chn" length="50" />
+        </property>
+        <property name="bondShareUnit" type="java.lang.Integer">
+            <column name="bond_share_unit" />
+        </property>
+        <property name="transfer" type="java.lang.Boolean">
+            <column name="transfer" />
+        </property>
+        <property name="receiverUnitState" type="java.lang.Integer">
+            <column name="receiver_unit_state" />
+        </property>
+        <property name="receiverStartUnit" type="java.lang.Integer">
+            <column name="receiver_start_unit" />
+        </property>
+        <property name="unitAfterTransfer" type="java.lang.Integer">
+            <column name="unit_after_transfer" />
+        </property>
+        <property name="mergeDate" type="date">
+            <column name="merge_date" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

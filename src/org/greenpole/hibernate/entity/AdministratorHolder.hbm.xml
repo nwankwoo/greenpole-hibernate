@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 07:34:44 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.AdministratorHolder" table="ADMINISTRATOR_HOLDER" schema="dbo" catalog="greenpole" optimistic-lock="version">
+        <composite-id name="id" class="org.greenpole.hibernate.entity.AdministratorHolderId">
+            <key-property name="administratorId" type="int">
+                <column name="administrator_id" />
+            </key-property>
+            <key-property name="holderId" type="int">
+                <column name="holder_id" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

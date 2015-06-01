@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -9,18 +9,18 @@ package org.greenpole.hibernate.entity;
 public class Reconstruction  implements java.io.Serializable {
 
 
-     private int id;   
-     private long versionId;
+     private int id;
+     private Long version;
      private ClientCompany clientCompany;
      private ReconstructionType reconstructionType;
-     private int qualifyShareUnit;
-     private int actionShareUnit;
+     private Integer qualifyShareUnit;
+     private Integer actionShareUnit;
      private String increaseOrDecrease;
 
     public Reconstruction() {
     }
 
-    public Reconstruction(ClientCompany clientCompany, ReconstructionType reconstructionType, int qualifyShareUnit, int actionShareUnit, String increaseOrDecrease) {
+    public Reconstruction(ClientCompany clientCompany, ReconstructionType reconstructionType, Integer qualifyShareUnit, Integer actionShareUnit, String increaseOrDecrease) {
        this.clientCompany = clientCompany;
        this.reconstructionType = reconstructionType;
        this.qualifyShareUnit = qualifyShareUnit;
@@ -35,22 +35,12 @@ public class Reconstruction  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for Reconstruction object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Reconstruction object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -66,19 +56,18 @@ public class Reconstruction  implements java.io.Serializable {
     public void setReconstructionType(ReconstructionType reconstructionType) {
         this.reconstructionType = reconstructionType;
     }
-    public int getQualifyShareUnit() {
+    public Integer getQualifyShareUnit() {
         return this.qualifyShareUnit;
     }
     
-    public void setQualifyShareUnit(int qualifyShareUnit) {
+    public void setQualifyShareUnit(Integer qualifyShareUnit) {
         this.qualifyShareUnit = qualifyShareUnit;
     }
-
-    public int getActionShareUnit() {
-        return actionShareUnit;
+    public Integer getActionShareUnit() {
+        return this.actionShareUnit;
     }
-
-    public void setActionShareUnit(int actionShareUnit) {
+    
+    public void setActionShareUnit(Integer actionShareUnit) {
         this.actionShareUnit = actionShareUnit;
     }
     public String getIncreaseOrDecrease() {

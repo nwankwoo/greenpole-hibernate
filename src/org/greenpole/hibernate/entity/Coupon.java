@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,11 +11,11 @@ public class Coupon  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private HolderBondAccount holderBondAccount;
-     private String bondTitle;
+     private String clientCompanyName;
      private Date issueDate;
-     private int couponNumber;
+     private Integer couponNumber;
      private String bondType;
      private Double redemptionAmt;
      private Double couponAmt;
@@ -23,15 +23,15 @@ public class Coupon  implements java.io.Serializable {
      private Date redemptnDate;
      private Double totalPymtsToBMade;
      private Double totalPaymtsMade;
-     private boolean paid;
+     private Boolean paid;
      private Date paidDate;
 
     public Coupon() {
     }
 
-    public Coupon(HolderBondAccount holderBondAccount, String bondTitle, Date issueDate, int couponNumber, String bondType, Double redemptionAmt, Double couponAmt, String bondholderMailingAddress, Date redemptnDate, Double totalPymtsToBMade, Double totalPaymtsMade, boolean paid, Date paidDate) {
+    public Coupon(HolderBondAccount holderBondAccount, String clientCompanyName, Date issueDate, Integer couponNumber, String bondType, Double redemptionAmt, Double couponAmt, String bondholderMailingAddress, Date redemptnDate, Double totalPymtsToBMade, Double totalPaymtsMade, Boolean paid, Date paidDate) {
        this.holderBondAccount = holderBondAccount;
-       this.bondTitle = bondTitle;
+       this.clientCompanyName = clientCompanyName;
        this.issueDate = issueDate;
        this.couponNumber = couponNumber;
        this.bondType = bondType;
@@ -52,38 +52,26 @@ public class Coupon  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for Coupon object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Coupon object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
-
     public HolderBondAccount getHolderBondAccount() {
-        return holderBondAccount;
+        return this.holderBondAccount;
     }
-
+    
     public void setHolderBondAccount(HolderBondAccount holderBondAccount) {
         this.holderBondAccount = holderBondAccount;
     }
-
-    public String getBondTitle() {
-        return bondTitle;
+    public String getClientCompanyName() {
+        return this.clientCompanyName;
     }
-
-    public void setBondTitle(String bondTitle) {
-        this.bondTitle = bondTitle;
+    
+    public void setClientCompanyName(String clientCompanyName) {
+        this.clientCompanyName = clientCompanyName;
     }
     public Date getIssueDate() {
         return this.issueDate;
@@ -92,11 +80,11 @@ public class Coupon  implements java.io.Serializable {
     public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
     }
-    public int getCouponNumber() {
+    public Integer getCouponNumber() {
         return this.couponNumber;
     }
     
-    public void setCouponNumber(int couponNumber) {
+    public void setCouponNumber(Integer couponNumber) {
         this.couponNumber = couponNumber;
     }
     public String getBondType() {
@@ -148,11 +136,11 @@ public class Coupon  implements java.io.Serializable {
     public void setTotalPaymtsMade(Double totalPaymtsMade) {
         this.totalPaymtsMade = totalPaymtsMade;
     }
-    public boolean isPaid() {
+    public Boolean getPaid() {
         return this.paid;
     }
     
-    public void setPaid(boolean paid) {
+    public void setPaid(Boolean paid) {
         this.paid = paid;
     }
     public Date getPaidDate() {

@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -10,9 +10,9 @@ public class AdministratorPhoneNumber  implements java.io.Serializable {
 
 
      private AdministratorPhoneNumberId id;
-     private long versionId;
+     private Long version;
      private Administrator administrator;
-     private boolean isPrimary;
+     private Boolean isPrimary;
 
     public AdministratorPhoneNumber() {
     }
@@ -22,7 +22,7 @@ public class AdministratorPhoneNumber  implements java.io.Serializable {
         this.id = id;
         this.administrator = administrator;
     }
-    public AdministratorPhoneNumber(AdministratorPhoneNumberId id, Administrator administrator, boolean isPrimary) {
+    public AdministratorPhoneNumber(AdministratorPhoneNumberId id, Administrator administrator, Boolean isPrimary) {
        this.id = id;
        this.administrator = administrator;
        this.isPrimary = isPrimary;
@@ -35,23 +35,12 @@ public class AdministratorPhoneNumber  implements java.io.Serializable {
     public void setId(AdministratorPhoneNumberId id) {
         this.id = id;
     }
-    
-    /**
-     * A getter for AdministratorPhoneNumber object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for AdministratorPhoneNumber object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public Administrator getAdministrator() {
         return this.administrator;
@@ -60,11 +49,11 @@ public class AdministratorPhoneNumber  implements java.io.Serializable {
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
     }
-    public boolean isIsPrimary() {
+    public Boolean getIsPrimary() {
         return this.isPrimary;
     }
     
-    public void setIsPrimary(boolean isPrimary) {
+    public void setIsPrimary(Boolean isPrimary) {
         this.isPrimary = isPrimary;
     }
 

@@ -12,8 +12,11 @@ import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.BondType;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
+import org.greenpole.hibernate.entity.ClientCompanyAddressId;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
+import org.greenpole.hibernate.entity.ClientCompanyEmailAddressId;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
+import org.greenpole.hibernate.entity.ClientCompanyPhoneNumberId;
 import org.greenpole.hibernate.entity.InitialPublicOffer;
 import org.greenpole.hibernate.entity.PrivatePlacement;
 import org.greenpole.hibernate.entity.ShareQuotation;
@@ -143,6 +146,13 @@ public interface ClientCompanyComponentQuery {
     public List<ClientCompanyAddress> getClientCompanyAddress(int clientCompanyId);
     
     /**
+     * Gets the address of a client company according to a specified id.
+     * @param id the address id
+     * @return the client company's address
+     */
+    public ClientCompanyAddress getClientCompanyAddress(ClientCompanyAddressId id);
+    
+    /**
      * Gets the email addresses of a client company.
      * @param clientCompanyId the client company id
      * @return the list of the client company's email addresses
@@ -150,11 +160,25 @@ public interface ClientCompanyComponentQuery {
     public List<ClientCompanyEmailAddress> getClientCompanyEmailAddress(int clientCompanyId);
     
     /**
+     * Gets the email address of a client company according to a specified id. 
+     * @param id the email id
+     * @return the client company's email address
+     */
+    public ClientCompanyEmailAddress getClientCompanyEmailAddress(ClientCompanyEmailAddressId id);
+    
+    /**
      * Gets the phone numbers of a client company.
      * @param clientCompanyId the client company id
      * @return the list of the client company's phone numbers
      */
     public List<ClientCompanyPhoneNumber> getClientCompanyPhoneNumber(int clientCompanyId);
+    
+    /**
+     * Gets the phone number of a client company according to a specified id.
+     * @param id the phone number id
+     * @return the client company's phone number
+     */
+    public ClientCompanyPhoneNumber getClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id);
     
     /**
      * Sets up a bond offer.
@@ -174,6 +198,13 @@ public interface ClientCompanyComponentQuery {
      * @param initialPublicOffer the ipo to be created
      */
     public void createInitialPublicOffer(InitialPublicOffer initialPublicOffer);
+    
+    /**
+     * Checks if a client company already has an ipo setup.
+     * @param clientCompanyId the company's id
+     * @return true, if client company already has an ipo. Otherwise, false
+     */
+    public boolean clientCompanyHasIpo(int clientCompanyId);
     
     /**
      * Sets up a private placement.
@@ -241,9 +272,22 @@ public interface ClientCompanyComponentQuery {
     public List<BondType> getAllBondTypes();
     
     /**
+     * Gets the bond type according to a specified id.
+     * @param bondTypeId the bond type id
+     * @return the bond type object
+     */
+    public BondType getBondType(int bondTypeId);
+    
+    /**
      * Gets all available bond offer payment plans.
      * @return a list of available bond offer payment plans
      */
     public List<BondOfferPaymentPlan> getAllBondOfferPaymentPlans();
     
+    /**
+     * Gets the bond offer payment plan according to a specified id.
+     * @param planId the plan id
+     * @return the bond offer payment plan object
+     */
+    public BondOfferPaymentPlan getBondOfferPaymentPlan(int planId);
 }

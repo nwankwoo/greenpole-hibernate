@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.HolderChanges" table="HOLDER_CHANGES" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" fetch="select">
+            <column name="holder_id" />
+        </many-to-one>
+        <many-to-one name="holderChangeType" class="org.greenpole.hibernate.entity.HolderChangeType" fetch="select">
+            <column name="change_type_id" />
+        </many-to-one>
+        <property name="initialForm" type="string">
+            <column name="initial_form" length="500" />
+        </property>
+        <property name="currentForm" type="string">
+            <column name="current_form" length="500" />
+        </property>
+        <property name="changeDate" type="date">
+            <column name="change_date" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

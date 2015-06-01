@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.ClientCompanyPhoneNumber" table="CLIENT_COMPANY_PHONE_NUMBER" schema="dbo" catalog="greenpole">
+        <composite-id name="id" class="org.greenpole.hibernate.entity.ClientCompanyPhoneNumberId">
+            <key-property name="clientCompanyId" type="int">
+                <column name="client_company_id" />
+            </key-property>
+            <key-property name="phoneNumber" type="string">
+                <column name="phone_number" length="50" />
+            </key-property>
+        </composite-id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" update="false" insert="false" fetch="select">
+            <column name="client_company_id" not-null="true" />
+        </many-to-one>
+        <property name="isPrimary" type="java.lang.Boolean">
+            <column name="is_primary" />
+        </property>
+    </class>
+</hibernate-mapping>

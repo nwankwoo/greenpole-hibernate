@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,17 +11,17 @@ public class UserAccess  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private UserAccount userAccount;
      private String email;
      private String password;
      private String userType;
-     private int maxIndividualShareHolding;
-     private int maxTotalShareHolding;
-     private boolean suspended;
+     private Integer maxIndividualShareHolding;
+     private Integer maxTotalShareHolding;
+     private Boolean suspended;
      private Date releaseSuspension;
-     private boolean locked;
-     private boolean expired;
+     private Boolean locked;
+     private Boolean expired;
      private String expiredPassword1;
      private String expiredPassword2;
      private String expiredPassword3;
@@ -30,7 +30,7 @@ public class UserAccess  implements java.io.Serializable {
     public UserAccess() {
     }
 
-    public UserAccess(UserAccount userAccount, String email, String password, String userType, int maxIndividualShareHolding, int maxTotalShareHolding, boolean suspended, Date releaseSuspension, boolean locked, boolean expired, String expiredPassword1, String expiredPassword2, String expiredPassword3, String expiredPassword4) {
+    public UserAccess(UserAccount userAccount, String email, String password, String userType, Integer maxIndividualShareHolding, Integer maxTotalShareHolding, Boolean suspended, Date releaseSuspension, Boolean locked, Boolean expired, String expiredPassword1, String expiredPassword2, String expiredPassword3, String expiredPassword4) {
        this.userAccount = userAccount;
        this.email = email;
        this.password = password;
@@ -54,22 +54,12 @@ public class UserAccess  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for UserAccess object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for UserAccess object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public UserAccount getUserAccount() {
         return this.userAccount;
@@ -92,33 +82,32 @@ public class UserAccess  implements java.io.Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
     public String getUserType() {
-        return userType;
+        return this.userType;
     }
-
+    
     public void setUserType(String userType) {
         this.userType = userType;
     }
-    public int getMaxIndividualShareHolding() {
+    public Integer getMaxIndividualShareHolding() {
         return this.maxIndividualShareHolding;
     }
     
-    public void setMaxIndividualShareHolding(int maxIndividualShareHolding) {
+    public void setMaxIndividualShareHolding(Integer maxIndividualShareHolding) {
         this.maxIndividualShareHolding = maxIndividualShareHolding;
     }
-    public int getMaxTotalShareHolding() {
+    public Integer getMaxTotalShareHolding() {
         return this.maxTotalShareHolding;
     }
     
-    public void setMaxTotalShareHolding(int maxTotalShareHolding) {
+    public void setMaxTotalShareHolding(Integer maxTotalShareHolding) {
         this.maxTotalShareHolding = maxTotalShareHolding;
     }
-    public boolean isSuspended() {
+    public Boolean getSuspended() {
         return this.suspended;
     }
     
-    public void setSuspended(boolean suspended) {
+    public void setSuspended(Boolean suspended) {
         this.suspended = suspended;
     }
     public Date getReleaseSuspension() {
@@ -128,18 +117,18 @@ public class UserAccess  implements java.io.Serializable {
     public void setReleaseSuspension(Date releaseSuspension) {
         this.releaseSuspension = releaseSuspension;
     }
-    public boolean isLocked() {
+    public Boolean getLocked() {
         return this.locked;
     }
     
-    public void setLocked(boolean locked) {
+    public void setLocked(Boolean locked) {
         this.locked = locked;
     }
-    public boolean isExpired() {
+    public Boolean getExpired() {
         return this.expired;
     }
     
-    public void setExpired(boolean expired) {
+    public void setExpired(Boolean expired) {
         this.expired = expired;
     }
     public String getExpiredPassword1() {

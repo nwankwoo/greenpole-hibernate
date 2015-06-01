@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,20 +13,20 @@ public class SuspendedTransaction  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
-     private int cscsTransactionId;
+     private Integer cscsTransactionId;
      private Date transactionDate;
      private Date suspensionDate;
      private String suspensionReason;
-     private boolean reconciled;
+     private Boolean reconciled;
      private String companyName;
      private Set suspendedTransactionHolders = new HashSet(0);
 
     public SuspendedTransaction() {
     }
 
-    public SuspendedTransaction(ClientCompany clientCompany, int cscsTransactionId, Date transactionDate, Date suspensionDate, String suspensionReason, boolean reconciled, String companyName, Set suspendedTransactionHolders) {
+    public SuspendedTransaction(ClientCompany clientCompany, Integer cscsTransactionId, Date transactionDate, Date suspensionDate, String suspensionReason, Boolean reconciled, String companyName, Set suspendedTransactionHolders) {
        this.clientCompany = clientCompany;
        this.cscsTransactionId = cscsTransactionId;
        this.transactionDate = transactionDate;
@@ -44,22 +44,12 @@ public class SuspendedTransaction  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-       /**
-     * A getter for SuspendedTransaction object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for SuspendedTransaction object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -68,11 +58,11 @@ public class SuspendedTransaction  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public int getCscsTransactionId() {
+    public Integer getCscsTransactionId() {
         return this.cscsTransactionId;
     }
     
-    public void setCscsTransactionId(int cscsTransactionId) {
+    public void setCscsTransactionId(Integer cscsTransactionId) {
         this.cscsTransactionId = cscsTransactionId;
     }
     public Date getTransactionDate() {
@@ -96,11 +86,11 @@ public class SuspendedTransaction  implements java.io.Serializable {
     public void setSuspensionReason(String suspensionReason) {
         this.suspensionReason = suspensionReason;
     }
-    public boolean isReconciled() {
+    public Boolean getReconciled() {
         return this.reconciled;
     }
     
-    public void setReconciled(boolean reconciled) {
+    public void setReconciled(Boolean reconciled) {
         this.reconciled = reconciled;
     }
     public String getCompanyName() {

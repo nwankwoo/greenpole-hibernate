@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -10,9 +10,9 @@ public class ClientCompanyPhoneNumber  implements java.io.Serializable {
 
 
      private ClientCompanyPhoneNumberId id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
-     private boolean isPrimary;
+     private Boolean isPrimary;
 
     public ClientCompanyPhoneNumber() {
     }
@@ -22,7 +22,7 @@ public class ClientCompanyPhoneNumber  implements java.io.Serializable {
         this.id = id;
         this.clientCompany = clientCompany;
     }
-    public ClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id, ClientCompany clientCompany, boolean isPrimary) {
+    public ClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id, ClientCompany clientCompany, Boolean isPrimary) {
        this.id = id;
        this.clientCompany = clientCompany;
        this.isPrimary = isPrimary;
@@ -35,25 +35,13 @@ public class ClientCompanyPhoneNumber  implements java.io.Serializable {
     public void setId(ClientCompanyPhoneNumberId id) {
         this.id = id;
     }
-    
-    /**
-     * A getter for ClientCompanyPhoneNumber object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
-    }
-    /**
-     * A setter for ClientCompanyPhoneNumber object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    public Long getVersion() {
+        return this.version;
     }
     
+    public void setVersion(Long version) {
+        this.version = version;
+    }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
     }
@@ -61,11 +49,11 @@ public class ClientCompanyPhoneNumber  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public boolean isIsPrimary() {
+    public Boolean getIsPrimary() {
         return this.isPrimary;
     }
     
-    public void setIsPrimary(boolean isPrimary) {
+    public void setIsPrimary(Boolean isPrimary) {
         this.isPrimary = isPrimary;
     }
 

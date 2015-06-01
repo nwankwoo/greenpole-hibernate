@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.DividendSettlement" table="DIVIDEND_SETTLEMENT" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="dividendDeclared" class="org.greenpole.hibernate.entity.DividendDeclared" fetch="select">
+            <column name="dividend_declaration_id" unique="true" />
+        </many-to-one>
+        <property name="totalDivAmtDec" type="java.lang.Double">
+            <column name="total_Div_Amt_Dec" precision="18" />
+        </property>
+        <property name="totalDivAmtPaid" type="java.lang.Double">
+            <column name="total_Div_Amt_Paid" precision="18" />
+        </property>
+        <property name="totalDivAmtUnpaid" type="java.lang.Double">
+            <column name="total_Div_Amt_Unpaid" precision="18" />
+        </property>
+        <property name="totalDivAmtLeft" type="java.lang.Double">
+            <column name="total_Div_Amt_Left" precision="18" />
+        </property>
+        <property name="shareholdersPaid" type="java.lang.Integer">
+            <column name="shareholders_Paid" />
+        </property>
+        <property name="shareholdersUnpaid" type="java.lang.Integer">
+            <column name="shareholders_Unpaid" />
+        </property>
+    </class>
+</hibernate-mapping>

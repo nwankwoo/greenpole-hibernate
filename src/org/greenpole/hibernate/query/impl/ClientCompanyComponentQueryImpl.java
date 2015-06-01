@@ -14,8 +14,11 @@ import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.BondType;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
+import org.greenpole.hibernate.entity.ClientCompanyAddressId;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
+import org.greenpole.hibernate.entity.ClientCompanyEmailAddressId;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
+import org.greenpole.hibernate.entity.ClientCompanyPhoneNumberId;
 import org.greenpole.hibernate.entity.HolderBondAccount;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.InitialPublicOffer;
@@ -170,6 +173,16 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public ClientCompanyAddress getClientCompanyAddress(ClientCompanyAddressId id) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyAddress.class)
+                .add(Restrictions.eq("id", id));
+        ClientCompanyAddress addy = (ClientCompanyAddress) criteria.list().get(0);
+        getTransaction().commit();
+        return addy;
+    }
+
+    @Override
     public List<ClientCompanyEmailAddress> getClientCompanyEmailAddress(int clientCompanyId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompanyEmailAddress.class)
@@ -177,6 +190,16 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         List<ClientCompanyEmailAddress> email_list = criteria.list();
         getTransaction().commit();
         return email_list;
+    }
+
+    @Override
+    public ClientCompanyEmailAddress getClientCompanyEmailAddress(ClientCompanyEmailAddressId id) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyEmailAddress.class)
+                .add(Restrictions.eq("id", id));
+        ClientCompanyEmailAddress email = (ClientCompanyEmailAddress) criteria.list().get(0);
+        getTransaction().commit();
+        return email;
     }
 
     @Override
@@ -190,10 +213,24 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public ClientCompanyPhoneNumber getClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompanyPhoneNumber.class)
+                .add(Restrictions.eq("id", id));
+        ClientCompanyPhoneNumber phone = (ClientCompanyPhoneNumber) criteria.list().get(0);
+        getTransaction().commit();
+        return phone;
+    }
+
+    @Override
     public boolean createClientCompany(ClientCompany clientCompany, List<ClientCompanyAddress> addresses,
             List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers) {
         boolean created = false;
         try {
+            System.out.println("Size of Address::::: " + addresses.size());
+            System.out.println("Size of email::::: " + emailAddresses.size());
+            System.out.println("Size of phone::::: " + phoneNumbers.size());
+            
             startOperation();
             //create client company
             createUpdateObject(clientCompany);
@@ -281,6 +318,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             if (emailAddressesToRemove != null) {
                 emailAddressesToRemove.stream().map((email) -> {
                     email.getId().setClientCompanyId(clientCompany.getId());
+                    System.out.println("delete-email: " + email.getId().getClientCompanyId() + ", " + email.getId().getEmailAddress());
                     return email;
                 }).forEach((email) -> {
                     removeObject(email);
@@ -331,6 +369,17 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         startOperation();
         createUpdateObject(initialPublicOffer);
         getTransaction().commit();
+    }
+
+    @Override
+    public boolean clientCompanyHasIpo(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                .add(Restrictions.idEq(clientCompanyId));
+        ClientCompany cc = (ClientCompany) criteria.list().get(0);
+        int count = cc.getInitialPublicOffers().size();
+        getTransaction().commit();
+        return count > 0;
     }
 
     @Override
@@ -402,46 +451,71 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
      * @return the criteria for a search on all client companies
      */
     private Criteria searchClientCompanyAccordingToObject(Criteria baseCriteria, ClientCompany clientCompany) {
+        baseCriteria.add(Example.create(clientCompany).enableLike());
+        
         List<ClientCompanyAddress> cc_address_list = new ArrayList<>(clientCompany.getClientCompanyAddresses());
         List<ClientCompanyPhoneNumber> cc_phone_list = new ArrayList<>(clientCompany.getClientCompanyPhoneNumbers());
         List<ClientCompanyEmailAddress> cc_email_list = new ArrayList<>(clientCompany.getClientCompanyEmailAddresses());
         
-        ClientCompanyAddress ccAddress = cc_address_list.get(0);
-        ClientCompanyPhoneNumber ccPhone = cc_phone_list.get(0);
-        ClientCompanyEmailAddress ccEmail = cc_email_list.get(0);
+        if (clientCompany.getDepository().getName() != null) {
+            baseCriteria.createCriteria("cc.depository", JoinType.LEFT_OUTER_JOIN)
+                    .add(Example.create(clientCompany.getDepository()).enableLike().ignoreCase());
+        }
         
-        baseCriteria.add(Example.create(clientCompany).enableLike())
-                .createCriteria("cc.clientCompanyAddresses", "a", JoinType.LEFT_OUTER_JOIN)
-                .add(Example.create(ccAddress).enableLike().ignoreCase())
-                .createCriteria("cc.clientCompanyPhoneNumbers", "p", JoinType.LEFT_OUTER_JOIN)
-                .add(Example.create(ccPhone).enableLike().ignoreCase())
-                .createCriteria("cc.clientCompanyEmailAddresses", "e", JoinType.LEFT_OUTER_JOIN)
+        if (clientCompany.getNseSector().getName() != null) {
+            baseCriteria.createCriteria("cc.nseSector", JoinType.LEFT_OUTER_JOIN)
+                    .add(Example.create(clientCompany.getNseSector()).enableLike().ignoreCase());
+        }
+        
+        if (!cc_address_list.isEmpty()) {
+            ClientCompanyAddress ccAddress = cc_address_list.get(0);
+            
+            baseCriteria.createCriteria("cc.clientCompanyAddresses", "a", JoinType.LEFT_OUTER_JOIN)
+                .add(Example.create(ccAddress).enableLike().ignoreCase());
+            
+            //for address id
+            if (ccAddress.getId() != null) {
+                if (ccAddress.getId().getAddressLine1() != null) {
+                    String addy_addressLine1 = ccAddress.getId().getAddressLine1();
+                    baseCriteria.add(Restrictions.ilike("a.id.addressLine1", addy_addressLine1));
+                }
+
+                if (ccAddress.getId().getState() != null) {
+                    String addy_state = ccAddress.getId().getState();
+                    baseCriteria.add(Restrictions.ilike("a.id.state", addy_state));
+                }
+
+                if (ccAddress.getId().getCountry() != null) {
+                    String addy_country = ccAddress.getId().getCountry();
+                    baseCriteria.add(Restrictions.ilike("a.id.country", addy_country));
+                }
+            }
+        }
+        
+        if (!cc_phone_list.isEmpty()) {
+            ClientCompanyPhoneNumber ccPhone = cc_phone_list.get(0);
+            
+            baseCriteria.createCriteria("cc.clientCompanyPhoneNumbers", "p", JoinType.LEFT_OUTER_JOIN)
+                .add(Example.create(ccPhone).enableLike().ignoreCase());
+            
+            //for phone id
+            if (ccPhone.getId() != null && ccPhone.getId().getPhoneNumber() != null) {
+                String phoneNumber = ccPhone.getId().getPhoneNumber();
+                baseCriteria.add(Restrictions.ilike("p.id.phoneNumber", phoneNumber));
+            }
+        }
+        
+        if (!cc_email_list.isEmpty()) {
+            ClientCompanyEmailAddress ccEmail = cc_email_list.get(0);
+            
+            baseCriteria.createCriteria("cc.clientCompanyEmailAddresses", "e", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccEmail).enableLike().ignoreCase());
-        
-        //for address id
-        String addy_addressLine1 = ccAddress.getId().getAddressLine1();
-        if (addy_addressLine1 != null) {
-            baseCriteria.add(Restrictions.ilike("a.id.addressLine1", addy_addressLine1));
-        }
-        String addy_state = ccAddress.getId().getState();
-        if (addy_state != null) {
-            baseCriteria.add(Restrictions.ilike("a.id.state", addy_state));
-        }
-        String addy_country = ccAddress.getId().getCountry();
-        if (addy_country != null) {
-            baseCriteria.add(Restrictions.ilike("a.id.country", addy_country));
-        }
-        
-        //for phone id
-        String phoneNumber = ccPhone.getId().getPhoneNumber();
-        if (phoneNumber != null) {
-            baseCriteria.add(Restrictions.ilike("p.id.phoneNumber", phoneNumber));
-        }
-        
-        //for email id
-        String emailAddress = ccEmail.getId().getEmailAddress();
-        if (emailAddress != null) {
-            baseCriteria.add(Restrictions.ilike("e.id.emailAddress", emailAddress));
+            
+            //for email id
+            if (ccEmail.getId() != null && ccEmail.getId().getEmailAddress() != null) {
+                String emailAddress = ccEmail.getId().getEmailAddress();
+                baseCriteria.add(Restrictions.ilike("e.id.emailAddress", emailAddress));
+            }
         }
         
         return baseCriteria;
@@ -666,10 +740,26 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public BondType getBondType(int bondTypeId) {
+        startOperation();
+        BondType type = (BondType) searchObject(BondType.class, bondTypeId);
+        getTransaction().commit();
+        return type;
+    }
+
+    @Override
     public List<BondOfferPaymentPlan> getAllBondOfferPaymentPlans() {
         startOperation();
         List<BondOfferPaymentPlan> plans = searchAll(BondOfferPaymentPlan.class);
         getTransaction().commit();
         return plans;
+    }
+
+    @Override
+    public BondOfferPaymentPlan getBondOfferPaymentPlan(int planId) {
+        startOperation();
+        BondOfferPaymentPlan plan = (BondOfferPaymentPlan) searchObject(BondOfferPaymentPlan.class, planId);
+        getTransaction().commit();
+        return plan;
     }
 }

@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 26-Apr-2015 06:13:16 by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,13 +13,13 @@ public class AccountConsolidation  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private Holder holder;
      private String holderName;
-     private int mergedToHolderId;
+     private Integer mergedToHolderId;
      private String mergedToHolderName;
      private Date mergeDate;
-     private boolean demerge;
+     private Boolean demerge;
      private String additionalChanges;
      private Date demergeDate;
      private Set companyAccountConsolidations = new HashSet(0);
@@ -27,7 +27,7 @@ public class AccountConsolidation  implements java.io.Serializable {
     public AccountConsolidation() {
     }
 
-    public AccountConsolidation(Holder holder, String holderName, int mergedToHolderId, String mergedToHolderName, Date mergeDate, boolean demerge, String additionalChanges, Date demergeDate, Set companyAccountConsolidations) {
+    public AccountConsolidation(Holder holder, String holderName, Integer mergedToHolderId, String mergedToHolderName, Date mergeDate, Boolean demerge, String additionalChanges, Date demergeDate, Set companyAccountConsolidations) {
        this.holder = holder;
        this.holderName = holderName;
        this.mergedToHolderId = mergedToHolderId;
@@ -46,28 +46,17 @@ public class AccountConsolidation  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for Administrator object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Administrator object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
-
     public Holder getHolder() {
-        return holder;
+        return this.holder;
     }
-
+    
     public void setHolder(Holder holder) {
         this.holder = holder;
     }
@@ -78,11 +67,11 @@ public class AccountConsolidation  implements java.io.Serializable {
     public void setHolderName(String holderName) {
         this.holderName = holderName;
     }
-    public int getMergedToHolderId() {
+    public Integer getMergedToHolderId() {
         return this.mergedToHolderId;
     }
     
-    public void setMergedToHolderId(int mergedToHolderId) {
+    public void setMergedToHolderId(Integer mergedToHolderId) {
         this.mergedToHolderId = mergedToHolderId;
     }
     public String getMergedToHolderName() {
@@ -99,11 +88,11 @@ public class AccountConsolidation  implements java.io.Serializable {
     public void setMergeDate(Date mergeDate) {
         this.mergeDate = mergeDate;
     }
-    public boolean isDemerge() {
+    public Boolean getDemerge() {
         return this.demerge;
     }
     
-    public void setDemerge(boolean demerge) {
+    public void setDemerge(Boolean demerge) {
         this.demerge = demerge;
     }
     public String getAdditionalChanges() {

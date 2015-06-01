@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,17 +13,17 @@ public class PrivatePlacement  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
-     private int totalSharesOnOffer;
-     private int methodOnOffer;
-     private int startingMinSubscrptn;
-     private int continuingMinSubscrptn;
+     private Integer totalSharesOnOffer;
+     private Integer methodOnOffer;
+     private Integer startingMinSubscrptn;
+     private Integer continuingMinSubscrptn;
      private Double offerPrice;
      private Double offerSize;
      private Date openingDate;
      private Date closingDate;
-     private boolean placementClosed;
+     private Boolean placementClosed;
      private Double tax;
      private Double interestRate;
      private Set certificates = new HashSet(0);
@@ -32,7 +32,7 @@ public class PrivatePlacement  implements java.io.Serializable {
     public PrivatePlacement() {
     }
 
-    public PrivatePlacement(ClientCompany clientCompany, int totalSharesOnOffer, int methodOnOffer, int startingMinSubscrptn, int continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, boolean placementClosed, Double tax, Double interestRate, Set certificates, Set privatePlacementApplications) {
+    public PrivatePlacement(ClientCompany clientCompany, Integer totalSharesOnOffer, Integer methodOnOffer, Integer startingMinSubscrptn, Integer continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Boolean placementClosed, Double tax, Double interestRate, Set certificates, Set privatePlacementApplications) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOnOffer = methodOnOffer;
@@ -56,23 +56,12 @@ public class PrivatePlacement  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
-    /**
-     * A getter for PrivatePlacement object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for PrivatePlacement object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -81,32 +70,32 @@ public class PrivatePlacement  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public int getTotalSharesOnOffer() {
+    public Integer getTotalSharesOnOffer() {
         return this.totalSharesOnOffer;
     }
     
-    public void setTotalSharesOnOffer(int totalSharesOnOffer) {
+    public void setTotalSharesOnOffer(Integer totalSharesOnOffer) {
         this.totalSharesOnOffer = totalSharesOnOffer;
     }
-    public int getMethodOnOffer() {
+    public Integer getMethodOnOffer() {
         return this.methodOnOffer;
     }
     
-    public void setMethodOnOffer(int methodOnOffer) {
+    public void setMethodOnOffer(Integer methodOnOffer) {
         this.methodOnOffer = methodOnOffer;
     }
-    public int getStartingMinSubscrptn() {
+    public Integer getStartingMinSubscrptn() {
         return this.startingMinSubscrptn;
     }
     
-    public void setStartingMinSubscrptn(int startingMinSubscrptn) {
+    public void setStartingMinSubscrptn(Integer startingMinSubscrptn) {
         this.startingMinSubscrptn = startingMinSubscrptn;
     }
-    public int getContinuingMinSubscrptn() {
+    public Integer getContinuingMinSubscrptn() {
         return this.continuingMinSubscrptn;
     }
     
-    public void setContinuingMinSubscrptn(int continuingMinSubscrptn) {
+    public void setContinuingMinSubscrptn(Integer continuingMinSubscrptn) {
         this.continuingMinSubscrptn = continuingMinSubscrptn;
     }
     public Double getOfferPrice() {
@@ -133,32 +122,30 @@ public class PrivatePlacement  implements java.io.Serializable {
     public Date getClosingDate() {
         return this.closingDate;
     }
-    public Double getTax() {
-        return tax;
-    }
-
-    public void setTax(Double tax) {
-        this.tax = tax;
-    }
-
-    public Double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(Double interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public boolean isPlacementClosed() {
-        return placementClosed;
-    }
-
-    public void setPlacementClosed(boolean placementClosed) {
-        this.placementClosed = placementClosed;
-    }
     
     public void setClosingDate(Date closingDate) {
         this.closingDate = closingDate;
+    }
+    public Boolean getPlacementClosed() {
+        return this.placementClosed;
+    }
+    
+    public void setPlacementClosed(Boolean placementClosed) {
+        this.placementClosed = placementClosed;
+    }
+    public Double getTax() {
+        return this.tax;
+    }
+    
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+    public Double getInterestRate() {
+        return this.interestRate;
+    }
+    
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
     }
     public Set getCertificates() {
         return this.certificates;

@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 
@@ -10,9 +10,9 @@ public class HolderPhoneNumber  implements java.io.Serializable {
 
 
      private HolderPhoneNumberId id;
-     private long versionId;
+     private Long version;
      private Holder holder;
-     private boolean isPrimary;
+     private Boolean isPrimary;
 
     public HolderPhoneNumber() {
     }
@@ -22,7 +22,7 @@ public class HolderPhoneNumber  implements java.io.Serializable {
         this.id = id;
         this.holder = holder;
     }
-    public HolderPhoneNumber(HolderPhoneNumberId id, Holder holder, boolean isPrimary) {
+    public HolderPhoneNumber(HolderPhoneNumberId id, Holder holder, Boolean isPrimary) {
        this.id = id;
        this.holder = holder;
        this.isPrimary = isPrimary;
@@ -35,22 +35,12 @@ public class HolderPhoneNumber  implements java.io.Serializable {
     public void setId(HolderPhoneNumberId id) {
         this.id = id;
     }
-    /**
-     * A getter for HolderPhoneNumber object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for HolderPhoneNumber object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public Holder getHolder() {
         return this.holder;
@@ -59,11 +49,11 @@ public class HolderPhoneNumber  implements java.io.Serializable {
     public void setHolder(Holder holder) {
         this.holder = holder;
     }
-    public boolean isIsPrimary() {
+    public Boolean getIsPrimary() {
         return this.isPrimary;
     }
     
-    public void setIsPrimary(boolean isPrimary) {
+    public void setIsPrimary(Boolean isPrimary) {
         this.isPrimary = isPrimary;
     }
 

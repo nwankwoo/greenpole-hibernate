@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,7 +13,7 @@ public class Dividend  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
      private DividendDeclared dividendDeclared;
      private DividendIssueType dividendIssueType;
@@ -22,27 +22,27 @@ public class Dividend  implements java.io.Serializable {
      private String clientCompName;
      private String issueType;
      private Date issueDate;
-     private int divNumber;
+     private Integer divNumber;
      private String yearType;
      private Date yearEnding;
      private String SHolderMailingAddr;
      private Double rate;
-     private int compAccHoldings;
+     private Integer compAccHoldings;
      private Double withldingTaxRate;
      private Double grossAmount;
      private Double tax;
      private Double payableAmount;
      private Date payableDate;
-     private boolean issued;
+     private Boolean issued;
      private Date issuedDate;
-     private boolean reIssued;
+     private Boolean reIssued;
      private Date reIssuedDate;
-     private boolean paid;
+     private Boolean paid;
      private Date paidDate;
      private String paymentMethod;
-     private boolean unclaimed;
+     private Boolean unclaimed;
      private Date unclaimedDate;
-     private boolean cancelled;
+     private Boolean cancelled;
      private Date canelledDate;
      private Set dividenAnnotations = new HashSet(0);
 
@@ -53,7 +53,7 @@ public class Dividend  implements java.io.Serializable {
     public Dividend(int warrantNumber) {
         this.warrantNumber = warrantNumber;
     }
-    public Dividend(ClientCompany clientCompany, DividendDeclared dividendDeclared, DividendIssueType dividendIssueType, HolderCompanyAccount holderCompanyAccount, int warrantNumber, String clientCompName, String issueType, Date issueDate, int divNumber, String yearType, Date yearEnding, String SHolderMailingAddr, Double rate, int compAccHoldings, Double withldingTaxRate, Double grossAmount, Double tax, Double payableAmount, Date payableDate, boolean issued, Date issuedDate, boolean reIssued, Date reIssuedDate, boolean paid, Date paidDate, String paymentMethod, boolean unclaimed, Date unclaimedDate, boolean cancelled, Date canelledDate, Set dividenAnnotations) {
+    public Dividend(ClientCompany clientCompany, DividendDeclared dividendDeclared, DividendIssueType dividendIssueType, HolderCompanyAccount holderCompanyAccount, int warrantNumber, String clientCompName, String issueType, Date issueDate, Integer divNumber, String yearType, Date yearEnding, String SHolderMailingAddr, Double rate, Integer compAccHoldings, Double withldingTaxRate, Double grossAmount, Double tax, Double payableAmount, Date payableDate, Boolean issued, Date issuedDate, Boolean reIssued, Date reIssuedDate, Boolean paid, Date paidDate, String paymentMethod, Boolean unclaimed, Date unclaimedDate, Boolean cancelled, Date canelledDate, Set dividenAnnotations) {
        this.clientCompany = clientCompany;
        this.dividendDeclared = dividendDeclared;
        this.dividendIssueType = dividendIssueType;
@@ -94,22 +94,12 @@ public class Dividend  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for Dividend object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Dividend object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -167,11 +157,11 @@ public class Dividend  implements java.io.Serializable {
     public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
     }
-    public int getDivNumber() {
+    public Integer getDivNumber() {
         return this.divNumber;
     }
     
-    public void setDivNumber(int divNumber) {
+    public void setDivNumber(Integer divNumber) {
         this.divNumber = divNumber;
     }
     public String getYearType() {
@@ -202,11 +192,11 @@ public class Dividend  implements java.io.Serializable {
     public void setRate(Double rate) {
         this.rate = rate;
     }
-    public int getCompAccHoldings() {
+    public Integer getCompAccHoldings() {
         return this.compAccHoldings;
     }
     
-    public void setCompAccHoldings(int compAccHoldings) {
+    public void setCompAccHoldings(Integer compAccHoldings) {
         this.compAccHoldings = compAccHoldings;
     }
     public Double getWithldingTaxRate() {
@@ -244,11 +234,11 @@ public class Dividend  implements java.io.Serializable {
     public void setPayableDate(Date payableDate) {
         this.payableDate = payableDate;
     }
-    public boolean isIssued() {
+    public Boolean getIssued() {
         return this.issued;
     }
     
-    public void setIssued(boolean issued) {
+    public void setIssued(Boolean issued) {
         this.issued = issued;
     }
     public Date getIssuedDate() {
@@ -258,11 +248,11 @@ public class Dividend  implements java.io.Serializable {
     public void setIssuedDate(Date issuedDate) {
         this.issuedDate = issuedDate;
     }
-    public boolean isReIssued() {
+    public Boolean getReIssued() {
         return this.reIssued;
     }
     
-    public void setReIssued(boolean reIssued) {
+    public void setReIssued(Boolean reIssued) {
         this.reIssued = reIssued;
     }
     public Date getReIssuedDate() {
@@ -272,11 +262,11 @@ public class Dividend  implements java.io.Serializable {
     public void setReIssuedDate(Date reIssuedDate) {
         this.reIssuedDate = reIssuedDate;
     }
-    public boolean isPaid() {
+    public Boolean getPaid() {
         return this.paid;
     }
     
-    public void setPaid(boolean paid) {
+    public void setPaid(Boolean paid) {
         this.paid = paid;
     }
     public Date getPaidDate() {
@@ -293,11 +283,11 @@ public class Dividend  implements java.io.Serializable {
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-    public boolean isUnclaimed() {
+    public Boolean getUnclaimed() {
         return this.unclaimed;
     }
     
-    public void setUnclaimed(boolean unclaimed) {
+    public void setUnclaimed(Boolean unclaimed) {
         this.unclaimed = unclaimed;
     }
     public Date getUnclaimedDate() {
@@ -307,11 +297,11 @@ public class Dividend  implements java.io.Serializable {
     public void setUnclaimedDate(Date unclaimedDate) {
         this.unclaimedDate = unclaimedDate;
     }
-    public boolean isCancelled() {
+    public Boolean getCancelled() {
         return this.cancelled;
     }
     
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(Boolean cancelled) {
         this.cancelled = cancelled;
     }
     public Date getCanelledDate() {

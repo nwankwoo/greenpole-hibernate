@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,20 +11,19 @@ public class PowerOfAttorney  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private Holder holder;
      private String title;
      private String filePath;
      private String type;
      private Date startDate;
      private Date endDate;
-     private boolean powerOfAttorneyPrimary;
+     private Boolean powerOfAttorneyPrimary;
 
     public PowerOfAttorney() {
     }
-    
-    
-    public PowerOfAttorney(Holder holder, String title, String filePath, String type, Date startDate, Date endDate, boolean powerOfAttorneyPrimary) {
+
+    public PowerOfAttorney(Holder holder, String title, String filePath, String type, Date startDate, Date endDate, Boolean powerOfAttorneyPrimary) {
        this.holder = holder;
        this.title = title;
        this.filePath = filePath;
@@ -41,22 +40,12 @@ public class PowerOfAttorney  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for PowerOfAttorney object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for PowerOfAttorney object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public Holder getHolder() {
         return this.holder;
@@ -100,11 +89,11 @@ public class PowerOfAttorney  implements java.io.Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-    public boolean isPowerOfAttorneyPrimary() {
+    public Boolean getPowerOfAttorneyPrimary() {
         return this.powerOfAttorneyPrimary;
     }
     
-    public void setPowerOfAttorneyPrimary(boolean powerOfAttorneyPrimary) {
+    public void setPowerOfAttorneyPrimary(Boolean powerOfAttorneyPrimary) {
         this.powerOfAttorneyPrimary = powerOfAttorneyPrimary;
     }
 

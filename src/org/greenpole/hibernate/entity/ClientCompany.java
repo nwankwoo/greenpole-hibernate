@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -10,18 +10,20 @@ import java.util.Set;
  */
 public class ClientCompany  implements java.io.Serializable {
 
-     private int id;            //primary id
-     private long versionId;    //version
-     private ClientCompany clientCompany;   
+
+     private int id;
+     private Long version;
+     private ClientCompany clientCompany;
      private Depository depository;
      private NseSector nseSector;
      private String name;
      private String code;
      private String ceo;
      private String secretary;
-     private boolean valid;
-     private boolean merged;
-     private boolean clientCompanyPrimary;
+     private String depository_1;
+     private Boolean valid;
+     private Boolean merged;
+     private Boolean clientCompanyPrimary;
      private Set clientCompanies = new HashSet(0);
      private Set initialPublicOffers = new HashSet(0);
      private Set shareBonuses = new HashSet(0);
@@ -30,9 +32,9 @@ public class ClientCompany  implements java.io.Serializable {
      private Set dividends = new HashSet(0);
      private Set holderCompanyAccounts = new HashSet(0);
      private Set reconstructions = new HashSet(0);
+     private Set clientCompanyAddresses = new HashSet(0);
      private Set clientCompanyPhoneNumbers = new HashSet(0);
      private Set clientCompanyEmailAddresses = new HashSet(0);
-     private Set clientCompanyAddresses = new HashSet(0);
      private Set privatePlacements = new HashSet(0);
      private Set shareQuotations = new HashSet(0);
      private Set dividendDeclareds = new HashSet(0);
@@ -44,23 +46,15 @@ public class ClientCompany  implements java.io.Serializable {
     public ClientCompany() {
     }
 
-    public ClientCompany(Depository depository, String name, String code, String ceo) {
-        this.depository = depository;
-        this.name = name;        
-        this.code = code;
-        this.ceo = ceo;
-    }
-    
-    
-    
-    public ClientCompany(ClientCompany clientCompany, Depository depository, NseSector nseSector, String name, String code, String ceo, String secretary, boolean valid, boolean merged, boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set clientCompanyAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
+    public ClientCompany(ClientCompany clientCompany, Depository depository, NseSector nseSector, String name, String code, String ceo, String secretary, String depository_1, Boolean valid, Boolean merged, Boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyAddresses, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
        this.clientCompany = clientCompany;
        this.depository = depository;
+       this.nseSector = nseSector;
        this.name = name;
        this.code = code;
-       this.nseSector = nseSector;
        this.ceo = ceo;
        this.secretary = secretary;
+       this.depository_1 = depository_1;
        this.valid = valid;
        this.merged = merged;
        this.clientCompanyPrimary = clientCompanyPrimary;
@@ -72,9 +66,9 @@ public class ClientCompany  implements java.io.Serializable {
        this.dividends = dividends;
        this.holderCompanyAccounts = holderCompanyAccounts;
        this.reconstructions = reconstructions;
+       this.clientCompanyAddresses = clientCompanyAddresses;
        this.clientCompanyPhoneNumbers = clientCompanyPhoneNumbers;
        this.clientCompanyEmailAddresses = clientCompanyEmailAddresses;
-       this.clientCompanyAddresses = clientCompanyAddresses;
        this.privatePlacements = privatePlacements;
        this.shareQuotations = shareQuotations;
        this.dividendDeclareds = dividendDeclareds;
@@ -91,22 +85,12 @@ public class ClientCompany  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    /**
-     * A getter for ClientCompany object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for ClientCompany object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -157,25 +141,32 @@ public class ClientCompany  implements java.io.Serializable {
     public void setSecretary(String secretary) {
         this.secretary = secretary;
     }
-    public boolean isValid() {
+    public String getDepository_1() {
+        return this.depository_1;
+    }
+    
+    public void setDepository_1(String depository_1) {
+        this.depository_1 = depository_1;
+    }
+    public Boolean getValid() {
         return this.valid;
     }
     
-    public void setValid(boolean valid) {
+    public void setValid(Boolean valid) {
         this.valid = valid;
     }
-    public boolean isMerged() {
+    public Boolean getMerged() {
         return this.merged;
     }
     
-    public void setMerged(boolean merged) {
+    public void setMerged(Boolean merged) {
         this.merged = merged;
     }
-    public boolean isClientCompanyPrimary() {
+    public Boolean getClientCompanyPrimary() {
         return this.clientCompanyPrimary;
     }
     
-    public void setClientCompanyPrimary(boolean clientCompanyPrimary) {
+    public void setClientCompanyPrimary(Boolean clientCompanyPrimary) {
         this.clientCompanyPrimary = clientCompanyPrimary;
     }
     public Set getClientCompanies() {
@@ -234,6 +225,13 @@ public class ClientCompany  implements java.io.Serializable {
     public void setReconstructions(Set reconstructions) {
         this.reconstructions = reconstructions;
     }
+    public Set getClientCompanyAddresses() {
+        return this.clientCompanyAddresses;
+    }
+    
+    public void setClientCompanyAddresses(Set clientCompanyAddresses) {
+        this.clientCompanyAddresses = clientCompanyAddresses;
+    }
     public Set getClientCompanyPhoneNumbers() {
         return this.clientCompanyPhoneNumbers;
     }
@@ -247,14 +245,6 @@ public class ClientCompany  implements java.io.Serializable {
     
     public void setClientCompanyEmailAddresses(Set clientCompanyEmailAddresses) {
         this.clientCompanyEmailAddresses = clientCompanyEmailAddresses;
-    }
-
-    public Set getClientCompanyAddresses() {
-        return clientCompanyAddresses;
-    }
-
-    public void setClientCompanyAddresses(Set clientCompanyAddresses) {
-        this.clientCompanyAddresses = clientCompanyAddresses;
     }
     public Set getPrivatePlacements() {
         return this.privatePlacements;

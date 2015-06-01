@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.ProcessedTransactionHolder" table="PROCESSED_TRANSACTION_HOLDER" schema="dbo" catalog="greenpole">
+        <composite-id name="id" class="org.greenpole.hibernate.entity.ProcessedTransactionHolderId">
+            <key-property name="transactionId" type="int">
+                <column name="transaction_id" />
+            </key-property>
+            <key-property name="holderId" type="int">
+                <column name="holder_id" />
+            </key-property>
+        </composite-id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" update="false" insert="false" fetch="select">
+            <column name="holder_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="processedTransaction" class="org.greenpole.hibernate.entity.ProcessedTransaction" update="false" insert="false" fetch="select">
+            <column name="transaction_id" not-null="true" />
+        </many-to-one>
+        <property name="holderName" type="string">
+            <column name="holder_name" />
+        </property>
+        <property name="holderChn" type="string">
+            <column name="holder_chn" length="100" />
+        </property>
+        <property name="units" type="java.lang.Integer">
+            <column name="units" />
+        </property>
+        <property name="unitType" type="string">
+            <column name="unit_type" length="50" />
+        </property>
+        <property name="fromTo" type="string">
+            <column name="from_to" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

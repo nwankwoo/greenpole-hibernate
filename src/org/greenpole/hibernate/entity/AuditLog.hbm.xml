@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.AuditLog" table="AUDIT_LOG" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <property name="userId" type="string">
+            <column name="user_id" length="50" />
+        </property>
+        <property name="functionPerformed" type="string">
+            <column name="function_performed" length="300" />
+        </property>
+        <property name="approverRequired" type="java.lang.Boolean">
+            <column name="approver_required" />
+        </property>
+        <property name="designatedApprover" type="string">
+            <column name="designated_approver" length="300" />
+        </property>
+        <property name="affectedEntityType" type="string">
+            <column name="affected_entity_type" length="50" />
+        </property>
+        <property name="entityName" type="string">
+            <column name="entity_name" length="300" />
+        </property>
+        <property name="dateTime" type="timestamp">
+            <column name="date_time" length="23" />
+        </property>
+    </class>
+</hibernate-mapping>

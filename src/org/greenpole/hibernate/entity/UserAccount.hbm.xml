@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.UserAccount" table="USER_ACCOUNT" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="aprDepartment" class="org.greenpole.hibernate.entity.AprDepartment" fetch="select">
+            <column name="dept_id" />
+        </many-to-one>
+        <many-to-one name="aprUnit" class="org.greenpole.hibernate.entity.AprUnit" fetch="select">
+            <column name="unit_id" />
+        </many-to-one>
+        <property name="firstName" type="string">
+            <column name="first_name" length="300" />
+        </property>
+        <property name="middleName" type="string">
+            <column name="middle_name" length="300" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="300" />
+        </property>
+        <property name="dob" type="date">
+            <column name="dob" length="10" />
+        </property>
+        <property name="gender" type="string">
+            <column name="gender" length="50" />
+        </property>
+        <property name="position" type="string">
+            <column name="position" length="200" />
+        </property>
+        <set name="groups" table="USER_ACCOUNT_GROUP" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="user_account_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.greenpole.hibernate.entity.Group">
+                <column name="group_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="requirementFunctions" table="USER_ACCOUNT_FUNCTION" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="user_account_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.greenpole.hibernate.entity.RequirementFunction">
+                <column name="function_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="userAccesses" table="USER_ACCESS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_account_id" unique="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.UserAccess" />
+        </set>
+        <set name="requirements" table="USER_ACCOUNT_REQUIREMENT" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="user_account_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.greenpole.hibernate.entity.Requirement">
+                <column name="requirement_id" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

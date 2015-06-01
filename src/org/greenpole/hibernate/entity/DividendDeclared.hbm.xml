@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.DividendDeclared" table="DIVIDEND_DECLARED" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
+            <column name="client_company_id" />
+        </many-to-one>
+        <property name="yearType" type="string">
+            <column name="year_type" length="50" />
+        </property>
+        <property name="issueType" type="binary">
+            <column name="issue_type" />
+        </property>
+        <property name="qualifyDate" type="date">
+            <column name="qualify_date" length="10" />
+        </property>
+        <property name="withholdingTaxRateInd" type="java.lang.Double">
+            <column name="withholding_tax_rate_ind" precision="18" />
+        </property>
+        <property name="withholdingTaxRateCorp" type="java.lang.Double">
+            <column name="withholding_tax_rate_corp" precision="18" />
+        </property>
+        <property name="yearEnding" type="java.lang.Integer">
+            <column name="year_ending" />
+        </property>
+        <property name="datePayable" type="date">
+            <column name="date_payable" length="10" />
+        </property>
+        <property name="rate" type="java.lang.Double">
+            <column name="rate" precision="18" />
+        </property>
+        <set name="dividends" table="DIVIDEND" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="div_decld_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Dividend" />
+        </set>
+        <set name="dividendSettlements" table="DIVIDEND_SETTLEMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="dividend_declaration_id" unique="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.DividendSettlement" />
+        </set>
+    </class>
+</hibernate-mapping>

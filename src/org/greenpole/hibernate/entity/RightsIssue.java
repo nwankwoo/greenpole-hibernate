@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,18 +13,18 @@ public class RightsIssue  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private ClientCompany clientCompany;
-     private int totalSharesOnIssue;
+     private Integer totalSharesOnIssue;
      private String methodOnOffer;
      private Double issuePrice;
      private Double issueSize;
-     private int qualifyShareUnit;
-     private int alottedUnitPerQualifyUnit;
+     private Integer qualifyShareUnit;
+     private Integer alottedUnitPerQualifyUnit;
      private Date qualifyDate;
      private Date openingDate;
      private Date closingDate;
-     private boolean rightsClosed;
+     private Boolean rightsClosed;
      private Double tax;
      private Double interestRate;
      private Set rightsIssueApplications = new HashSet(0);
@@ -33,7 +33,7 @@ public class RightsIssue  implements java.io.Serializable {
     public RightsIssue() {
     }
 
-    public RightsIssue(ClientCompany clientCompany, int totalSharesOnIssue, String methodOnOffer, Double issuePrice, Double issueSize, int qualifyShareUnit, int alottedUnitPerQualifyUnit, Date qualifyDate, Date openingDate, Date closingDate, boolean rightsClosed, Double tax, Double interestRate, Set rightsIssueApplications, Set certificates) {
+    public RightsIssue(ClientCompany clientCompany, Integer totalSharesOnIssue, String methodOnOffer, Double issuePrice, Double issueSize, Integer qualifyShareUnit, Integer alottedUnitPerQualifyUnit, Date qualifyDate, Date openingDate, Date closingDate, Boolean rightsClosed, Double tax, Double interestRate, Set rightsIssueApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnIssue = totalSharesOnIssue;
        this.methodOnOffer = methodOnOffer;
@@ -58,22 +58,12 @@ public class RightsIssue  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-       /**
-     * A getter for RightsIssue object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for RightsIssue object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public ClientCompany getClientCompany() {
         return this.clientCompany;
@@ -82,11 +72,11 @@ public class RightsIssue  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public int getTotalSharesOnIssue() {
+    public Integer getTotalSharesOnIssue() {
         return this.totalSharesOnIssue;
     }
     
-    public void setTotalSharesOnIssue(int totalSharesOnIssue) {
+    public void setTotalSharesOnIssue(Integer totalSharesOnIssue) {
         this.totalSharesOnIssue = totalSharesOnIssue;
     }
     public String getMethodOnOffer() {
@@ -110,18 +100,18 @@ public class RightsIssue  implements java.io.Serializable {
     public void setIssueSize(Double issueSize) {
         this.issueSize = issueSize;
     }
-    public int getQualifyShareUnit() {
+    public Integer getQualifyShareUnit() {
         return this.qualifyShareUnit;
     }
     
-    public void setQualifyShareUnit(int qualifyShareUnit) {
+    public void setQualifyShareUnit(Integer qualifyShareUnit) {
         this.qualifyShareUnit = qualifyShareUnit;
     }
-    public int getAlottedUnitPerQualifyUnit() {
+    public Integer getAlottedUnitPerQualifyUnit() {
         return this.alottedUnitPerQualifyUnit;
     }
     
-    public void setAlottedUnitPerQualifyUnit(int alottedUnitPerQualifyUnit) {
+    public void setAlottedUnitPerQualifyUnit(Integer alottedUnitPerQualifyUnit) {
         this.alottedUnitPerQualifyUnit = alottedUnitPerQualifyUnit;
     }
     public Date getQualifyDate() {
@@ -145,27 +135,24 @@ public class RightsIssue  implements java.io.Serializable {
     public void setClosingDate(Date closingDate) {
         this.closingDate = closingDate;
     }
-
-    public boolean isRightsClosed() {
-        return rightsClosed;
+    public Boolean getRightsClosed() {
+        return this.rightsClosed;
     }
-
-    public void setRightsClosed(boolean rightsClosed) {
+    
+    public void setRightsClosed(Boolean rightsClosed) {
         this.rightsClosed = rightsClosed;
     }
-
     public Double getTax() {
-        return tax;
+        return this.tax;
     }
-
+    
     public void setTax(Double tax) {
         this.tax = tax;
     }
-
     public Double getInterestRate() {
-        return interestRate;
+        return this.interestRate;
     }
-
+    
     public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
     }

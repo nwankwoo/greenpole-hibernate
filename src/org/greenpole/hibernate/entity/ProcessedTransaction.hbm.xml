@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.ProcessedTransaction" table="PROCESSED_TRANSACTION" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
+            <column name="company_id" />
+        </many-to-one>
+        <many-to-one name="transactionType" class="org.greenpole.hibernate.entity.TransactionType" fetch="select">
+            <column name="transaction_type_id" />
+        </many-to-one>
+        <property name="cscsTransactionId" type="java.lang.Integer">
+            <column name="cscs_transaction_id" unique="true" />
+        </property>
+        <property name="companyName" type="string">
+            <column name="company_name" />
+        </property>
+        <set name="processedTransactionHolders" table="PROCESSED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="transaction_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.ProcessedTransactionHolder" />
+        </set>
+    </class>
+</hibernate-mapping>

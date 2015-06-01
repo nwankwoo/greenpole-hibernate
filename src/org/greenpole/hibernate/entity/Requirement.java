@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated Apr 2, 2015 11:49:14 AM by Hibernate Tools 4.3.1
+// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,21 +12,21 @@ public class Requirement  implements java.io.Serializable {
 
 
      private int id;
-     private long versionId;
+     private Long version;
      private Group group;
      private String name;
      private String description;
      private String screen;
      private String viewType;
      private String model;
-     private int authoriser;
+     private Integer authoriser;
      private Set requirementFunctions = new HashSet(0);
      private Set userAccounts = new HashSet(0);
 
     public Requirement() {
     }
 
-    public Requirement(Group group, String name, String description, String screen, String viewType, String model, int authoriser, Set requirementFunctions, Set userAccounts) {
+    public Requirement(Group group, String name, String description, String screen, String viewType, String model, Integer authoriser, Set requirementFunctions, Set userAccounts) {
        this.group = group;
        this.name = name;
        this.description = description;
@@ -45,22 +45,12 @@ public class Requirement  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-     /**
-     * A getter for Requirement object which retrieve 
-     * a version identifier, apart from the primary key of object
-     * @return versionId identifier
-     */
-    public long getVersionId() {
-        return versionId;
+    public Long getVersion() {
+        return this.version;
     }
-    /**
-     * A setter for Requirement object which persist the 
-     * versionId identifier in the memory by hibernate
-     * @param versionId, an argument that receives the generated 
-     * version of current object by hibernate
-     */
-    public void setVersionId(long versionId) {
-        this.versionId = versionId;
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public Group getGroup() {
         return this.group;
@@ -104,11 +94,11 @@ public class Requirement  implements java.io.Serializable {
     public void setModel(String model) {
         this.model = model;
     }
-    public int getAuthoriser() {
+    public Integer getAuthoriser() {
         return this.authoriser;
     }
     
-    public void setAuthoriser(int authoriser) {
+    public void setAuthoriser(Integer authoriser) {
         this.authoriser = authoriser;
     }
     public Set getRequirementFunctions() {

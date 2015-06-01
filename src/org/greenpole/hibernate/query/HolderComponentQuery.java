@@ -8,6 +8,15 @@ package org.greenpole.hibernate.query;
 import java.util.List;
 import java.util.Map;
 import org.greenpole.hibernate.entity.AccountConsolidation;
+import org.greenpole.hibernate.entity.Administrator;
+import org.greenpole.hibernate.entity.AdministratorEmailAddress;
+import org.greenpole.hibernate.entity.AdministratorEmailAddressId;
+import org.greenpole.hibernate.entity.AdministratorPhoneNumber;
+import org.greenpole.hibernate.entity.AdministratorPhoneNumberId;
+import org.greenpole.hibernate.entity.AdministratorPostalAddress;
+import org.greenpole.hibernate.entity.AdministratorPostalAddressId;
+import org.greenpole.hibernate.entity.AdministratorResidentialAddress;
+import org.greenpole.hibernate.entity.AdministratorResidentialAddressId;
 import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
@@ -15,9 +24,13 @@ import org.greenpole.hibernate.entity.HolderBondAccount;
 import org.greenpole.hibernate.entity.HolderChanges;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.HolderEmailAddress;
+import org.greenpole.hibernate.entity.HolderEmailAddressId;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
+import org.greenpole.hibernate.entity.HolderPhoneNumberId;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
+import org.greenpole.hibernate.entity.HolderPostalAddressId;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
+import org.greenpole.hibernate.entity.HolderResidentialAddressId;
 import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.HolderType;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
@@ -175,6 +188,13 @@ public interface HolderComponentQuery {
     public HolderBondAccount getHolderBondAccount(int holderId, int bondOfferId);
     
     /**
+     * Gets an administrator according to a specified id.
+     * @param administratorId the administrator id
+     * @return the administrator object
+     */
+    public Administrator getAdministrator(int administratorId);
+    
+    /**
      * Searches for list of shareholders according to the provided search parameters.
      * @param descriptor the description of the type of search to carry out
      * @param searchParams the shareholder search parameters
@@ -204,11 +224,25 @@ public interface HolderComponentQuery {
     public List<HolderResidentialAddress> getHolderResidentialAddress(int holderId);
     
     /**
+     * Gets the holder's residential address according to a specified id.
+     * @param id the holder address id
+     * @return the holder's address
+     */
+    public HolderResidentialAddress getHolderResidentialAddress(HolderResidentialAddressId id);
+    
+    /**
      * Gets the holder's residential addresses.
      * @param holderId the holder's id
      * @return the list of the holder's residential addresses
      */
     public List<HolderPostalAddress> getHolderPostalAddress(int holderId);
+    
+    /**
+     * Gets the holder's residential address according to a specified id.
+     * @param id the holder address id
+     * @return the holder's address
+     */
+    public HolderPostalAddress getHolderPostalAddress(HolderPostalAddressId id);
     
     /**
      * Gets the holder's residential addresses.
@@ -218,11 +252,53 @@ public interface HolderComponentQuery {
     public List<HolderPhoneNumber> getHolderPhoneNumbers(int holderId);
     
     /**
+     * Gets the holder's phone number according to a specified id.
+     * @param id the holder phone number id
+     * @return the holder's phone number
+     */
+    public HolderPhoneNumber getHolderPhoneNumber(HolderPhoneNumberId id);
+    
+    /**
      * Gets the holder's residential addresses.
      * @param holderId the holder's id
      * @return the list of the holder's residential addresses
      */
     public List<HolderEmailAddress> getHolderEmailAddresses(int holderId);
+    
+    /**
+     * Gets the holder's email address according to a specified id.
+     * @param id the holder email address id
+     * @return the holder's email address
+     */
+    public HolderEmailAddress getHolderEmailAddress(HolderEmailAddressId id);
+    
+    /**
+     * Gets the administrator's residential address according to a specified id
+     * @param id the administrator residential id
+     * @return the administrator's residential address
+     */
+    public AdministratorResidentialAddress getAdministratorResidentialAddress(AdministratorResidentialAddressId id);
+    
+    /**
+     * Gets the administrator's postal address according to a specified id
+     * @param id the administrator postal id
+     * @return the administrator's postal address
+     */
+    public AdministratorPostalAddress getAdministratorPostalAddress(AdministratorPostalAddressId id);
+    
+    /**
+     * Gets the administrator's email address according to a specified id.
+     * @param id the administrator email id
+     * @return the administrator's email address
+     */
+    public AdministratorEmailAddress getAdministratorEmailAddress(AdministratorEmailAddressId id);
+    
+    /**
+     * Gets the administrator's phone number according to a specified id.
+     * @param id the administrator phone number id
+     * @return the administrator's phone number
+     */
+    public AdministratorPhoneNumber getAdministratorPhoneNumber(AdministratorPhoneNumberId id);
     
     /**
      * Transfers share units from one holder company account to another.
@@ -440,8 +516,21 @@ public interface HolderComponentQuery {
     public List<HolderType> getAllHolderTypes();
     
     /**
+     * Gets the holder type according to a specified id.
+     * @param typeId the holder type id
+     * @return the holder type object
+     */
+    public HolderType getHolderType(int typeId);
+    /**
      * Gets all available transaction types.
      * @return a list of all transaction types
      */
     public List<TransactionType> getAllTransactionTypes();
+    
+    /**
+     * Gets the transaction type according to a specified id.
+     * @param typeId the transaction type id
+     * @return the transaction type object
+     */
+    public TransactionType getTransactionType(int typeId);
 }

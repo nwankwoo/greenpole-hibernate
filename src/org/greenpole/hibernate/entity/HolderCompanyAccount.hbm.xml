@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.HolderCompanyAccount" table="HOLDER_COMPANY_ACCOUNT" schema="dbo" catalog="greenpole">
+        <composite-id name="id" class="org.greenpole.hibernate.entity.HolderCompanyAccountId">
+            <key-property name="holderId" type="int">
+                <column name="holder_id" />
+            </key-property>
+            <key-property name="clientCompanyId" type="int">
+                <column name="client_Company_Id" />
+            </key-property>
+        </composite-id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <many-to-one name="bank" class="org.greenpole.hibernate.entity.Bank" fetch="select">
+            <column name="bank_id" />
+        </many-to-one>
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" update="false" insert="false" fetch="select">
+            <column name="client_Company_Id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="holder" class="org.greenpole.hibernate.entity.Holder" update="false" insert="false" fetch="select">
+            <column name="holder_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="holderCompanyAccount" class="org.greenpole.hibernate.entity.HolderCompanyAccount" fetch="select">
+            <column name="sec_holder_id" />
+            <column name="sec_client_comp_id" />
+        </many-to-one>
+        <property name="shareUnits" type="java.lang.Integer">
+            <column name="share_units" />
+        </property>
+        <property name="esop" type="java.lang.Boolean">
+            <column name="esop" />
+        </property>
+        <property name="nubanAccount" type="string">
+            <column name="nuban_Account" length="50" />
+        </property>
+        <property name="merged" type="java.lang.Boolean">
+            <column name="merged" />
+        </property>
+        <property name="holderCompAccPrimary" type="java.lang.Boolean">
+            <column name="holder_comp_acc_Primary" />
+        </property>
+        <set name="dividends" table="DIVIDEND" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="h_act_holder_id" />
+                <column name="h_act_client_comp_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.Dividend" />
+        </set>
+        <set name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sec_holder_id" />
+                <column name="sec_client_comp_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount" />
+        </set>
+    </class>
+</hibernate-mapping>
