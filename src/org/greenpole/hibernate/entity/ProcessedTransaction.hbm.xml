@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<!-- Generated 05-Jun-2015 21:07:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.ProcessedTransaction" table="PROCESSED_TRANSACTION" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -18,10 +18,13 @@
             <column name="transaction_type_id" />
         </many-to-one>
         <property name="cscsTransactionId" type="java.lang.Integer">
-            <column name="cscs_transaction_id" unique="true" />
+            <column name="cscs_transaction_id" />
         </property>
         <property name="companyName" type="string">
             <column name="company_name" />
+        </property>
+        <property name="transactionDate" type="date">
+            <column name="transaction_date" length="10" />
         </property>
         <set name="processedTransactionHolders" table="PROCESSED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
             <key>

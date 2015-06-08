@@ -12,12 +12,11 @@ import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.BondType;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
-import org.greenpole.hibernate.entity.ClientCompanyAddressId;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
-import org.greenpole.hibernate.entity.ClientCompanyEmailAddressId;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
-import org.greenpole.hibernate.entity.ClientCompanyPhoneNumberId;
+import org.greenpole.hibernate.entity.Depository;
 import org.greenpole.hibernate.entity.InitialPublicOffer;
+import org.greenpole.hibernate.entity.NseSector;
 import org.greenpole.hibernate.entity.PrivatePlacement;
 import org.greenpole.hibernate.entity.ShareQuotation;
 
@@ -113,6 +112,12 @@ public interface ClientCompanyComponentQuery {
     public ClientCompany getClientCompany(String code);
     
     /**
+     * Gets all available client companies.
+     * @return a list of all available client companies
+     */
+    public List<ClientCompany> getAllClientCompanies();
+    
+    /**
      * Retrieves the unique identifier of the client company according to the
      * provided name.
      * @param clientCompanyName the name of the client company
@@ -143,42 +148,63 @@ public interface ClientCompanyComponentQuery {
      * @param clientCompanyId the client company id
      * @return the list of the client company's addresses
      */
-    public List<ClientCompanyAddress> getClientCompanyAddress(int clientCompanyId);
+    public List<ClientCompanyAddress> getClientCompanyAddresses(int clientCompanyId);
     
     /**
      * Gets the address of a client company according to a specified id.
      * @param id the address id
      * @return the client company's address
      */
-    public ClientCompanyAddress getClientCompanyAddress(ClientCompanyAddressId id);
+    public ClientCompanyAddress getClientCompanyAddress(int id);
     
     /**
      * Gets the email addresses of a client company.
      * @param clientCompanyId the client company id
      * @return the list of the client company's email addresses
      */
-    public List<ClientCompanyEmailAddress> getClientCompanyEmailAddress(int clientCompanyId);
+    public List<ClientCompanyEmailAddress> getClientCompanyEmailAddresses(int clientCompanyId);
     
     /**
      * Gets the email address of a client company according to a specified id. 
      * @param id the email id
      * @return the client company's email address
      */
-    public ClientCompanyEmailAddress getClientCompanyEmailAddress(ClientCompanyEmailAddressId id);
+    public ClientCompanyEmailAddress getClientCompanyEmailAddress(int id);
     
     /**
      * Gets the phone numbers of a client company.
      * @param clientCompanyId the client company id
      * @return the list of the client company's phone numbers
      */
-    public List<ClientCompanyPhoneNumber> getClientCompanyPhoneNumber(int clientCompanyId);
+    public List<ClientCompanyPhoneNumber> getClientCompanyPhoneNumbers(int clientCompanyId);
     
     /**
      * Gets the phone number of a client company according to a specified id.
      * @param id the phone number id
      * @return the client company's phone number
      */
-    public ClientCompanyPhoneNumber getClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id);
+    public ClientCompanyPhoneNumber getClientCompanyPhoneNumber(int id);
+    
+    /**
+     * Gets the number of shareholders of a client company.
+     * @param clientCompanyId the client company id
+     * @return the number of shareholders of a client company
+     */
+    public int getNumberOfShareholders(int clientCompanyId);
+    
+    /**
+     * Gets the number of bondholders of a client company.
+     * @param clientCompanyId the client company id
+     * @return the number of bondholders of a client company
+     */
+    public int getNumberOfBondholders (int clientCompanyId);
+    
+    /**
+     * Gets the unit price of a client company.
+     * @param clientCompanyId the client company id
+     * @return the unit price of a client company
+     */
+    public double getUnitPrice(int clientCompanyId);
     
     /**
      * Sets up a bond offer.
@@ -290,4 +316,30 @@ public interface ClientCompanyComponentQuery {
      * @return the bond offer payment plan object
      */
     public BondOfferPaymentPlan getBondOfferPaymentPlan(int planId);
+    
+    /**
+     * Gets all available nse sectors.
+     * @return a list of all available nse sectors
+     */
+    public List<NseSector> getAllNseSectors();
+    
+    /**
+     * Gets the nse sector according to the specified id.
+     * @param sectorId the nse sector id
+     * @return the nse sector object
+     */
+    public NseSector getNseSector(int sectorId);
+    
+    /**
+     * Gets all available depositories.
+     * @return a list of all available depositories
+     */
+    public List<Depository> getAllDepositories();
+    
+    /**
+     * Gets the depository according to a specified id.
+     * @param depositoryId the depository id
+     * @return the depository object
+     */
+    public Depository getDepository(int depositoryId);
 }

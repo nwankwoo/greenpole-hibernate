@@ -16,13 +16,9 @@ import java.util.Map;
 import org.greenpole.hibernate.entity.AccountConsolidation;
 import org.greenpole.hibernate.entity.Administrator;
 import org.greenpole.hibernate.entity.AdministratorEmailAddress;
-import org.greenpole.hibernate.entity.AdministratorEmailAddressId;
 import org.greenpole.hibernate.entity.AdministratorPhoneNumber;
-import org.greenpole.hibernate.entity.AdministratorPhoneNumberId;
 import org.greenpole.hibernate.entity.AdministratorPostalAddress;
-import org.greenpole.hibernate.entity.AdministratorPostalAddressId;
 import org.greenpole.hibernate.entity.AdministratorResidentialAddress;
-import org.greenpole.hibernate.entity.AdministratorResidentialAddressId;
 import org.greenpole.hibernate.entity.Bank;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
@@ -33,13 +29,9 @@ import org.greenpole.hibernate.entity.HolderChanges;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.HolderCompanyAccountId;
 import org.greenpole.hibernate.entity.HolderEmailAddress;
-import org.greenpole.hibernate.entity.HolderEmailAddressId;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
-import org.greenpole.hibernate.entity.HolderPhoneNumberId;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
-import org.greenpole.hibernate.entity.HolderPostalAddressId;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
-import org.greenpole.hibernate.entity.HolderResidentialAddressId;
 import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.HolderType;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
@@ -48,9 +40,10 @@ import org.greenpole.hibernate.entity.ProcessedTransactionHolder;
 import org.greenpole.hibernate.entity.ProcessedTransactionHolderId;
 import org.greenpole.hibernate.entity.Stockbroker;
 import org.greenpole.hibernate.entity.TransactionType;
+import org.greenpole.hibernate.exception.GreenpoleQueryException;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
 import org.greenpole.hibernate.query.HolderComponentQuery;
-import org.greenpole.util.Descriptor;
+import org.greenpole.hibernate.util.Descriptor;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Projections;
@@ -74,6 +67,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             startOperation();
             //create holder
             createUpdateObject(holder);
+            
             //create company account
             if (holderCompanyAccount != null) {
                 holderCompanyAccount.getId().setHolderId(holder.getId());
@@ -83,7 +77,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //create residential address
             if (residentialAddresses != null) {
                 for (HolderResidentialAddress res : residentialAddresses) {
-                    res.getId().setHolderId(holder.getId());
+                    res.setHolder(holder);
                     createUpdateObject(res);
                 }
             }
@@ -91,7 +85,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //create postal address
             if (postalAddresses != null) {
                 for (HolderPostalAddress pos : postalAddresses) {
-                    pos.getId().setHolderId(holder.getId());
+                    pos.setHolder(holder);
                     createUpdateObject(pos);
                 }
             }
@@ -99,7 +93,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //create email address
             if (emailAddresses != null) {
                 for (HolderEmailAddress email : emailAddresses) {
-                    email.getId().setHolderId(holder.getId());
+                    email.setHolder(holder);
                     createUpdateObject(email);
                 }
             }
@@ -107,7 +101,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //create phone numbers
             if (phoneNumbers != null) {
                 for (HolderPhoneNumber phone : phoneNumbers) {
-                    phone.getId().setHolderId(holder.getId());
+                    phone.setHolder(holder);
                     createUpdateObject(phone);
                 }
             }
@@ -143,10 +137,11 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 holderBondAccount.getId().setHolderId(holder.getId());
                 createUpdateObject(holderBondAccount);
             }
+            
             //create residential address
             if (residentialAddresses != null) {
                 for (HolderResidentialAddress res : residentialAddresses) {
-                    res.getId().setHolderId(holder.getId());
+                    res.setHolder(holder);
                     createUpdateObject(res);
                 }
             }
@@ -154,7 +149,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //create postal address
             if (postalAddresses != null) {
                 for (HolderPostalAddress pos : postalAddresses) {
-                    pos.getId().setHolderId(holder.getId());
+                    pos.setHolder(holder);
                     createUpdateObject(pos);
                 }
             }
@@ -162,7 +157,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //create email address
             if (emailAddresses != null) {
                 for (HolderEmailAddress email : emailAddresses) {
-                    email.getId().setHolderId(holder.getId());
+                    email.setHolder(holder);
                     createUpdateObject(email);
                 }
             }
@@ -170,7 +165,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //create phone numbers
             if (phoneNumbers != null) {
                 for (HolderPhoneNumber phone : phoneNumbers) {
-                    phone.getId().setHolderId(holder.getId());
+                    phone.setHolder(holder);
                     createUpdateObject(phone);
                 }
             }
@@ -206,7 +201,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //update residential address
             if (residentialAddresses != null) {
                 for (HolderResidentialAddress res : residentialAddresses) {
-                    res.getId().setHolderId(holder.getId());
+                    res.setHolder(holder);
                     createUpdateObject(res);
                 }
             }
@@ -214,7 +209,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //update postal address
             if (postalAddresses != null) {
                 for (HolderPostalAddress pos : postalAddresses) {
-                    pos.getId().setHolderId(holder.getId());
+                    pos.setHolder(holder);
                     createUpdateObject(pos);
                 }
             }
@@ -222,7 +217,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //update email address
             if (emailAddresses != null) {
                 for (HolderEmailAddress email : emailAddresses) {
-                    email.getId().setHolderId(holder.getId());
+                    email.setHolder(holder);
                     createUpdateObject(email);
                 }
             }
@@ -230,40 +225,47 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             //update phone numbers
             if (phoneNumbers != null) {
                 for (HolderPhoneNumber phone : phoneNumbers) {
-                    phone.getId().setHolderId(holder.getId());
+                    phone.setHolder(holder);
                     createUpdateObject(phone);
+                }
+            }
+            
+            //register changes
+            if (changes != null) {
+                for (HolderChanges change : changes) {
+                    createUpdateObject(change);
                 }
             }
             
             //delete resident address
             if (deletedResAddresses != null) {
                 for (HolderResidentialAddress res : deletedResAddresses) {
-                    res.getId().setHolderId(holder.getId());
-                    createUpdateObject(res);
+                    res.setHolder(holder);
+                    removeObject(res);
                 }
             }
             
             //delete postal address
             if (deletedPosAddresses != null) {
                 for (HolderPostalAddress pos : deletedPosAddresses) {
-                    pos.getId().setHolderId(holder.getId());
-                    createUpdateObject(pos);
+                    pos.setHolder(holder);
+                    removeObject(pos);
                 }
             }
             
             //delete email address
             if (deletedEmailAddresses != null) {
                 for (HolderEmailAddress email : deletedEmailAddresses) {
-                    email.getId().setHolderId(holder.getId());
-                    createUpdateObject(email);
+                    email.setHolder(holder);
+                    removeObject(email);
                 }
             }
             
             //delete phone address
             if (deletedPhoneNumbers != null) {
                 for (HolderPhoneNumber phone : deletedPhoneNumbers) {
-                    phone.getId().setHolderId(holder.getId());
-                    createUpdateObject(phone);
+                    phone.setHolder(holder);
+                    removeObject(phone);
                 }
             }
             
@@ -288,7 +290,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkHolderAccount(int holderId) {
         Holder h = new Holder();
         h.setPryHolder(true);
-        h.setMerged(false);
         
         startOperation();
         Criteria criteria = getSession().createCriteria(Holder.class)
@@ -412,6 +413,22 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     }
 
     @Override
+    public List<HolderChangeType> getAllChangeTypes() {
+        startOperation();
+        List<HolderChangeType> types = searchAll(HolderChangeType.class);
+        getTransaction().commit();
+        return types;
+    }
+
+    @Override
+    public HolderChangeType getChangeType(int typeId) {
+        startOperation();
+        HolderChangeType type = (HolderChangeType) searchObject(HolderChangeType.class, typeId);
+        getTransaction().commit();
+        return type;
+    }
+
+    @Override
     public Holder getHolder(int holderId) {
         startOperation();
         Holder h = (Holder) searchObject(Holder.class, holderId);
@@ -434,7 +451,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
                 .add(Restrictions.eq("id.holderId", holderId))
-                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId))
+                .add(Restrictions.eq("holderCompAccPrimary", true));
         HolderCompanyAccount hca = (HolderCompanyAccount) criteria.list().get(0);
         getTransaction().commit();
         return hca;
@@ -445,7 +463,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
                 .add(Restrictions.eq("id.holderId", holderId))
-                .add(Restrictions.eq("id.bondOfferId", bondOfferId));
+                .add(Restrictions.eq("id.bondOfferId", bondOfferId))
+                .add(Restrictions.eq("holderBondAcctPrimary", true));
         HolderBondAccount hba = (HolderBondAccount) criteria.list().get(0);
         getTransaction().commit();
         return hba;
@@ -454,9 +473,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     @Override
     public Administrator getAdministrator(int administratorId) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(Administrator.class)
-                .add(Restrictions.idEq(administratorId));
-        Administrator admin = (Administrator) criteria.list().get(0);
+        Administrator admin = (Administrator) searchObject(Administrator.class, administratorId);
         getTransaction().commit();
         return admin;
     }
@@ -475,40 +492,58 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         String holderDescriptor = descriptorSplits.get("holder");
         String unitsDescriptor = descriptorSplits.get("units");
         String totalHoldingsDescriptor = descriptorSplits.get("totalHoldings");
-        
-        startOperation();
-        Criteria baseCriteria = getStartCriteria();
-        
-        //we should assume that the result will consist of all base holders
-        List<Holder> result;
-        Criteria shareHolderUnitCriteria;
-        Criteria shareHolderSearchCriteria = baseCriteria; //shareholder search criteria must be initialised since it is being used in an isolated if statement
-        //under the share unit price search (see if statement for clarification).
-        
-        if (holderDescriptor.equalsIgnoreCase("exact")) {
-            shareHolderSearchCriteria = searchShareholderAccordingToObject(baseCriteria, searchParams);
-            result = shareHolderSearchCriteria.list();
-        } else {
-            baseCriteria.add(Example.create(initialHolder).enableLike());//ensure that only primary and non-merged holders are filtered out of list
-            result = baseCriteria.list();
+        try {
+            startOperation();
+            Criteria baseCriteria = getStartCriteria();
+
+            //we should assume that the result will consist of all base holders
+            List<Holder> result;
+            Criteria shareHolderUnitCriteria;
+            Criteria shareHolderSearchCriteria = baseCriteria; //shareholder search criteria must be initialised since it is being used in an isolated if statement
+            //under the share unit price search (see if statement for clarification).
+
+            if (holderDescriptor.equalsIgnoreCase("exact")) {
+                shareHolderSearchCriteria = searchShareholderAccordingToObject(baseCriteria, searchParams);
+                result = shareHolderSearchCriteria.list();
+            } else {
+                baseCriteria.add(Example.create(initialHolder).enableLike());//ensure that only primary and non-merged holders are filtered out of list
+                result = baseCriteria.list();
+            }
+
+            //if shareholder was searched for, pass shareholder search criteria into unit search. Otherwise, use base criteria
+            if (!unitsDescriptor.equalsIgnoreCase("none") && holderDescriptor.equalsIgnoreCase("exact")) {
+                shareHolderUnitCriteria = searchShareUnit(shareHolderSearchCriteria, unitsDescriptor, holderDescriptor, shareUnits_search);
+                result = shareHolderUnitCriteria.list();
+            } else if (!unitsDescriptor.equalsIgnoreCase("none") && !holderDescriptor.equalsIgnoreCase("exact")) {
+                shareHolderUnitCriteria = searchShareUnit(baseCriteria, unitsDescriptor, holderDescriptor, shareUnits_search);
+                result = shareHolderUnitCriteria.list();
+            }
+
+            if (!totalHoldingsDescriptor.equalsIgnoreCase("none")) {
+                result = searchTotalShareHoldings(result, totalHoldingsDescriptor, totalShareHoldings_search);
+            }
+
+            //ensure that only shareholders are returned
+            List<Holder> shareholders = new ArrayList<>();
+            for (Holder holder : result) {
+                if (holder.getHolderCompanyAccounts() != null && holder.getHolderCompanyAccounts().size() > 0) {
+                    Iterator it = holder.getHolderCompanyAccounts().iterator();
+                    while (it.hasNext()) {
+                        HolderCompanyAccount acct = (HolderCompanyAccount) it.next();
+                        if (acct.getShareUnits() != null && acct.getShareUnits() > 0) {
+                            shareholders.add(holder);
+                        }
+                    }
+                }
+            }
+
+            getTransaction().commit();
+            
+            return shareholders;
+        } finally {
+            if (getTransaction() != null && !getTransaction().wasCommitted())
+                getTransaction().rollback();
         }
-        
-        //if shareholder was searched for, pass shareholder search criteria into unit search. Otherwise, use base criteria
-        if (!unitsDescriptor.equalsIgnoreCase("none") && holderDescriptor.equalsIgnoreCase("exact")) {
-            shareHolderUnitCriteria = searchShareUnit(shareHolderSearchCriteria, unitsDescriptor, holderDescriptor, shareUnits_search);
-            result = shareHolderUnitCriteria.list();
-        } else if (!unitsDescriptor.equalsIgnoreCase("none") && !holderDescriptor.equalsIgnoreCase("exact")) {
-            shareHolderUnitCriteria = searchShareUnit(baseCriteria, unitsDescriptor, holderDescriptor, shareUnits_search);
-            result = shareHolderUnitCriteria.list();
-        }
-        
-        if (!totalHoldingsDescriptor.equalsIgnoreCase("none")) {
-            result = searchTotalShareHoldings(result, totalHoldingsDescriptor, totalShareHoldings_search);
-        }
-        
-        getTransaction().commit();
-        
-        return result;
     }
 
     @Override
@@ -526,77 +561,95 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         String unitsDescriptor = descriptorSplits.get("units");
         String totalHoldingsDescriptor = descriptorSplits.get("totalHoldings");
         
-        startOperation();
-        Criteria baseCriteria = getStartCriteria();
-        
-        //we should assume that the result will consist of all base holders (set in holderDescriptor if statement)
-        List<Holder> result;
-        Criteria bondholderUnitCriteria;
-        Criteria bondholderSearchCriteria = baseCriteria; //bond-holder search criteria must be initialised since it is being used in an isolated if statement
-        //under the bond unit search (see if statement for clarification).
-        
-        if (holderDescriptor.equalsIgnoreCase("exact")) {
-            bondholderSearchCriteria = searchBondholderAccordingToObject(baseCriteria, searchParams);
-            result = bondholderSearchCriteria.list();
-        } else {
-            baseCriteria.add(Example.create(initialHolder).enableLike());//ensure that only primary and non-merged holders are filtered out of list
-            result = baseCriteria.list();
+        try {
+            startOperation();
+            Criteria baseCriteria = getStartCriteria();
+            
+            //we should assume that the result will consist of all base holders (set in holderDescriptor if statement)
+            List<Holder> result;
+            Criteria bondholderUnitCriteria;
+            Criteria bondholderSearchCriteria = baseCriteria; //bond-holder search criteria must be initialised since it is being used in an isolated if statement
+            //under the bond unit search (see if statement for clarification).
+
+            if (holderDescriptor.equalsIgnoreCase("exact")) {
+                bondholderSearchCriteria = searchBondholderAccordingToObject(baseCriteria, searchParams);
+                result = bondholderSearchCriteria.list();
+            } else {
+                baseCriteria.add(Example.create(initialHolder).enableLike());//ensure that only primary and non-merged holders are filtered out of list
+                result = baseCriteria.list();
+            }
+
+            //if bond-holder was searched for, pass bond-holder search criteria into unit search. Otherwise, use base criteria
+            if (!unitsDescriptor.equalsIgnoreCase("none") && holderDescriptor.equalsIgnoreCase("exact")) {
+                bondholderUnitCriteria = searchBondUnit(bondholderSearchCriteria, unitsDescriptor, holderDescriptor, bondUnits_search);
+                result = bondholderUnitCriteria.list();
+            } else if (!unitsDescriptor.equalsIgnoreCase("none") && !holderDescriptor.equalsIgnoreCase("exact")) {
+                bondholderUnitCriteria = searchBondUnit(baseCriteria, unitsDescriptor, holderDescriptor, bondUnits_search);
+                result = bondholderUnitCriteria.list();
+            }
+
+            if (!totalHoldingsDescriptor.equalsIgnoreCase("none")) {
+                result = searchTotalBondHoldings(result, totalHoldingsDescriptor, totalBondHoldings_search);
+            }
+
+            //ensure that only bondholders are returned
+            List<Holder> bondholders = new ArrayList<>();
+            for (Holder holder : result) {
+                if (holder.getHolderBondAccounts() != null && holder.getHolderBondAccounts().size() > 0) {
+                    Iterator it = holder.getHolderBondAccounts().iterator();
+                    while (it.hasNext()) {
+                        HolderBondAccount acct = (HolderBondAccount) it.next();
+                        if (acct.getBondUnits() != null && acct.getBondUnits() > 0) {
+                            bondholders.add(holder);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            getTransaction().commit();
+
+            return bondholders;
+        } finally {
+            if (getTransaction() != null && !getTransaction().wasCommitted())
+                getTransaction().rollback();
         }
-        
-        //if bond-holder was searched for, pass bond-holder search criteria into unit search. Otherwise, use base criteria
-        if (!unitsDescriptor.equalsIgnoreCase("none") && holderDescriptor.equalsIgnoreCase("exact")) {
-            bondholderUnitCriteria = searchBondUnit(bondholderSearchCriteria, unitsDescriptor, holderDescriptor, bondUnits_search);
-            result = bondholderUnitCriteria.list();
-        } else if (!unitsDescriptor.equalsIgnoreCase("none") && !holderDescriptor.equalsIgnoreCase("exact")) {
-            bondholderUnitCriteria = searchBondUnit(baseCriteria, unitsDescriptor, holderDescriptor, bondUnits_search);
-            result = bondholderUnitCriteria.list();
-        }
-        
-        if (!totalHoldingsDescriptor.equalsIgnoreCase("none")) {
-            result = searchTotalBondHoldings(result, totalHoldingsDescriptor, totalBondHoldings_search);
-        }
-        
-        getTransaction().commit();
-        
-        return result;
     }
 
     @Override
-    public List<HolderResidentialAddress> getHolderResidentialAddress(int holderId) {
+    public List<HolderResidentialAddress> getHolderResidentialAddresses(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderResidentialAddress.class)
-                .add(Restrictions.eq("id.holderId", holderId));
+                .add(Restrictions.eq("holder.id", holderId));
         List<HolderResidentialAddress> returnlist = criteria.list();
         getTransaction().commit();
         return returnlist;
     }
 
     @Override
-    public HolderResidentialAddress getHolderResidentialAddress(HolderResidentialAddressId id) {
+    public HolderResidentialAddress getHolderResidentialAddress(int id) {
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderResidentialAddress.class)
-                .add(Restrictions.eq("id", id));
+                .add(Restrictions.idEq(id));
         HolderResidentialAddress addy = (HolderResidentialAddress) criteria.list().get(0);
         getTransaction().commit();
         return addy;
     }
 
     @Override
-    public List<HolderPostalAddress> getHolderPostalAddress(int holderId) {
+    public List<HolderPostalAddress> getHolderPostalAddresses(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderPostalAddress.class)
-                .add(Restrictions.eq("id.holderId", holderId));
+                .add(Restrictions.eq("holder.id", holderId));
         List<HolderPostalAddress> returnlist = criteria.list();
         getTransaction().commit();
         return returnlist;
     }
 
     @Override
-    public HolderPostalAddress getHolderPostalAddress(HolderPostalAddressId id) {
+    public HolderPostalAddress getHolderPostalAddress(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(HolderPostalAddress.class)
-                .add(Restrictions.eq("id", id));
-        HolderPostalAddress addy = (HolderPostalAddress) criteria.list().get(0);
+        HolderPostalAddress addy = (HolderPostalAddress) searchObject(HolderPostalAddress.class, id);
         getTransaction().commit();
         return addy;
     }
@@ -605,18 +658,16 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<HolderPhoneNumber> getHolderPhoneNumbers(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderPhoneNumber.class)
-                .add(Restrictions.eq("id.holderId", holderId));
+                .add(Restrictions.eq("holder.id", holderId));
         List<HolderPhoneNumber> returnlist = criteria.list();
         getTransaction().commit();
         return returnlist;
     }
 
     @Override
-    public HolderPhoneNumber getHolderPhoneNumber(HolderPhoneNumberId id) {
+    public HolderPhoneNumber getHolderPhoneNumber(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(HolderPhoneNumber.class)
-                .add(Restrictions.eq("id.holderId", id));
-        HolderPhoneNumber phone = (HolderPhoneNumber) criteria.list().get(0);
+        HolderPhoneNumber phone = (HolderPhoneNumber) searchObject(HolderPhoneNumber.class, id);
         getTransaction().commit();
         return phone;
     }
@@ -625,60 +676,70 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<HolderEmailAddress> getHolderEmailAddresses(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderEmailAddress.class)
-                .add(Restrictions.eq("id.holderId", holderId));
+                .add(Restrictions.eq("holder.id", holderId));
         List<HolderEmailAddress> returnlist = criteria.list();
         getTransaction().commit();
         return returnlist;
     }
 
     @Override
-    public HolderEmailAddress getHolderEmailAddress(HolderEmailAddressId id) {
+    public HolderEmailAddress getHolderEmailAddress(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(HolderEmailAddress.class)
-                .add(Restrictions.eq("id", id));
-        HolderEmailAddress email = (HolderEmailAddress) criteria.list().get(0);
+        HolderEmailAddress email = (HolderEmailAddress) searchObject(HolderEmailAddress.class, id);
         getTransaction().commit();
         return email;
     }
 
     @Override
-    public AdministratorResidentialAddress getAdministratorResidentialAddress(AdministratorResidentialAddressId id) {
+    public AdministratorResidentialAddress getAdministratorResidentialAddress(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(AdministratorResidentialAddress.class)
-                .add(Restrictions.eq("id", id));
-        AdministratorResidentialAddress addy = (AdministratorResidentialAddress) criteria.list().get(0);
+        AdministratorResidentialAddress addy = (AdministratorResidentialAddress) searchObject(AdministratorResidentialAddress.class, id);
         getTransaction().commit();
         return addy;
     }
 
     @Override
-    public AdministratorPostalAddress getAdministratorPostalAddress(AdministratorPostalAddressId id) {
+    public AdministratorPostalAddress getAdministratorPostalAddress(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(AdministratorPostalAddress.class)
-                .add(Restrictions.eq("id", id));
-        AdministratorPostalAddress addy = (AdministratorPostalAddress) criteria.list().get(0);
+        AdministratorPostalAddress addy = (AdministratorPostalAddress) searchObject(AdministratorPostalAddress.class, id);
         getTransaction().commit();
         return addy;
     }
 
     @Override
-    public AdministratorEmailAddress getAdministratorEmailAddress(AdministratorEmailAddressId id) {
+    public AdministratorEmailAddress getAdministratorEmailAddress(int id) {
+        startOperation();
+        AdministratorEmailAddress email = (AdministratorEmailAddress) searchObject(AdministratorEmailAddress.class, id);
+        getTransaction().commit();
+        return email;
+    }
+
+    @Override
+    public List<AdministratorEmailAddress> getAdministratorEmailAddresses(int administratorId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(AdministratorEmailAddress.class)
-                .add(Restrictions.eq("id", id));
-        AdministratorEmailAddress email = (AdministratorEmailAddress) criteria.list().get(0);
+                .add(Restrictions.eq("administrator.id", administratorId));
+        List <AdministratorEmailAddress> emails = criteria.list();
         getTransaction().commit();
-        return email;
+        return emails;
     }
 
     @Override
-    public AdministratorPhoneNumber getAdministratorPhoneNumber(AdministratorPhoneNumberId id) {
+    public AdministratorPhoneNumber getAdministratorPhoneNumber(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(AdministratorPhoneNumber.class)
-                .add(Restrictions.eq("id", id));
-        AdministratorPhoneNumber phone = (AdministratorPhoneNumber) criteria.list().get(0);
+        AdministratorPhoneNumber phone = (AdministratorPhoneNumber) searchObject(AdministratorPhoneNumber.class, id);
         getTransaction().commit();
         return phone;
+    }
+
+    @Override
+    public List<AdministratorPhoneNumber> getAdministratorPhoneNumbers(int administratorId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(AdministratorPhoneNumber.class)
+                .add(Restrictions.eq("administrator.id", administratorId));
+        List<AdministratorPhoneNumber> phones = criteria.list();
+        getTransaction().commit();
+        return phones;
     }
 
     @Override
@@ -775,7 +836,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         Holder h = (Holder) searchObject(Holder.class, holderId);
         List<HolderCompanyAccount> hca_list = new ArrayList<>(h.getHolderCompanyAccounts());
         for (HolderCompanyAccount hca : hca_list) {
-            if (hca.getShareUnits() > 0 && hca.getHolderCompAccPrimary() && !hca.getMerged()) {
+            if (hca.getShareUnits() != null && hca.getShareUnits() > 0 && hca.getHolderCompAccPrimary()) {
                 hasAcct = true;
                 break;
             }
@@ -791,7 +852,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         Holder h = (Holder) searchObject(Holder.class, holderId);
         List<HolderBondAccount> hba_list = new ArrayList<>(h.getHolderBondAccounts());
         for (HolderBondAccount hba : hba_list) {
-            if (hba.getBondUnits() > 0 && hba.getHolderBondAcctPrimary() && !hba.getMerged()) {
+            if (hba.getBondUnits() != null && hba.getBondUnits() > 0 && hba.getHolderBondAcctPrimary() && !hba.getMerged()) {
                 hasAcct = true;
                 break;
             }
@@ -836,7 +897,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         boolean merged = false;
         
         int receiverShareUnitState = 0;
-        int receiverBondUnitState =0;
         
         try {
             startOperation();
@@ -847,7 +907,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             createUpdateObject(primaryHolder);//update primary holder
             
             //account consolidation ids for comp account consolidation entry
-            Map<Integer, Integer> cons_id = new HashMap<>();
+            Map<Integer, AccountConsolidation> cons = new HashMap<>();
             
             //set all sec holders to non-pry and merged - record in account consolidation
             for (Holder sec : secondaryHolders) {
@@ -864,9 +924,10 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 sec_cons.setMergedToHolderId(primaryHolder.getId());
                 sec_cons.setMergedToHolderName(primaryHolder.getFirstName() + " " + primaryHolder.getLastName());
                 sec_cons.setAdditionalChanges(pryHolderOriginalValues);
+                sec_cons.setDemerge(false);
                 
                 createUpdateObject(sec_cons);//create account consolidation record
-                cons_id.put(sec.getId(), sec_cons.getId());//add consolidation id to list
+                cons.put(sec.getId(), sec_cons);//add consolidation id to list
             }
             
             //set all sec comp accts to non-pry and merged (if for transfer) - record in company account consolidation
@@ -885,8 +946,31 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
                 
                 CompanyAccountConsolidation sec_comp_cons = new CompanyAccountConsolidation();
-                AccountConsolidation sec_cons = (AccountConsolidation) getSession().get(AccountConsolidation.class, cons_id.get(hca.getId().getHolderId()));
-                if (foundHca) {//if accounts of the same company exists in both pry and sec, carry out transfer
+                //AccountConsolidation sec_cons = (AccountConsolidation) getSession().get(AccountConsolidation.class, cons.get(hca.getId().getHolderId()));
+                AccountConsolidation sec_cons = cons.get(hca.getId().getHolderId());
+                if (!foundHca) {//if accounts of the same company exists in both pry and sec, carry out transfer
+                    HolderCompanyAccountId oldId = new HolderCompanyAccountId(hca.getId().getHolderId(), hca.getId().getClientCompanyId());
+                    HolderCompanyAccount oldAcct = (HolderCompanyAccount) searchObject(HolderCompanyAccount.class, oldId);
+                    
+                    int initialHolderId = hca.getId().getHolderId();
+                    int currentHolderId = primaryHolder.getId();
+                    
+                    hca.getId().setHolderId(currentHolderId);
+                    createUpdateObject(hca);//update sec comp account (severe and bond to current holder)
+                    removeObject(oldAcct);//get rid of old object
+                    
+                    sec_comp_cons.setAccountConsolidation(sec_cons);
+                    sec_comp_cons.setForCompanyId(hca.getId().getClientCompanyId());
+                    sec_comp_cons.setTiedToInitialHolderId(initialHolderId);
+                    sec_comp_cons.setTiedToCurrentHolderId(currentHolderId);
+                    sec_comp_cons.setInitialChn(sec_cons.getHolder().getChn());
+                    sec_comp_cons.setCurrentChn(primaryHolder.getChn());
+                    sec_comp_cons.setBondShareUnit(hca.getShareUnits());
+                    sec_comp_cons.setTransfer(false);
+                    sec_comp_cons.setMergeDate(new Date());
+                    
+                    createUpdateObject(sec_comp_cons);//create comp account consolidation record
+                } else {//if no pry-sec accounts of the same company, sever sec comp acct and attach to pry holder
                     int unitsToMove = hca.getShareUnits();
                     int pryUnits = transferTo.getShareUnits();
                     
@@ -908,6 +992,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                     sec_comp_cons.setTiedToInitialHolderId(hca.getId().getHolderId());
                     sec_comp_cons.setTiedToCurrentHolderId(transferTo.getId().getHolderId());
                     sec_comp_cons.setInitialChn(sec_cons.getHolder().getChn());
+                    sec_comp_cons.setCurrentChn(primaryHolder.getChn());
                     sec_comp_cons.setBondShareUnit(unitsToMove);
                     sec_comp_cons.setTransfer(true);
                     sec_comp_cons.setReceiverUnitState(receiverShareUnitState);
@@ -918,21 +1003,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                     createUpdateObject(sec_comp_cons);
                     
                     foundHca = false; //set back to false when done
-                    
-                } else {//if no pry-sec accounts of the same company, sever sec comp acct and attach to pry holder
-                    hca.getId().setHolderId(primaryHolder.getId());
-                    createUpdateObject(hca);//update sec comp account
-                    
-                    sec_comp_cons.setAccountConsolidation(sec_cons);
-                    sec_comp_cons.setForCompanyId(hca.getId().getClientCompanyId());
-                    sec_comp_cons.setTiedToInitialHolderId(hca.getId().getHolderId());
-                    sec_comp_cons.setTiedToCurrentHolderId(transferTo.getId().getHolderId());
-                    sec_comp_cons.setInitialChn(sec_cons.getHolder().getChn());
-                    sec_comp_cons.setBondShareUnit(hca.getShareUnits());
-                    sec_comp_cons.setTransfer(false);
-                    sec_comp_cons.setMergeDate(new Date());
-                    
-                    createUpdateObject(sec_comp_cons);//create comp account consolidation record
                 }
             }
             
@@ -941,7 +1011,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             List<HolderBondAccount> pry_hba_list = new ArrayList<>(primaryHolder.getHolderBondAccounts());
             boolean foundHba = false;
             for (HolderBondAccount hba : secHolderBondAccts) {
-                HolderBondAccount transferTo = new HolderBondAccount();
                 
                 for (HolderBondAccount pry_hba : pry_hba_list) {
                     if (hba.getId().getBondOfferId() == pry_hba.getId().getBondOfferId() &&
@@ -952,40 +1021,27 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
                 
                 CompanyAccountConsolidation sec_comp_cons = new CompanyAccountConsolidation();
-                AccountConsolidation sec_cons = (AccountConsolidation) getSession().get(AccountConsolidation.class, cons_id.get(hba.getId().getHolderId()));
-                if (foundHba) {
-                    int unitsToMove = hba.getBondUnits();
-                    int pryUnits = transferTo.getBondUnits();
-                    double pryStPrincipal = transferTo.getStartingPrincipalValue();
-                    double pryRemPrincipal = transferTo.getRemainingPrincipalValue();
+                //AccountConsolidation sec_cons = (AccountConsolidation) getSession().get(AccountConsolidation.class, cons.get(hba.getId().getHolderId()));
+                AccountConsolidation sec_cons = cons.get(hba.getId().getHolderId());
+                if (!foundHba) {
+                    HolderBondAccountId oldId = new HolderBondAccountId(hba.getId().getHolderId(), hba.getId().getBondOfferId());
+                    HolderBondAccount oldAcct = (HolderBondAccount) searchObject(HolderBondAccount.class, oldId);
                     
-                    if (receiverBondUnitState == 0)
-                        receiverBondUnitState = pryUnits;
+                    int initialHolderId = hba.getId().getHolderId();
+                    int currentHolderId = primaryHolder.getId();
                     
-                    transferTo.setBondUnits(pryUnits + unitsToMove);
-                    transferTo.setStartingPrincipalValue(pryStPrincipal + hba.getStartingPrincipalValue());
-                    transferTo.setRemainingPrincipalValue(pryRemPrincipal + hba.getRemainingPrincipalValue());
-                    transferTo.setMerged(true);
-                    createUpdateObject(transferTo);//update pry bond acct
-                    
-                    hba.setBondUnits(0);
-                    hba.setHolderBondAccount(transferTo);
-                    //hba.setStartingPrincipalValue(0.00); //leave start and remaining where they are. Bond will not be calculated for non-primary bond accts
-                    //hba.setRemainingPrincipalValue(0.00);
-                    hba.setHolderBondAcctPrimary(false);
-                    hba.setMerged(true);
-                    createUpdateObject(hba);//update sec bond acct
+                    hba.getId().setHolderId(currentHolderId);
+                    createUpdateObject(hba);//update sec comp account (severe and bond to current holder)
+                    removeObject(oldAcct);//get rid of old object
                     
                     sec_comp_cons.setAccountConsolidation(sec_cons);
                     sec_comp_cons.setForBondOfferId(hba.getId().getBondOfferId());
-                    sec_comp_cons.setTiedToInitialHolderId(hba.getId().getHolderId());
-                    sec_comp_cons.setTiedToCurrentHolderId(transferTo.getId().getHolderId());
+                    sec_comp_cons.setTiedToInitialHolderId(initialHolderId);
+                    sec_comp_cons.setTiedToCurrentHolderId(currentHolderId);
                     sec_comp_cons.setInitialChn(sec_cons.getHolder().getChn());
+                    sec_comp_cons.setCurrentChn(primaryHolder.getChn());
                     sec_comp_cons.setBondShareUnit(hba.getBondUnits());
-                    sec_comp_cons.setTransfer(true);
-                    sec_comp_cons.setReceiverUnitState(receiverBondUnitState);
-                    sec_comp_cons.setReceiverStartUnit(pryUnits);
-                    sec_comp_cons.setUnitAfterTransfer(pryUnits + unitsToMove);
+                    sec_comp_cons.setTransfer(false);
                     sec_comp_cons.setMergeDate(new Date());
                     
                     createUpdateObject(sec_comp_cons);//create comp account consolidation record
@@ -1010,10 +1066,9 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             startOperation();
             
             //null accounts
-            Holder h_null = new Holder();
-            HolderCompanyAccount hca_null = new HolderCompanyAccount();
-            HolderBondAccount hba_null = new HolderBondAccount();
-
+            Holder h_null = null;
+            HolderCompanyAccount hca_null = null;
+            
             //changed merged status of primary holder
             primaryHolder.setMerged(false);
             createUpdateObject(primaryHolder);//update primary holder
@@ -1026,41 +1081,72 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 sec.setPryHolder(true);
                 createUpdateObject(sec);//update secondary holder
                 
-                AccountConsolidation acctCons = (AccountConsolidation) searchObject(AccountConsolidation.class, sec.getId());
+                //AccountConsolidation acctCons = (AccountConsolidation) searchObject(AccountConsolidation.class, sec.getId());
+                Criteria consCriteria = getSession().createCriteria(AccountConsolidation.class)
+                        .add(Restrictions.eq("mergedToHolderId", primaryHolder.getId()))
+                        .add(Restrictions.eq("holder.id", sec.getId()))
+                        .add(Restrictions.eq("demerge", false));
+                if (consCriteria.list() == null || consCriteria.list().isEmpty())
+                    throw new GreenpoleQueryException("Illegal secondary holder in demerge operation. "
+                            + "Secondary holder has no account consolidation record.");
+                AccountConsolidation acctCons = (AccountConsolidation) consCriteria.list().get(0);
                 acctCons.setDemerge(true);
                 acctCons.setDemergeDate(new Date());
                 createUpdateObject(acctCons);//update account consolidation record
             }
-
+            
             //for non-transfer sec comp accts, sever and re-attach to sec accounts
             Iterator it = secondaryAcctInfo.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 Holder sec = (Holder) entry.getKey();
                 List<CompanyAccountConsolidation> compAcctCons_list = (List<CompanyAccountConsolidation>) entry.getValue();
-
+                
                 for (CompanyAccountConsolidation compAcctCons : compAcctCons_list) {
-                    int holderId = compAcctCons.getTiedToCurrentHolderId();
-                    int compId = compAcctCons.getForCompanyId();
-                    int bondId = compAcctCons.getForBondOfferId();
-
-                    HolderCompanyAccountId hca_pry_id = new HolderCompanyAccountId(holderId, compId);
-                    HolderBondAccountId hba_pry_id = new HolderBondAccountId(holderId, bondId);
-
-                    HolderCompanyAccount hca_pry = (HolderCompanyAccount) searchObject(HolderCompanyAccount.class, hca_pry_id);
-                    HolderBondAccount hba_pry = (HolderBondAccount) searchObject(HolderBondAccount.class, hba_pry_id);
+                    int initialId = compAcctCons.getTiedToInitialHolderId();
+                    int currentId = compAcctCons.getTiedToCurrentHolderId();
+                    Integer compId = 0;
+                    Integer bondId = 0;
+                    
+                    if (compAcctCons.getForCompanyId() != null)
+                        compId = compAcctCons.getForCompanyId();
+                    
+                    if (compAcctCons.getForBondOfferId() != null)
+                        bondId = compAcctCons.getForBondOfferId();
 
                     if (!compAcctCons.getTransfer()) {
                         //re-attach to secondary holder
-                        hca_pry.setHolder(sec);
-                        createUpdateObject(hca_pry);//update sec comp accts
+                        if (compAcctCons.getForCompanyId() != null && compAcctCons.getForCompanyId() > 0) {
+                            HolderCompanyAccountId hca_pry_id = new HolderCompanyAccountId(currentId, compId);
+                            HolderCompanyAccount hca_pry = (HolderCompanyAccount) searchObject(HolderCompanyAccount.class, hca_pry_id);
+                            getSession().evict(hca_pry);
+                            hca_pry.getId().setHolderId(initialId);
+                            createUpdateObject(hca_pry);//update sec comp acct
+                            
+                            HolderCompanyAccountId oldHcaId = new HolderCompanyAccountId(currentId, compId);
+                            HolderCompanyAccount oldHca = (HolderCompanyAccount) searchObject(HolderCompanyAccount.class, oldHcaId);
+                            removeObject(oldHca);//remove the old pry comp acct
+                        }
+                        
+                        //for bonds, detach and retach
+                        if (compAcctCons.getForBondOfferId() != null && compAcctCons.getForBondOfferId() > 0) {
+                            HolderBondAccountId hba_pry_id = new HolderBondAccountId(currentId, bondId);
+                            HolderBondAccount hba_pry = (HolderBondAccount) searchObject(HolderBondAccount.class, hba_pry_id);
+                            getSession().evict(hba_pry);
+                            hba_pry.getId().setHolderId(sec.getId());
+                            createUpdateObject(hba_pry);//update pry bond acct
+                            
+                            HolderBondAccountId oldHbaId = new HolderBondAccountId(currentId, bondId);
+                            HolderBondAccount oldHba = (HolderBondAccount) searchObject(HolderBondAccount.class, oldHbaId);
+                            removeObject(oldHba);//remove the old pry bond acct
+                        }
                     } else {
                         //for transfer sec comp accts, move original data back (share units), change pry and merge status
-                        if (compAcctCons.getForCompanyId() > 0) {
+                        if (compAcctCons.getForCompanyId() != null && compAcctCons.getForCompanyId() > 0) {
                             int unitsForSec = compAcctCons.getBondShareUnit();
-                            int pryUnits = hca_pry.getShareUnits();
+                            //int pryUnits = hca_pry.getShareUnits();
 
-                            HolderCompanyAccountId hca_sec_id = new HolderCompanyAccountId(sec.getId(), compId);
+                            HolderCompanyAccountId hca_sec_id = new HolderCompanyAccountId(initialId, compId);
                             HolderCompanyAccount hca_sec = (HolderCompanyAccount) searchObject(HolderCompanyAccount.class, hca_sec_id);
 
                             hca_sec.setShareUnits(unitsForSec);
@@ -1068,33 +1154,13 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                             hca_sec.setMerged(false);
                             hca_sec.setHolderCompanyAccount(hca_null);
                             createUpdateObject(hca_sec);//update sec comp acct
-
-                            hca_pry.setShareUnits(pryUnits - unitsForSec);
+                            
+                            HolderCompanyAccountId hca_pry_id = new HolderCompanyAccountId(currentId, compId);
+                            HolderCompanyAccount hca_pry = (HolderCompanyAccount) searchObject(HolderCompanyAccount.class, hca_pry_id);
+                            
+                            hca_pry.setShareUnits(hca_pry.getShareUnits() - unitsForSec);
                             hca_pry.setMerged(false);
                             createUpdateObject(hca_pry);//update pry comp acct
-                        }
-
-                        //for transfer sec bond accts, move orginial data back (bond units, starting principal, remaining principal), change pry and merge status
-                        if (compAcctCons.getForBondOfferId() > 0) {
-                            int unitsForSec = compAcctCons.getBondShareUnit();
-                            int pryUnits = hba_pry.getBondUnits();
-                            double pryStartPrincipalValue = hba_pry.getStartingPrincipalValue();
-                            double pryRemPrincipalValue = hba_pry.getRemainingPrincipalValue();
-
-                            HolderBondAccountId hba_sec_id = new HolderBondAccountId(sec.getId(), bondId);
-                            HolderBondAccount hba_sec = (HolderBondAccount) searchObject(HolderBondAccount.class, hba_sec_id);
-
-                            hba_sec.setBondUnits(unitsForSec);
-                            hba_sec.setHolderBondAcctPrimary(true);
-                            hba_sec.setMerged(false);
-                            hba_sec.setHolderBondAccount(hba_null);
-                            createUpdateObject(hba_sec);//update sec bond acct
-
-                            hba_pry.setBondUnits(pryUnits - unitsForSec);
-                            hba_pry.setStartingPrincipalValue(pryStartPrincipalValue - hba_sec.getStartingPrincipalValue());
-                            hba_pry.setRemainingPrincipalValue(pryRemPrincipalValue - hba_sec.getRemainingPrincipalValue());
-                            hba_pry.setMerged(false);
-                            createUpdateObject(hba_pry);//update pry bond acct
                         }
                     }
                 }
@@ -1112,14 +1178,11 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
 
     @Override
     public List<Holder> getSecondaryHolderAccounts(int holderId) {
-        startOperation();
-        Holder sec_holder = new Holder();
-        sec_holder.setMerged(true);
-        sec_holder.setPryHolder(false);
-        
+        startOperation();        
         Criteria criteria = getSession().createCriteria(Holder.class)
-                .add(Example.create(sec_holder).enableLike())
-                .add(Restrictions.eq("holder.id.holderId", holderId));
+                .add(Restrictions.eq("pryHolder", false))
+                .add(Restrictions.eq("merged", true))
+                .add(Restrictions.eq("holder.id", holderId));
         List<Holder> resultlist = criteria.list();
         getTransaction().commit();
         return resultlist;
@@ -1127,12 +1190,9 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
 
     @Override
     public boolean checkInConsolidation(int pryHolderId, int secHolderId) {
-        AccountConsolidation acctCons = new AccountConsolidation();
-        acctCons.setDemerge(false);
-        
         startOperation();
         Criteria criteria = getSession().createCriteria(AccountConsolidation.class)
-                .add(Example.create(acctCons).enableLike())
+                .add(Restrictions.eq("demerge", false))
                 .add(Restrictions.eq("mergedToHolderId", pryHolderId))
                 .add(Restrictions.eq("holder.id", secHolderId))
                 .setProjection(Projections.rowCount());
@@ -1145,7 +1205,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkInCompAcctConsolidation(int pryHolderId, int secHolderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .add(Restrictions.eq("accountConsolidation.demerge", false))
+                .createAlias("accountConsolidation", "a")
+                .add(Restrictions.eq("a.demerge", false))
                 .add(Restrictions.eq("tiedToCurrentHolderId", pryHolderId))
                 .add(Restrictions.eq("tiedToInitialHolderId", secHolderId))
                 .setProjection(Projections.rowCount());
@@ -1169,7 +1230,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<CompanyAccountConsolidation> getCompanyAccountMerges(int holderId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .add(Restrictions.eq("accountConsolidation.demerge", false))
+                .createAlias("accountConsolidation", "a")
+                .add(Restrictions.eq("a.demerge", false))
                 .add(Restrictions.eq("tiedToInitialHolderId", holderId));
         List<CompanyAccountConsolidation> resultlist = criteria.list();
         getTransaction().commit();
@@ -1182,20 +1244,22 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         Criteria criteria;
         if (isShare) {
             criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                    .add(Restrictions.eq("accountConsolidation.demerge", false))
+                    .createAlias("accountConsolidation", "a")
+                    .add(Restrictions.eq("a.demerge", false))
                     .add(Restrictions.eq("tiedToCurrentHolderId", holderId))
                     .add(Restrictions.eq("forCompanyId", compOrBondId))
                     .setProjection(Projections.max("unitAfterTransfer"));
         } else {
             criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                    .add(Restrictions.eq("accountConsolidation.demerge", false))
+                    .createAlias("accountConsolidation", "a")
+                    .add(Restrictions.eq("a.demerge", false))
                     .add(Restrictions.eq("tiedToCurrentHolderId", holderId))
                     .add(Restrictions.eq("forBondOfferId", compOrBondId))
                     .setProjection(Projections.max("unitAfterTransfer"));
         }
-        Long finalUnit = (Long) criteria.uniqueResult();
+        Integer finalUnit = (Integer) criteria.uniqueResult();
         getTransaction().commit();
-        return finalUnit.intValue();
+        return finalUnit;
     }
 
     @Override
@@ -1203,56 +1267,61 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //descriptor must be date:none / date:exact / date:between / date:before / date:after
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
         
-        startOperation();
-        Criteria criteria = getSession().createCriteria(AccountConsolidation.class);
-        
-        if (descriptor.equalsIgnoreCase("exact")) {
-            try {
-                criteria.add(Restrictions.eq("mergeDate", formatter.parse(startDate)));
-                List<AccountConsolidation> returnlist = criteria.list();
-                getTransaction().commit();
-                return returnlist;
-            } catch (ParseException ex) {
-                logger.error("error parsing date - ", ex);
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(AccountConsolidation.class);
+
+            if (descriptor.equalsIgnoreCase("exact")) {
+                try {
+                    criteria.add(Restrictions.eq("mergeDate", formatter.parse(startDate)));
+                    List<AccountConsolidation> returnlist = criteria.list();
+                    getTransaction().commit();
+                    return returnlist;
+                } catch (ParseException ex) {
+                    logger.error("error parsing date - ", ex);
+                }
             }
-        }
-        
-        if (descriptor.equalsIgnoreCase("between")) {
-            try {
-                criteria.add(Restrictions.between("mergeDate", formatter.parse(startDate), formatter.parse(endDate)));
-                List<AccountConsolidation> returnlist = criteria.list();
-                getTransaction().commit();
-                return returnlist;
-            } catch (ParseException ex) {
-                logger.error("error parsing date - ", ex);
+
+            if (descriptor.equalsIgnoreCase("between")) {
+                try {
+                    criteria.add(Restrictions.between("mergeDate", formatter.parse(startDate), formatter.parse(endDate)));
+                    List<AccountConsolidation> returnlist = criteria.list();
+                    getTransaction().commit();
+                    return returnlist;
+                } catch (ParseException ex) {
+                    logger.error("error parsing date - ", ex);
+                }
             }
-        }
-        
-        if (descriptor.equalsIgnoreCase("before")) {
-            try {
-                criteria.add(Restrictions.lt("mergeDate", formatter.parse(startDate)));
-                List<AccountConsolidation> returnlist = criteria.list();
-                getTransaction().commit();
-                return returnlist;
-            } catch (ParseException ex) {
-                logger.error("error parsing date - ", ex);
+
+            if (descriptor.equalsIgnoreCase("before")) {
+                try {
+                    criteria.add(Restrictions.lt("mergeDate", formatter.parse(startDate)));
+                    List<AccountConsolidation> returnlist = criteria.list();
+                    getTransaction().commit();
+                    return returnlist;
+                } catch (ParseException ex) {
+                    logger.error("error parsing date - ", ex);
+                }
             }
-        }
-        
-        if (descriptor.equalsIgnoreCase("after")) {
-            try {
-                criteria.add(Restrictions.gt("mergeDate", formatter.parse(startDate)));
-                List<AccountConsolidation> returnlist = criteria.list();
-                getTransaction().commit();
-                return returnlist;
-            } catch (ParseException ex) {
-                logger.error("error parsing date - ", ex);
+
+            if (descriptor.equalsIgnoreCase("after")) {
+                try {
+                    criteria.add(Restrictions.gt("mergeDate", formatter.parse(startDate)));
+                    List<AccountConsolidation> returnlist = criteria.list();
+                    getTransaction().commit();
+                    return returnlist;
+                } catch (ParseException ex) {
+                    logger.error("error parsing date - ", ex);
+                }
             }
+
+            List<AccountConsolidation> returnlist = criteria.list();
+            getTransaction().commit();
+            return returnlist;
+        } finally {
+            if (getTransaction() != null && !getTransaction().wasCommitted())
+                getTransaction().rollback();
         }
-        
-        List<AccountConsolidation> returnlist = criteria.list();
-        getTransaction().commit();
-        return returnlist;
     }
 
     @Override
@@ -1267,41 +1336,40 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     }
 
     @Override
-    public boolean createAdministratorForHolder(Holder holder) {
+    public boolean createAdministratorForHolder(Holder holder, HolderChanges change) {
         boolean created = false;
         
         try {
             startOperation();
-            List<Administrator> admin_list = new ArrayList<>(holder.getAdministrators());
+            createUpdateObject(change); //record change
+            createUpdateObject(holder);
             
+            List<Administrator> admin_list = new ArrayList<>(holder.getAdministrators());
             for (Administrator admin : admin_list) {
-                createUpdateObject(admin);//create admin
                 
+                createUpdateObject(admin);//create admin
                 List<AdministratorEmailAddress> email_list = new ArrayList<>(admin.getAdministratorEmailAddresses());
+                
                 for (AdministratorEmailAddress email : email_list) {
-                    AdministratorEmailAddressId id = new AdministratorEmailAddressId();
-                    id.setAdministratorId(admin.getId());
+                    email.setAdministrator(admin);
                     createUpdateObject(email);//create email
                 }
                 
                 List<AdministratorPhoneNumber> phone_list = new ArrayList<>(admin.getAdministratorPhoneNumbers());
                 for (AdministratorPhoneNumber phone : phone_list) {
-                    AdministratorPhoneNumberId id = new AdministratorPhoneNumberId();
-                    id.setAdministratorId(admin.getId());
+                    phone.setAdministrator(admin);
                     createUpdateObject(phone);//create phone
                 }
                 
                 List<AdministratorPostalAddress> pos_list = new ArrayList<>(admin.getAdministratorPostalAddresses());
                 for (AdministratorPostalAddress pos : pos_list) {
-                    AdministratorPostalAddressId id = new AdministratorPostalAddressId();
-                    id.setAdministratorId(admin.getId());
+                    pos.setAdministrator(admin);
                     createUpdateObject(pos);//create postal address
                 }
                 
                 List<AdministratorResidentialAddress> res_list = new ArrayList<>(admin.getAdministratorResidentialAddresses());
                 for (AdministratorResidentialAddress res : res_list) {
-                    AdministratorResidentialAddressId id = new AdministratorResidentialAddressId();
-                    id.setAdministratorId(admin.getId());
+                    res.setAdministrator(admin);
                     createUpdateObject(res);//create residential address
                 }
             }
@@ -1401,9 +1469,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     @Override
     public PowerOfAttorney getHolderPowerOfAttorney(int attorneyId) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
-                .add(Restrictions.idEq(attorneyId));
-        PowerOfAttorney poa = (PowerOfAttorney) criteria.list().get(0);
+        PowerOfAttorney poa = (PowerOfAttorney) searchObject(PowerOfAttorney.class, attorneyId);
         getTransaction().commit();
         return poa;
     }
@@ -1460,6 +1526,26 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         getTransaction().commit();
         return type;
     }
+
+    @Override
+    public Bank getBankDetails(int bankId) {
+        startOperation();
+        Bank bank = (Bank) searchObject(Bank.class, bankId);
+        getTransaction().commit();
+        return bank;
+    }
+
+    @Override
+    public boolean holderHasEsopAccount(int holderId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
+                .add(Restrictions.eq("id.holderId", holderId))
+                .add(Restrictions.eq("esop", true))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
+    }
     
     /**
      * Gets the criteria for a search on all holders in the database.
@@ -1494,21 +1580,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             baseCriteria.createCriteria("h.holderResidentialAddresses", "r", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hres).enableLike().ignoreCase());
-            
-            if (hres.getId() != null) {
-                String res_addressLine1 = hres.getId().getAddressLine1();
-                if (res_addressLine1 != null) {
-                    baseCriteria.add(Restrictions.ilike("r.id.addressLine1", res_addressLine1));
-                }
-                String res_state = hres.getId().getState();
-                if (res_state != null) {
-                    baseCriteria.add(Restrictions.ilike("r.id.state", res_state));
-                }
-                String res_country = hres.getId().getCountry();
-                if (res_country != null) {
-                    baseCriteria.add(Restrictions.ilike("r.id.country", res_country));
-                }
-            }
         }
 
         //for postal address
@@ -1517,21 +1588,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             baseCriteria.createCriteria("h.holderPostalAddresses", "p", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hpos).enableLike().ignoreCase());
-            
-            if (hpos.getId() != null) {
-                String pos_addressLine1 = hpos.getId().getAddressLine1();
-                if (pos_addressLine1 != null) {
-                    baseCriteria.add(Restrictions.ilike("p.id.addressLine1", pos_addressLine1));
-                }
-                String pos_state = hpos.getId().getState();
-                if (pos_state != null) {
-                    baseCriteria.add(Restrictions.ilike("p.id.state", pos_state));
-                }
-                String pos_country = hpos.getId().getCountry();
-                if (pos_country != null) {
-                    baseCriteria.add(Restrictions.ilike("p.id.country", pos_country));
-                }
-            }
         }
         
         //for phone number
@@ -1540,11 +1596,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             baseCriteria.createCriteria("h.holderPhoneNumbers", "n", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hphone).enableLike().ignoreCase());
-            
-            if (hphone.getId() != null && hphone.getId().getPhoneNumber() != null) {
-                String phoneNumber = hphone.getId().getPhoneNumber();
-                baseCriteria.add(Restrictions.ilike("n.id.phoneNumber", phoneNumber));
-            }
         }
         
         //for email address
@@ -1553,11 +1604,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             baseCriteria.createCriteria("h.holderEmailAddresses", "e", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hemail).enableLike().ignoreCase());
-            
-            if (hemail.getId() != null && hemail.getId().getEmailAddress() != null) {
-                String emailAddress = hemail.getId().getEmailAddress();
-                baseCriteria.add(Restrictions.ilike("e.id.emailAddress", emailAddress));
-            }
         }
         
         //for stockbroker
@@ -1576,8 +1622,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 .add(Example.create(hacct).enableLike().ignoreCase());
             
             if (hacct.getId() != null && hacct.getId().getBondOfferId() > 0) {
-                int ccId = hacct.getId().getBondOfferId();
-                baseCriteria.add(Restrictions.eq("c.id.bondOfferId", ccId));
+                int offerId = hacct.getId().getBondOfferId();
+                baseCriteria.add(Restrictions.eq("c.id.holderId", offerId));
             }
         }
         return baseCriteria;
@@ -1608,21 +1654,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             baseCriteria.createCriteria("h.holderResidentialAddresses", "r", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hres).enableLike().ignoreCase());
-            
-            if (hres.getId() != null) {
-                String res_addressLine1 = hres.getId().getAddressLine1();
-                if (res_addressLine1 != null) {
-                    baseCriteria.add(Restrictions.ilike("r.id.addressLine1", res_addressLine1));
-                }
-                String res_state = hres.getId().getState();
-                if (res_state != null) {
-                    baseCriteria.add(Restrictions.ilike("r.id.state", res_state));
-                }
-                String res_country = hres.getId().getCountry();
-                if (res_country != null) {
-                    baseCriteria.add(Restrictions.ilike("r.id.country", res_country));
-                }
-            }
         }
 
         //for postal address
@@ -1631,34 +1662,14 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             baseCriteria.createCriteria("h.holderPostalAddresses", "p", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hpos).enableLike().ignoreCase());
-            
-            if (hpos.getId() != null) {
-                String pos_addressLine1 = hpos.getId().getAddressLine1();
-                if (pos_addressLine1 != null) {
-                    baseCriteria.add(Restrictions.ilike("p.id.addressLine1", pos_addressLine1));
-                }
-                String pos_state = hpos.getId().getState();
-                if (pos_state != null) {
-                    baseCriteria.add(Restrictions.ilike("p.id.state", pos_state));
-                }
-                String pos_country = hpos.getId().getCountry();
-                if (pos_country != null) {
-                    baseCriteria.add(Restrictions.ilike("p.id.country", pos_country));
-                }
-            }
         }
         
         //for phone number
         if (!h_phone_list.isEmpty()) {
             HolderPhoneNumber hphone = h_phone_list.get(0);
-            
+            System.out.println(":::phone:::::: " + hphone.getPhoneNumber());
             baseCriteria.createCriteria("h.holderPhoneNumbers", "n", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hphone).enableLike().ignoreCase());
-            
-            if (hphone.getId() != null && hphone.getId().getPhoneNumber() != null) {
-                String phoneNumber = hphone.getId().getPhoneNumber();
-                baseCriteria.add(Restrictions.ilike("n.id.phoneNumber", phoneNumber));
-            }
         }
         
         //for email address
@@ -1667,11 +1678,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             baseCriteria.createCriteria("h.holderEmailAddresses", "e", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hemail).enableLike().ignoreCase());
-            
-            if (hemail.getId() != null && hemail.getId().getEmailAddress() != null) {
-                String emailAddress = hemail.getId().getEmailAddress();
-                baseCriteria.add(Restrictions.ilike("e.id.emailAddress", emailAddress));
-            }
         }
         
         //for stockbroker
@@ -1685,14 +1691,12 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //for company account
         if (!h_acct_list.isEmpty()) {
             HolderCompanyAccount hacct = h_acct_list.get(0);
-            
             baseCriteria.createCriteria("h.holderCompanyAccounts", "c", JoinType.LEFT_OUTER_JOIN)
-                .add(Example.create(hacct).enableLike().ignoreCase());
+                    .add(Example.create(hacct).enableLike().ignoreCase());
            
-            
             if (hacct.getId() != null && hacct.getId().getClientCompanyId() > 0) {
-                int ccId = hacct.getId().getClientCompanyId();
-                baseCriteria.add(Restrictions.eq("c.id.clientCompanyId", ccId));
+                int compId = hacct.getId().getClientCompanyId();
+                baseCriteria.add(Restrictions.eq("c.id.clientCompanyId", compId));
             }
         }
         

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<!-- Generated 05-Jun-2015 21:07:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.HolderBondAccount" table="HOLDER_BOND_ACCOUNT" schema="dbo" catalog="greenpole">
         <composite-id name="id" class="org.greenpole.hibernate.entity.HolderBondAccountId">
@@ -25,8 +25,8 @@
             <column name="holder_id" not-null="true" />
         </many-to-one>
         <many-to-one name="holderBondAccount" class="org.greenpole.hibernate.entity.HolderBondAccount" fetch="select">
-            <column name="sec_holder_id" />
-            <column name="sec_bond_offer_id" />
+            <column name="pry_holder_id" />
+            <column name="pry_bond_offer_id" />
         </many-to-one>
         <property name="bondUnits" type="java.lang.Integer">
             <column name="bond_units" />
@@ -51,8 +51,8 @@
         </property>
         <set name="holderBondAccounts" table="HOLDER_BOND_ACCOUNT" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="sec_holder_id" />
-                <column name="sec_bond_offer_id" />
+                <column name="pry_holder_id" />
+                <column name="pry_bond_offer_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.HolderBondAccount" />
         </set>

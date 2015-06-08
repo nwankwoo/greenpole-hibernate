@@ -1,7 +1,8 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,16 +18,18 @@ public class ProcessedTransaction  implements java.io.Serializable {
      private TransactionType transactionType;
      private Integer cscsTransactionId;
      private String companyName;
+     private Date transactionDate;
      private Set processedTransactionHolders = new HashSet(0);
 
     public ProcessedTransaction() {
     }
 
-    public ProcessedTransaction(ClientCompany clientCompany, TransactionType transactionType, Integer cscsTransactionId, String companyName, Set processedTransactionHolders) {
+    public ProcessedTransaction(ClientCompany clientCompany, TransactionType transactionType, Integer cscsTransactionId, String companyName, Date transactionDate, Set processedTransactionHolders) {
        this.clientCompany = clientCompany;
        this.transactionType = transactionType;
        this.cscsTransactionId = cscsTransactionId;
        this.companyName = companyName;
+       this.transactionDate = transactionDate;
        this.processedTransactionHolders = processedTransactionHolders;
     }
    
@@ -71,6 +74,13 @@ public class ProcessedTransaction  implements java.io.Serializable {
     
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+    public Date getTransactionDate() {
+        return this.transactionDate;
+    }
+    
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
     }
     public Set getProcessedTransactionHolders() {
         return this.processedTransactionHolders;

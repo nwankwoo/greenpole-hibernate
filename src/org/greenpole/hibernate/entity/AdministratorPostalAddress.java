@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
 
@@ -9,40 +9,40 @@ package org.greenpole.hibernate.entity;
 public class AdministratorPostalAddress  implements java.io.Serializable {
 
 
-     private AdministratorPostalAddressId id;
+     private int id;
      private Long version;
      private Administrator administrator;
+     private String addressLine1;
      private String addressLine2;
      private String addressLine3;
      private String addressLine4;
      private String postCode;
      private String city;
+     private String state;
+     private String country;
      private Boolean isPrimary;
 
     public AdministratorPostalAddress() {
     }
 
-	
-    public AdministratorPostalAddress(AdministratorPostalAddressId id, Administrator administrator) {
-        this.id = id;
-        this.administrator = administrator;
-    }
-    public AdministratorPostalAddress(AdministratorPostalAddressId id, Administrator administrator, String addressLine2, String addressLine3, String addressLine4, String postCode, String city, Boolean isPrimary) {
-       this.id = id;
+    public AdministratorPostalAddress(Administrator administrator, String addressLine1, String addressLine2, String addressLine3, String addressLine4, String postCode, String city, String state, String country, Boolean isPrimary) {
        this.administrator = administrator;
+       this.addressLine1 = addressLine1;
        this.addressLine2 = addressLine2;
        this.addressLine3 = addressLine3;
        this.addressLine4 = addressLine4;
        this.postCode = postCode;
        this.city = city;
+       this.state = state;
+       this.country = country;
        this.isPrimary = isPrimary;
     }
    
-    public AdministratorPostalAddressId getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(AdministratorPostalAddressId id) {
+    public void setId(int id) {
         this.id = id;
     }
     public Long getVersion() {
@@ -58,6 +58,13 @@ public class AdministratorPostalAddress  implements java.io.Serializable {
     
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
+    }
+    public String getAddressLine1() {
+        return this.addressLine1;
+    }
+    
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
     }
     public String getAddressLine2() {
         return this.addressLine2;
@@ -93,6 +100,20 @@ public class AdministratorPostalAddress  implements java.io.Serializable {
     
     public void setCity(String city) {
         this.city = city;
+    }
+    public String getState() {
+        return this.state;
+    }
+    
+    public void setState(String state) {
+        this.state = state;
+    }
+    public String getCountry() {
+        return this.country;
+    }
+    
+    public void setCountry(String country) {
+        this.country = country;
     }
     public Boolean getIsPrimary() {
         return this.isPrimary;

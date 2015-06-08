@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
 
@@ -9,40 +9,40 @@ package org.greenpole.hibernate.entity;
 public class StockbrokerAddress  implements java.io.Serializable {
 
 
-     private StockbrokerAddressId id;
+     private int id;
      private Long version;
      private Stockbroker stockbroker;
+     private String addressLine1;
      private String addressLine2;
      private String addressLine3;
      private String addressLine4;
      private String postCode;
      private String city;
+     private String state;
+     private String country;
      private Boolean isPrimary;
 
     public StockbrokerAddress() {
     }
 
-	
-    public StockbrokerAddress(StockbrokerAddressId id, Stockbroker stockbroker) {
-        this.id = id;
-        this.stockbroker = stockbroker;
-    }
-    public StockbrokerAddress(StockbrokerAddressId id, Stockbroker stockbroker, String addressLine2, String addressLine3, String addressLine4, String postCode, String city, Boolean isPrimary) {
-       this.id = id;
+    public StockbrokerAddress(Stockbroker stockbroker, String addressLine1, String addressLine2, String addressLine3, String addressLine4, String postCode, String city, String state, String country, Boolean isPrimary) {
        this.stockbroker = stockbroker;
+       this.addressLine1 = addressLine1;
        this.addressLine2 = addressLine2;
        this.addressLine3 = addressLine3;
        this.addressLine4 = addressLine4;
        this.postCode = postCode;
        this.city = city;
+       this.state = state;
+       this.country = country;
        this.isPrimary = isPrimary;
     }
    
-    public StockbrokerAddressId getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(StockbrokerAddressId id) {
+    public void setId(int id) {
         this.id = id;
     }
     public Long getVersion() {
@@ -58,6 +58,13 @@ public class StockbrokerAddress  implements java.io.Serializable {
     
     public void setStockbroker(Stockbroker stockbroker) {
         this.stockbroker = stockbroker;
+    }
+    public String getAddressLine1() {
+        return this.addressLine1;
+    }
+    
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
     }
     public String getAddressLine2() {
         return this.addressLine2;
@@ -93,6 +100,20 @@ public class StockbrokerAddress  implements java.io.Serializable {
     
     public void setCity(String city) {
         this.city = city;
+    }
+    public String getState() {
+        return this.state;
+    }
+    
+    public void setState(String state) {
+        this.state = state;
+    }
+    public String getCountry() {
+        return this.country;
+    }
+    
+    public void setCountry(String country) {
+        this.country = country;
     }
     public Boolean getIsPrimary() {
         return this.isPrimary;

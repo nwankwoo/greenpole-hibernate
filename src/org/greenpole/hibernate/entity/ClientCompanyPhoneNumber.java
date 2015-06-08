@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
 
@@ -9,30 +9,26 @@ package org.greenpole.hibernate.entity;
 public class ClientCompanyPhoneNumber  implements java.io.Serializable {
 
 
-     private ClientCompanyPhoneNumberId id;
+     private int id;
      private Long version;
      private ClientCompany clientCompany;
+     private String phoneNumber;
      private Boolean isPrimary;
 
     public ClientCompanyPhoneNumber() {
     }
 
-	
-    public ClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id, ClientCompany clientCompany) {
-        this.id = id;
-        this.clientCompany = clientCompany;
-    }
-    public ClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id, ClientCompany clientCompany, Boolean isPrimary) {
-       this.id = id;
+    public ClientCompanyPhoneNumber(ClientCompany clientCompany, String phoneNumber, Boolean isPrimary) {
        this.clientCompany = clientCompany;
+       this.phoneNumber = phoneNumber;
        this.isPrimary = isPrimary;
     }
    
-    public ClientCompanyPhoneNumberId getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(ClientCompanyPhoneNumberId id) {
+    public void setId(int id) {
         this.id = id;
     }
     public Long getVersion() {
@@ -48,6 +44,13 @@ public class ClientCompanyPhoneNumber  implements java.io.Serializable {
     
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
+    }
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+    
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     public Boolean getIsPrimary() {
         return this.isPrimary;

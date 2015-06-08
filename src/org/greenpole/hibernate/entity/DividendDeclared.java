@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -16,7 +16,7 @@ public class DividendDeclared  implements java.io.Serializable {
      private Long version;
      private ClientCompany clientCompany;
      private String yearType;
-     private byte[] issueType;
+     private String issueType;
      private Date qualifyDate;
      private Double withholdingTaxRateInd;
      private Double withholdingTaxRateCorp;
@@ -29,7 +29,7 @@ public class DividendDeclared  implements java.io.Serializable {
     public DividendDeclared() {
     }
 
-    public DividendDeclared(ClientCompany clientCompany, String yearType, byte[] issueType, Date qualifyDate, Double withholdingTaxRateInd, Double withholdingTaxRateCorp, Integer yearEnding, Date datePayable, Double rate, Set dividends, Set dividendSettlements) {
+    public DividendDeclared(ClientCompany clientCompany, String yearType, String issueType, Date qualifyDate, Double withholdingTaxRateInd, Double withholdingTaxRateCorp, Integer yearEnding, Date datePayable, Double rate, Set dividends, Set dividendSettlements) {
        this.clientCompany = clientCompany;
        this.yearType = yearType;
        this.issueType = issueType;
@@ -71,11 +71,11 @@ public class DividendDeclared  implements java.io.Serializable {
     public void setYearType(String yearType) {
         this.yearType = yearType;
     }
-    public byte[] getIssueType() {
+    public String getIssueType() {
         return this.issueType;
     }
     
-    public void setIssueType(byte[] issueType) {
+    public void setIssueType(String issueType) {
         this.issueType = issueType;
     }
     public Date getQualifyDate() {

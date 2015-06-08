@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<!-- Generated 05-Jun-2015 21:07:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.DividendDeclared" table="DIVIDEND_DECLARED" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -17,8 +17,8 @@
         <property name="yearType" type="string">
             <column name="year_type" length="50" />
         </property>
-        <property name="issueType" type="binary">
-            <column name="issue_type" />
+        <property name="issueType" type="string">
+            <column name="issue_type" length="100" />
         </property>
         <property name="qualifyDate" type="date">
             <column name="qualify_date" length="10" />

@@ -113,12 +113,12 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
             //update the address
             ccaddress.setCity(city);
             ccaddress.setPostCode(compcode);
-            ccaddress.getId().setState(state);
-            ccaddress.getId().setCountry(country);
+            ccaddress.setState(state);
+            ccaddress.setCountry(country);
             //update email address
-            clientemailaddress.getId().setEmailAddress(email);
+            clientemailaddress.setEmailAddress(email);
             //update clientcompany phone number
-            ccphonenumber.getId().setPhoneNumber(clientphone);
+            ccphonenumber.setPhoneNumber(clientphone);
             //update other direct company attributes
             clientcompany.setName(compname);
             clientcompany.setCode(compcode);
@@ -316,34 +316,34 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
         holderpersistence.setDob(dob);
         holderpersistence.setTaxExempted(taxExempted);
        //insert holder adddress in the HolderResidentialAddress object
-        holderresidentialaddress.getId().setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderResidentialAddress entity
+        //holderresidentialaddress.setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderResidentialAddress entity
         holderresidentialaddress.setCity(holdercityaddress);
         holderresidentialaddress.setPostCode(holdercodeaddress);
-        holderresidentialaddress.getId().setState(holderstateaddress);
-        holderresidentialaddress.getId().setCountry(holdercountryaddress);
-        holderresidentialaddress.getId().setAddressLine1(shareholderresidentaddline1);
+        holderresidentialaddress.setState(holderstateaddress);
+        holderresidentialaddress.setCountry(holdercountryaddress);
+        holderresidentialaddress.setAddressLine1(shareholderresidentaddline1);
         holderresidentialaddress.setAddressLine2(shareholderresidentaddline2);
         holderresidentialaddress.setAddressLine3(shareholderresidentaddline3);
         holderresidentialaddress.setAddressLine4(shareholderresidentaddline4);
         holderresidentialaddress.setIsPrimary(shareholderresidentaddrValidity);
        //insert holder adddress in the HolderPostalAddress object
-        holderpostaladdress.getId().setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderPostalAddress entity
+        //holderpostaladdress.setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderPostalAddress entity
         holderpostaladdress.setCity(holderpostalcityaddress);
         holderpostaladdress.setPostCode(holderpostalcodeaddress);
-        holderpostaladdress.getId().setState(holderpostalstateaddress);
-        holderpostaladdress.getId().setCountry(holderpostalcountryaddress);
-        holderpostaladdress.getId().setAddressLine1(shareholderresidentaddline1);
+        holderpostaladdress.setState(holderpostalstateaddress);
+        holderpostaladdress.setCountry(holderpostalcountryaddress);
+        holderpostaladdress.setAddressLine1(shareholderresidentaddline1);
         holderpostaladdress.setAddressLine2(shareholderresidentaddline2);
         holderpostaladdress.setAddressLine3(shareholderresidentaddline3);
         holderpostaladdress.setAddressLine4(shareholderresidentaddline4);
         holderpostaladdress.setIsPrimary(shareholderpostaladdrValidity);
         //insert holder adddress in the HolderPhoneNumber object
-        holderfonenumber.getId().setHolderId(holderpersistence.getId());    //set the newly generated idetifier key in HolderPhoneNumber entity
-        holderfonenumber.getId().setPhoneNumber(holderphonenumber);
+        //holderfonenumber.setHolderId(holderpersistence.getId());    //set the newly generated idetifier key in HolderPhoneNumber entity
+        holderfonenumber.setPhoneNumber(holderphonenumber);
         holderfonenumber.setIsPrimary(shareholderphoneaddrValidity);
         //insert holder adddress in the HolderEmailAddress object
-        holderemailaddr.getId().setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderEmailAddress entity
-        holderemailaddr.getId().setEmailAddress(holderemailaddress);   
+        //holderemailaddr.setHolderId(holderpersistence.getId()); //set the newly generated idetifier key in HolderEmailAddress entity
+        holderemailaddr.setEmailAddress(holderemailaddress);   
         //Initialise the Hashset to contain set of addresses
         HashSet setHolderPostalAddresses, setHolderEmails, setHolderPhonenumbers, setHolderResidentialAddresses;
         setHolderResidentialAddresses = new HashSet();
@@ -417,12 +417,12 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
        bondHolder.setChn(bondholderCHN);
        //bondunit, principalbondvalue,stockbroker, clientcompany buying from
        //persist the attribute with residential address
-       bondholderresidentialaddress.getId().setHolderId(bondHolder.getId());
+       //bondholderresidentialaddress.setHolderId(bondHolder.getId());
        bondholderresidentialaddress.setCity(residentialcity);
        bondholderresidentialaddress.setPostCode(residentialpostalcode);
-       bondholderresidentialaddress.getId().setState(residentialstate);
-       bondholderresidentialaddress.getId().setCountry(residentialcountry);
-       bondholderresidentialaddress.getId().setAddressLine1(bondholderresidentaddline1);
+       bondholderresidentialaddress.setState(residentialstate);
+       bondholderresidentialaddress.setCountry(residentialcountry);
+       bondholderresidentialaddress.setAddressLine1(bondholderresidentaddline1);
        bondholderresidentialaddress.setAddressLine2(bondholderresidentaddline2);
        bondholderresidentialaddress.setAddressLine3(bondholderresidentaddline3);
        bondholderresidentialaddress.setAddressLine4(bondholderresidentaddline4);
@@ -430,21 +430,21 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
        //persist the attribute with residential address
        bondholderpostaladdress.setCity(postalcity);
        bondholderpostaladdress.setPostCode(postalpostcode);
-       bondholderpostaladdress.getId().setHolderId(bondHolder.getId());
-       bondholderpostaladdress.getId().setState(postalstate);
-       bondholderpostaladdress.getId().setCountry(postalcountry);
-       bondholderpostaladdress.getId().setAddressLine1(bondholderpostaladdline1);
+       //bondholderpostaladdress.setHolderId(bondHolder.getId());
+       bondholderpostaladdress.setState(postalstate);
+       bondholderpostaladdress.setCountry(postalcountry);
+       bondholderpostaladdress.setAddressLine1(bondholderpostaladdline1);
        bondholderpostaladdress.setAddressLine2(bondholderpostaladdline2);
        bondholderpostaladdress.setAddressLine3(bondholderpostaladdline3);
        bondholderpostaladdress.setAddressLine4(bondholderpostaladdline4);
        bondholderpostaladdress.setIsPrimary(bhpostaladdrValidity);
        //persist the attribute with phone number
-       bondholderfonenumber.getId().setHolderId(bondHolder.getId());
-       bondholderfonenumber.getId().setPhoneNumber(bondholdernumber);
+       //bondholderfonenumber.setHolderId(bondHolder.getId());
+       bondholderfonenumber.setPhoneNumber(bondholdernumber);
        bondholderfonenumber.setIsPrimary(bhphoneaddrValidity);
        //persist the attribute with email address
-       bondholderemailaddr.getId().setHolderId(bondHolder.getId());
-       bondholderemailaddr.getId().setEmailAddress(bondholderemail);
+       //bondholderemailaddr.setHolderId(bondHolder.getId());
+       bondholderemailaddr.setEmailAddress(bondholderemail);
        
        //Initialise the Hashset to contain set of addresses
         HashSet setBondHolderResidentialAddresses, setBondHolderPostalAddresses, setBondHolderPhonenumbers, setBondHolderEmails;
@@ -545,32 +545,32 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
         //the deceased holder
         holder.setId(deceasedid); 
         
-        administratorPhone.getId().setAdministratorId(administrator.getId());
-        administratorPhone.getId().setPhoneNumber(adminfonenumber);
+        //administratorPhone.setAdministratorId(administrator.getId());
+        administratorPhone.setPhoneNumber(adminfonenumber);
         administratorPhone.setIsPrimary(adminphoneValidity);
         
-        administratorEmail.getId().setAdministratorId(administrator.getId());
-        administratorEmail.getId().setEmailAddress(adminemail);
+        //administratorEmail.setAdministratorId(administrator.getId());
+        administratorEmail.setEmailAddress(adminemail);
         administratorPhone.setIsPrimary(adminphoneValidity);
         
-        administratorresidential.getId().setAdministratorId(administrator.getId());
+        //administratorresidential.setAdministratorId(administrator.getId());
         administratorresidential.setCity(adminresidentialcity);
         administratorresidential.setPostCode(adminresidentialpostalcode);
         administratorresidential.setIsPrimary(adminresidentialValidity);
-        administratorresidential.getId().setState(adminresidentialstate);
-        administratorresidential.getId().setCountry(adminresidentialcountry);
-        administratorresidential.getId().setAddressLine1(adminresidentaddline1);
+        //administratorresidential.setState(adminresidentialstate);
+        administratorresidential.setCountry(adminresidentialcountry);
+        administratorresidential.setAddressLine1(adminresidentaddline1);
         administratorresidential.setAddressLine2(adminresidentaddline2);
         administratorresidential.setAddressLine3(adminresidentaddline3);
         administratorresidential.setAddressLine4(adminresidentaddline4);
         
-        administratorpostaladdr.getId().setAdministratorId(administrator.getId());
+        //administratorpostaladdr.getId().setAdministratorId(administrator.getId());
         administratorpostaladdr.setCity(adminpostaladdresscity);
         administratorpostaladdr.setPostCode(adminpostaladdrpostcode);
-        administratorpostaladdr.getId().setState(adminpostaladdrstate);
-        administratorpostaladdr.getId().setCountry(adminpostaladdrcountry);
+        administratorpostaladdr.setState(adminpostaladdrstate);
+        administratorpostaladdr.setCountry(adminpostaladdrcountry);
         administratorpostaladdr.setIsPrimary(adminpostalAddressValidity);
-        administratorpostaladdr.getId().setAddressLine1(adminpostaladdline1);
+        administratorpostaladdr.setAddressLine1(adminpostaladdline1);
         administratorpostaladdr.setAddressLine2(adminpostaladdline2);
         administratorpostaladdr.setAddressLine3(adminpostaladdline3);
         administratorpostaladdr.setAddressLine4(adminpostaladdline4);
@@ -617,19 +617,19 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
             startOperation();
             createUpdateObject(holder);
             for( HolderResidentialAddress address : residentialaddresses ){
-                address.getId().setHolderId(holder.getId());
+                //address.getId().setHolderId(holder.getId());
                 createUpdateObject(address);
             }
             for( HolderPostalAddress postal : postaladdresses ){
-                postal.getId().setHolderId(holder.getId());
+                //postal.getId().setHolderId(holder.getId());
                 createUpdateObject(postal);
             }
             for( HolderEmailAddress email : emailaddresses ){
-                email.getId().setHolderId(holder.getId());
+                //email.getId().setHolderId(holder.getId());
                 createUpdateObject(email);
             }
             for( HolderPhoneNumber phone : fonenumbers ){
-                phone.getId().setHolderId(holder.getId());
+                //phone.getId().setHolderId(holder.getId());
                 createUpdateObject(phone);
             }
             //persist holdercompanyobject
@@ -662,19 +662,19 @@ public class ClientCompanyQueryImpl extends GeneralisedAbstractDao {
             startOperation();
             createUpdateObject(holder);
             for( HolderResidentialAddress address : residentialaddresses ){
-                address.getId().setHolderId(holder.getId());
+                //address.getId().setHolderId(holder.getId());
                 createUpdateObject(address);
             }
             for( HolderPostalAddress postal : postaladdresses ){
-                postal.getId().setHolderId(holder.getId());
+                //postal.getId().setHolderId(holder.getId());
                 createUpdateObject(postal);
             }
             for( HolderEmailAddress email : emailaddresses ){
-                email.getId().setHolderId(holder.getId());
+                //email.getId().setHolderId(holder.getId());
                 createUpdateObject(email);
             }
             for( HolderPhoneNumber phone : fonenumbers ){
-                phone.getId().setHolderId(holder.getId());
+                //phone.getId().setHolderId(holder.getId());
                 createUpdateObject(phone);
             }
             //persist holdercompanyobject

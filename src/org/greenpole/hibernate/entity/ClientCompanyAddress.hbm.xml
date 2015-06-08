@@ -1,29 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<!-- Generated 05-Jun-2015 21:07:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.ClientCompanyAddress" table="CLIENT_COMPANY_ADDRESS" schema="dbo" catalog="greenpole">
-        <composite-id name="id" class="org.greenpole.hibernate.entity.ClientCompanyAddressId">
-            <key-property name="clientCompanyId" type="int">
-                <column name="client_company_id" />
-            </key-property>
-            <key-property name="addressLine1" type="string">
-                <column name="address_line_1" length="50" />
-            </key-property>
-            <key-property name="state" type="string">
-                <column name="state" length="50" />
-            </key-property>
-            <key-property name="country" type="string">
-                <column name="country" length="50" />
-            </key-property>
-        </composite-id>
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
         <version name="version" type="java.lang.Long">
             <column name="version" />
         </version>
-        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" update="false" insert="false" fetch="select">
-            <column name="client_company_id" not-null="true" />
+        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
+            <column name="client_company_id" />
         </many-to-one>
+        <property name="addressLine1" type="string">
+            <column name="address_line_1" length="50" />
+        </property>
         <property name="addressLine2" type="string">
             <column name="address_line_2" length="50" />
         </property>
@@ -38,6 +31,12 @@
         </property>
         <property name="city" type="string">
             <column name="city" length="50" />
+        </property>
+        <property name="state" type="string">
+            <column name="state" length="50" />
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="50" />
         </property>
         <property name="isPrimary" type="java.lang.Boolean">
             <column name="is_primary" />

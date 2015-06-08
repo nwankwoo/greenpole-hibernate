@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<!-- Generated 05-Jun-2015 21:07:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.Administrator" table="ADMINISTRATOR" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -25,13 +25,13 @@
         </property>
         <set name="administratorPhoneNumbers" table="ADMINISTRATOR_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="administrator_id" not-null="true" />
+                <column name="administrator_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.AdministratorPhoneNumber" />
         </set>
         <set name="administratorResidentialAddresses" table="ADMINISTRATOR_RESIDENTIAL_ADDRESS" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="administrator_id" not-null="true" />
+                <column name="administrator_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.AdministratorResidentialAddress" />
         </set>
@@ -45,13 +45,13 @@
         </set>
         <set name="administratorEmailAddresses" table="ADMINISTRATOR_EMAIL_ADDRESS" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="administrator_id" not-null="true" />
+                <column name="administrator_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.AdministratorEmailAddress" />
         </set>
         <set name="administratorPostalAddresses" table="ADMINISTRATOR_POSTAL_ADDRESS" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="administrator_id" not-null="true" />
+                <column name="administrator_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.AdministratorPostalAddress" />
         </set>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<!-- Generated 05-Jun-2015 21:07:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.Holder" table="HOLDER" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -88,7 +88,7 @@
         </set>
         <set name="holderPhoneNumbers" table="HOLDER_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="holder_id" not-null="true" />
+                <column name="holder_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.HolderPhoneNumber" />
         </set>
@@ -124,7 +124,7 @@
         </set>
         <set name="holderResidentialAddresses" table="HOLDER_RESIDENTIAL_ADDRESS" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="holder_id" not-null="true" />
+                <column name="holder_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.HolderResidentialAddress" />
         </set>
@@ -142,7 +142,7 @@
         </set>
         <set name="holderPostalAddresses" table="HOLDER_POSTAL_ADDRESS" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="holder_id" not-null="true" />
+                <column name="holder_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.HolderPostalAddress" />
         </set>
@@ -168,7 +168,7 @@
         </set>
         <set name="holderEmailAddresses" table="HOLDER_EMAIL_ADDRESS" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="holder_id" not-null="true" />
+                <column name="holder_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.HolderEmailAddress" />
         </set>

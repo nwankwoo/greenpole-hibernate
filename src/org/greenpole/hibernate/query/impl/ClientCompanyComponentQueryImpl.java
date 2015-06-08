@@ -9,24 +9,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.BondType;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
-import org.greenpole.hibernate.entity.ClientCompanyAddressId;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
-import org.greenpole.hibernate.entity.ClientCompanyEmailAddressId;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
-import org.greenpole.hibernate.entity.ClientCompanyPhoneNumberId;
+import org.greenpole.hibernate.entity.Depository;
 import org.greenpole.hibernate.entity.HolderBondAccount;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.InitialPublicOffer;
+import org.greenpole.hibernate.entity.NseSector;
 import org.greenpole.hibernate.entity.PrivatePlacement;
 import org.greenpole.hibernate.entity.ShareQuotation;
+import org.greenpole.hibernate.exception.GreenpoleQueryException;
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
 import org.greenpole.hibernate.query.GeneralisedAbstractDao;
-import org.greenpole.util.Descriptor;
+import org.greenpole.hibernate.util.Descriptor;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
@@ -118,6 +119,14 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         getTransaction().commit();
         return cc;
     }
+
+    @Override
+    public List<ClientCompany> getAllClientCompanies() {
+        startOperation();
+        List<ClientCompany> cclist = searchAll(ClientCompany.class);
+        getTransaction().commit();
+        return cclist;
+    }
     
     @Override
     public ClientCompany getClientCompanyByName(String name) {
@@ -163,63 +172,104 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
-    public List<ClientCompanyAddress> getClientCompanyAddress(int clientCompanyId) {
+    public List<ClientCompanyAddress> getClientCompanyAddresses(int clientCompanyId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompanyAddress.class)
-                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+                .add(Restrictions.eq("clientCompany.id", clientCompanyId));
         List<ClientCompanyAddress> addy_list = criteria.list();
         getTransaction().commit();
         return addy_list;
     }
 
     @Override
-    public ClientCompanyAddress getClientCompanyAddress(ClientCompanyAddressId id) {
+    public ClientCompanyAddress getClientCompanyAddress(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(ClientCompanyAddress.class)
-                .add(Restrictions.eq("id", id));
-        ClientCompanyAddress addy = (ClientCompanyAddress) criteria.list().get(0);
+        ClientCompanyAddress addy = (ClientCompanyAddress) searchObject(ClientCompanyAddress.class, id);
         getTransaction().commit();
         return addy;
     }
 
     @Override
-    public List<ClientCompanyEmailAddress> getClientCompanyEmailAddress(int clientCompanyId) {
+    public List<ClientCompanyEmailAddress> getClientCompanyEmailAddresses(int clientCompanyId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompanyEmailAddress.class)
-                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+                .add(Restrictions.eq("clientCompany.id", clientCompanyId));
         List<ClientCompanyEmailAddress> email_list = criteria.list();
         getTransaction().commit();
         return email_list;
     }
 
     @Override
-    public ClientCompanyEmailAddress getClientCompanyEmailAddress(ClientCompanyEmailAddressId id) {
+    public ClientCompanyEmailAddress getClientCompanyEmailAddress(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(ClientCompanyEmailAddress.class)
-                .add(Restrictions.eq("id", id));
-        ClientCompanyEmailAddress email = (ClientCompanyEmailAddress) criteria.list().get(0);
+        ClientCompanyEmailAddress email = (ClientCompanyEmailAddress) searchObject(ClientCompanyEmailAddress.class, id);
         getTransaction().commit();
         return email;
     }
 
     @Override
-    public List<ClientCompanyPhoneNumber> getClientCompanyPhoneNumber(int clientCompanyId) {
+    public List<ClientCompanyPhoneNumber> getClientCompanyPhoneNumbers(int clientCompanyId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(ClientCompanyPhoneNumber.class)
-                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId));
+                .add(Restrictions.eq("clientCompany.id", clientCompanyId));
         List<ClientCompanyPhoneNumber> phone_list = criteria.list();
         getTransaction().commit();
         return phone_list;
     }
 
     @Override
-    public ClientCompanyPhoneNumber getClientCompanyPhoneNumber(ClientCompanyPhoneNumberId id) {
+    public ClientCompanyPhoneNumber getClientCompanyPhoneNumber(int id) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(ClientCompanyPhoneNumber.class)
-                .add(Restrictions.eq("id", id));
-        ClientCompanyPhoneNumber phone = (ClientCompanyPhoneNumber) criteria.list().get(0);
+        ClientCompanyPhoneNumber phone = (ClientCompanyPhoneNumber) searchObject(ClientCompanyPhoneNumber.class, id);
         getTransaction().commit();
         return phone;
+    }
+
+    @Override
+    public int getNumberOfShareholders(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
+                .add(Restrictions.eq("clientCompany.id", clientCompanyId));
+        List<HolderCompanyAccount> accts = criteria.list();
+        int count = 0;
+        for (HolderCompanyAccount hca : accts) {
+            if (hca.getShareUnits() != null && hca.getShareUnits() > 0)
+                ++count;
+        }
+        getTransaction().commit();
+        return count;
+    }
+
+    @Override
+    public int getNumberOfBondholders(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(BondOffer.class)
+                .add(Restrictions.eq("clientCompany.id", clientCompanyId));
+        List<BondOffer> offers = criteria.list();
+        int count = 0;
+        for (BondOffer bo : offers) {
+            List<HolderBondAccount> accts = new ArrayList<>(bo.getHolderBondAccounts());
+            for (HolderBondAccount hba : accts) {
+                if (!Objects.equals(hba.getRemainingPrincipalValue(), hba.getStartingPrincipalValue()))
+                    ++count;
+            }
+        }
+        getTransaction().commit();
+        return count;
+    }
+
+    @Override
+    public double getUnitPrice(int clientCompanyId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ShareQuotation.class)
+                .add(Restrictions.eq("clientCompany.id", clientCompanyId));
+        double price = 0.00;
+        if (criteria.list() != null && !criteria.list().isEmpty()) {
+            ShareQuotation quotation = (ShareQuotation) criteria.list().get(0);
+            price = quotation.getUnitPrice();
+        }
+        getTransaction().commit();
+        return price;
     }
 
     @Override
@@ -227,32 +277,24 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             List<ClientCompanyEmailAddress> emailAddresses, List<ClientCompanyPhoneNumber> phoneNumbers) {
         boolean created = false;
         try {
-            System.out.println("Size of Address::::: " + addresses.size());
-            System.out.println("Size of email::::: " + emailAddresses.size());
-            System.out.println("Size of phone::::: " + phoneNumbers.size());
-            
             startOperation();
-            //create client company
+            
+            //update client company
             createUpdateObject(clientCompany);
+            
             //create addresses
-            addresses.stream().map((address) -> {
-                address.getId().setClientCompanyId(clientCompany.getId());
-                return address;
-            }).forEach((addy) -> {
+            addresses.stream().forEach((addy) -> {
+                addy.setClientCompany(clientCompany);
                 createUpdateObject(addy);
             });
             //create email addresses
-            emailAddresses.stream().map((email) -> {
-                email.getId().setClientCompanyId(clientCompany.getId());
-                return email;
-            }).forEach((email) -> {
+            emailAddresses.stream().forEach((email) -> {
+                email.setClientCompany(clientCompany);
                 createUpdateObject(email);
             });
             //create phone numbers
-            phoneNumbers.stream().map((phone) -> {
-                phone.getId().setClientCompanyId(clientCompany.getId());
-                return phone;
-            }).forEach((phone) -> {
+            phoneNumbers.stream().forEach((phone) -> {
+                phone.setClientCompany(clientCompany);
                 createUpdateObject(phone);
             });
             getTransaction().commit();
@@ -272,65 +314,54 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         boolean updated = false;
         try {
             startOperation();
-            //create client company
+            
+            //update client company
             createUpdateObject(clientCompany);
-            //create addresses
+            
+            //update addresses
             if (addresses != null) {
-                addresses.stream().map((address) -> {
-                    address.getId().setClientCompanyId(clientCompany.getId());
-                    return address;
-                }).forEach((addy) -> {
+                addresses.stream().forEach((addy) -> {
+                    addy.setClientCompany(clientCompany);
                     createUpdateObject(addy);
                 });
             }
             
-            //create email addresses
+            //update email addresses
             if (emailAddresses != null) {
-                emailAddresses.stream().map((email) -> {
-                    email.getId().setClientCompanyId(clientCompany.getId());
-                    return email;
-                }).forEach((email) -> {
+                emailAddresses.stream().forEach((email) -> {
+                    email.setClientCompany(clientCompany);
                     createUpdateObject(email);
                 });
             }
             
-            //create phone numbers
+            //update phone numbers
             if (phoneNumbers != null) {
-                phoneNumbers.stream().map((phone) -> {
-                    phone.getId().setClientCompanyId(clientCompany.getId());
-                    return phone;
-                }).forEach((phone) -> {
+                phoneNumbers.stream().forEach((phone) -> {
+                    phone.setClientCompany(clientCompany);
                     createUpdateObject(phone);
                 });
             }
             
             //remove addresses
             if (addressesToRemove != null) {
-                addressesToRemove.stream().map((addy) -> {
-                    addy.getId().setClientCompanyId(clientCompany.getId());
-                    return addy;
-                }).forEach((addy) -> {
+                addressesToRemove.stream().forEach((addy) -> {
+                    addy.setClientCompany(clientCompany);
                     removeObject(addy);
                 });
             }
             
             //remove email addresses
             if (emailAddressesToRemove != null) {
-                emailAddressesToRemove.stream().map((email) -> {
-                    email.getId().setClientCompanyId(clientCompany.getId());
-                    System.out.println("delete-email: " + email.getId().getClientCompanyId() + ", " + email.getId().getEmailAddress());
-                    return email;
-                }).forEach((email) -> {
+                emailAddressesToRemove.stream().forEach((email) -> {
+                    email.setClientCompany(clientCompany);
                     removeObject(email);
                 });
             }
             
             //remove phone numbers
             if (phoneNumbersToRemove != null) {
-                phoneNumbersToRemove.stream().map((phone) -> {
-                    phone.getId().setClientCompanyId(clientCompany.getId());
-                    return phone;
-                }).forEach((phone) -> {
+                phoneNumbersToRemove.stream().forEach((phone) -> {
+                    phone.setClientCompany(clientCompany);
                     removeObject(phone);
                 });
             }
@@ -472,24 +503,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             
             baseCriteria.createCriteria("cc.clientCompanyAddresses", "a", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccAddress).enableLike().ignoreCase());
-            
-            //for address id
-            if (ccAddress.getId() != null) {
-                if (ccAddress.getId().getAddressLine1() != null) {
-                    String addy_addressLine1 = ccAddress.getId().getAddressLine1();
-                    baseCriteria.add(Restrictions.ilike("a.id.addressLine1", addy_addressLine1));
-                }
-
-                if (ccAddress.getId().getState() != null) {
-                    String addy_state = ccAddress.getId().getState();
-                    baseCriteria.add(Restrictions.ilike("a.id.state", addy_state));
-                }
-
-                if (ccAddress.getId().getCountry() != null) {
-                    String addy_country = ccAddress.getId().getCountry();
-                    baseCriteria.add(Restrictions.ilike("a.id.country", addy_country));
-                }
-            }
         }
         
         if (!cc_phone_list.isEmpty()) {
@@ -497,12 +510,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             
             baseCriteria.createCriteria("cc.clientCompanyPhoneNumbers", "p", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccPhone).enableLike().ignoreCase());
-            
-            //for phone id
-            if (ccPhone.getId() != null && ccPhone.getId().getPhoneNumber() != null) {
-                String phoneNumber = ccPhone.getId().getPhoneNumber();
-                baseCriteria.add(Restrictions.ilike("p.id.phoneNumber", phoneNumber));
-            }
         }
         
         if (!cc_email_list.isEmpty()) {
@@ -510,12 +517,6 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             
             baseCriteria.createCriteria("cc.clientCompanyEmailAddresses", "e", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(ccEmail).enableLike().ignoreCase());
-            
-            //for email id
-            if (ccEmail.getId() != null && ccEmail.getId().getEmailAddress() != null) {
-                String emailAddress = ccEmail.getId().getEmailAddress();
-                baseCriteria.add(Restrictions.ilike("e.id.emailAddress", emailAddress));
-            }
         }
         
         return baseCriteria;
@@ -572,7 +573,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
                 List<HolderCompanyAccount> acct_list = new ArrayList<>(cc.getHolderCompanyAccounts());
                 int count = 0;
                 for (HolderCompanyAccount hca : acct_list) {
-                    if (hca.getShareUnits() > 0)
+                    if (hca.getShareUnits() != null && hca.getShareUnits() > 0)
                         ++count;
                 }
                 if (count == startNo) {
@@ -589,7 +590,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
                 List<HolderCompanyAccount> acct_list = new ArrayList<>(cc.getHolderCompanyAccounts());
                 int count = 0;
                 for (HolderCompanyAccount hca : acct_list) {
-                    if (hca.getShareUnits() > 0)
+                    if (hca.getShareUnits() != null && hca.getShareUnits() > 0)
                         ++count;
                 }
                 if (count >= startNo && count <= endNo) {
@@ -615,22 +616,23 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
      */
     private List<ClientCompany> searchNumberOfBondholders(List<ClientCompany> clientCompanies, String descriptorValue, Map<String, Integer> noOfBondholders) {
         List<ClientCompany> searchResult = new ArrayList<>();
-        int bondAccounts = 0;
 
         if (descriptorValue.equalsIgnoreCase("exact")) {
             int startNo = noOfBondholders.get("start");
             for (ClientCompany cc : clientCompanies) {
+                int bondAccounts = 0;
                 Iterator it = cc.getBondOffers().iterator();
                 while (it.hasNext()) {
                     BondOffer bondOffer = (BondOffer) it.next();
                     List<HolderBondAccount> bond_list = new ArrayList<>(bondOffer.getHolderBondAccounts());
                     for (HolderBondAccount hba : bond_list) {
-                        if (hba.getBondUnits() > 0)
+                        if (hba.getBondUnits() != null && hba.getBondUnits() > 0)
                             ++bondAccounts;
                     }
                 }
                 if (bondAccounts == startNo) {
                     searchResult.add(cc);
+                    bondAccounts = 0;
                 }
             }
             return searchResult;
@@ -640,17 +642,20 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             int startNo = noOfBondholders.get("start");
             int endNo = noOfBondholders.get("end");
             for (ClientCompany cc : clientCompanies) {
+                int bondAccounts = 0;
                 Iterator it = cc.getBondOffers().iterator();
                 while (it.hasNext()) {
                     BondOffer bondOffer = (BondOffer) it.next();
                     List<HolderBondAccount> bond_list = new ArrayList<>(bondOffer.getHolderBondAccounts());
                     for (HolderBondAccount hba : bond_list) {
-                        if (hba.getBondUnits() > 0)
+                        if (hba.getBondUnits() != null && hba.getBondUnits() > 0)
                             ++bondAccounts;
                     }
                 }
+                System.out.println("::::no of bonds found:::: " + bondAccounts);
                 if (bondAccounts >= startNo && bondAccounts <= endNo) {
                     searchResult.add(cc);
+                    bondAccounts = 0;
                 }
             }
             return searchResult;
@@ -661,7 +666,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
 
     @Override
     public List<ClientCompany> queryClientCompany(String descriptor, ClientCompany ccSearchParams, Map<String, Double> shareUnitCriteria,
-            Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria) {
+            Map<String, Integer> noOfShareholdersCriteria, Map<String, Integer> noOfBondholdersCriteria) throws GreenpoleQueryException {
         Descriptor descriptorUtil = new Descriptor();
         //intial shareholder object, in case holder isnt searched
         ClientCompany initialCC = new ClientCompany();
@@ -674,43 +679,48 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         String shareUnitDescriptor = descriptorSplits.get("shareUnit");
         String numberOfShareholdersDescriptor = descriptorSplits.get("numberOfShareholders");
         String numberOfBondholdersDescriptor = descriptorSplits.get("numberOfBondholders");
+        
+        try {
+            startOperation();
+            Criteria baseCriteria = getStartCriteria();
 
-        startOperation();
-        Criteria baseCriteria = getStartCriteria();
+            //we should assume the  result will consist of the base client company list
+            List<ClientCompany> result = baseCriteria.list();
+            Criteria clientCompanyUnitPriceCriteria;
+            Criteria clientCompanySearchCriteria = baseCriteria; //client company search criteria must be initialised since it is being used in an isolated if statement
+            //under the share unit price search (see if statement for clarification).
 
-        //we should assume the  result will consist of the base client company list
-        List<ClientCompany> result = baseCriteria.list();
-        Criteria clientCompanyUnitPriceCriteria;
-        Criteria clientCompanySearchCriteria = baseCriteria; //client company search criteria must be initialised since it is being used in an isolated if statement
-        //under the share unit price search (see if statement for clarification).
+            if (clientCompanyDescriptor.equalsIgnoreCase("exact")) {
+                clientCompanySearchCriteria = searchClientCompanyAccordingToObject(baseCriteria, ccSearchParams);
+                result = clientCompanySearchCriteria.list();
+            } else {
+                baseCriteria.add(Example.create(initialCC).enableLike());
+            }
 
-        if (clientCompanyDescriptor.equalsIgnoreCase("exact")) {
-            clientCompanySearchCriteria = searchClientCompanyAccordingToObject(baseCriteria, ccSearchParams);
-            result = clientCompanySearchCriteria.list();
-        } else {
-            baseCriteria.add(Example.create(initialCC).enableLike());
+            //if client company was searched for, pass client company search criteria into unit price search. Otherwise, use base criteria
+            if (!shareUnitDescriptor.equalsIgnoreCase("none") && clientCompanyDescriptor.equalsIgnoreCase("exact")) {
+                clientCompanyUnitPriceCriteria = searchUnitPrice(clientCompanySearchCriteria, shareUnitDescriptor, shareUnitCriteria);
+                result = clientCompanyUnitPriceCriteria.list();
+            } else if (!shareUnitDescriptor.equalsIgnoreCase("none") && !clientCompanyDescriptor.equalsIgnoreCase("exact")) {
+                clientCompanyUnitPriceCriteria = searchUnitPrice(baseCriteria, shareUnitDescriptor, shareUnitCriteria);
+                result = clientCompanyUnitPriceCriteria.list();
+            }
+
+            if (!numberOfShareholdersDescriptor.equalsIgnoreCase("none")) {
+                result = searchNumberOfShareholders(result, numberOfShareholdersDescriptor, noOfShareholdersCriteria);
+            }
+
+            if (!numberOfBondholdersDescriptor.equalsIgnoreCase("none")) {
+                result = searchNumberOfBondholders(result, numberOfBondholdersDescriptor, noOfBondholdersCriteria);
+            }
+
+            getTransaction().commit();
+            
+            return result;
+        } finally {
+            if (getTransaction() != null && !getTransaction().wasCommitted())
+                getTransaction().rollback();
         }
-
-        //if client company was searched for, pass client company search criteria into unit price search. Otherwise, use base criteria
-        if (!shareUnitDescriptor.equalsIgnoreCase("none") && clientCompanyDescriptor.equalsIgnoreCase("exact")) {
-            clientCompanyUnitPriceCriteria = searchUnitPrice(clientCompanySearchCriteria, shareUnitDescriptor, shareUnitCriteria);
-            result = clientCompanyUnitPriceCriteria.list();
-        } else if (!shareUnitDescriptor.equalsIgnoreCase("none") && !clientCompanyDescriptor.equalsIgnoreCase("exact")) {
-            clientCompanyUnitPriceCriteria = searchUnitPrice(baseCriteria, shareUnitDescriptor, shareUnitCriteria);
-            result = clientCompanyUnitPriceCriteria.list();
-        }
-
-        if (!numberOfShareholdersDescriptor.equalsIgnoreCase("none")) {
-            result = searchNumberOfShareholders(result, numberOfShareholdersDescriptor, noOfShareholdersCriteria);
-        }
-
-        if (!numberOfBondholdersDescriptor.equalsIgnoreCase("none")) {
-            result = searchNumberOfBondholders(result, numberOfBondholdersDescriptor, noOfBondholdersCriteria);
-        }
-
-        getTransaction().commit();
-
-        return result;
     }
 
     @Override
@@ -761,5 +771,37 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         BondOfferPaymentPlan plan = (BondOfferPaymentPlan) searchObject(BondOfferPaymentPlan.class, planId);
         getTransaction().commit();
         return plan;
+    }
+
+    @Override
+    public List<NseSector> getAllNseSectors() {
+        startOperation();
+        List<NseSector> sectors = searchAll(NseSector.class);
+        getTransaction().commit();
+        return sectors;
+    }
+
+    @Override
+    public NseSector getNseSector(int sectorId) {
+        startOperation();
+        NseSector sector = (NseSector) searchObject(NseSector.class, sectorId);
+        getTransaction().commit();
+        return sector;
+    }
+
+    @Override
+    public List<Depository> getAllDepositories() {
+        startOperation();
+        List<Depository> depositories = searchAll(Depository.class);
+        getTransaction().commit();
+        return depositories;
+    }
+
+    @Override
+    public Depository getDepository(int depositoryId) {
+        startOperation();
+        Depository depository = (Depository) searchObject(Depository.class, depositoryId);
+        getTransaction().commit();
+        return depository;
     }
 }

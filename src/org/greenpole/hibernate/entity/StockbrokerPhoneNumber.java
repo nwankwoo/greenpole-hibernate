@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
 
@@ -9,30 +9,26 @@ package org.greenpole.hibernate.entity;
 public class StockbrokerPhoneNumber  implements java.io.Serializable {
 
 
-     private StockbrokerPhoneNumberId id;
+     private int id;
      private Long version;
      private Stockbroker stockbroker;
+     private String phoneNumber;
      private Boolean isPrimary;
 
     public StockbrokerPhoneNumber() {
     }
 
-	
-    public StockbrokerPhoneNumber(StockbrokerPhoneNumberId id, Stockbroker stockbroker) {
-        this.id = id;
-        this.stockbroker = stockbroker;
-    }
-    public StockbrokerPhoneNumber(StockbrokerPhoneNumberId id, Stockbroker stockbroker, Boolean isPrimary) {
-       this.id = id;
+    public StockbrokerPhoneNumber(Stockbroker stockbroker, String phoneNumber, Boolean isPrimary) {
        this.stockbroker = stockbroker;
+       this.phoneNumber = phoneNumber;
        this.isPrimary = isPrimary;
     }
    
-    public StockbrokerPhoneNumberId getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(StockbrokerPhoneNumberId id) {
+    public void setId(int id) {
         this.id = id;
     }
     public Long getVersion() {
@@ -48,6 +44,13 @@ public class StockbrokerPhoneNumber  implements java.io.Serializable {
     
     public void setStockbroker(Stockbroker stockbroker) {
         this.stockbroker = stockbroker;
+    }
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+    
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     public Boolean getIsPrimary() {
         return this.isPrimary;

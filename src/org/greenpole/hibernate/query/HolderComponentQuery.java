@@ -10,27 +10,20 @@ import java.util.Map;
 import org.greenpole.hibernate.entity.AccountConsolidation;
 import org.greenpole.hibernate.entity.Administrator;
 import org.greenpole.hibernate.entity.AdministratorEmailAddress;
-import org.greenpole.hibernate.entity.AdministratorEmailAddressId;
 import org.greenpole.hibernate.entity.AdministratorPhoneNumber;
-import org.greenpole.hibernate.entity.AdministratorPhoneNumberId;
 import org.greenpole.hibernate.entity.AdministratorPostalAddress;
-import org.greenpole.hibernate.entity.AdministratorPostalAddressId;
 import org.greenpole.hibernate.entity.AdministratorResidentialAddress;
-import org.greenpole.hibernate.entity.AdministratorResidentialAddressId;
-import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
+import org.greenpole.hibernate.entity.Bank;
 import org.greenpole.hibernate.entity.CompanyAccountConsolidation;
 import org.greenpole.hibernate.entity.Holder;
 import org.greenpole.hibernate.entity.HolderBondAccount;
+import org.greenpole.hibernate.entity.HolderChangeType;
 import org.greenpole.hibernate.entity.HolderChanges;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.HolderEmailAddress;
-import org.greenpole.hibernate.entity.HolderEmailAddressId;
 import org.greenpole.hibernate.entity.HolderPhoneNumber;
-import org.greenpole.hibernate.entity.HolderPhoneNumberId;
 import org.greenpole.hibernate.entity.HolderPostalAddress;
-import org.greenpole.hibernate.entity.HolderPostalAddressId;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
-import org.greenpole.hibernate.entity.HolderResidentialAddressId;
 import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.HolderType;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
@@ -158,6 +151,19 @@ public interface HolderComponentQuery {
     public List<HolderChanges> queryHolderChanges(String descriptor, HolderChanges searchParams, String startDate, String endDate, String dateFormat);
     
     /**
+     * Gets all holder change types.
+     * @return a list of all holder change types
+     */
+    public List<HolderChangeType> getAllChangeTypes();
+    
+    /**
+     * Gets a holder change type according to a specified id.
+     * @param typeId the holder change type id
+     * @return the holder change type object
+     */
+    public HolderChangeType getChangeType(int typeId);
+    
+    /**
      * Gets the holder object according to the specified id.
      * @param holderId the holder id
      * @return the holder object
@@ -221,28 +227,28 @@ public interface HolderComponentQuery {
      * @param holderId the holder's id
      * @return the list of the holder's residential addresses
      */
-    public List<HolderResidentialAddress> getHolderResidentialAddress(int holderId);
+    public List<HolderResidentialAddress> getHolderResidentialAddresses(int holderId);
     
     /**
      * Gets the holder's residential address according to a specified id.
      * @param id the holder address id
      * @return the holder's address
      */
-    public HolderResidentialAddress getHolderResidentialAddress(HolderResidentialAddressId id);
+    public HolderResidentialAddress getHolderResidentialAddress(int id);
     
     /**
      * Gets the holder's residential addresses.
      * @param holderId the holder's id
      * @return the list of the holder's residential addresses
      */
-    public List<HolderPostalAddress> getHolderPostalAddress(int holderId);
+    public List<HolderPostalAddress> getHolderPostalAddresses(int holderId);
     
     /**
      * Gets the holder's residential address according to a specified id.
      * @param id the holder address id
      * @return the holder's address
      */
-    public HolderPostalAddress getHolderPostalAddress(HolderPostalAddressId id);
+    public HolderPostalAddress getHolderPostalAddress(int id);
     
     /**
      * Gets the holder's residential addresses.
@@ -256,7 +262,7 @@ public interface HolderComponentQuery {
      * @param id the holder phone number id
      * @return the holder's phone number
      */
-    public HolderPhoneNumber getHolderPhoneNumber(HolderPhoneNumberId id);
+    public HolderPhoneNumber getHolderPhoneNumber(int id);
     
     /**
      * Gets the holder's residential addresses.
@@ -270,35 +276,49 @@ public interface HolderComponentQuery {
      * @param id the holder email address id
      * @return the holder's email address
      */
-    public HolderEmailAddress getHolderEmailAddress(HolderEmailAddressId id);
+    public HolderEmailAddress getHolderEmailAddress(int id);
     
     /**
      * Gets the administrator's residential address according to a specified id
      * @param id the administrator residential id
      * @return the administrator's residential address
      */
-    public AdministratorResidentialAddress getAdministratorResidentialAddress(AdministratorResidentialAddressId id);
+    public AdministratorResidentialAddress getAdministratorResidentialAddress(int id);
     
     /**
      * Gets the administrator's postal address according to a specified id
      * @param id the administrator postal id
      * @return the administrator's postal address
      */
-    public AdministratorPostalAddress getAdministratorPostalAddress(AdministratorPostalAddressId id);
+    public AdministratorPostalAddress getAdministratorPostalAddress(int id);
     
     /**
      * Gets the administrator's email address according to a specified id.
      * @param id the administrator email id
      * @return the administrator's email address
      */
-    public AdministratorEmailAddress getAdministratorEmailAddress(AdministratorEmailAddressId id);
+    public AdministratorEmailAddress getAdministratorEmailAddress(int id);
+    
+    /**
+     * Gets all email addresses belonging to a specified administrator
+     * @param administratorId the administrator id
+     * @return the list of all email addresses belonging to a specified administrator
+     */
+    public List<AdministratorEmailAddress> getAdministratorEmailAddresses(int administratorId);
     
     /**
      * Gets the administrator's phone number according to a specified id.
      * @param id the administrator phone number id
      * @return the administrator's phone number
      */
-    public AdministratorPhoneNumber getAdministratorPhoneNumber(AdministratorPhoneNumberId id);
+    public AdministratorPhoneNumber getAdministratorPhoneNumber(int id);
+    
+    /**
+     * Gets all phone numbers belonging to a specified administrator
+     * @param administratorId the administrator id
+     * @return the list of all phone numbers belonging to a specified administrator
+     */
+    public List<AdministratorPhoneNumber> getAdministratorPhoneNumbers(int administratorId);
     
     /**
      * Transfers share units from one holder company account to another.
@@ -355,6 +375,7 @@ public interface HolderComponentQuery {
      * @param secondaryHolders the list of secondary holder accounts
      * @param secHolderCompAccts the list of company accounts tied to the secondary holder accounts
      * @param secHolderBondAccts the list of legitimate bond accounts tied to the secondary holder accounts
+     * @param pryHolderOriginalValues the original values stored in the holder account before merge
      * @return true if merge was successful. Otherwise, false
      */
     public boolean mergeHolderAccounts(Holder primaryHolder, List<Holder> secondaryHolders, List<HolderCompanyAccount> secHolderCompAccts,
@@ -436,9 +457,10 @@ public interface HolderComponentQuery {
     /**
      * Creates administrators for a holder.
      * @param holder the holder object which holds all administrator objects
+     * @param change the change object which holds changes to the holder
      * @return true if creation is successful. Otherwise, false
      */
-    public boolean createAdministratorForHolder(Holder holder);
+    public boolean createAdministratorForHolder(Holder holder, HolderChanges change);
     
     /**
      * Checks the status of a holder's current power of attorney.
@@ -533,4 +555,18 @@ public interface HolderComponentQuery {
      * @return the transaction type object
      */
     public TransactionType getTransactionType(int typeId);
+    
+    /**
+     * Gets the details of a bank in the database.
+     * @param bankId the bank id
+     * @return the bank object
+     */
+    public Bank getBankDetails(int bankId);
+    
+    /**
+     * Checks if holder has an ESOP company account
+     * @param holderId the holder id
+     * @return true, if holder has an ESOP company account. Otherwise, false
+     */
+    public boolean holderHasEsopAccount(int holderId);
 }

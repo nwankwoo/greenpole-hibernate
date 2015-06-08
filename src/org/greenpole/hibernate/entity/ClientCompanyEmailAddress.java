@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
 
@@ -9,30 +9,26 @@ package org.greenpole.hibernate.entity;
 public class ClientCompanyEmailAddress  implements java.io.Serializable {
 
 
-     private ClientCompanyEmailAddressId id;
+     private int id;
      private Long version;
      private ClientCompany clientCompany;
+     private String emailAddress;
      private Boolean isPrimary;
 
     public ClientCompanyEmailAddress() {
     }
 
-	
-    public ClientCompanyEmailAddress(ClientCompanyEmailAddressId id, ClientCompany clientCompany) {
-        this.id = id;
-        this.clientCompany = clientCompany;
-    }
-    public ClientCompanyEmailAddress(ClientCompanyEmailAddressId id, ClientCompany clientCompany, Boolean isPrimary) {
-       this.id = id;
+    public ClientCompanyEmailAddress(ClientCompany clientCompany, String emailAddress, Boolean isPrimary) {
        this.clientCompany = clientCompany;
+       this.emailAddress = emailAddress;
        this.isPrimary = isPrimary;
     }
    
-    public ClientCompanyEmailAddressId getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(ClientCompanyEmailAddressId id) {
+    public void setId(int id) {
         this.id = id;
     }
     public Long getVersion() {
@@ -48,6 +44,13 @@ public class ClientCompanyEmailAddress  implements java.io.Serializable {
     
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
+    }
+    public String getEmailAddress() {
+        return this.emailAddress;
+    }
+    
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
     public Boolean getIsPrimary() {
         return this.isPrimary;

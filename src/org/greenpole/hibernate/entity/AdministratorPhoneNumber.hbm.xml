@@ -1,23 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-May-2015 21:21:46 by Hibernate Tools 4.3.1 -->
+<!-- Generated 05-Jun-2015 21:07:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.AdministratorPhoneNumber" table="ADMINISTRATOR_PHONE_NUMBER" schema="dbo" catalog="greenpole">
-        <composite-id name="id" class="org.greenpole.hibernate.entity.AdministratorPhoneNumberId">
-            <key-property name="administratorId" type="int">
-                <column name="administrator_id" />
-            </key-property>
-            <key-property name="phoneNumber" type="string">
-                <column name="phone_number" length="50" />
-            </key-property>
-        </composite-id>
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
         <version name="version" type="java.lang.Long">
             <column name="version" />
         </version>
-        <many-to-one name="administrator" class="org.greenpole.hibernate.entity.Administrator" update="false" insert="false" fetch="select">
-            <column name="administrator_id" not-null="true" />
+        <many-to-one name="administrator" class="org.greenpole.hibernate.entity.Administrator" fetch="select">
+            <column name="administrator_id" />
         </many-to-one>
+        <property name="phoneNumber" type="string">
+            <column name="phone_number" length="50" />
+        </property>
         <property name="isPrimary" type="java.lang.Boolean">
             <column name="is_primary" />
         </property>

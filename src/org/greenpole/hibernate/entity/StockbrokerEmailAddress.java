@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
 
@@ -9,30 +9,26 @@ package org.greenpole.hibernate.entity;
 public class StockbrokerEmailAddress  implements java.io.Serializable {
 
 
-     private StockbrokerEmailAddressId id;
+     private int id;
      private Long version;
      private Stockbroker stockbroker;
+     private String emailAddress;
      private Boolean isPrimary;
 
     public StockbrokerEmailAddress() {
     }
 
-	
-    public StockbrokerEmailAddress(StockbrokerEmailAddressId id, Stockbroker stockbroker) {
-        this.id = id;
-        this.stockbroker = stockbroker;
-    }
-    public StockbrokerEmailAddress(StockbrokerEmailAddressId id, Stockbroker stockbroker, Boolean isPrimary) {
-       this.id = id;
+    public StockbrokerEmailAddress(Stockbroker stockbroker, String emailAddress, Boolean isPrimary) {
        this.stockbroker = stockbroker;
+       this.emailAddress = emailAddress;
        this.isPrimary = isPrimary;
     }
    
-    public StockbrokerEmailAddressId getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(StockbrokerEmailAddressId id) {
+    public void setId(int id) {
         this.id = id;
     }
     public Long getVersion() {
@@ -48,6 +44,13 @@ public class StockbrokerEmailAddress  implements java.io.Serializable {
     
     public void setStockbroker(Stockbroker stockbroker) {
         this.stockbroker = stockbroker;
+    }
+    public String getEmailAddress() {
+        return this.emailAddress;
+    }
+    
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
     public Boolean getIsPrimary() {
         return this.isPrimary;

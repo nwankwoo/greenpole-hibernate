@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 29-May-2015 21:21:44 by Hibernate Tools 4.3.1
+// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
 
 
 
@@ -9,30 +9,26 @@ package org.greenpole.hibernate.entity;
 public class HolderPhoneNumber  implements java.io.Serializable {
 
 
-     private HolderPhoneNumberId id;
+     private int id;
      private Long version;
      private Holder holder;
+     private String phoneNumber;
      private Boolean isPrimary;
 
     public HolderPhoneNumber() {
     }
 
-	
-    public HolderPhoneNumber(HolderPhoneNumberId id, Holder holder) {
-        this.id = id;
-        this.holder = holder;
-    }
-    public HolderPhoneNumber(HolderPhoneNumberId id, Holder holder, Boolean isPrimary) {
-       this.id = id;
+    public HolderPhoneNumber(Holder holder, String phoneNumber, Boolean isPrimary) {
        this.holder = holder;
+       this.phoneNumber = phoneNumber;
        this.isPrimary = isPrimary;
     }
    
-    public HolderPhoneNumberId getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(HolderPhoneNumberId id) {
+    public void setId(int id) {
         this.id = id;
     }
     public Long getVersion() {
@@ -48,6 +44,13 @@ public class HolderPhoneNumber  implements java.io.Serializable {
     
     public void setHolder(Holder holder) {
         this.holder = holder;
+    }
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+    
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     public Boolean getIsPrimary() {
         return this.isPrimary;
