@@ -179,6 +179,13 @@ public interface HolderComponentQuery {
     public Holder getHolder(String chn);
     
     /**
+     * Gets all primary holders in the system.
+     * @param isShareholder whether to search for all shareholders or bond-holders
+     * @return a list of all primary holders in the system
+     */
+    public List<Holder> getAllHolders(boolean isShareholder);
+    
+    /**
      * Gets the holder company account object according to the specified ids.
      * @param holderId the holder id
      * @param clientCompanyId the client company id, which the holder has an account with

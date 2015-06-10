@@ -271,7 +271,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkHolderAccount(String chn) {
         Holder h = new Holder();
         h.setPryHolder(true);
-        h.setMerged(false);
         
         startOperation();
         Criteria criteria = getSession().createCriteria(Holder.class)
@@ -287,7 +286,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkHolderCompanyAccount(int holderId, int clientCompanyId) {
         HolderCompanyAccount hca = new HolderCompanyAccount();
         hca.setHolderCompAccPrimary(true);
-        hca.setMerged(false);
         
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
@@ -304,7 +302,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkHolderBondAccount(int holderId, int bondOfferId) {
         HolderBondAccount hba = new HolderBondAccount();
         hba.setHolderBondAcctPrimary(true);
-        hba.setMerged(false);
         
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
@@ -428,6 +425,31 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     }
 
     @Override
+    public List<Holder> getAllHolders(boolean isShareholder) {
+        Holder h = new Holder();
+        h.setPryHolder(true);
+        
+        startOperation();
+        Criteria criteria = getSession().createCriteria(Holder.class)
+                .add(Example.create(h));
+        List<Holder> hlist = criteria.list();
+        List<Holder> returnlist = new ArrayList<>();
+        for (Holder holder : hlist) {
+            if (isShareholder) {
+                if (holder.getHolderCompanyAccounts() != null && holder.getHolderCompanyAccounts().size() > 0) {
+                    returnlist.add(holder);
+                }
+            } else {
+                if (holder.getHolderBondAccounts()!= null && holder.getHolderBondAccounts().size() > 0) {
+                    returnlist.add(holder);
+                }
+            }
+        }
+        getTransaction().commit();
+        return returnlist;
+    }
+
+    @Override
     public HolderCompanyAccount getHolderCompanyAccount(int holderId, int clientCompanyId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
@@ -466,7 +488,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //intial shareholder object, in case holder isnt searched
         Holder initialHolder = new Holder();
         initialHolder.setPryHolder(true);
-        initialHolder.setMerged(false);
         
         //descriptor must be (default value) = holder:none;units:none;totalHoldings:none
         Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
@@ -511,7 +532,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                     Iterator it = holder.getHolderCompanyAccounts().iterator();
                     while (it.hasNext()) {
                         HolderCompanyAccount acct = (HolderCompanyAccount) it.next();
-                        if (acct.getShareUnits() != null && acct.getShareUnits() > 0) {
+                        if (acct.getShareUnits() != null && acct.getShareUnits() >= 0) {
                             shareholders.add(holder);
                         }
                     }
@@ -534,7 +555,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //intial shareholder object, in case holder isnt searched
         Holder initialHolder = new Holder();
         initialHolder.setPryHolder(true);
-        initialHolder.setMerged(false);
         
         //descriptor must be (default value) = holder:none;units:none;totalHoldings:none
         Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
@@ -580,7 +600,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                     Iterator it = holder.getHolderBondAccounts().iterator();
                     while (it.hasNext()) {
                         HolderBondAccount acct = (HolderBondAccount) it.next();
-                        if (acct.getBondUnits() != null && acct.getBondUnits() > 0) {
+                        if (acct.getBondUnits() != null && acct.getBondUnits() >= 0) {
                             bondholders.add(holder);
                             break;
                         }
@@ -1713,7 +1733,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //intial shareholder company account object, in case holder isnt searched
         HolderBondAccount initialAcct = new HolderBondAccount();
         initialAcct.setHolderBondAcctPrimary(true);
-        initialAcct.setMerged(false);
         
         Criteria tempCriteria = baseCriteria; //save criteria state, in case it needs to be returned
         
@@ -1752,7 +1771,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //intial shareholder company account object, in case holder isnt searched
         HolderCompanyAccount initialAcct = new HolderCompanyAccount();
         initialAcct.setHolderCompAccPrimary(true);
-        initialAcct.setMerged(false);
         
         Criteria tempCriteria = baseCriteria; //save criteria state, in case it needs to be returned
         
