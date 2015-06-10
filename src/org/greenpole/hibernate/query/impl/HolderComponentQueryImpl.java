@@ -848,7 +848,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<HolderCompanyAccount> getAllHolderCompanyAccounts(int holderId) {
         HolderCompanyAccount hca = new HolderCompanyAccount();
         hca.setHolderCompAccPrimary(true);
-        hca.setMerged(false);
         
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
@@ -863,7 +862,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<HolderBondAccount> getAllHolderBondAccounts(int holderId) {
         HolderBondAccount hba = new HolderBondAccount();
         hba.setHolderBondAcctPrimary(true);
-        hba.setMerged(false);
         
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
