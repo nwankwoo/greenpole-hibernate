@@ -34,7 +34,10 @@ public abstract class GeneralisedAbstractDao {
      */
     public void startOperation(){
         session = HibernateUtil.getSessionFactory().getCurrentSession();
-        tx = session.beginTransaction();
+        if (session.getTransaction() != null && session.getTransaction().isActive())
+            tx = session.getTransaction();
+        else
+            tx = session.beginTransaction();
     }
 
     /**

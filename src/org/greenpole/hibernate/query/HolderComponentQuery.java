@@ -89,17 +89,11 @@ public interface HolderComponentQuery {
      * @param postalAddresses the holder's postal addresses
      * @param phoneNumbers the holder's phone numbers
      * @param emailAddresses the holder's email address
-     * @param deletedResAddresses the holder's residential addresses to be deleted
-     * @param deletedPosAddresses the holder's postal addresses to be deleted
-     * @param deletedPhoneNumbers the holder's phone numbers to be deleted
-     * @param deletedEmailAddresses the holder's email address to be deleted
      * @param changes recordable changes made to the holder account
      * @return true, if update transaction is successful
      */
     public boolean updateHolderAccount(Holder holder, List<HolderResidentialAddress> residentialAddresses, List<HolderPostalAddress> postalAddresses,
-            List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderResidentialAddress> deletedResAddresses,
-            List<HolderPostalAddress> deletedPosAddresses, List<HolderPhoneNumber> deletedPhoneNumbers, List<HolderEmailAddress> deletedEmailAddresses,  
-            List<HolderChanges> changes);
+            List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderChanges> changes);
     
     /**
      * Updates an existing holder account (for shareholder and bondholder).
@@ -162,6 +156,13 @@ public interface HolderComponentQuery {
      * @return the holder change type object
      */
     public HolderChangeType getChangeType(int typeId);
+    
+    /**
+     * Checks if a holder change type exists.
+     * @param typeId the holder change type id
+     * @return true, if holder change type exists. Otherwise, false
+     */
+    public boolean checkChangeType(int typeId);
     
     /**
      * Gets the holder object according to the specified id.
@@ -336,6 +337,7 @@ public interface HolderComponentQuery {
      * @param receiver the holder bond account receiving the bond units
      * @param bondUnits the bond units to be sent
      * @param unitPrice the price per bond unit
+     * @param transferTypeId the type of transfer
      * @return true, if transaction was successful. Otherwise, false
      */
     public boolean transferBondUnits(HolderBondAccount sender, HolderBondAccount receiver, int bondUnits, double unitPrice, int transferTypeId);
@@ -453,6 +455,14 @@ public interface HolderComponentQuery {
      * @return a list of company account consolidation records
      */
     public List<CompanyAccountConsolidation> getCompAcctConsolidation(int acctConsolidationId);
+    
+    /**
+     * Gets all company account consolidation according to the specified account consolidation id.
+     * This method does not consider whether the company account has been de-merged.
+     * @param acctConsolidationId the account consolidation id
+     * @return a list of company account consolidation records
+     */
+    public List<CompanyAccountConsolidation> getCompAcctConsolidationIgnoreDemerge(int acctConsolidationId);
     
     /**
      * Creates administrators for a holder.

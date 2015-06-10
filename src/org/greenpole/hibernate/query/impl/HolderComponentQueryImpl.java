@@ -189,9 +189,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
 
     @Override
     public boolean updateHolderAccount(Holder holder, List<HolderResidentialAddress> residentialAddresses, List<HolderPostalAddress> postalAddresses,
-            List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderResidentialAddress> deletedResAddresses,
-            List<HolderPostalAddress> deletedPosAddresses, List<HolderPhoneNumber> deletedPhoneNumbers, List<HolderEmailAddress> deletedEmailAddresses,
-            List<HolderChanges> changes) {
+            List<HolderPhoneNumber> phoneNumbers, List<HolderEmailAddress> emailAddresses, List<HolderChanges> changes) {
         boolean created = false;
         try {
             startOperation();
@@ -234,38 +232,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             if (changes != null) {
                 for (HolderChanges change : changes) {
                     createUpdateObject(change);
-                }
-            }
-            
-            //delete resident address
-            if (deletedResAddresses != null) {
-                for (HolderResidentialAddress res : deletedResAddresses) {
-                    res.setHolder(holder);
-                    removeObject(res);
-                }
-            }
-            
-            //delete postal address
-            if (deletedPosAddresses != null) {
-                for (HolderPostalAddress pos : deletedPosAddresses) {
-                    pos.setHolder(holder);
-                    removeObject(pos);
-                }
-            }
-            
-            //delete email address
-            if (deletedEmailAddresses != null) {
-                for (HolderEmailAddress email : deletedEmailAddresses) {
-                    email.setHolder(holder);
-                    removeObject(email);
-                }
-            }
-            
-            //delete phone address
-            if (deletedPhoneNumbers != null) {
-                for (HolderPhoneNumber phone : deletedPhoneNumbers) {
-                    phone.setHolder(holder);
-                    removeObject(phone);
                 }
             }
             
@@ -356,14 +322,18 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //descriptor must be date:none / date:exact / date:between / date:before / date:after
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
         HolderChangeType changeType = searchParams.getHolderChangeType();
+        Descriptor descriptorUtil = new Descriptor();
+        
+        Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
+        String dateDescriptor = descriptorSplits.get("date");
         
         startOperation();
         Criteria criteria = getSession().createCriteria(HolderChanges.class, "hc")
-                .add(Example.create(searchParams).enableLike())
+                //.add(Example.create(searchParams).enableLike())
                 .createCriteria("hc.holderChangeType", "t", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(changeType).enableLike().ignoreCase());
         
-        if (descriptor.equalsIgnoreCase("exact")) {
+        if (dateDescriptor.equalsIgnoreCase("exact")) {
             try {
                 criteria.add(Restrictions.eq("hc.changeDate", formatter.parse(startDate)));
                 List<HolderChanges> returnlist = criteria.list();
@@ -374,7 +344,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             }
         }
         
-        if (descriptor.equalsIgnoreCase("between")) {
+        if (dateDescriptor.equalsIgnoreCase("between")) {
             try {
                 criteria.add(Restrictions.between("hc.changeDate", formatter.parse(startDate), formatter.parse(endDate)));
                 List<HolderChanges> returnlist = criteria.list();
@@ -385,7 +355,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             }
         }
         
-        if (descriptor.equalsIgnoreCase("before")) {
+        if (dateDescriptor.equalsIgnoreCase("before")) {
             try {
                 criteria.add(Restrictions.lt("hc.changeDate", formatter.parse(startDate)));
                 List<HolderChanges> returnlist = criteria.list();
@@ -396,7 +366,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             }
         }
         
-        if (descriptor.equalsIgnoreCase("after")) {
+        if (dateDescriptor.equalsIgnoreCase("after")) {
             try {
                 criteria.add(Restrictions.gt("hc.changeDate", formatter.parse(startDate)));
                 List<HolderChanges> returnlist = criteria.list();
@@ -426,6 +396,17 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         HolderChangeType type = (HolderChangeType) searchObject(HolderChangeType.class, typeId);
         getTransaction().commit();
         return type;
+    }
+
+    @Override
+    public boolean checkChangeType(int typeId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(HolderChangeType.class)
+                .add(Restrictions.idEq(typeId))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
     }
 
     @Override
@@ -755,7 +736,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             startOperation();
             
             sender = (HolderCompanyAccount) getSession().merge(sender);
-            receiver = (HolderCompanyAccount) getSession().merge(receiver);
+            HolderCompanyAccountId rId = new HolderCompanyAccountId(receiver.getId().getHolderId(), receiver.getId().getClientCompanyId());
+            receiver = (HolderCompanyAccount) searchObject(HolderCompanyAccount.class, rId);
             TransactionType type = (TransactionType) searchObject(TransactionType.class, transferTypeId);
             
             int senderUnits = sender.getShareUnits();
@@ -796,7 +778,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             startOperation();
             
             sender = (HolderBondAccount) getSession().merge(sender);
-            receiver = (HolderBondAccount) getSession().merge(receiver);
+            HolderBondAccountId rId = new HolderBondAccountId(receiver.getId().getHolderId(), receiver.getId().getBondOfferId());
+            receiver = (HolderBondAccount) searchObject(HolderBondAccount.class, rId);
             TransactionType type = (TransactionType) searchObject(TransactionType.class, transferTypeId);
             
             int senderUnits = sender.getBondUnits();
@@ -823,7 +806,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             transferred = true;
             return transferred;
         } catch (Exception ex) {
-            logger.error("share transfer transaction error - ", ex);
+            logger.error("bond transfer transaction error - ", ex);
             getTransaction().rollback();
             return transferred;
         }
@@ -1266,12 +1249,16 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<AccountConsolidation> getAllHolderAccountConsolidation(String descriptor, String startDate, String endDate, String dateFormat) {
         //descriptor must be date:none / date:exact / date:between / date:before / date:after
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+        Descriptor descriptorUtil = new Descriptor();
+        
+        Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
+        String dateDescriptor = descriptorSplits.get("date");
         
         try {
             startOperation();
             Criteria criteria = getSession().createCriteria(AccountConsolidation.class);
 
-            if (descriptor.equalsIgnoreCase("exact")) {
+            if (dateDescriptor.equalsIgnoreCase("exact")) {
                 try {
                     criteria.add(Restrictions.eq("mergeDate", formatter.parse(startDate)));
                     List<AccountConsolidation> returnlist = criteria.list();
@@ -1282,7 +1269,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
 
-            if (descriptor.equalsIgnoreCase("between")) {
+            if (dateDescriptor.equalsIgnoreCase("between")) {
                 try {
                     criteria.add(Restrictions.between("mergeDate", formatter.parse(startDate), formatter.parse(endDate)));
                     List<AccountConsolidation> returnlist = criteria.list();
@@ -1293,7 +1280,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
 
-            if (descriptor.equalsIgnoreCase("before")) {
+            if (dateDescriptor.equalsIgnoreCase("before")) {
                 try {
                     criteria.add(Restrictions.lt("mergeDate", formatter.parse(startDate)));
                     List<AccountConsolidation> returnlist = criteria.list();
@@ -1304,7 +1291,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
 
-            if (descriptor.equalsIgnoreCase("after")) {
+            if (dateDescriptor.equalsIgnoreCase("after")) {
                 try {
                     criteria.add(Restrictions.gt("mergeDate", formatter.parse(startDate)));
                     List<AccountConsolidation> returnlist = criteria.list();
@@ -1328,8 +1315,20 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<CompanyAccountConsolidation> getCompAcctConsolidation(int acctConsolidationId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .add(Restrictions.eq("accountConsolidation.demerge", false))
-                .add(Restrictions.eq("accountConsolidation.id", acctConsolidationId));
+                .createAlias("accountConsolidation", "a")
+                .add(Restrictions.eq("a.demerge", false))
+                .add(Restrictions.eq("a.id", acctConsolidationId));
+        List<CompanyAccountConsolidation> resultlist = criteria.list();
+        getTransaction().commit();
+        return resultlist;
+    }
+
+    @Override
+    public List<CompanyAccountConsolidation> getCompAcctConsolidationIgnoreDemerge(int acctConsolidationId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
+                .createAlias("accountConsolidation", "a")
+                .add(Restrictions.eq("a.id", acctConsolidationId));
         List<CompanyAccountConsolidation> resultlist = criteria.list();
         getTransaction().commit();
         return resultlist;
@@ -1667,7 +1666,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //for phone number
         if (!h_phone_list.isEmpty()) {
             HolderPhoneNumber hphone = h_phone_list.get(0);
-            System.out.println(":::phone:::::: " + hphone.getPhoneNumber());
             baseCriteria.createCriteria("h.holderPhoneNumbers", "n", JoinType.LEFT_OUTER_JOIN)
                 .add(Example.create(hphone).enableLike().ignoreCase());
         }
@@ -1899,6 +1897,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //set transaction for receiver
         pt_receiver_id.setHolderId(receiver.getId().getHolderId());
         pt_receiver_id.setTransactionId(pt.getId());
+        pt_receiver.setId(pt_receiver_id);
         pt_receiver.setProcessedTransaction(pt);
         pt_receiver.setHolder(receiver.getHolder());
         pt_receiver.setHolderName(receiver.getHolder().getFirstName() + " " + receiver.getHolder().getLastName());
@@ -1935,6 +1934,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         //set transaction for receiver
         pt_receiver_id.setHolderId(receiver.getId().getHolderId());
         pt_receiver_id.setTransactionId(pt.getId());
+        pt_receiver.setId(pt_receiver_id);
         pt_receiver.setProcessedTransaction(pt);
         pt_receiver.setHolder(receiver.getHolder());
         pt_receiver.setHolderName(receiver.getHolder().getFirstName() + " " + receiver.getHolder().getLastName());
