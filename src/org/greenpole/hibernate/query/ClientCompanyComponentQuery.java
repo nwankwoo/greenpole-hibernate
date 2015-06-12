@@ -213,11 +213,30 @@ public interface ClientCompanyComponentQuery {
     public void createBondOffer(BondOffer bondOffer);
     
     /**
+     * Checks if a bond offer exists, whether valid or not.
+     * @param bondOfferId the bond offer id
+     * @return true, if bond offer exists
+     */
+    public boolean checkBondOffer(int bondOfferId);
+    
+    /**
      * Checks the valid status of a bond offer.
      * @param bondOfferId the bond offer id
      * @return true, if bond offer is valid. Otherwise, false
      */
     public boolean bondOfferIsValid(int bondOfferId);
+    
+    /**
+     * Gets all available bond offers in the system.
+     * @return a list of all available bond offers in the system
+     */
+    public List<BondOffer> getAllBondOffers();
+    
+    /**
+     * Gets all bond offers, including non valid ones.
+     * @return a list of all bond offers
+     */
+    public List<BondOffer> getAllBondOffersWithNonValid();
     
     /**
      * Sets up an initial public offer.
@@ -256,6 +275,20 @@ public interface ClientCompanyComponentQuery {
      * @return true, if creation is successful
      */
     public boolean uploadShareQuotation(List<ShareQuotation> shareQuotations);
+    
+    /**
+     * Checks if a client company already has uploaded share quotation.
+     * @param clientCompanyCode the client company code
+     * @return true, if client company already has uploaded share quotation
+     */
+    public boolean companyHasShareQuotation(String clientCompanyCode);
+    
+    /**
+     * Gets the share quotation according to a specified client company code.
+     * @param clientCompanyCode the client company code
+     * @return the share quotation object
+     */
+    public ShareQuotation getShareQuotation(String clientCompanyCode);
     
     /**
      * Checks if a client company has shareholders tied to it.

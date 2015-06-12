@@ -384,6 +384,17 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public boolean checkBondOffer(int bondOfferId) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(BondOffer.class)
+                .add(Restrictions.idEq(bondOfferId))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
+    }
+
+    @Override
     public boolean bondOfferIsValid(int bondOfferId) {
         startOperation();
         Criteria criteria = getSession().createCriteria(BondOffer.class)
@@ -393,6 +404,24 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         Long count = (Long) criteria.uniqueResult();
         getTransaction().commit();
         return count > 0;
+    }
+
+    @Override
+    public List<BondOffer> getAllBondOffers() {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(BondOffer.class)
+                .add(Restrictions.eq("valid", true));
+        List<BondOffer> offerlist = criteria.list();
+        getTransaction().commit();
+        return offerlist;
+    }
+
+    @Override
+    public List<BondOffer> getAllBondOffersWithNonValid() {
+        startOperation();
+        List<BondOffer> offerlist = searchAll(BondOffer.class);
+        getTransaction().commit();
+        return offerlist;
     }
 
     @Override
@@ -454,12 +483,41 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public boolean companyHasShareQuotation(String clientCompanyCode) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ShareQuotation.class)
+                .createAlias("clientCompany", "c")
+                .add(Restrictions.eq("c.code", clientCompanyCode))
+                .setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        getTransaction().commit();
+        return count > 0;
+    }
+
+    @Override
+    public ShareQuotation getShareQuotation(String clientCompanyCode) {
+        startOperation();
+        Criteria criteria = getSession().createCriteria(ShareQuotation.class)
+                .createAlias("clientCompany", "c")
+                .add(Restrictions.eq("c.code", clientCompanyCode));
+        ShareQuotation sq = (ShareQuotation) criteria.list().get(0);
+        getTransaction().commit();
+        return sq;
+    }
+
+    @Override
     public boolean checkClientCompanyForShareholders(String clientCompanyName) {
         startOperation();
         List result = getSession().createCriteria(ClientCompany.class)
                 .add(Restrictions.eq("name", clientCompanyName)).list();
         ClientCompany cc = (ClientCompany) result.get(0);
-        int countAccounts = cc.getHolderCompanyAccounts().size();
+        int countAccounts = 0;
+        List<HolderCompanyAccount> hcalist = new ArrayList<>(cc.getHolderCompanyAccounts());
+        for (HolderCompanyAccount hca : hcalist) {
+            if (hca.getShareUnits() != null && hca.getShareUnits() > 0 && 
+                    hca.getHolder().getPryHolder() != null && hca.getHolder().getPryHolder())
+                ++countAccounts;
+        }
         int countCertificates = cc.getCertificates().size();
         getTransaction().commit();
         return countAccounts > 0 || countCertificates > 0;
