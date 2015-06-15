@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 05-Jun-2015 21:07:19 by Hibernate Tools 4.3.1
+// Generated 15-Jun-2015 12:07:06 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -21,6 +21,7 @@ public class HolderCompanyAccount  implements java.io.Serializable {
      private Boolean esop;
      private String nubanAccount;
      private Boolean merged;
+     private Boolean EPayment;
      private Boolean holderCompAccPrimary;
      private Set dividends = new HashSet(0);
      private Set holderCompanyAccounts = new HashSet(0);
@@ -34,7 +35,7 @@ public class HolderCompanyAccount  implements java.io.Serializable {
         this.clientCompany = clientCompany;
         this.holder = holder;
     }
-    public HolderCompanyAccount(HolderCompanyAccountId id, Bank bank, ClientCompany clientCompany, Holder holder, HolderCompanyAccount holderCompanyAccount, Integer shareUnits, Boolean esop, String nubanAccount, Boolean merged, Boolean holderCompAccPrimary, Set dividends, Set holderCompanyAccounts) {
+    public HolderCompanyAccount(HolderCompanyAccountId id, Bank bank, ClientCompany clientCompany, Holder holder, HolderCompanyAccount holderCompanyAccount, Integer shareUnits, Boolean esop, String nubanAccount, Boolean merged, Boolean EPayment, Boolean holderCompAccPrimary, Set dividends, Set holderCompanyAccounts) {
        this.id = id;
        this.bank = bank;
        this.clientCompany = clientCompany;
@@ -44,6 +45,7 @@ public class HolderCompanyAccount  implements java.io.Serializable {
        this.esop = esop;
        this.nubanAccount = nubanAccount;
        this.merged = merged;
+       this.EPayment = EPayment;
        this.holderCompAccPrimary = holderCompAccPrimary;
        this.dividends = dividends;
        this.holderCompanyAccounts = holderCompanyAccounts;
@@ -118,6 +120,13 @@ public class HolderCompanyAccount  implements java.io.Serializable {
     
     public void setMerged(Boolean merged) {
         this.merged = merged;
+    }
+    public Boolean getEPayment() {
+        return this.EPayment;
+    }
+    
+    public void setEPayment(Boolean EPayment) {
+        this.EPayment = EPayment;
     }
     public Boolean getHolderCompAccPrimary() {
         return this.holderCompAccPrimary;
