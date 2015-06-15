@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 15-Jun-2015 13:01:59 by Hibernate Tools 4.3.1
+// Generated 15-Jun-2015 14:01:49 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -18,7 +18,7 @@ public class Dividend  implements java.io.Serializable {
      private DividendDeclared dividendDeclared;
      private DividendIssueType dividendIssueType;
      private HolderCompanyAccount holderCompanyAccount;
-     private int warrantNumber;
+     private Long warrantNumber;
      private String clientCompName;
      private String issueType;
      private Date issueDate;
@@ -49,11 +49,7 @@ public class Dividend  implements java.io.Serializable {
     public Dividend() {
     }
 
-	
-    public Dividend(int warrantNumber) {
-        this.warrantNumber = warrantNumber;
-    }
-    public Dividend(ClientCompany clientCompany, DividendDeclared dividendDeclared, DividendIssueType dividendIssueType, HolderCompanyAccount holderCompanyAccount, int warrantNumber, String clientCompName, String issueType, Date issueDate, Integer divNumber, String yearType, Date yearEnding, String SHolderMailingAddr, Double rate, Integer compAccHoldings, Double withldingTaxRate, Double grossAmount, Double tax, Double payableAmount, Date payableDate, Boolean issued, Date issuedDate, Boolean reIssued, Date reIssuedDate, Boolean paid, Date paidDate, String paymentMethod, Boolean unclaimed, Date unclaimedDate, Boolean cancelled, Date canelledDate, Set dividenAnnotations) {
+    public Dividend(ClientCompany clientCompany, DividendDeclared dividendDeclared, DividendIssueType dividendIssueType, HolderCompanyAccount holderCompanyAccount, Long warrantNumber, String clientCompName, String issueType, Date issueDate, Integer divNumber, String yearType, Date yearEnding, String SHolderMailingAddr, Double rate, Integer compAccHoldings, Double withldingTaxRate, Double grossAmount, Double tax, Double payableAmount, Date payableDate, Boolean issued, Date issuedDate, Boolean reIssued, Date reIssuedDate, Boolean paid, Date paidDate, String paymentMethod, Boolean unclaimed, Date unclaimedDate, Boolean cancelled, Date canelledDate, Set dividenAnnotations) {
        this.clientCompany = clientCompany;
        this.dividendDeclared = dividendDeclared;
        this.dividendIssueType = dividendIssueType;
@@ -129,11 +125,11 @@ public class Dividend  implements java.io.Serializable {
     public void setHolderCompanyAccount(HolderCompanyAccount holderCompanyAccount) {
         this.holderCompanyAccount = holderCompanyAccount;
     }
-    public int getWarrantNumber() {
+    public Long getWarrantNumber() {
         return this.warrantNumber;
     }
     
-    public void setWarrantNumber(int warrantNumber) {
+    public void setWarrantNumber(Long warrantNumber) {
         this.warrantNumber = warrantNumber;
     }
     public String getClientCompName() {
