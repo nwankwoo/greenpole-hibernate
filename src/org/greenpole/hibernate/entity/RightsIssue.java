@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 15-Jun-2015 12:07:06 by Hibernate Tools 4.3.1
+// Generated 15-Jun-2015 13:01:59 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -15,7 +15,7 @@ public class RightsIssue  implements java.io.Serializable {
      private int id;
      private Long version;
      private ClientCompany clientCompany;
-     private Integer totalSharesOnIssue;
+     private Long totalSharesOnIssue;
      private String methodOnOffer;
      private Double issuePrice;
      private Double issueSize;
@@ -33,7 +33,7 @@ public class RightsIssue  implements java.io.Serializable {
     public RightsIssue() {
     }
 
-    public RightsIssue(ClientCompany clientCompany, Integer totalSharesOnIssue, String methodOnOffer, Double issuePrice, Double issueSize, Integer qualifyShareUnit, Integer alottedUnitPerQualifyUnit, Date qualifyDate, Date openingDate, Date closingDate, Boolean rightsClosed, Double tax, Double interestRate, Set rightsIssueApplications, Set certificates) {
+    public RightsIssue(ClientCompany clientCompany, Long totalSharesOnIssue, String methodOnOffer, Double issuePrice, Double issueSize, Integer qualifyShareUnit, Integer alottedUnitPerQualifyUnit, Date qualifyDate, Date openingDate, Date closingDate, Boolean rightsClosed, Double tax, Double interestRate, Set rightsIssueApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnIssue = totalSharesOnIssue;
        this.methodOnOffer = methodOnOffer;
@@ -72,11 +72,11 @@ public class RightsIssue  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public Integer getTotalSharesOnIssue() {
+    public Long getTotalSharesOnIssue() {
         return this.totalSharesOnIssue;
     }
     
-    public void setTotalSharesOnIssue(Integer totalSharesOnIssue) {
+    public void setTotalSharesOnIssue(Long totalSharesOnIssue) {
         this.totalSharesOnIssue = totalSharesOnIssue;
     }
     public String getMethodOnOffer() {

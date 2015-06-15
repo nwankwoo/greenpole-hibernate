@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 15-Jun-2015 12:07:06 by Hibernate Tools 4.3.1
+// Generated 15-Jun-2015 13:01:59 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -15,7 +15,7 @@ public class InitialPublicOffer  implements java.io.Serializable {
      private int id;
      private Long version;
      private ClientCompany clientCompany;
-     private Integer totalSharesOnOffer;
+     private Long totalSharesOnOffer;
      private String methodOfOffer;
      private Integer startingMinSub;
      private Integer contMinSub;
@@ -32,7 +32,7 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public InitialPublicOffer() {
     }
 
-    public InitialPublicOffer(ClientCompany clientCompany, Integer totalSharesOnOffer, String methodOfOffer, Integer startingMinSub, Integer contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Boolean ipoClosed, Double tax, Double interestRate, Set ipoApplications, Set certificates) {
+    public InitialPublicOffer(ClientCompany clientCompany, Long totalSharesOnOffer, String methodOfOffer, Integer startingMinSub, Integer contMinSub, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Boolean ipoClosed, Double tax, Double interestRate, Set ipoApplications, Set certificates) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOfOffer = methodOfOffer;
@@ -70,11 +70,11 @@ public class InitialPublicOffer  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public Integer getTotalSharesOnOffer() {
+    public Long getTotalSharesOnOffer() {
         return this.totalSharesOnOffer;
     }
     
-    public void setTotalSharesOnOffer(Integer totalSharesOnOffer) {
+    public void setTotalSharesOnOffer(Long totalSharesOnOffer) {
         this.totalSharesOnOffer = totalSharesOnOffer;
     }
     public String getMethodOfOffer() {

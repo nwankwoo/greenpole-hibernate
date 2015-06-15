@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 15-Jun-2015 12:07:06 by Hibernate Tools 4.3.1
+// Generated 15-Jun-2015 13:01:59 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -15,7 +15,7 @@ public class PrivatePlacement  implements java.io.Serializable {
      private int id;
      private Long version;
      private ClientCompany clientCompany;
-     private Integer totalSharesOnOffer;
+     private Long totalSharesOnOffer;
      private Integer methodOnOffer;
      private Integer startingMinSubscrptn;
      private Integer continuingMinSubscrptn;
@@ -32,7 +32,7 @@ public class PrivatePlacement  implements java.io.Serializable {
     public PrivatePlacement() {
     }
 
-    public PrivatePlacement(ClientCompany clientCompany, Integer totalSharesOnOffer, Integer methodOnOffer, Integer startingMinSubscrptn, Integer continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Boolean placementClosed, Double tax, Double interestRate, Set certificates, Set privatePlacementApplications) {
+    public PrivatePlacement(ClientCompany clientCompany, Long totalSharesOnOffer, Integer methodOnOffer, Integer startingMinSubscrptn, Integer continuingMinSubscrptn, Double offerPrice, Double offerSize, Date openingDate, Date closingDate, Boolean placementClosed, Double tax, Double interestRate, Set certificates, Set privatePlacementApplications) {
        this.clientCompany = clientCompany;
        this.totalSharesOnOffer = totalSharesOnOffer;
        this.methodOnOffer = methodOnOffer;
@@ -70,11 +70,11 @@ public class PrivatePlacement  implements java.io.Serializable {
     public void setClientCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
     }
-    public Integer getTotalSharesOnOffer() {
+    public Long getTotalSharesOnOffer() {
         return this.totalSharesOnOffer;
     }
     
-    public void setTotalSharesOnOffer(Integer totalSharesOnOffer) {
+    public void setTotalSharesOnOffer(Long totalSharesOnOffer) {
         this.totalSharesOnOffer = totalSharesOnOffer;
     }
     public Integer getMethodOnOffer() {
