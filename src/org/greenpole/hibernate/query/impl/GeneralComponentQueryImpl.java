@@ -5,6 +5,7 @@
  */
 package org.greenpole.hibernate.query.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.greenpole.hibernate.entity.Notification;
 import org.greenpole.hibernate.entity.UserAccess;
@@ -37,11 +38,27 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
     @Override
     public List<Notification> getNotificationsForReceiver(String userId) {
         startOperation();
-        Criteria criteria = getSession().createCriteria(Notification.class)
+        Criteria nonAttendedCriteria = getSession().createCriteria(Notification.class)
                 .add(Restrictions.eq("sentTo", userId))
                 .add(Restrictions.eq("attendedTo", false))
+                .add(Restrictions.eq("rejected", false))
                 .add(Restrictions.eq("writeOff", false));
-        List<Notification> resultList = criteria.list();
+        List<Notification> nonAttended = nonAttendedCriteria.list();
+        
+        Criteria rejectedCriteria = getSession().createCriteria(Notification.class)
+                .add(Restrictions.eq("sentFrom", userId))
+                .add(Restrictions.eq("attendedTo", true))
+                .add(Restrictions.eq("rejected", true))
+                .add(Restrictions.eq("writeOff", false));
+        List<Notification> rejected = rejectedCriteria.list();
+        
+        List<Notification> resultList = new ArrayList<>();
+        for (Notification n : nonAttended) {
+            resultList.add(n);
+        }
+        for (Notification n : rejected) {
+            resultList.add(n);
+        }
         getTransaction().commit();
         return resultList;
     }
@@ -52,6 +69,7 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
         Criteria criteria = getSession().createCriteria(Notification.class)
                 .add(Restrictions.eq("sentFrom", userId))
                 .add(Restrictions.eq("attendedTo", false))
+                .add(Restrictions.eq("rejected", false))
                 .add(Restrictions.eq("writeOff", false));
         List<Notification> resultList = criteria.list();
         getTransaction().commit();
@@ -75,6 +93,7 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
         Criteria criteria = getSession().createCriteria(Notification.class)
                 .add(Restrictions.eq("fileName", notificationCode))
                 .add(Restrictions.eq("attendedTo", false))
+                .add(Restrictions.eq("rejected", false))
                 .add(Restrictions.eq("writeOff", false))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
@@ -89,6 +108,7 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
                 .add(Restrictions.eq("sentTo", userId))
                 .add(Restrictions.eq("fileName", notificationCode))
                 .add(Restrictions.eq("attendedTo", false))
+                .add(Restrictions.eq("rejected", false))
                 .add(Restrictions.eq("writeOff", false))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
@@ -104,6 +124,7 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
                 .add(Restrictions.eq("sentTo", userId))
                 .add(Restrictions.eq("fileName", notificationCode))
                 .add(Restrictions.eq("attendedTo", false))
+                .add(Restrictions.eq("rejected", false))
                 .add(Restrictions.eq("writeOff", false))
                 .setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();

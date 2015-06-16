@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15-Jun-2015 14:01:53 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-Jun-2015 12:22:23 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.Notification" table="NOTIFICATION" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -13,6 +13,9 @@
         </version>
         <property name="fileName" type="string">
             <column name="file_name" length="50" />
+        </property>
+        <property name="notificationType" type="string">
+            <column name="notification_type" length="50" />
         </property>
         <property name="description" type="string">
             <column name="description" length="300" />
@@ -31,6 +34,9 @@
         </property>
         <property name="attendedTo" type="java.lang.Boolean">
             <column name="attended_to" />
+        </property>
+        <property name="rejected" type="java.lang.Boolean">
+            <column name="rejected" />
         </property>
         <property name="writeOff" type="java.lang.Boolean">
             <column name="write_off" />

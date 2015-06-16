@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 15-Jun-2015 14:01:49 by Hibernate Tools 4.3.1
+// Generated 16-Jun-2015 12:22:21 by Hibernate Tools 4.3.1
 
 
 
@@ -12,25 +12,29 @@ public class Notification  implements java.io.Serializable {
      private int id;
      private Long version;
      private String fileName;
+     private String notificationType;
      private String description;
      private String sentFrom;
      private String sentTo;
      private String fromType;
      private String toType;
      private Boolean attendedTo;
+     private Boolean rejected;
      private Boolean writeOff;
 
     public Notification() {
     }
 
-    public Notification(String fileName, String description, String sentFrom, String sentTo, String fromType, String toType, Boolean attendedTo, Boolean writeOff) {
+    public Notification(String fileName, String notificationType, String description, String sentFrom, String sentTo, String fromType, String toType, Boolean attendedTo, Boolean rejected, Boolean writeOff) {
        this.fileName = fileName;
+       this.notificationType = notificationType;
        this.description = description;
        this.sentFrom = sentFrom;
        this.sentTo = sentTo;
        this.fromType = fromType;
        this.toType = toType;
        this.attendedTo = attendedTo;
+       this.rejected = rejected;
        this.writeOff = writeOff;
     }
    
@@ -54,6 +58,13 @@ public class Notification  implements java.io.Serializable {
     
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+    public String getNotificationType() {
+        return this.notificationType;
+    }
+    
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
     }
     public String getDescription() {
         return this.description;
@@ -96,6 +107,13 @@ public class Notification  implements java.io.Serializable {
     
     public void setAttendedTo(Boolean attendedTo) {
         this.attendedTo = attendedTo;
+    }
+    public Boolean getRejected() {
+        return this.rejected;
+    }
+    
+    public void setRejected(Boolean rejected) {
+        this.rejected = rejected;
     }
     public Boolean getWriteOff() {
         return this.writeOff;
