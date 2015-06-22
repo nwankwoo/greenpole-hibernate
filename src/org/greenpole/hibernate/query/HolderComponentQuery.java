@@ -266,6 +266,13 @@ public interface HolderComponentQuery {
     public List<HolderPhoneNumber> getHolderPhoneNumbers(int holderId);
     
     /**
+     * Gets the holder's primary phone number.
+     * @param holderId the holder's id
+     * @return the holder's primary phone number
+     */
+    public String getHolderPryPhoneNumber(int holderId);
+    
+    /**
      * Gets the holder's phone number according to a specified id.
      * @param id the holder phone number id
      * @return the holder's phone number

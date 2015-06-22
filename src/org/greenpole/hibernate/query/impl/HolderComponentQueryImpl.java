@@ -666,6 +666,23 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     }
 
     @Override
+    public String getHolderPryPhoneNumber(int holderId) {
+        String number = "";
+        startOperation();
+        Criteria criteria = getSession().createCriteria(HolderPhoneNumber.class)
+                .add(Restrictions.eq("holder.id", holderId));
+        List<HolderPhoneNumber> returnlist = criteria.list();
+        for (HolderPhoneNumber phone : returnlist) {
+            if (phone.getIsPrimary() != null && phone.getIsPrimary()) {
+                number = phone.getPhoneNumber();
+                break;
+            }
+        }
+        getTransaction().commit();
+        return number;
+    }
+
+    @Override
     public HolderPhoneNumber getHolderPhoneNumber(int id) {
         startOperation();
         HolderPhoneNumber phone = (HolderPhoneNumber) searchObject(HolderPhoneNumber.class, id);

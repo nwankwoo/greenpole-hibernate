@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 16-Jun-2015 12:22:21 by Hibernate Tools 4.3.1
+// Generated 22-Jun-2015 15:17:29 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,14 +16,16 @@ public class BondType  implements java.io.Serializable {
      private String type;
      private String description;
      private Set bondOffers = new HashSet(0);
+     private Set coupons = new HashSet(0);
 
     public BondType() {
     }
 
-    public BondType(String type, String description, Set bondOffers) {
+    public BondType(String type, String description, Set bondOffers, Set coupons) {
        this.type = type;
        this.description = description;
        this.bondOffers = bondOffers;
+       this.coupons = coupons;
     }
    
     public int getId() {
@@ -60,6 +62,13 @@ public class BondType  implements java.io.Serializable {
     
     public void setBondOffers(Set bondOffers) {
         this.bondOffers = bondOffers;
+    }
+    public Set getCoupons() {
+        return this.coupons;
+    }
+    
+    public void setCoupons(Set coupons) {
+        this.coupons = coupons;
     }
 
 

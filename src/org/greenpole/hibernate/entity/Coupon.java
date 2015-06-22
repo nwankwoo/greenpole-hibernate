@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 16-Jun-2015 12:22:21 by Hibernate Tools 4.3.1
+// Generated 22-Jun-2015 15:17:29 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,11 +12,11 @@ public class Coupon  implements java.io.Serializable {
 
      private int id;
      private Long version;
+     private BondType bondType;
      private HolderBondAccount holderBondAccount;
      private String clientCompanyName;
      private Date issueDate;
      private Integer couponNumber;
-     private String bondType;
      private Double redemptionAmt;
      private Double couponAmt;
      private String bondholderMailingAddress;
@@ -29,12 +29,12 @@ public class Coupon  implements java.io.Serializable {
     public Coupon() {
     }
 
-    public Coupon(HolderBondAccount holderBondAccount, String clientCompanyName, Date issueDate, Integer couponNumber, String bondType, Double redemptionAmt, Double couponAmt, String bondholderMailingAddress, Date redemptnDate, Double totalPymtsToBMade, Double totalPaymtsMade, Boolean paid, Date paidDate) {
+    public Coupon(BondType bondType, HolderBondAccount holderBondAccount, String clientCompanyName, Date issueDate, Integer couponNumber, Double redemptionAmt, Double couponAmt, String bondholderMailingAddress, Date redemptnDate, Double totalPymtsToBMade, Double totalPaymtsMade, Boolean paid, Date paidDate) {
+       this.bondType = bondType;
        this.holderBondAccount = holderBondAccount;
        this.clientCompanyName = clientCompanyName;
        this.issueDate = issueDate;
        this.couponNumber = couponNumber;
-       this.bondType = bondType;
        this.redemptionAmt = redemptionAmt;
        this.couponAmt = couponAmt;
        this.bondholderMailingAddress = bondholderMailingAddress;
@@ -58,6 +58,13 @@ public class Coupon  implements java.io.Serializable {
     
     public void setVersion(Long version) {
         this.version = version;
+    }
+    public BondType getBondType() {
+        return this.bondType;
+    }
+    
+    public void setBondType(BondType bondType) {
+        this.bondType = bondType;
     }
     public HolderBondAccount getHolderBondAccount() {
         return this.holderBondAccount;
@@ -86,13 +93,6 @@ public class Coupon  implements java.io.Serializable {
     
     public void setCouponNumber(Integer couponNumber) {
         this.couponNumber = couponNumber;
-    }
-    public String getBondType() {
-        return this.bondType;
-    }
-    
-    public void setBondType(String bondType) {
-        this.bondType = bondType;
     }
     public Double getRedemptionAmt() {
         return this.redemptionAmt;

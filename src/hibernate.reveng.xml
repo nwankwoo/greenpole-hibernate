@@ -8,6 +8,7 @@
         <sql-type jdbc-type="DECIMAL" hibernate-type="java.lang.Double"/>
     </type-mapping>
     
+    <table-filter match-name="TEXT_MESSAGE"/>
     <table-filter match-name="HOLDER_POSTAL_ADDRESS"/>
     <table-filter match-name="GM"/>
     <table-filter match-name="DEPOSITORY"/>
@@ -91,6 +92,85 @@
     <table-filter match-name="HOLDER_EMAIL_ADDRESS"/>
     <table-filter match-name="DIVIDEN_ANNOTATION"/>
     <table-filter match-name="STOCKBROKER_ADDRESS"/>
+    <table-filter match-name="PROPERTY_EMAIL"/>
+    <table-filter match-name="PROPERTY_GREENPOLE_ENGINE"/>
+    <table-filter match-name="PROPERTY_NOTIFICATIONS"/>
+    <table-filter match-name="PROPERTY_NOTIFIERS"/>
+    <table-filter match-name="PROPERTY_QUEUE_CONFIG"/>
+    <table-filter match-name="PROPERTY_SMS"/>
+    <table-filter match-name="PROPERTY_THREADPOOL"/>
+    <table-filter match-name="ENVIRONMENTAL_VARIABLES"/>
+    <table-filter match-name="CERTIFICATE_EVENT"/>
+    
+    <table name="CERTIFICATE_EVENT" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="ENVIRONMENTAL_VARIABLES" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="PROPERTY_EMAIL" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="PROPERTY_GREENPOLE_ENGINE" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="PROPERTY_NOTIFICATIONS" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="PROPERTY_NOTIFIERS" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="PROPERTY_QUEUE_CONFIG" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="PROPERTY_SMS" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="PROPERTY_THREADPOOL" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="TEXT_MESSAGE" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
     
     <table name="ADMINISTRATOR_RESIDENTIAL_ADDRESS" catalog="greenpole" schema="dbo">
         <primary-key>

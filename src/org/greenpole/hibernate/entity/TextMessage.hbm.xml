@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22-Jun-2015 15:17:30 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.greenpole.hibernate.entity.TextMessage" table="TEXT_MESSAGE" schema="dbo" catalog="greenpole">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity"></generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
+        <property name="sender" type="string">
+            <column name="sender" length="50" />
+        </property>
+        <property name="receiver" type="string">
+            <column name="receiver" length="50" />
+        </property>
+        <property name="text" type="string">
+            <column name="text" length="500" />
+        </property>
+        <property name="messageId" type="string">
+            <column name="message_id" length="50" />
+        </property>
+        <property name="purpose" type="string">
+            <column name="purpose" length="50" />
+        </property>
+        <property name="isBulk" type="java.lang.Boolean">
+            <column name="is_bulk" />
+        </property>
+        <property name="isFlash" type="java.lang.Boolean">
+            <column name="is_flash" />
+        </property>
+        <property name="returnCode" type="java.lang.Integer">
+            <column name="return_code" />
+        </property>
+        <property name="sent" type="java.lang.Boolean">
+            <column name="sent" />
+        </property>
+    </class>
+</hibernate-mapping>

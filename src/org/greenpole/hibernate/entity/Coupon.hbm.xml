@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-Jun-2015 12:22:23 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-Jun-2015 15:17:30 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.Coupon" table="COUPON" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -11,6 +11,9 @@
         <version name="version" type="java.lang.Long">
             <column name="version" />
         </version>
+        <many-to-one name="bondType" class="org.greenpole.hibernate.entity.BondType" fetch="select">
+            <column name="bond_type_id" />
+        </many-to-one>
         <many-to-one name="holderBondAccount" class="org.greenpole.hibernate.entity.HolderBondAccount" fetch="select">
             <column name="h_bond_act_holder_id" />
             <column name="h_bond_act_bond_offer_id" />
@@ -23,9 +26,6 @@
         </property>
         <property name="couponNumber" type="java.lang.Integer">
             <column name="coupon_Number" unique="true" />
-        </property>
-        <property name="bondType" type="string">
-            <column name="bond_Type" length="50" />
         </property>
         <property name="redemptionAmt" type="java.lang.Double">
             <column name="redemption_Amt" precision="18" />
