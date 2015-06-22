@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 22-Jun-2015 15:17:29 by Hibernate Tools 4.3.1
+// Generated 22-Jun-2015 15:26:20 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;

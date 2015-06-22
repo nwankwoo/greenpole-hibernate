@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 22-Jun-2015 15:17:29 by Hibernate Tools 4.3.1
+// Generated 22-Jun-2015 15:26:20 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -32,12 +32,13 @@ public class Certificate  implements java.io.Serializable {
      private Boolean cancelled;
      private Boolean claimed;
      private Boolean immobStatus;
+     private Set certificateEvents = new HashSet(0);
      private Set certificateVerifications = new HashSet(0);
 
     public Certificate() {
     }
 
-    public Certificate(CertificateLodgement certificateLodgement, ClientCompany clientCompany, Holder holder, InitialPublicOffer initialPublicOffer, PrivatePlacement privatePlacement, RightsIssue rightsIssue, ShareBonus shareBonus, Integer certificateNumber, Integer shareVolume, Integer bondHolding, String holderName, String holderAddress, String issuingCompName, Date issueDate, String certNarration, Boolean cancelled, Boolean claimed, Boolean immobStatus, Set certificateVerifications) {
+    public Certificate(CertificateLodgement certificateLodgement, ClientCompany clientCompany, Holder holder, InitialPublicOffer initialPublicOffer, PrivatePlacement privatePlacement, RightsIssue rightsIssue, ShareBonus shareBonus, Integer certificateNumber, Integer shareVolume, Integer bondHolding, String holderName, String holderAddress, String issuingCompName, Date issueDate, String certNarration, Boolean cancelled, Boolean claimed, Boolean immobStatus, Set certificateEvents, Set certificateVerifications) {
        this.certificateLodgement = certificateLodgement;
        this.clientCompany = clientCompany;
        this.holder = holder;
@@ -56,6 +57,7 @@ public class Certificate  implements java.io.Serializable {
        this.cancelled = cancelled;
        this.claimed = claimed;
        this.immobStatus = immobStatus;
+       this.certificateEvents = certificateEvents;
        this.certificateVerifications = certificateVerifications;
     }
    
@@ -198,6 +200,13 @@ public class Certificate  implements java.io.Serializable {
     
     public void setImmobStatus(Boolean immobStatus) {
         this.immobStatus = immobStatus;
+    }
+    public Set getCertificateEvents() {
+        return this.certificateEvents;
+    }
+    
+    public void setCertificateEvents(Set certificateEvents) {
+        this.certificateEvents = certificateEvents;
     }
     public Set getCertificateVerifications() {
         return this.certificateVerifications;

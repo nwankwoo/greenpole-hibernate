@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-Jun-2015 15:17:30 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-Jun-2015 15:26:22 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.Certificate" table="CERTIFICATE" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -65,6 +65,12 @@
         <property name="immobStatus" type="java.lang.Boolean">
             <column name="immob_Status" />
         </property>
+        <set name="certificateEvents" table="CERTIFICATE_EVENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cert_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.CertificateEvent" />
+        </set>
         <set name="certificateVerifications" table="CERTIFICATE_VERIFICATION" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="certificate_id" unique="true" />

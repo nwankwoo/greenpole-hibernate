@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 22-Jun-2015 15:17:29 by Hibernate Tools 4.3.1
+// Generated 22-Jun-2015 15:26:20 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,19 +12,19 @@ public class CertificateEvent  implements java.io.Serializable {
 
      private int id;
      private Long version;
+     private Certificate certificate;
      private Boolean splitStatus;
      private Boolean mergeStatus;
      private Date eventDate;
-     private Integer certId;
 
     public CertificateEvent() {
     }
 
-    public CertificateEvent(Boolean splitStatus, Boolean mergeStatus, Date eventDate, Integer certId) {
+    public CertificateEvent(Certificate certificate, Boolean splitStatus, Boolean mergeStatus, Date eventDate) {
+       this.certificate = certificate;
        this.splitStatus = splitStatus;
        this.mergeStatus = mergeStatus;
        this.eventDate = eventDate;
-       this.certId = certId;
     }
    
     public int getId() {
@@ -40,6 +40,13 @@ public class CertificateEvent  implements java.io.Serializable {
     
     public void setVersion(Long version) {
         this.version = version;
+    }
+    public Certificate getCertificate() {
+        return this.certificate;
+    }
+    
+    public void setCertificate(Certificate certificate) {
+        this.certificate = certificate;
     }
     public Boolean getSplitStatus() {
         return this.splitStatus;
@@ -61,13 +68,6 @@ public class CertificateEvent  implements java.io.Serializable {
     
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
-    }
-    public Integer getCertId() {
-        return this.certId;
-    }
-    
-    public void setCertId(Integer certId) {
-        this.certId = certId;
     }
 
 
