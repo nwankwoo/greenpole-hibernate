@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-Jun-2015 15:26:22 by Hibernate Tools 4.3.1 -->
+<!-- Generated 23-Jun-2015 04:57:02 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.Holder" table="HOLDER" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -50,29 +50,11 @@
         <property name="pryAddress" type="string">
             <column name="pry_address" length="50" />
         </property>
-        <set name="holderBondAccounts" table="HOLDER_BOND_ACCOUNT" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holder_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entity.HolderBondAccount" />
-        </set>
-        <set name="privatePlacementApplications" table="PRIVATE_PLACEMENT_APPLICATION" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holder_id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entity.PrivatePlacementApplication" />
-        </set>
         <set name="holders" table="HOLDER" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="pry_holder_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.Holder" />
-        </set>
-        <set name="holderGmAttendances" table="HOLDER_GM_ATTENDANCE" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holder_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entity.HolderGmAttendance" />
         </set>
         <set name="holderSignatures" table="HOLDER_SIGNATURE" inverse="true" lazy="true" fetch="select">
             <key>
@@ -85,18 +67,6 @@
                 <column name="holder_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.IpoApplication" />
-        </set>
-        <set name="holderPhoneNumbers" table="HOLDER_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holder_id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entity.HolderPhoneNumber" />
-        </set>
-        <set name="suspendedTransactionHolders" table="SUSPENDED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holder_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entity.SuspendedTransactionHolder" />
         </set>
         <set name="rightsIssueApplications" table="RIGHTS_ISSUE_APPLICATION" inverse="true" lazy="true" fetch="select">
             <key>
@@ -134,17 +104,67 @@
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.AccountConsolidation" />
         </set>
-        <set name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holder_id" not-null="true" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount" />
-        </set>
         <set name="holderPostalAddresses" table="HOLDER_POSTAL_ADDRESS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="holder_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.HolderPostalAddress" />
+        </set>
+        <set name="holderChangeses" table="HOLDER_CHANGES" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderChanges" />
+        </set>
+        <set name="administrators" table="ADMINISTRATOR_HOLDER" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="org.greenpole.hibernate.entity.Administrator">
+                <column name="administrator_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="holderBondAccounts" table="HOLDER_BOND_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderBondAccount" />
+        </set>
+        <set name="privatePlacementApplications" table="PRIVATE_PLACEMENT_APPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.PrivatePlacementApplication" />
+        </set>
+        <set name="holderGmAttendances" table="HOLDER_GM_ATTENDANCE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderGmAttendance" />
+        </set>
+        <set name="holderPhoneNumbers" table="HOLDER_PHONE_NUMBER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderPhoneNumber" />
+        </set>
+        <set name="suspendedTransactionHolders" table="SUSPENDED_TRANSACTION_HOLDER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.SuspendedTransactionHolder" />
+        </set>
+        <set name="textMessages" table="TEXT_MESSAGE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.TextMessage" />
+        </set>
+        <set name="holderCompanyAccounts" table="HOLDER_COMPANY_ACCOUNT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" not-null="true" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.HolderCompanyAccount" />
         </set>
         <set name="stockbrokers" table="STOCKBROKER_HOLDER" inverse="false" lazy="true" fetch="select">
             <key>
@@ -153,12 +173,6 @@
             <many-to-many entity-name="org.greenpole.hibernate.entity.Stockbroker">
                 <column name="stockbroker_id" not-null="true" />
             </many-to-many>
-        </set>
-        <set name="holderChangeses" table="HOLDER_CHANGES" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holder_id" />
-            </key>
-            <one-to-many class="org.greenpole.hibernate.entity.HolderChanges" />
         </set>
         <set name="holderBonuses" table="HOLDER_BONUS" inverse="true" lazy="true" fetch="select">
             <key>
@@ -189,14 +203,6 @@
                 <column name="holder_Id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.Certificate" />
-        </set>
-        <set name="administrators" table="ADMINISTRATOR_HOLDER" inverse="false" lazy="true" fetch="select">
-            <key>
-                <column name="holder_id" not-null="true" />
-            </key>
-            <many-to-many entity-name="org.greenpole.hibernate.entity.Administrator">
-                <column name="administrator_id" not-null="true" />
-            </many-to-many>
         </set>
     </class>
 </hibernate-mapping>

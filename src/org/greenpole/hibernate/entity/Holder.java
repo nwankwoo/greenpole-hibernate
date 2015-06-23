@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 22-Jun-2015 15:26:20 by Hibernate Tools 4.3.1
+// Generated 23-Jun-2015 04:56:55 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -27,35 +27,36 @@ public class Holder  implements java.io.Serializable {
      private Boolean merged;
      private Boolean pryHolder;
      private String pryAddress;
-     private Set holderBondAccounts = new HashSet(0);
-     private Set privatePlacementApplications = new HashSet(0);
      private Set holders = new HashSet(0);
-     private Set holderGmAttendances = new HashSet(0);
      private Set holderSignatures = new HashSet(0);
      private Set ipoApplications = new HashSet(0);
-     private Set holderPhoneNumbers = new HashSet(0);
-     private Set suspendedTransactionHolders = new HashSet(0);
      private Set rightsIssueApplications = new HashSet(0);
      private Set digitalCaptures = new HashSet(0);
      private Set processedTransactionHolders = new HashSet(0);
      private Set powerOfAttorneys = new HashSet(0);
      private Set holderResidentialAddresses = new HashSet(0);
      private Set accountConsolidations = new HashSet(0);
-     private Set holderCompanyAccounts = new HashSet(0);
      private Set holderPostalAddresses = new HashSet(0);
-     private Set stockbrokers = new HashSet(0);
      private Set holderChangeses = new HashSet(0);
+     private Set administrators = new HashSet(0);
+     private Set holderBondAccounts = new HashSet(0);
+     private Set privatePlacementApplications = new HashSet(0);
+     private Set holderGmAttendances = new HashSet(0);
+     private Set holderPhoneNumbers = new HashSet(0);
+     private Set suspendedTransactionHolders = new HashSet(0);
+     private Set textMessages = new HashSet(0);
+     private Set holderCompanyAccounts = new HashSet(0);
+     private Set stockbrokers = new HashSet(0);
      private Set holderBonuses = new HashSet(0);
      private Set holderEmailAddresses = new HashSet(0);
      private Set holderVotings = new HashSet(0);
      private Set cautions = new HashSet(0);
      private Set certificates = new HashSet(0);
-     private Set administrators = new HashSet(0);
 
     public Holder() {
     }
 
-    public Holder(Holder holder, HolderType holderType, Integer holderAcctNumber, String chn, String firstName, String middleName, String lastName, String gender, Date dob, Boolean taxExempted, Boolean merged, Boolean pryHolder, String pryAddress, Set holderBondAccounts, Set privatePlacementApplications, Set holders, Set holderGmAttendances, Set holderSignatures, Set ipoApplications, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set accountConsolidations, Set holderCompanyAccounts, Set holderPostalAddresses, Set stockbrokers, Set holderChangeses, Set holderBonuses, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates, Set administrators) {
+    public Holder(Holder holder, HolderType holderType, Integer holderAcctNumber, String chn, String firstName, String middleName, String lastName, String gender, Date dob, Boolean taxExempted, Boolean merged, Boolean pryHolder, String pryAddress, Set holders, Set holderSignatures, Set ipoApplications, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set accountConsolidations, Set holderPostalAddresses, Set holderChangeses, Set administrators, Set holderBondAccounts, Set privatePlacementApplications, Set holderGmAttendances, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set textMessages, Set holderCompanyAccounts, Set stockbrokers, Set holderBonuses, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates) {
        this.holder = holder;
        this.holderType = holderType;
        this.holderAcctNumber = holderAcctNumber;
@@ -69,30 +70,31 @@ public class Holder  implements java.io.Serializable {
        this.merged = merged;
        this.pryHolder = pryHolder;
        this.pryAddress = pryAddress;
-       this.holderBondAccounts = holderBondAccounts;
-       this.privatePlacementApplications = privatePlacementApplications;
        this.holders = holders;
-       this.holderGmAttendances = holderGmAttendances;
        this.holderSignatures = holderSignatures;
        this.ipoApplications = ipoApplications;
-       this.holderPhoneNumbers = holderPhoneNumbers;
-       this.suspendedTransactionHolders = suspendedTransactionHolders;
        this.rightsIssueApplications = rightsIssueApplications;
        this.digitalCaptures = digitalCaptures;
        this.processedTransactionHolders = processedTransactionHolders;
        this.powerOfAttorneys = powerOfAttorneys;
        this.holderResidentialAddresses = holderResidentialAddresses;
        this.accountConsolidations = accountConsolidations;
-       this.holderCompanyAccounts = holderCompanyAccounts;
        this.holderPostalAddresses = holderPostalAddresses;
-       this.stockbrokers = stockbrokers;
        this.holderChangeses = holderChangeses;
+       this.administrators = administrators;
+       this.holderBondAccounts = holderBondAccounts;
+       this.privatePlacementApplications = privatePlacementApplications;
+       this.holderGmAttendances = holderGmAttendances;
+       this.holderPhoneNumbers = holderPhoneNumbers;
+       this.suspendedTransactionHolders = suspendedTransactionHolders;
+       this.textMessages = textMessages;
+       this.holderCompanyAccounts = holderCompanyAccounts;
+       this.stockbrokers = stockbrokers;
        this.holderBonuses = holderBonuses;
        this.holderEmailAddresses = holderEmailAddresses;
        this.holderVotings = holderVotings;
        this.cautions = cautions;
        this.certificates = certificates;
-       this.administrators = administrators;
     }
    
     public int getId() {
@@ -200,33 +202,12 @@ public class Holder  implements java.io.Serializable {
     public void setPryAddress(String pryAddress) {
         this.pryAddress = pryAddress;
     }
-    public Set getHolderBondAccounts() {
-        return this.holderBondAccounts;
-    }
-    
-    public void setHolderBondAccounts(Set holderBondAccounts) {
-        this.holderBondAccounts = holderBondAccounts;
-    }
-    public Set getPrivatePlacementApplications() {
-        return this.privatePlacementApplications;
-    }
-    
-    public void setPrivatePlacementApplications(Set privatePlacementApplications) {
-        this.privatePlacementApplications = privatePlacementApplications;
-    }
     public Set getHolders() {
         return this.holders;
     }
     
     public void setHolders(Set holders) {
         this.holders = holders;
-    }
-    public Set getHolderGmAttendances() {
-        return this.holderGmAttendances;
-    }
-    
-    public void setHolderGmAttendances(Set holderGmAttendances) {
-        this.holderGmAttendances = holderGmAttendances;
     }
     public Set getHolderSignatures() {
         return this.holderSignatures;
@@ -241,20 +222,6 @@ public class Holder  implements java.io.Serializable {
     
     public void setIpoApplications(Set ipoApplications) {
         this.ipoApplications = ipoApplications;
-    }
-    public Set getHolderPhoneNumbers() {
-        return this.holderPhoneNumbers;
-    }
-    
-    public void setHolderPhoneNumbers(Set holderPhoneNumbers) {
-        this.holderPhoneNumbers = holderPhoneNumbers;
-    }
-    public Set getSuspendedTransactionHolders() {
-        return this.suspendedTransactionHolders;
-    }
-    
-    public void setSuspendedTransactionHolders(Set suspendedTransactionHolders) {
-        this.suspendedTransactionHolders = suspendedTransactionHolders;
     }
     public Set getRightsIssueApplications() {
         return this.rightsIssueApplications;
@@ -298,13 +265,6 @@ public class Holder  implements java.io.Serializable {
     public void setAccountConsolidations(Set accountConsolidations) {
         this.accountConsolidations = accountConsolidations;
     }
-    public Set getHolderCompanyAccounts() {
-        return this.holderCompanyAccounts;
-    }
-    
-    public void setHolderCompanyAccounts(Set holderCompanyAccounts) {
-        this.holderCompanyAccounts = holderCompanyAccounts;
-    }
     public Set getHolderPostalAddresses() {
         return this.holderPostalAddresses;
     }
@@ -312,19 +272,75 @@ public class Holder  implements java.io.Serializable {
     public void setHolderPostalAddresses(Set holderPostalAddresses) {
         this.holderPostalAddresses = holderPostalAddresses;
     }
-    public Set getStockbrokers() {
-        return this.stockbrokers;
-    }
-    
-    public void setStockbrokers(Set stockbrokers) {
-        this.stockbrokers = stockbrokers;
-    }
     public Set getHolderChangeses() {
         return this.holderChangeses;
     }
     
     public void setHolderChangeses(Set holderChangeses) {
         this.holderChangeses = holderChangeses;
+    }
+    public Set getAdministrators() {
+        return this.administrators;
+    }
+    
+    public void setAdministrators(Set administrators) {
+        this.administrators = administrators;
+    }
+    public Set getHolderBondAccounts() {
+        return this.holderBondAccounts;
+    }
+    
+    public void setHolderBondAccounts(Set holderBondAccounts) {
+        this.holderBondAccounts = holderBondAccounts;
+    }
+    public Set getPrivatePlacementApplications() {
+        return this.privatePlacementApplications;
+    }
+    
+    public void setPrivatePlacementApplications(Set privatePlacementApplications) {
+        this.privatePlacementApplications = privatePlacementApplications;
+    }
+    public Set getHolderGmAttendances() {
+        return this.holderGmAttendances;
+    }
+    
+    public void setHolderGmAttendances(Set holderGmAttendances) {
+        this.holderGmAttendances = holderGmAttendances;
+    }
+    public Set getHolderPhoneNumbers() {
+        return this.holderPhoneNumbers;
+    }
+    
+    public void setHolderPhoneNumbers(Set holderPhoneNumbers) {
+        this.holderPhoneNumbers = holderPhoneNumbers;
+    }
+    public Set getSuspendedTransactionHolders() {
+        return this.suspendedTransactionHolders;
+    }
+    
+    public void setSuspendedTransactionHolders(Set suspendedTransactionHolders) {
+        this.suspendedTransactionHolders = suspendedTransactionHolders;
+    }
+    public Set getTextMessages() {
+        return this.textMessages;
+    }
+    
+    public void setTextMessages(Set textMessages) {
+        this.textMessages = textMessages;
+    }
+    public Set getHolderCompanyAccounts() {
+        return this.holderCompanyAccounts;
+    }
+    
+    public void setHolderCompanyAccounts(Set holderCompanyAccounts) {
+        this.holderCompanyAccounts = holderCompanyAccounts;
+    }
+    public Set getStockbrokers() {
+        return this.stockbrokers;
+    }
+    
+    public void setStockbrokers(Set stockbrokers) {
+        this.stockbrokers = stockbrokers;
     }
     public Set getHolderBonuses() {
         return this.holderBonuses;
@@ -360,13 +376,6 @@ public class Holder  implements java.io.Serializable {
     
     public void setCertificates(Set certificates) {
         this.certificates = certificates;
-    }
-    public Set getAdministrators() {
-        return this.administrators;
-    }
-    
-    public void setAdministrators(Set administrators) {
-        this.administrators = administrators;
     }
 
 
