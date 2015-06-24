@@ -33,11 +33,8 @@ public abstract class GeneralisedAbstractDao {
      * start a hibernate transaction, applied to a sequence of operation
      */
     public void startOperation(){
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
-        if (session.getTransaction() != null && session.getTransaction().isActive())
-            tx = session.getTransaction();
-        else
-            tx = session.beginTransaction();
+        session = HibernateUtil.getSessionFactory().openSession();
+        tx = session.beginTransaction();
     }
 
     /**
@@ -58,6 +55,28 @@ public abstract class GeneralisedAbstractDao {
      */
     public Transaction getTransaction() {
         return tx;
+    }
+    
+    /**
+     * Commits the hibernate transaction.
+     */
+    public void commit() {
+        tx.commit();
+    }
+    
+    /**
+     * Rolls back the hibernate transaction, as long as it exists
+     */
+    public void rollback() {
+        if (tx != null)
+            tx.rollback();
+    }
+    
+    /**
+     * Closes the hibernate session.
+     */
+    public void closeSession() {
+        session.close();
     }
     
     /**
