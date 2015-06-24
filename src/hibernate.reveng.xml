@@ -101,6 +101,22 @@
     <table-filter match-name="PROPERTY_THREADPOOL"/>
     <table-filter match-name="ENVIRONMENTAL_VARIABLES"/>
     <table-filter match-name="CERTIFICATE_EVENT"/>
+    <table-filter match-name="CERTIFICATE_CHANGE_RECORD"/>
+    <table-filter match-name="CERTIFICATE_TRANSFER"/>
+    
+    <table name="CERTIFICATE_CHANGE_RECORD" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
+    
+    <table name="CERTIFICATE_TRANSFER" catalog="greenpole" schema="dbo">
+        <primary-key>
+            <generator class="identity"/>
+            <key-column name="id" type="int"/>
+        </primary-key>
+    </table>
     
     <table name="CERTIFICATE_EVENT" catalog="greenpole" schema="dbo">
         <primary-key>

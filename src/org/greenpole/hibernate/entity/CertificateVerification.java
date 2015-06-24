@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 23-Jun-2015 04:56:55 by Hibernate Tools 4.3.1
+// Generated 24-Jun-2015 14:34:48 by Hibernate Tools 4.3.1
 
 
 
@@ -12,14 +12,16 @@ public class CertificateVerification  implements java.io.Serializable {
      private int id;
      private Long version;
      private Certificate certificate;
+     private Stockbroker stockbroker;
      private String status;
      private String note;
 
     public CertificateVerification() {
     }
 
-    public CertificateVerification(Certificate certificate, String status, String note) {
+    public CertificateVerification(Certificate certificate, Stockbroker stockbroker, String status, String note) {
        this.certificate = certificate;
+       this.stockbroker = stockbroker;
        this.status = status;
        this.note = note;
     }
@@ -44,6 +46,13 @@ public class CertificateVerification  implements java.io.Serializable {
     
     public void setCertificate(Certificate certificate) {
         this.certificate = certificate;
+    }
+    public Stockbroker getStockbroker() {
+        return this.stockbroker;
+    }
+    
+    public void setStockbroker(Stockbroker stockbroker) {
+        this.stockbroker = stockbroker;
     }
     public String getStatus() {
         return this.status;

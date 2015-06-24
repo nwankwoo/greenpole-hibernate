@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 24-Jun-2015 14:34:49 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entity.ClientCompanyEmailAddress" table="CLIENT_COMPANY_EMAIL_ADDRESS" schema="dbo" catalog="greenpole">
+    <class name="org.greenpole.hibernate.entity.CertificateChangeRecord" table="CERTIFICATE_CHANGE_RECORD" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
             <column name="id" />
             <generator class="identity"></generator>
@@ -11,14 +11,11 @@
         <version name="version" type="java.lang.Long">
             <column name="version" />
         </version>
-        <many-to-one name="clientCompany" class="org.greenpole.hibernate.entity.ClientCompany" fetch="select">
-            <column name="client_company_id" />
+        <many-to-one name="certificate" class="org.greenpole.hibernate.entity.Certificate" fetch="select">
+            <column name="certificate_id" />
         </many-to-one>
-        <property name="emailAddress" type="string">
-            <column name="email_address" length="500" />
-        </property>
-        <property name="isPrimary" type="java.lang.Boolean">
-            <column name="is_primary" />
+        <property name="changeReason" type="binary">
+            <column name="change_reason" />
         </property>
     </class>
 </hibernate-mapping>

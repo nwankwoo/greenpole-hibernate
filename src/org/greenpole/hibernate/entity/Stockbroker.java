@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 23-Jun-2015 04:56:55 by Hibernate Tools 4.3.1
+// Generated 24-Jun-2015 14:34:48 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -20,6 +20,7 @@ public class Stockbroker  implements java.io.Serializable {
      private Set stockbrokerAddresses = new HashSet(0);
      private Set stockbrokerPhoneNumbers = new HashSet(0);
      private Set holders = new HashSet(0);
+     private Set certificateVerifications = new HashSet(0);
      private Set stockbrokerAgents = new HashSet(0);
      private Set stockbrokerSignatures = new HashSet(0);
      private Set stockbrokerEmailAddresses = new HashSet(0);
@@ -27,7 +28,7 @@ public class Stockbroker  implements java.io.Serializable {
     public Stockbroker() {
     }
 
-    public Stockbroker(String name, String cscsAccNo, Boolean active, Boolean valid, Set stockbrokerAddresses, Set stockbrokerPhoneNumbers, Set holders, Set stockbrokerAgents, Set stockbrokerSignatures, Set stockbrokerEmailAddresses) {
+    public Stockbroker(String name, String cscsAccNo, Boolean active, Boolean valid, Set stockbrokerAddresses, Set stockbrokerPhoneNumbers, Set holders, Set certificateVerifications, Set stockbrokerAgents, Set stockbrokerSignatures, Set stockbrokerEmailAddresses) {
        this.name = name;
        this.cscsAccNo = cscsAccNo;
        this.active = active;
@@ -35,6 +36,7 @@ public class Stockbroker  implements java.io.Serializable {
        this.stockbrokerAddresses = stockbrokerAddresses;
        this.stockbrokerPhoneNumbers = stockbrokerPhoneNumbers;
        this.holders = holders;
+       this.certificateVerifications = certificateVerifications;
        this.stockbrokerAgents = stockbrokerAgents;
        this.stockbrokerSignatures = stockbrokerSignatures;
        this.stockbrokerEmailAddresses = stockbrokerEmailAddresses;
@@ -102,6 +104,13 @@ public class Stockbroker  implements java.io.Serializable {
     
     public void setHolders(Set holders) {
         this.holders = holders;
+    }
+    public Set getCertificateVerifications() {
+        return this.certificateVerifications;
+    }
+    
+    public void setCertificateVerifications(Set certificateVerifications) {
+        this.certificateVerifications = certificateVerifications;
     }
     public Set getStockbrokerAgents() {
         return this.stockbrokerAgents;

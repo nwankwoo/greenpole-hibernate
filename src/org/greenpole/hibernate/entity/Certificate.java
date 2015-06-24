@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 23-Jun-2015 04:56:55 by Hibernate Tools 4.3.1
+// Generated 24-Jun-2015 14:34:48 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -32,13 +32,15 @@ public class Certificate  implements java.io.Serializable {
      private Boolean cancelled;
      private Boolean claimed;
      private Boolean immobStatus;
+     private Set certificateTransfers = new HashSet(0);
+     private Set certificateChangeRecords = new HashSet(0);
      private Set certificateEvents = new HashSet(0);
      private Set certificateVerifications = new HashSet(0);
 
     public Certificate() {
     }
 
-    public Certificate(CertificateLodgement certificateLodgement, ClientCompany clientCompany, Holder holder, InitialPublicOffer initialPublicOffer, PrivatePlacement privatePlacement, RightsIssue rightsIssue, ShareBonus shareBonus, Integer certificateNumber, Integer shareVolume, Integer bondHolding, String holderName, String holderAddress, String issuingCompName, Date issueDate, String certNarration, Boolean cancelled, Boolean claimed, Boolean immobStatus, Set certificateEvents, Set certificateVerifications) {
+    public Certificate(CertificateLodgement certificateLodgement, ClientCompany clientCompany, Holder holder, InitialPublicOffer initialPublicOffer, PrivatePlacement privatePlacement, RightsIssue rightsIssue, ShareBonus shareBonus, Integer certificateNumber, Integer shareVolume, Integer bondHolding, String holderName, String holderAddress, String issuingCompName, Date issueDate, String certNarration, Boolean cancelled, Boolean claimed, Boolean immobStatus, Set certificateTransfers, Set certificateChangeRecords, Set certificateEvents, Set certificateVerifications) {
        this.certificateLodgement = certificateLodgement;
        this.clientCompany = clientCompany;
        this.holder = holder;
@@ -57,6 +59,8 @@ public class Certificate  implements java.io.Serializable {
        this.cancelled = cancelled;
        this.claimed = claimed;
        this.immobStatus = immobStatus;
+       this.certificateTransfers = certificateTransfers;
+       this.certificateChangeRecords = certificateChangeRecords;
        this.certificateEvents = certificateEvents;
        this.certificateVerifications = certificateVerifications;
     }
@@ -200,6 +204,20 @@ public class Certificate  implements java.io.Serializable {
     
     public void setImmobStatus(Boolean immobStatus) {
         this.immobStatus = immobStatus;
+    }
+    public Set getCertificateTransfers() {
+        return this.certificateTransfers;
+    }
+    
+    public void setCertificateTransfers(Set certificateTransfers) {
+        this.certificateTransfers = certificateTransfers;
+    }
+    public Set getCertificateChangeRecords() {
+        return this.certificateChangeRecords;
+    }
+    
+    public void setCertificateChangeRecords(Set certificateChangeRecords) {
+        this.certificateChangeRecords = certificateChangeRecords;
     }
     public Set getCertificateEvents() {
         return this.certificateEvents;

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23-Jun-2015 04:57:02 by Hibernate Tools 4.3.1 -->
+<!-- Generated 24-Jun-2015 14:34:49 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.Holder" table="HOLDER" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -67,6 +67,12 @@
                 <column name="holder_id" />
             </key>
             <one-to-many class="org.greenpole.hibernate.entity.IpoApplication" />
+        </set>
+        <set name="certificateTransfers" table="CERTIFICATE_TRANSFER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holder_id" />
+            </key>
+            <one-to-many class="org.greenpole.hibernate.entity.CertificateTransfer" />
         </set>
         <set name="rightsIssueApplications" table="RIGHTS_ISSUE_APPLICATION" inverse="true" lazy="true" fetch="select">
             <key>

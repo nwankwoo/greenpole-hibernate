@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 23-Jun-2015 04:56:55 by Hibernate Tools 4.3.1
+// Generated 24-Jun-2015 14:34:48 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -30,6 +30,7 @@ public class Holder  implements java.io.Serializable {
      private Set holders = new HashSet(0);
      private Set holderSignatures = new HashSet(0);
      private Set ipoApplications = new HashSet(0);
+     private Set certificateTransfers = new HashSet(0);
      private Set rightsIssueApplications = new HashSet(0);
      private Set digitalCaptures = new HashSet(0);
      private Set processedTransactionHolders = new HashSet(0);
@@ -56,7 +57,7 @@ public class Holder  implements java.io.Serializable {
     public Holder() {
     }
 
-    public Holder(Holder holder, HolderType holderType, Integer holderAcctNumber, String chn, String firstName, String middleName, String lastName, String gender, Date dob, Boolean taxExempted, Boolean merged, Boolean pryHolder, String pryAddress, Set holders, Set holderSignatures, Set ipoApplications, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set accountConsolidations, Set holderPostalAddresses, Set holderChangeses, Set administrators, Set holderBondAccounts, Set privatePlacementApplications, Set holderGmAttendances, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set textMessages, Set holderCompanyAccounts, Set stockbrokers, Set holderBonuses, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates) {
+    public Holder(Holder holder, HolderType holderType, Integer holderAcctNumber, String chn, String firstName, String middleName, String lastName, String gender, Date dob, Boolean taxExempted, Boolean merged, Boolean pryHolder, String pryAddress, Set holders, Set holderSignatures, Set ipoApplications, Set certificateTransfers, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set accountConsolidations, Set holderPostalAddresses, Set holderChangeses, Set administrators, Set holderBondAccounts, Set privatePlacementApplications, Set holderGmAttendances, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set textMessages, Set holderCompanyAccounts, Set stockbrokers, Set holderBonuses, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates) {
        this.holder = holder;
        this.holderType = holderType;
        this.holderAcctNumber = holderAcctNumber;
@@ -73,6 +74,7 @@ public class Holder  implements java.io.Serializable {
        this.holders = holders;
        this.holderSignatures = holderSignatures;
        this.ipoApplications = ipoApplications;
+       this.certificateTransfers = certificateTransfers;
        this.rightsIssueApplications = rightsIssueApplications;
        this.digitalCaptures = digitalCaptures;
        this.processedTransactionHolders = processedTransactionHolders;
@@ -222,6 +224,13 @@ public class Holder  implements java.io.Serializable {
     
     public void setIpoApplications(Set ipoApplications) {
         this.ipoApplications = ipoApplications;
+    }
+    public Set getCertificateTransfers() {
+        return this.certificateTransfers;
+    }
+    
+    public void setCertificateTransfers(Set certificateTransfers) {
+        this.certificateTransfers = certificateTransfers;
     }
     public Set getRightsIssueApplications() {
         return this.rightsIssueApplications;

@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 23-Jun-2015 04:56:55 by Hibernate Tools 4.3.1
+// Generated 24-Jun-2015 14:34:48 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
