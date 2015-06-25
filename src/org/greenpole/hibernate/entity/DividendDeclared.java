@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 25-Jun-2015 11:31:21 by Hibernate Tools 4.3.1
+// Generated 25-Jun-2015 15:41:35 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -23,13 +23,15 @@ public class DividendDeclared  implements java.io.Serializable {
      private Integer yearEnding;
      private Date datePayable;
      private Double rate;
+     private Integer paymentNumber;
+     private Integer registrarCode;
      private Set dividends = new HashSet(0);
      private Set dividendSettlements = new HashSet(0);
 
     public DividendDeclared() {
     }
 
-    public DividendDeclared(ClientCompany clientCompany, String yearType, String issueType, Date qualifyDate, Double withholdingTaxRateInd, Double withholdingTaxRateCorp, Integer yearEnding, Date datePayable, Double rate, Set dividends, Set dividendSettlements) {
+    public DividendDeclared(ClientCompany clientCompany, String yearType, String issueType, Date qualifyDate, Double withholdingTaxRateInd, Double withholdingTaxRateCorp, Integer yearEnding, Date datePayable, Double rate, Integer paymentNumber, Integer registrarCode, Set dividends, Set dividendSettlements) {
        this.clientCompany = clientCompany;
        this.yearType = yearType;
        this.issueType = issueType;
@@ -39,6 +41,8 @@ public class DividendDeclared  implements java.io.Serializable {
        this.yearEnding = yearEnding;
        this.datePayable = datePayable;
        this.rate = rate;
+       this.paymentNumber = paymentNumber;
+       this.registrarCode = registrarCode;
        this.dividends = dividends;
        this.dividendSettlements = dividendSettlements;
     }
@@ -119,6 +123,20 @@ public class DividendDeclared  implements java.io.Serializable {
     
     public void setRate(Double rate) {
         this.rate = rate;
+    }
+    public Integer getPaymentNumber() {
+        return this.paymentNumber;
+    }
+    
+    public void setPaymentNumber(Integer paymentNumber) {
+        this.paymentNumber = paymentNumber;
+    }
+    public Integer getRegistrarCode() {
+        return this.registrarCode;
+    }
+    
+    public void setRegistrarCode(Integer registrarCode) {
+        this.registrarCode = registrarCode;
     }
     public Set getDividends() {
         return this.dividends;

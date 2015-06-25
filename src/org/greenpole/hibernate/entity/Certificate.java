@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 25-Jun-2015 11:31:21 by Hibernate Tools 4.3.1
+// Generated 25-Jun-2015 15:41:35 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -21,7 +21,7 @@ public class Certificate  implements java.io.Serializable {
      private PrivatePlacement privatePlacement;
      private RightsIssue rightsIssue;
      private ShareBonus shareBonus;
-     private Integer certificateNumber;
+     private String certificateNumber;
      private String controlNumber;
      private Integer shareVolume;
      private Integer bondHolding;
@@ -41,7 +41,7 @@ public class Certificate  implements java.io.Serializable {
     public Certificate() {
     }
 
-    public Certificate(CertificateLodgement certificateLodgement, ClientCompany clientCompany, Holder holder, InitialPublicOffer initialPublicOffer, PrivatePlacement privatePlacement, RightsIssue rightsIssue, ShareBonus shareBonus, Integer certificateNumber, String controlNumber, Integer shareVolume, Integer bondHolding, String holderName, String holderAddress, String issuingCompName, Date issueDate, String certNarration, Boolean cancelled, Boolean claimed, Boolean immobStatus, Set certificateTransfers, Set certificateChangeRecords, Set certificateEvents, Set certificateVerifications) {
+    public Certificate(CertificateLodgement certificateLodgement, ClientCompany clientCompany, Holder holder, InitialPublicOffer initialPublicOffer, PrivatePlacement privatePlacement, RightsIssue rightsIssue, ShareBonus shareBonus, String certificateNumber, String controlNumber, Integer shareVolume, Integer bondHolding, String holderName, String holderAddress, String issuingCompName, Date issueDate, String certNarration, Boolean cancelled, Boolean claimed, Boolean immobStatus, Set certificateTransfers, Set certificateChangeRecords, Set certificateEvents, Set certificateVerifications) {
        this.certificateLodgement = certificateLodgement;
        this.clientCompany = clientCompany;
        this.holder = holder;
@@ -130,11 +130,11 @@ public class Certificate  implements java.io.Serializable {
     public void setShareBonus(ShareBonus shareBonus) {
         this.shareBonus = shareBonus;
     }
-    public Integer getCertificateNumber() {
+    public String getCertificateNumber() {
         return this.certificateNumber;
     }
     
-    public void setCertificateNumber(Integer certificateNumber) {
+    public void setCertificateNumber(String certificateNumber) {
         this.certificateNumber = certificateNumber;
     }
     public String getControlNumber() {

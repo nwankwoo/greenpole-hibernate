@@ -772,134 +772,235 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
 
     @Override
     public HolderResidentialAddress getHolderResidentialAddress(int id) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderResidentialAddress.class)
-                .add(Restrictions.idEq(id));
-        HolderResidentialAddress addy = (HolderResidentialAddress) criteria.list().get(0);
-        getTransaction().commit();
+        HolderResidentialAddress addy = new HolderResidentialAddress();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderResidentialAddress.class)
+                    .add(Restrictions.idEq(id));
+            addy = (HolderResidentialAddress) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return addy;
     }
 
     @Override
     public List<HolderPostalAddress> getHolderPostalAddresses(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderPostalAddress.class)
-                .add(Restrictions.eq("holder.id", holderId));
-        List<HolderPostalAddress> returnlist = criteria.list();
-        getTransaction().commit();
+        List<HolderPostalAddress> returnlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderPostalAddress.class)
+                    .add(Restrictions.eq("holder.id", holderId));
+            returnlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return returnlist;
     }
 
     @Override
     public HolderPostalAddress getHolderPostalAddress(int id) {
-        startOperation();
-        HolderPostalAddress addy = (HolderPostalAddress) searchObject(HolderPostalAddress.class, id);
-        getTransaction().commit();
+        HolderPostalAddress addy = new HolderPostalAddress();
+        try {
+            startOperation();
+            addy = (HolderPostalAddress) searchObject(HolderPostalAddress.class, id);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return addy;
     }
 
     @Override
     public List<HolderPhoneNumber> getHolderPhoneNumbers(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderPhoneNumber.class)
-                .add(Restrictions.eq("holder.id", holderId));
-        List<HolderPhoneNumber> returnlist = criteria.list();
-        getTransaction().commit();
+        List<HolderPhoneNumber> returnlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderPhoneNumber.class)
+                    .add(Restrictions.eq("holder.id", holderId));
+            returnlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return returnlist;
     }
 
     @Override
     public String getHolderPryPhoneNumber(int holderId) {
         String number = "";
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderPhoneNumber.class)
-                .add(Restrictions.eq("holder.id", holderId));
-        List<HolderPhoneNumber> returnlist = criteria.list();
-        for (HolderPhoneNumber phone : returnlist) {
-            if (phone.getIsPrimary() != null && phone.getIsPrimary()) {
-                number = phone.getPhoneNumber();
-                break;
+        try {
+            Criteria criteria = getSession().createCriteria(HolderPhoneNumber.class)
+                    .add(Restrictions.eq("holder.id", holderId));
+            List<HolderPhoneNumber> returnlist = criteria.list();
+            for (HolderPhoneNumber phone : returnlist) {
+                if (phone.getIsPrimary() != null && phone.getIsPrimary()) {
+                    number = phone.getPhoneNumber();
+                    break;
+                }
             }
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
         }
-        getTransaction().commit();
         return number;
     }
 
     @Override
     public HolderPhoneNumber getHolderPhoneNumber(int id) {
-        startOperation();
-        HolderPhoneNumber phone = (HolderPhoneNumber) searchObject(HolderPhoneNumber.class, id);
-        getTransaction().commit();
+        HolderPhoneNumber phone = new HolderPhoneNumber();
+        try {
+            phone = (HolderPhoneNumber) searchObject(HolderPhoneNumber.class, id);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return phone;
     }
 
     @Override
     public List<HolderEmailAddress> getHolderEmailAddresses(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderEmailAddress.class)
-                .add(Restrictions.eq("holder.id", holderId));
-        List<HolderEmailAddress> returnlist = criteria.list();
-        getTransaction().commit();
+        List<HolderEmailAddress> returnlist = new ArrayList<>();
+        try {
+            Criteria criteria = getSession().createCriteria(HolderEmailAddress.class)
+                    .add(Restrictions.eq("holder.id", holderId));
+            returnlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return returnlist;
     }
 
     @Override
     public HolderEmailAddress getHolderEmailAddress(int id) {
-        startOperation();
-        HolderEmailAddress email = (HolderEmailAddress) searchObject(HolderEmailAddress.class, id);
-        getTransaction().commit();
+        HolderEmailAddress email = new HolderEmailAddress();
+        try {
+            email = (HolderEmailAddress) searchObject(HolderEmailAddress.class, id);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return email;
     }
 
     @Override
     public AdministratorResidentialAddress getAdministratorResidentialAddress(int id) {
-        startOperation();
-        AdministratorResidentialAddress addy = (AdministratorResidentialAddress) searchObject(AdministratorResidentialAddress.class, id);
-        getTransaction().commit();
+        AdministratorResidentialAddress addy = new AdministratorResidentialAddress();
+        try {
+            addy = (AdministratorResidentialAddress) searchObject(AdministratorResidentialAddress.class, id);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return addy;
     }
 
     @Override
     public AdministratorPostalAddress getAdministratorPostalAddress(int id) {
-        startOperation();
-        AdministratorPostalAddress addy = (AdministratorPostalAddress) searchObject(AdministratorPostalAddress.class, id);
-        getTransaction().commit();
+        AdministratorPostalAddress addy = new AdministratorPostalAddress();
+        try {
+            addy = (AdministratorPostalAddress) searchObject(AdministratorPostalAddress.class, id);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return addy;
     }
 
     @Override
     public AdministratorEmailAddress getAdministratorEmailAddress(int id) {
-        startOperation();
-        AdministratorEmailAddress email = (AdministratorEmailAddress) searchObject(AdministratorEmailAddress.class, id);
-        getTransaction().commit();
+        AdministratorEmailAddress email = new AdministratorEmailAddress();
+        try {
+            email = (AdministratorEmailAddress) searchObject(AdministratorEmailAddress.class, id);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return email;
     }
 
     @Override
     public List<AdministratorEmailAddress> getAdministratorEmailAddresses(int administratorId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(AdministratorEmailAddress.class)
-                .add(Restrictions.eq("administrator.id", administratorId));
-        List <AdministratorEmailAddress> emails = criteria.list();
-        getTransaction().commit();
+        List<AdministratorEmailAddress> emails = new ArrayList<>();
+        try {
+            Criteria criteria = getSession().createCriteria(AdministratorEmailAddress.class)
+                    .add(Restrictions.eq("administrator.id", administratorId));
+            emails = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return emails;
     }
 
     @Override
     public AdministratorPhoneNumber getAdministratorPhoneNumber(int id) {
-        startOperation();
-        AdministratorPhoneNumber phone = (AdministratorPhoneNumber) searchObject(AdministratorPhoneNumber.class, id);
-        getTransaction().commit();
+        AdministratorPhoneNumber phone = new AdministratorPhoneNumber();
+        try {
+            phone = (AdministratorPhoneNumber) searchObject(AdministratorPhoneNumber.class, id);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return phone;
     }
 
     @Override
     public List<AdministratorPhoneNumber> getAdministratorPhoneNumbers(int administratorId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(AdministratorPhoneNumber.class)
-                .add(Restrictions.eq("administrator.id", administratorId));
-        List<AdministratorPhoneNumber> phones = criteria.list();
-        getTransaction().commit();
+        List<AdministratorPhoneNumber> phones = new ArrayList<>();
+        try {
+            Criteria criteria = getSession().createCriteria(AdministratorPhoneNumber.class)
+                    .add(Restrictions.eq("administrator.id", administratorId));
+            phones = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return phones;
     }
 
@@ -930,13 +1031,15 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             processTransactionShareTransfer(pt, sender, type, pt_sender_id, pt_sender, shareUnits, pt_receiver_id, receiver, pt_receiver);
 
-            getTransaction().commit();
+            commit();
             transferred = true;
             return transferred;
         } catch (Exception ex) {
             logger.error("share transfer transaction error - ", ex);
-            getTransaction().rollback();
+            rollback();
             return transferred;
+        } finally {
+            closeSession();
         }
     }
 
@@ -982,45 +1085,61 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             
             processTransactionBondTransfer(pt, sender, type, pt_sender_id, pt_sender, bondUnits, pt_receiver_id, receiver, pt_receiver);
             
-            getTransaction().commit();
+            commit();
             transferred = true;
             return transferred;
         } catch (Exception ex) {
             logger.error("bond transfer transaction error - ", ex);
-            getTransaction().rollback();
+            rollback();
             return transferred;
+        } finally {
+            closeSession();
         }
     }
 
     @Override
     public boolean hasCompanyAccount(int holderId) {
-        startOperation();
         boolean hasAcct = false;
-        Holder h = (Holder) searchObject(Holder.class, holderId);
-        List<HolderCompanyAccount> hca_list = new ArrayList<>(h.getHolderCompanyAccounts());
-        for (HolderCompanyAccount hca : hca_list) {
-            if (hca.getShareUnits() != null && hca.getShareUnits() > 0 && hca.getHolderCompAccPrimary()) {
-                hasAcct = true;
-                break;
+        try {
+            startOperation();
+            Holder h = (Holder) searchObject(Holder.class, holderId);
+            List<HolderCompanyAccount> hca_list = new ArrayList<>(h.getHolderCompanyAccounts());
+            for (HolderCompanyAccount hca : hca_list) {
+                if (hca.getShareUnits() != null && hca.getShareUnits() > 0 && hca.getHolderCompAccPrimary()) {
+                    hasAcct = true;
+                    break;
+                }
             }
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
         }
-        getTransaction().commit();
         return hasAcct;
     }
 
     @Override
     public boolean hasBondAccount(int holderId) {
-        startOperation();
         boolean hasAcct = false;
-        Holder h = (Holder) searchObject(Holder.class, holderId);
-        List<HolderBondAccount> hba_list = new ArrayList<>(h.getHolderBondAccounts());
-        for (HolderBondAccount hba : hba_list) {
-            if (hba.getBondUnits() != null && hba.getBondUnits() > 0 && hba.getHolderBondAcctPrimary() && !hba.getMerged()) {
-                hasAcct = true;
-                break;
+        try {
+            startOperation();
+            Holder h = (Holder) searchObject(Holder.class, holderId);
+            List<HolderBondAccount> hba_list = new ArrayList<>(h.getHolderBondAccounts());
+            for (HolderBondAccount hba : hba_list) {
+                if (hba.getBondUnits() != null && hba.getBondUnits() > 0 && hba.getHolderBondAcctPrimary() && !hba.getMerged()) {
+                    hasAcct = true;
+                    break;
+                }
             }
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
         }
-        getTransaction().commit();
         return hasAcct;
     }
 
@@ -1028,13 +1147,20 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<HolderCompanyAccount> getAllHolderCompanyAccounts(int holderId) {
         HolderCompanyAccount hca = new HolderCompanyAccount();
         hca.setHolderCompAccPrimary(true);
-        
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
-                .add(Example.create(hca).enableLike())
-                .add(Restrictions.eq("id.holderId", holderId));
-        List<HolderCompanyAccount> returnlist = criteria.list();
-        getTransaction().commit();
+        List<HolderCompanyAccount> returnlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
+                    .add(Example.create(hca).enableLike())
+                    .add(Restrictions.eq("id.holderId", holderId));
+            returnlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return returnlist;
     }
 
@@ -1042,13 +1168,20 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<HolderBondAccount> getAllHolderBondAccounts(int holderId) {
         HolderBondAccount hba = new HolderBondAccount();
         hba.setHolderBondAcctPrimary(true);
-        
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
-                .add(Example.create(hba).enableLike())
-                .add(Restrictions.eq("id.holderId", holderId));
-        List<HolderBondAccount> returnlist = criteria.list();
-        getTransaction().commit();
+        List<HolderBondAccount> returnlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
+                    .add(Example.create(hba).enableLike())
+                    .add(Restrictions.eq("id.holderId", holderId));
+            returnlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return returnlist;
     }
 
@@ -1209,13 +1342,15 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
             
-            getTransaction().commit();
+            commit();
             merged = true;
             return merged;
         } catch (Exception ex) {
             logger.error("merge error - ", ex);
-            getTransaction().rollback();
+            rollback();
             return merged;
+        } finally {
+            closeSession();
         }
     }
 
@@ -1327,99 +1462,149 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
 
-            getTransaction().commit();
+            commit();
             demerged = true;
             return demerged;
         } catch (Exception ex) {
             logger.error("demerge error - ", ex);
-            getTransaction().rollback();
+            rollback();
             return demerged;
+        } finally {
+            closeSession();
         }
     }
 
     @Override
     public List<Holder> getSecondaryHolderAccounts(int holderId) {
-        startOperation();        
-        Criteria criteria = getSession().createCriteria(Holder.class)
-                .add(Restrictions.eq("pryHolder", false))
-                .add(Restrictions.eq("merged", true))
-                .add(Restrictions.eq("holder.id", holderId));
-        List<Holder> resultlist = criteria.list();
-        getTransaction().commit();
+        List<Holder> resultlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Holder.class)
+                    .add(Restrictions.eq("pryHolder", false))
+                    .add(Restrictions.eq("merged", true))
+                    .add(Restrictions.eq("holder.id", holderId));
+            resultlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return resultlist;
     }
 
     @Override
     public boolean checkInConsolidation(int pryHolderId, int secHolderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(AccountConsolidation.class)
-                .add(Restrictions.eq("demerge", false))
-                .add(Restrictions.eq("mergedToHolderId", pryHolderId))
-                .add(Restrictions.eq("holder.id", secHolderId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(AccountConsolidation.class)
+                    .add(Restrictions.eq("demerge", false))
+                    .add(Restrictions.eq("mergedToHolderId", pryHolderId))
+                    .add(Restrictions.eq("holder.id", secHolderId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public boolean checkInCompAcctConsolidation(int pryHolderId, int secHolderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .createAlias("accountConsolidation", "a")
-                .add(Restrictions.eq("a.demerge", false))
-                .add(Restrictions.eq("tiedToCurrentHolderId", pryHolderId))
-                .add(Restrictions.eq("tiedToInitialHolderId", secHolderId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
+                    .createAlias("accountConsolidation", "a")
+                    .add(Restrictions.eq("a.demerge", false))
+                    .add(Restrictions.eq("tiedToCurrentHolderId", pryHolderId))
+                    .add(Restrictions.eq("tiedToInitialHolderId", secHolderId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public boolean checkSecondaryHolders(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Holder.class)
-                .add(Restrictions.eq("holder.id", holderId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Holder.class)
+                    .add(Restrictions.eq("holder.id", holderId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public List<CompanyAccountConsolidation> getCompanyAccountMerges(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .createAlias("accountConsolidation", "a")
-                .add(Restrictions.eq("a.demerge", false))
-                .add(Restrictions.eq("tiedToInitialHolderId", holderId));
-        List<CompanyAccountConsolidation> resultlist = criteria.list();
-        getTransaction().commit();
+        List<CompanyAccountConsolidation> resultlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
+                    .createAlias("accountConsolidation", "a")
+                    .add(Restrictions.eq("a.demerge", false))
+                    .add(Restrictions.eq("tiedToInitialHolderId", holderId));
+            resultlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return resultlist;
     }
 
     @Override
     public int getFinalUnitAfterTransfer(int holderId, int compOrBondId, boolean isShare) {
-        startOperation();
-        Criteria criteria;
-        if (isShare) {
-            criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                    .createAlias("accountConsolidation", "a")
-                    .add(Restrictions.eq("a.demerge", false))
-                    .add(Restrictions.eq("tiedToCurrentHolderId", holderId))
-                    .add(Restrictions.eq("forCompanyId", compOrBondId))
-                    .setProjection(Projections.max("unitAfterTransfer"));
-        } else {
-            criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                    .createAlias("accountConsolidation", "a")
-                    .add(Restrictions.eq("a.demerge", false))
-                    .add(Restrictions.eq("tiedToCurrentHolderId", holderId))
-                    .add(Restrictions.eq("forBondOfferId", compOrBondId))
-                    .setProjection(Projections.max("unitAfterTransfer"));
+        Integer finalUnit = 0;
+        try {
+            startOperation();
+            Criteria criteria;
+            if (isShare) {
+                criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
+                        .createAlias("accountConsolidation", "a")
+                        .add(Restrictions.eq("a.demerge", false))
+                        .add(Restrictions.eq("tiedToCurrentHolderId", holderId))
+                        .add(Restrictions.eq("forCompanyId", compOrBondId))
+                        .setProjection(Projections.max("unitAfterTransfer"));
+            } else {
+                criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
+                        .createAlias("accountConsolidation", "a")
+                        .add(Restrictions.eq("a.demerge", false))
+                        .add(Restrictions.eq("tiedToCurrentHolderId", holderId))
+                        .add(Restrictions.eq("forBondOfferId", compOrBondId))
+                        .setProjection(Projections.max("unitAfterTransfer"));
+            }
+            finalUnit = (Integer) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
         }
-        Integer finalUnit = (Integer) criteria.uniqueResult();
-        getTransaction().commit();
         return finalUnit;
     }
 
@@ -1431,7 +1616,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         
         Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
         String dateDescriptor = descriptorSplits.get("date");
-        
+        List<AccountConsolidation> returnlist = new ArrayList<>();
         try {
             startOperation();
             Criteria criteria = getSession().createCriteria(AccountConsolidation.class);
@@ -1439,7 +1624,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             if (dateDescriptor.equalsIgnoreCase("exact")) {
                 try {
                     criteria.add(Restrictions.eq("mergeDate", formatter.parse(startDate)));
-                    List<AccountConsolidation> returnlist = criteria.list();
+                    returnlist = criteria.list();
                     getTransaction().commit();
                     return returnlist;
                 } catch (ParseException ex) {
@@ -1450,7 +1635,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             if (dateDescriptor.equalsIgnoreCase("between")) {
                 try {
                     criteria.add(Restrictions.between("mergeDate", formatter.parse(startDate), formatter.parse(endDate)));
-                    List<AccountConsolidation> returnlist = criteria.list();
+                    returnlist = criteria.list();
                     getTransaction().commit();
                     return returnlist;
                 } catch (ParseException ex) {
@@ -1461,7 +1646,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             if (dateDescriptor.equalsIgnoreCase("before")) {
                 try {
                     criteria.add(Restrictions.lt("mergeDate", formatter.parse(startDate)));
-                    List<AccountConsolidation> returnlist = criteria.list();
+                    returnlist = criteria.list();
                     getTransaction().commit();
                     return returnlist;
                 } catch (ParseException ex) {
@@ -1472,43 +1657,60 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             if (dateDescriptor.equalsIgnoreCase("after")) {
                 try {
                     criteria.add(Restrictions.gt("mergeDate", formatter.parse(startDate)));
-                    List<AccountConsolidation> returnlist = criteria.list();
+                    returnlist = criteria.list();
                     getTransaction().commit();
                     return returnlist;
                 } catch (ParseException ex) {
                     logger.error("error parsing date - ", ex);
                 }
             }
-
-            List<AccountConsolidation> returnlist = criteria.list();
+            returnlist = criteria.list();
             getTransaction().commit();
-            return returnlist;
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
         } finally {
-            if (getTransaction() != null && !getTransaction().wasCommitted())
-                getTransaction().rollback();
+            closeSession();
         }
+        return returnlist;
     }
 
     @Override
     public List<CompanyAccountConsolidation> getCompAcctConsolidation(int acctConsolidationId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .createAlias("accountConsolidation", "a")
-                .add(Restrictions.eq("a.demerge", false))
-                .add(Restrictions.eq("a.id", acctConsolidationId));
-        List<CompanyAccountConsolidation> resultlist = criteria.list();
-        getTransaction().commit();
+        List<CompanyAccountConsolidation> resultlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
+                    .createAlias("accountConsolidation", "a")
+                    .add(Restrictions.eq("a.demerge", false))
+                    .add(Restrictions.eq("a.id", acctConsolidationId));
+            resultlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return resultlist;
     }
 
     @Override
     public List<CompanyAccountConsolidation> getCompAcctConsolidationIgnoreDemerge(int acctConsolidationId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
-                .createAlias("accountConsolidation", "a")
-                .add(Restrictions.eq("a.id", acctConsolidationId));
-        List<CompanyAccountConsolidation> resultlist = criteria.list();
-        getTransaction().commit();
+        List<CompanyAccountConsolidation> resultlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(CompanyAccountConsolidation.class)
+                    .createAlias("accountConsolidation", "a")
+                    .add(Restrictions.eq("a.id", acctConsolidationId));
+            resultlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return resultlist;
     }
 
@@ -1551,59 +1753,93 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
             
-            getTransaction().commit();
+            commit();
             created = true;
             return created;
         } catch (Exception ex) {
             logger.error("error creating administrator account - ", ex);
-            getTransaction().rollback();
+            rollback();
             return created;
+        } finally {
+            closeSession();
         }
     }
 
     @Override
     public boolean checkCurrentPowerOfAttorney(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
-                .add(Restrictions.eq("powerOfAttorneyPrimary", true))
-                .add(Restrictions.eq("holder.id", holderId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
+                    .add(Restrictions.eq("powerOfAttorneyPrimary", true))
+                    .add(Restrictions.eq("holder.id", holderId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public PowerOfAttorney getCurrentPowerOfAttorney(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
-                .add(Restrictions.eq("powerOfAttorneyPrimary", true))
-                .add(Restrictions.eq("holder.id", holderId));
-        PowerOfAttorney poa = (PowerOfAttorney) criteria.list().get(0);
-        getTransaction().commit();
+        PowerOfAttorney poa = new PowerOfAttorney();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
+                    .add(Restrictions.eq("powerOfAttorneyPrimary", true))
+                    .add(Restrictions.eq("holder.id", holderId));
+            poa = (PowerOfAttorney) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return poa;
     }
 
     @Override
     public boolean checkCurrentSignature(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderSignature.class)
-                .add(Restrictions.eq("holderSignaturePrimary", true))
-                .add(Restrictions.eq("holder.id", holderId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderSignature.class)
+                    .add(Restrictions.eq("holderSignaturePrimary", true))
+                    .add(Restrictions.eq("holder.id", holderId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public HolderSignature getCurrentSignature(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderSignature.class)
-                .add(Restrictions.eq("holderSignaturePrimary", true))
-                .add(Restrictions.eq("holder.id", holderId));
-        HolderSignature hs = (HolderSignature) criteria.list().get(0);
-        getTransaction().commit();
+        HolderSignature hs = new HolderSignature();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderSignature.class)
+                    .add(Restrictions.eq("holderSignaturePrimary", true))
+                    .add(Restrictions.eq("holder.id", holderId));
+            hs = (HolderSignature) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return hs;
     }
 
@@ -1615,13 +1851,15 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             createUpdateObject(newPoa);
             if (currentPoa != null)
                 createUpdateObject(currentPoa);
-            getTransaction().commit();
+            commit();
             uploaded = true;
             return uploaded;
         } catch (Exception ex) {
             logger.error("error uploading power of attorney - ", ex);
-            getTransaction().rollback();
+            rollback();
             return uploaded;
+        } finally {
+            closeSession();
         }
     }
 
@@ -1633,94 +1871,171 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             createUpdateObject(newSig);
             if (currentSig != null)
                 createUpdateObject(currentSig);
-            getTransaction().commit();
+            commit();
             uploaded = true;
             return uploaded;
         } catch (Exception ex) {
             logger.error("error uploading signature - ", ex);
-            getTransaction().rollback();
+            rollback();
             return uploaded;
+        } finally {
+            closeSession();
         }
     }
 
     @Override
     public PowerOfAttorney getHolderPowerOfAttorney(int attorneyId) {
-        startOperation();
-        PowerOfAttorney poa = (PowerOfAttorney) searchObject(PowerOfAttorney.class, attorneyId);
-        getTransaction().commit();
+        PowerOfAttorney poa = new PowerOfAttorney();
+        try {
+            startOperation();
+            poa = (PowerOfAttorney) searchObject(PowerOfAttorney.class, attorneyId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return poa;
     }
 
     @Override
     public List<PowerOfAttorney> getAllHolderPowerOfAttorney(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
-                .add(Restrictions.eq("holder.id", holderId));
-        List<PowerOfAttorney> poa_list = criteria.list();
-        getTransaction().commit();
+        List<PowerOfAttorney> poa_list = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PowerOfAttorney.class)
+                    .add(Restrictions.eq("holder.id", holderId));
+            poa_list = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return poa_list;
     }
 
     @Override
     public boolean checkBank(int bankId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Bank.class)
-                .add(Restrictions.idEq(bankId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Bank.class)
+                    .add(Restrictions.idEq(bankId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public List<HolderType> getAllHolderTypes() {
+        List<HolderType> type_list = new ArrayList<>();
+        try {
+            startOperation();
+            type_list = searchAll(HolderType.class);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         startOperation();
-        List<HolderType> type_list = searchAll(HolderType.class);
+        
         getTransaction().commit();
         return type_list;
     }
 
     @Override
     public HolderType getHolderType(int typeId) {
-        startOperation();
-        HolderType type = (HolderType) searchObject(HolderType.class, typeId);
-        getTransaction().commit();
+        HolderType type = new HolderType();
+        try {
+            startOperation();
+            type = (HolderType) searchObject(HolderType.class, typeId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return type;
     }
 
     @Override
     public List<TransactionType> getAllTransactionTypes() {
-        startOperation();
-        List<TransactionType> type_list = searchAll(TransactionType.class);
-        getTransaction().commit();
+        List<TransactionType> type_list = new ArrayList<>();
+        try {
+            startOperation();
+            type_list = searchAll(TransactionType.class);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return type_list;
     }
 
     @Override
     public TransactionType getTransactionType(int typeId) {
-        startOperation();
-        TransactionType type = (TransactionType) searchObject(TransactionType.class, typeId);
-        getTransaction().commit();
+        TransactionType type = new TransactionType();
+        try {
+            startOperation();
+            type = (TransactionType) searchObject(TransactionType.class, typeId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return type;
     }
 
     @Override
     public Bank getBankDetails(int bankId) {
-        startOperation();
-        Bank bank = (Bank) searchObject(Bank.class, bankId);
-        getTransaction().commit();
+        Bank bank = new Bank();
+        try {
+            startOperation();
+            bank = (Bank) searchObject(Bank.class, bankId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return bank;
     }
 
     @Override
     public boolean holderHasEsopAccount(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
-                .add(Restrictions.eq("id.holderId", holderId))
-                .add(Restrictions.eq("esop", true))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
+                    .add(Restrictions.eq("id.holderId", holderId))
+                    .add(Restrictions.eq("esop", true))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
     
