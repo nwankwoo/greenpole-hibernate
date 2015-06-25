@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24-Jun-2015 14:34:49 by Hibernate Tools 4.3.1 -->
+<!-- Generated 25-Jun-2015 11:31:23 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.Certificate" table="CERTIFICATE" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -34,6 +34,9 @@
         </many-to-one>
         <property name="certificateNumber" type="java.lang.Integer">
             <column name="certificate_Number" unique="true" />
+        </property>
+        <property name="controlNumber" type="string">
+            <column name="control_number" length="50" />
         </property>
         <property name="shareVolume" type="java.lang.Integer">
             <column name="share_Volume" />

@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 24-Jun-2015 14:34:48 by Hibernate Tools 4.3.1
+// Generated 25-Jun-2015 11:31:21 by Hibernate Tools 4.3.1
 
 
 
@@ -10,6 +10,7 @@ public class CertificateTransfer  implements java.io.Serializable {
 
 
      private int id;
+     private Long version;
      private Certificate certificate;
      private Holder holder;
      private String fromTo;
@@ -29,6 +30,13 @@ public class CertificateTransfer  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    public Long getVersion() {
+        return this.version;
+    }
+    
+    public void setVersion(Long version) {
+        this.version = version;
     }
     public Certificate getCertificate() {
         return this.certificate;

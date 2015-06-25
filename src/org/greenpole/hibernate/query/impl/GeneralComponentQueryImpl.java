@@ -36,168 +36,270 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
 
     @Override
     public void testConnection() {
-        startOperation();
-        getTransaction().commit();
+        try {
+            startOperation();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public void createUpdateNotification(Notification notification) {
-        startOperation();
-        createUpdateObject(notification);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(notification);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public List<Notification> getNotificationsForReceiver(String userId) {
-        startOperation();
-        Criteria nonAttendedCriteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("sentTo", userId))
-                .add(Restrictions.eq("attendedTo", false))
-                .add(Restrictions.eq("rejected", false))
-                .add(Restrictions.eq("writeOff", false));
-        List<Notification> nonAttended = nonAttendedCriteria.list();
-        
-        Criteria rejectedCriteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("sentFrom", userId))
-                .add(Restrictions.eq("attendedTo", true))
-                .add(Restrictions.eq("rejected", true))
-                .add(Restrictions.eq("writeOff", false));
-        List<Notification> rejected = rejectedCriteria.list();
-        
         List<Notification> resultList = new ArrayList<>();
-        for (Notification n : nonAttended) {
-            resultList.add(n);
+        try {
+            startOperation();
+            Criteria nonAttendedCriteria = getSession().createCriteria(Notification.class)
+                    .add(Restrictions.eq("sentTo", userId))
+                    .add(Restrictions.eq("attendedTo", false))
+                    .add(Restrictions.eq("rejected", false))
+                    .add(Restrictions.eq("writeOff", false));
+            List<Notification> nonAttended = nonAttendedCriteria.list();
+
+            Criteria rejectedCriteria = getSession().createCriteria(Notification.class)
+                    .add(Restrictions.eq("sentFrom", userId))
+                    .add(Restrictions.eq("attendedTo", true))
+                    .add(Restrictions.eq("rejected", true))
+                    .add(Restrictions.eq("writeOff", false));
+            List<Notification> rejected = rejectedCriteria.list();
+
+            resultList = new ArrayList<>();
+            for (Notification n : nonAttended) {
+                resultList.add(n);
+            }
+            for (Notification n : rejected) {
+                resultList.add(n);
+            }
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
         }
-        for (Notification n : rejected) {
-            resultList.add(n);
-        }
-        getTransaction().commit();
         return resultList;
     }
 
     @Override
     public List<Notification> getNotificationsForSender(String userId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("sentFrom", userId))
-                .add(Restrictions.eq("attendedTo", false))
-                .add(Restrictions.eq("rejected", false))
-                .add(Restrictions.eq("writeOff", false));
-        List<Notification> resultList = criteria.list();
-        getTransaction().commit();
+        List<Notification> resultList = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Notification.class)
+                    .add(Restrictions.eq("sentFrom", userId))
+                    .add(Restrictions.eq("attendedTo", false))
+                    .add(Restrictions.eq("rejected", false))
+                    .add(Restrictions.eq("writeOff", false));
+            resultList = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return resultList;
     }
 
     @Override
     public Notification getNotification(String notificationCode) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("fileName", notificationCode))
-                .add(Restrictions.eq("writeOff", false));
-        Notification result = (Notification) criteria.list().get(0);
-        getTransaction().commit();
+        Notification result = new Notification();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Notification.class)
+                    .add(Restrictions.eq("fileName", notificationCode))
+                    .add(Restrictions.eq("writeOff", false));
+            result = (Notification) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return result;
     }
 
     @Override
     public boolean checkNotification(String notificationCode) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("fileName", notificationCode))
-                .add(Restrictions.eq("attendedTo", false))
-                .add(Restrictions.eq("rejected", false))
-                .add(Restrictions.eq("writeOff", false))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Notification.class)
+                    .add(Restrictions.eq("fileName", notificationCode))
+                    .add(Restrictions.eq("attendedTo", false))
+                    .add(Restrictions.eq("rejected", false))
+                    .add(Restrictions.eq("writeOff", false))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public boolean checkNotificationAgainstUser(String userId, String notificationCode) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("sentTo", userId))
-                .add(Restrictions.eq("fileName", notificationCode))
-                .add(Restrictions.eq("attendedTo", false))
-                .add(Restrictions.eq("rejected", false))
-                .add(Restrictions.eq("writeOff", false))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Notification.class)
+                    .add(Restrictions.eq("sentTo", userId))
+                    .add(Restrictions.eq("fileName", notificationCode))
+                    .add(Restrictions.eq("attendedTo", false))
+                    .add(Restrictions.eq("rejected", false))
+                    .add(Restrictions.eq("writeOff", false))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public boolean checkFromToSame(String userId, String notificationCode) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("sentFrom", userId))
-                .add(Restrictions.eq("sentTo", userId))
-                .add(Restrictions.eq("fileName", notificationCode))
-                .add(Restrictions.eq("attendedTo", false))
-                .add(Restrictions.eq("rejected", false))
-                .add(Restrictions.eq("writeOff", false))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Notification.class)
+                    .add(Restrictions.eq("sentFrom", userId))
+                    .add(Restrictions.eq("sentTo", userId))
+                    .add(Restrictions.eq("fileName", notificationCode))
+                    .add(Restrictions.eq("attendedTo", false))
+                    .add(Restrictions.eq("rejected", false))
+                    .add(Restrictions.eq("writeOff", false))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public boolean checkNotificationIgnoreAttended(String notificationCode) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Notification.class)
-                .add(Restrictions.eq("fileName", notificationCode))
-                .add(Restrictions.eq("writeOff", false))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Notification.class)
+                    .add(Restrictions.eq("fileName", notificationCode))
+                    .add(Restrictions.eq("writeOff", false))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public boolean checkValidUser(String userId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(UserAccess.class)
-                .add(Restrictions.eq("email", userId))
-                .add(Restrictions.eq("suspended", false))
-                .add(Restrictions.eq("locked", false))
-                .add(Restrictions.eq("expired", false))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(UserAccess.class)
+                    .add(Restrictions.eq("email", userId))
+                    .add(Restrictions.eq("suspended", false))
+                    .add(Restrictions.eq("locked", false))
+                    .add(Restrictions.eq("expired", false))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public boolean checkUser(String userId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(UserAccess.class)
-                .add(Restrictions.eq("email", userId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(UserAccess.class)
+                    .add(Restrictions.eq("email", userId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public UserAccount getUserAccount(String userId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(UserAccount.class)
-                .add(Restrictions.eq("userAccesses.email", userId));
-        UserAccount acctInfo = (UserAccount) criteria.list().get(0);
-        getTransaction().commit();
+        UserAccount acctInfo = new UserAccount();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(UserAccount.class)
+                    .add(Restrictions.eq("userAccesses.email", userId));
+            acctInfo = (UserAccount) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return acctInfo;
     }
 
     @Override
     public UserAccess getUserAccess(String userId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(UserAccess.class)
-                .add(Restrictions.eq("email", userId));
-        UserAccess accessInfo = (UserAccess) criteria.list().get(0);
-        getTransaction().commit();
+        UserAccess accessInfo = new UserAccess();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(UserAccess.class)
+                    .add(Restrictions.eq("email", userId));
+            accessInfo = (UserAccess) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return accessInfo;
     }
 
@@ -207,11 +309,13 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
         try {
             startOperation();
             createUpdateObject(text);
-            getTransaction().commit();
+            commit();
             persisted = true;
         } catch (Exception ex) {
             logger.error("error thrown while persisting text message record - ", ex);
-            getTransaction().rollback();
+            rollback();
+        } finally {
+            closeSession();
         }
         return persisted;
     }
@@ -224,215 +328,402 @@ public class GeneralComponentQueryImpl extends GeneralisedAbstractDao implements
             texts.stream().forEach((text) -> {
                 createUpdateObject(text);
             });
-            getTransaction().commit();
+            commit();
             persisted = true;
         } catch (Exception ex) {
             logger.error("error thrown while persisting text message record - ", ex);
-            getTransaction().rollback();
+            rollback();
+        } finally {
+            closeSession();
         }
         return persisted;
     }
 
     @Override
     public TextMessage getTextMessageRecord(String messageId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(TextMessage.class)
-                .add(Restrictions.eq("messageId", messageId));
-        TextMessage txt = (TextMessage) criteria.list().get(0);
-        getTransaction().commit();
+        TextMessage txt = new TextMessage();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(TextMessage.class)
+                    .add(Restrictions.eq("messageId", messageId));
+            txt = (TextMessage) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return txt;
     }
 
     @Override
     public List<PropertyEmail> getAllEmailProperty() {
-        startOperation();
-        List<PropertyEmail> propList = searchAll(PropertyEmail.class);
-        getTransaction().commit();
+        List<PropertyEmail> propList = new ArrayList<>();
+        try {
+            startOperation();
+            propList = searchAll(PropertyEmail.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return propList;
     }
 
     @Override
     public List<PropertyGreenpoleEngine> getAllEngineProperty() {
-        startOperation();
-        List<PropertyGreenpoleEngine> propList = searchAll(PropertyGreenpoleEngine.class);
-        getTransaction().commit();
+        List<PropertyGreenpoleEngine> propList = new ArrayList<>();
+        try {
+            startOperation();
+            propList = searchAll(PropertyGreenpoleEngine.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return propList;
     }
 
     @Override
     public List<PropertyNotifications> getAllNotificationsProperty() {
-        startOperation();
-        List<PropertyNotifications> propList = searchAll(PropertyNotifications.class);
-        getTransaction().commit();
+        List<PropertyNotifications> propList = new ArrayList<>();
+        try {
+            startOperation();
+            propList = searchAll(PropertyNotifications.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return propList;
     }
 
     @Override
     public List<PropertyNotifiers> getAllNotifiersProperty() {
-        startOperation();
-        List<PropertyNotifiers> propList = searchAll(PropertyNotifiers.class);
-        getTransaction().commit();
+        List<PropertyNotifiers> propList = new ArrayList<>();
+        try {
+            startOperation();
+            propList = searchAll(PropertyNotifiers.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return propList;
     }
 
     @Override
     public List<PropertyQueueConfig> getAllQueueConfigProperty() {
-        startOperation();
-        List<PropertyQueueConfig> propList = searchAll(PropertyQueueConfig.class);
-        getTransaction().commit();
+        List<PropertyQueueConfig> propList = new ArrayList<>();
+        try {
+            startOperation();
+            propList = searchAll(PropertyQueueConfig.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return propList;
     }
 
     @Override
     public List<PropertySms> getAllSmsProperty() {
-        startOperation();
-        List<PropertySms> propList = searchAll(PropertySms.class);
-        getTransaction().commit();
+        List<PropertySms> propList = new ArrayList<>();
+        try {
+            startOperation();
+            propList = searchAll(PropertySms.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return propList;
     }
 
     @Override
     public List<PropertyThreadpool> getAllThreadProperty() {
-        startOperation();
-        List<PropertyThreadpool> propList = searchAll(PropertyThreadpool.class);
-        getTransaction().commit();
+        List<PropertyThreadpool> propList = new ArrayList<>();
+        try {
+            startOperation();
+            propList = searchAll(PropertyThreadpool.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return propList;
     }
 
     @Override
     public PropertyEmail getEmailProperty(String propertyName) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PropertyEmail.class)
-                .add(Restrictions.eq("propertyName", propertyName));
-        PropertyEmail prop = (PropertyEmail) criteria.list().get(0);
-        getTransaction().commit();
+        PropertyEmail prop = new PropertyEmail();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PropertyEmail.class)
+                    .add(Restrictions.eq("propertyName", propertyName));
+            prop = (PropertyEmail) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return prop;
     }
 
     @Override
     public PropertyGreenpoleEngine getEngineProperty(String propertyName) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PropertyGreenpoleEngine.class)
-                .add(Restrictions.eq("propertyName", propertyName));
-        PropertyGreenpoleEngine prop = (PropertyGreenpoleEngine) criteria.list().get(0);
-        getTransaction().commit();
+        PropertyGreenpoleEngine prop = new PropertyGreenpoleEngine();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PropertyGreenpoleEngine.class)
+                    .add(Restrictions.eq("propertyName", propertyName));
+            prop = (PropertyGreenpoleEngine) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return prop;
     }
 
     @Override
     public PropertyNotifications getNotificationsProperty(String propertyName) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PropertyNotifications.class)
-                .add(Restrictions.eq("propertyName", propertyName));
-        PropertyNotifications prop = (PropertyNotifications) criteria.list().get(0);
-        getTransaction().commit();
+        PropertyNotifications prop = new PropertyNotifications();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PropertyNotifications.class)
+                    .add(Restrictions.eq("propertyName", propertyName));
+            prop = (PropertyNotifications) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return prop;
     }
 
     @Override
     public PropertyNotifiers getNotifiersProperty(String propertyName) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PropertyNotifiers.class)
-                .add(Restrictions.eq("propertyName", propertyName));
-        PropertyNotifiers prop = (PropertyNotifiers) criteria.list().get(0);
-        getTransaction().commit();
+        PropertyNotifiers prop = new PropertyNotifiers();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PropertyNotifiers.class)
+                    .add(Restrictions.eq("propertyName", propertyName));
+            prop = (PropertyNotifiers) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return prop;
     }
 
     @Override
     public PropertyQueueConfig getQueueConfigProperty(String propertyName) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PropertyQueueConfig.class)
-                .add(Restrictions.eq("propertyName", propertyName));
-        PropertyQueueConfig prop = (PropertyQueueConfig) criteria.list().get(0);
-        getTransaction().commit();
+        PropertyQueueConfig prop = new PropertyQueueConfig();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PropertyQueueConfig.class)
+                    .add(Restrictions.eq("propertyName", propertyName));
+            prop = (PropertyQueueConfig) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return prop;
     }
 
     @Override
     public PropertySms getSmsProperty(String propertyName) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PropertySms.class)
-                .add(Restrictions.eq("propertyName", propertyName));
-        PropertySms prop = (PropertySms) criteria.list().get(0);
-        getTransaction().commit();
+        PropertySms prop = new PropertySms();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PropertySms.class)
+                    .add(Restrictions.eq("propertyName", propertyName));
+            prop = (PropertySms) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return prop;
     }
 
     @Override
     public PropertyThreadpool getThreadProperty(String propertyName) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(PropertyThreadpool.class)
-                .add(Restrictions.eq("propertyName", propertyName));
-        PropertyThreadpool prop = (PropertyThreadpool) criteria.list().get(0);
-        getTransaction().commit();
+        PropertyThreadpool prop = new PropertyThreadpool();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PropertyThreadpool.class)
+                    .add(Restrictions.eq("propertyName", propertyName));
+            prop = (PropertyThreadpool) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return prop;
     }
 
     @Override
     public void updateEmailProperty(PropertyEmail property) {
-        startOperation();
-        createUpdateObject(property);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(property);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public void updateEngineProperty(PropertyGreenpoleEngine property) {
-        startOperation();
-        createUpdateObject(property);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(property);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public void updateNotificationsProperty(PropertyNotifications property) {
-        startOperation();
-        createUpdateObject(property);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(property);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public void updateNotifiersProperty(PropertyNotifiers property) {
-        startOperation();
-        createUpdateObject(property);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(property);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public void updateQueueConfigProperty(PropertyQueueConfig property) {
-        startOperation();
-        createUpdateObject(property);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(property);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public void updateSmsProperty(PropertySms property) {
-        startOperation();
-        createUpdateObject(property);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(property);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public void updateThreadProperty(PropertyThreadpool property) {
-        startOperation();
-        createUpdateObject(property);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(property);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public EnvironmentalVariables getVariable(String variable) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(EnvironmentalVariables.class)
-                .add(Restrictions.eq("variable", variable));
-        EnvironmentalVariables ev = (EnvironmentalVariables) criteria.list().get(0);
-        getTransaction().commit();
+        EnvironmentalVariables ev = new EnvironmentalVariables();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(EnvironmentalVariables.class)
+                    .add(Restrictions.eq("variable", variable));
+            ev = (EnvironmentalVariables) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return ev;
     }
 
     @Override
     public List<EnvironmentalVariables> getAllVariables() {
-        startOperation();
-        List<EnvironmentalVariables> evList = searchAll(EnvironmentalVariables.class);
-        getTransaction().commit();
+        List<EnvironmentalVariables> evList = new ArrayList<>();
+        try {
+            startOperation();
+            evList = searchAll(EnvironmentalVariables.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return evList;
     }
     

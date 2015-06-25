@@ -101,23 +101,23 @@ public class TransactionComponentQueryImpl extends GeneralisedAbstractDao {
      * @param chn in the certificate file from the CSCS 
      * @param certificateNumber in the certificate file from the CSCS
      */
-    public boolean checkCertificateCreditation(String certificateNumber, String chn){
-        startOperation();
-        Criteria baseCriteria = getSession().createCriteria(CertificateLodgement.class, "certLogment_alias");
-        
-        CertificateLodgement certLogged = new CertificateLodgement();
-        certLogged.setChn(chn);
-        certLogged.setCertificateNumber(certificateNumber);
-        certLogged.setProcessed(true);
-                baseCriteria.add(
-                        Example.create(certLogged)
-                        .enableLike().ignoreCase()
-                ).setProjection(Projections.rowCount());
-        
-        Long count = (Long) baseCriteria.uniqueResult();
-        getTransaction().commit();
-        return count > 0;  
-    }
+    /*public boolean checkCertificateCreditation(String certificateNumber, String chn){
+    startOperation();
+    Criteria baseCriteria = getSession().createCriteria(CertificateLodgement.class, "certLogment_alias");
+    
+    CertificateLodgement certLogged = new CertificateLodgement();
+    certLogged.setChn(chn);
+    certLogged.setCertificateNumber(certificateNumber);
+    certLogged.setProcessed(true);
+    baseCriteria.add(
+    Example.create(certLogged)
+    .enableLike().ignoreCase()
+    ).setProjection(Projections.rowCount());
+    
+    Long count = (Long) baseCriteria.uniqueResult();
+    getTransaction().commit();
+    return count > 0;
+    }*/
     
     /**
      * If system discovers shareholders in the transaction 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24-Jun-2015 14:34:49 by Hibernate Tools 4.3.1 -->
+<!-- Generated 25-Jun-2015 11:31:23 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.greenpole.hibernate.entity.CertificateLodgement" table="CERTIFICATE_LODGEMENT" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
@@ -11,26 +11,11 @@
         <version name="version" type="java.lang.Long">
             <column name="version" />
         </version>
-        <property name="controlNumber" type="int">
-            <column name="control_number" not-null="true" unique="true" />
-        </property>
         <property name="title" type="string">
             <column name="title" />
         </property>
         <property name="date" type="date">
             <column name="date" length="10" />
-        </property>
-        <property name="certificateNumber" type="string">
-            <column name="certificate_number" length="50" />
-        </property>
-        <property name="holdings" type="java.lang.Integer">
-            <column name="holdings" />
-        </property>
-        <property name="shareholderName" type="string">
-            <column name="shareholder_name" />
-        </property>
-        <property name="chn" type="string">
-            <column name="chn" length="50" />
         </property>
         <property name="status" type="string">
             <column name="status" length="50" />

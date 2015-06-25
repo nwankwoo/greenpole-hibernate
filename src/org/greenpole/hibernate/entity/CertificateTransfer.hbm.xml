@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24-Jun-2015 14:34:49 by Hibernate Tools 4.3.1 -->
+<!-- Generated 25-Jun-2015 11:31:23 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.greenpole.hibernate.entity.CertificateTransfer" table="CERTIFICATE_TRANSFER" schema="dbo" catalog="greenpole" optimistic-lock="version">
+    <class name="org.greenpole.hibernate.entity.CertificateTransfer" table="CERTIFICATE_TRANSFER" schema="dbo" catalog="greenpole">
         <id name="id" type="int">
             <column name="id" />
             <generator class="identity"></generator>
         </id>
+        <version name="version" type="java.lang.Long">
+            <column name="version" />
+        </version>
         <many-to-one name="certificate" class="org.greenpole.hibernate.entity.Certificate" fetch="select">
             <column name="certificate_id" />
         </many-to-one>

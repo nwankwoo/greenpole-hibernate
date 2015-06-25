@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 24-Jun-2015 14:34:48 by Hibernate Tools 4.3.1
+// Generated 25-Jun-2015 11:31:21 by Hibernate Tools 4.3.1
 
 
 

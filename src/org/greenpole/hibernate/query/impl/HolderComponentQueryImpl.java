@@ -106,21 +106,30 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
             
-            getTransaction().commit();
+            commit();
             created = true;
             return created;
         } catch (Exception ex) {
             logger.error("error creating shareholder account - ", ex);
-            getTransaction().rollback();
+            rollback();
             return created;
+        } finally {
+            closeSession();
         }
     }
 
     @Override
     public void createUpdateHolderCompanyAccount(HolderCompanyAccount holderCompanyAccount) {
-        startOperation();
-        createUpdateObject(holderCompanyAccount);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(holderCompanyAccount);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
@@ -170,21 +179,30 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
             
-            getTransaction().commit();
+            commit();
             created = true;
             return created;
         } catch (Exception ex) {
             logger.error("error creating bond-holder account - ", ex);
-            getTransaction().rollback();
+            rollback();
             return created;
+        } finally {
+            closeSession();
         }
     }
 
     @Override
     public void createUpdateHolderBondAccount(HolderBondAccount holderBondAccount) {
-        startOperation();
-        createUpdateObject(holderBondAccount);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(holderBondAccount);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
@@ -235,35 +253,51 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
             
-            getTransaction().commit();
+            commit();
             created = true;
             return created;
         } catch (Exception ex) {
             logger.error("error creating/updating holder account - ", ex);
-            getTransaction().rollback();
+            rollback();
             return created;
+        } finally {
+            closeSession();
         }
     }
 
     @Override
     public void updateHolderAccountForTranspose(Holder holder) {
-        startOperation();
-        createUpdateObject(holder);
-        getTransaction().commit();
+        try {
+            startOperation();
+            createUpdateObject(holder);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
     }
 
     @Override
     public boolean checkHolderAccount(int holderId) {
         Holder h = new Holder();
         h.setPryHolder(true);
-        
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Holder.class)
-                .add(Example.create(h).enableLike())
-                .add(Restrictions.idEq(holderId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Holder.class)
+                    .add(Example.create(h).enableLike())
+                    .add(Restrictions.idEq(holderId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
@@ -271,14 +305,21 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkHolderAccount(String chn) {
         Holder h = new Holder();
         h.setPryHolder(true);
-        
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Holder.class)
-                .add(Example.create(h).enableLike())
-                .add(Restrictions.eq("chn", chn))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Holder.class)
+                    .add(Example.create(h).enableLike())
+                    .add(Restrictions.eq("chn", chn))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
@@ -286,15 +327,22 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkHolderCompanyAccount(int holderId, int clientCompanyId) {
         HolderCompanyAccount hca = new HolderCompanyAccount();
         hca.setHolderCompAccPrimary(true);
-        
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
-                .add(Example.create(hca).enableLike())
-                .add(Restrictions.eq("id.holderId", holderId))
-                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
+                    .add(Example.create(hca).enableLike())
+                    .add(Restrictions.eq("id.holderId", holderId))
+                    .add(Restrictions.eq("id.clientCompanyId", clientCompanyId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
@@ -302,15 +350,22 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public boolean checkHolderBondAccount(int holderId, int bondOfferId) {
         HolderBondAccount hba = new HolderBondAccount();
         hba.setHolderBondAcctPrimary(true);
-        
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
-                .add(Example.create(hba).enableLike())
-                .add(Restrictions.eq("id.holderId", holderId))
-                .add(Restrictions.eq("id.bondOfferId", bondOfferId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
+                    .add(Example.create(hba).enableLike())
+                    .add(Restrictions.eq("id.holderId", holderId))
+                    .add(Restrictions.eq("id.bondOfferId", bondOfferId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
@@ -323,104 +378,151 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         
         Map<String, String> descriptorSplits = descriptorUtil.decipherDescriptor(descriptor);
         String dateDescriptor = descriptorSplits.get("date");
-        
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderChanges.class, "hc")
-                //.add(Example.create(searchParams).enableLike())
-                .createCriteria("hc.holderChangeType", "t", JoinType.LEFT_OUTER_JOIN)
-                .add(Example.create(changeType).enableLike().ignoreCase());
-        
-        if (dateDescriptor.equalsIgnoreCase("exact")) {
-            try {
-                criteria.add(Restrictions.eq("hc.changeDate", formatter.parse(startDate)));
-                List<HolderChanges> returnlist = criteria.list();
-                getTransaction().commit();
-                return returnlist;
-            } catch (ParseException ex) {
-                logger.error("error parsing date - ", ex);
+        List<HolderChanges> returnlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderChanges.class, "hc")
+                    //.add(Example.create(searchParams).enableLike())
+                    .createCriteria("hc.holderChangeType", "t", JoinType.LEFT_OUTER_JOIN)
+                    .add(Example.create(changeType).enableLike().ignoreCase());
+
+            if (dateDescriptor.equalsIgnoreCase("exact")) {
+                try {
+                    criteria.add(Restrictions.eq("hc.changeDate", formatter.parse(startDate)));
+                    returnlist = criteria.list();
+                    getTransaction().commit();
+                    return returnlist;
+                } catch (ParseException ex) {
+                    logger.error("error parsing date - ", ex);
+                }
             }
-        }
-        
-        if (dateDescriptor.equalsIgnoreCase("between")) {
-            try {
-                criteria.add(Restrictions.between("hc.changeDate", formatter.parse(startDate), formatter.parse(endDate)));
-                List<HolderChanges> returnlist = criteria.list();
-                getTransaction().commit();
-                return returnlist;
-            } catch (ParseException ex) {
-                logger.error("error parsing date - ", ex);
+
+            if (dateDescriptor.equalsIgnoreCase("between")) {
+                try {
+                    criteria.add(Restrictions.between("hc.changeDate", formatter.parse(startDate), formatter.parse(endDate)));
+                    returnlist = criteria.list();
+                    getTransaction().commit();
+                    return returnlist;
+                } catch (ParseException ex) {
+                    logger.error("error parsing date - ", ex);
+                }
             }
-        }
-        
-        if (dateDescriptor.equalsIgnoreCase("before")) {
-            try {
-                criteria.add(Restrictions.lt("hc.changeDate", formatter.parse(startDate)));
-                List<HolderChanges> returnlist = criteria.list();
-                getTransaction().commit();
-                return returnlist;
-            } catch (ParseException ex) {
-                logger.error("error parsing date - ", ex);
+
+            if (dateDescriptor.equalsIgnoreCase("before")) {
+                try {
+                    criteria.add(Restrictions.lt("hc.changeDate", formatter.parse(startDate)));
+                    returnlist = criteria.list();
+                    getTransaction().commit();
+                    return returnlist;
+                } catch (ParseException ex) {
+                    logger.error("error parsing date - ", ex);
+                }
             }
-        }
-        
-        if (dateDescriptor.equalsIgnoreCase("after")) {
-            try {
-                criteria.add(Restrictions.gt("hc.changeDate", formatter.parse(startDate)));
-                List<HolderChanges> returnlist = criteria.list();
-                getTransaction().commit();
-                return returnlist;
-            } catch (ParseException ex) {
-                logger.error("error parsing date - ", ex);
+
+            if (dateDescriptor.equalsIgnoreCase("after")) {
+                try {
+                    criteria.add(Restrictions.gt("hc.changeDate", formatter.parse(startDate)));
+                    returnlist = criteria.list();
+                    getTransaction().commit();
+                    return returnlist;
+                } catch (ParseException ex) {
+                    logger.error("error parsing date - ", ex);
+                }
             }
+
+            returnlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
         }
-        
-        List<HolderChanges> returnlist = criteria.list();
-        getTransaction().commit();
         return returnlist;
     }
 
     @Override
     public List<HolderChangeType> getAllChangeTypes() {
-        startOperation();
-        List<HolderChangeType> types = searchAll(HolderChangeType.class);
-        getTransaction().commit();
+        List<HolderChangeType> types = new ArrayList<>();
+        try {
+            startOperation();
+            types = searchAll(HolderChangeType.class);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return types;
     }
 
     @Override
     public HolderChangeType getChangeType(int typeId) {
-        startOperation();
-        HolderChangeType type = (HolderChangeType) searchObject(HolderChangeType.class, typeId);
-        getTransaction().commit();
+        HolderChangeType type = new HolderChangeType();
+        try {
+            startOperation();
+            type = (HolderChangeType) searchObject(HolderChangeType.class, typeId);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return type;
     }
 
     @Override
     public boolean checkChangeType(int typeId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderChangeType.class)
-                .add(Restrictions.idEq(typeId))
-                .setProjection(Projections.rowCount());
-        Long count = (Long) criteria.uniqueResult();
-        getTransaction().commit();
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderChangeType.class)
+                    .add(Restrictions.idEq(typeId))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return count > 0;
     }
 
     @Override
     public Holder getHolder(int holderId) {
-        startOperation();
-        Holder h = (Holder) searchObject(Holder.class, holderId);
-        getTransaction().commit();
+        Holder h = new Holder();
+        try {
+            startOperation();
+            h = (Holder) searchObject(Holder.class, holderId);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return h;
     }
 
     @Override
     public Holder getHolder(String chn) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Holder.class)
-                .add(Restrictions.eq("chn", chn));
-        Holder h = (Holder) criteria.list().get(0);
-        getTransaction().commit();
+        Holder h = new Holder();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Holder.class)
+                    .add(Restrictions.eq("chn", chn));
+            h = (Holder) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return h;
     }
 
@@ -428,56 +530,86 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<Holder> getAllHolders(boolean isShareholder) {
         Holder h = new Holder();
         h.setPryHolder(true);
-        
-        startOperation();
-        Criteria criteria = getSession().createCriteria(Holder.class)
-                .add(Example.create(h));
-        List<Holder> hlist = criteria.list();
         List<Holder> returnlist = new ArrayList<>();
-        for (Holder holder : hlist) {
-            if (isShareholder) {
-                if (holder.getHolderCompanyAccounts() != null && holder.getHolderCompanyAccounts().size() > 0) {
-                    returnlist.add(holder);
-                }
-            } else {
-                if (holder.getHolderBondAccounts()!= null && holder.getHolderBondAccounts().size() > 0) {
-                    returnlist.add(holder);
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Holder.class)
+                    .add(Example.create(h));
+            List<Holder> hlist = criteria.list();
+            for (Holder holder : hlist) {
+                if (isShareholder) {
+                    if (holder.getHolderCompanyAccounts() != null && holder.getHolderCompanyAccounts().size() > 0) {
+                        returnlist.add(holder);
+                    }
+                } else {
+                    if (holder.getHolderBondAccounts() != null && holder.getHolderBondAccounts().size() > 0) {
+                        returnlist.add(holder);
+                    }
                 }
             }
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
         }
-        getTransaction().commit();
         return returnlist;
     }
 
     @Override
     public HolderCompanyAccount getHolderCompanyAccount(int holderId, int clientCompanyId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
-                .add(Restrictions.eq("id.holderId", holderId))
-                .add(Restrictions.eq("id.clientCompanyId", clientCompanyId))
-                .add(Restrictions.eq("holderCompAccPrimary", true));
-        HolderCompanyAccount hca = (HolderCompanyAccount) criteria.list().get(0);
-        getTransaction().commit();
+        HolderCompanyAccount hca = new HolderCompanyAccount();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderCompanyAccount.class)
+                    .add(Restrictions.eq("id.holderId", holderId))
+                    .add(Restrictions.eq("id.clientCompanyId", clientCompanyId))
+                    .add(Restrictions.eq("holderCompAccPrimary", true));
+            hca = (HolderCompanyAccount) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return hca;
     }
 
     @Override
     public HolderBondAccount getHolderBondAccount(int holderId, int bondOfferId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
-                .add(Restrictions.eq("id.holderId", holderId))
-                .add(Restrictions.eq("id.bondOfferId", bondOfferId))
-                .add(Restrictions.eq("holderBondAcctPrimary", true));
-        HolderBondAccount hba = (HolderBondAccount) criteria.list().get(0);
-        getTransaction().commit();
+        HolderBondAccount hba = new HolderBondAccount();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderBondAccount.class)
+                    .add(Restrictions.eq("id.holderId", holderId))
+                    .add(Restrictions.eq("id.bondOfferId", bondOfferId))
+                    .add(Restrictions.eq("holderBondAcctPrimary", true));
+            hba = (HolderBondAccount) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return hba;
     }
 
     @Override
     public Administrator getAdministrator(int administratorId) {
-        startOperation();
-        Administrator admin = (Administrator) searchObject(Administrator.class, administratorId);
-        getTransaction().commit();
+        Administrator admin = new Administrator();
+        try {
+            startOperation();
+            admin = (Administrator) searchObject(Administrator.class, administratorId);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return admin;
     }
     
@@ -494,6 +626,8 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         String holderDescriptor = descriptorSplits.get("holder");
         String unitsDescriptor = descriptorSplits.get("units");
         String totalHoldingsDescriptor = descriptorSplits.get("totalHoldings");
+        
+        List<Holder> shareholders = new ArrayList<>();
         try {
             startOperation();
             Criteria baseCriteria = getStartCriteria();
@@ -526,7 +660,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             }
 
             //ensure that only shareholders are returned
-            List<Holder> shareholders = new ArrayList<>();
             for (Holder holder : result) {
                 if (holder.getHolderCompanyAccounts() != null && holder.getHolderCompanyAccounts().size() > 0) {
                     Iterator it = holder.getHolderCompanyAccounts().iterator();
@@ -539,13 +672,14 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
 
-            getTransaction().commit();
-            
-            return shareholders;
+            commit();            
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
         } finally {
-            if (getTransaction() != null && !getTransaction().wasCommitted())
-                getTransaction().rollback();
+            closeSession();
         }
+        return shareholders;
     }
 
     @Override
@@ -562,6 +696,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         String unitsDescriptor = descriptorSplits.get("units");
         String totalHoldingsDescriptor = descriptorSplits.get("totalHoldings");
         
+        List<Holder> bondholders = new ArrayList<>();
         try {
             startOperation();
             Criteria baseCriteria = getStartCriteria();
@@ -594,7 +729,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             }
 
             //ensure that only bondholders are returned
-            List<Holder> bondholders = new ArrayList<>();
             for (Holder holder : result) {
                 if (holder.getHolderBondAccounts() != null && holder.getHolderBondAccounts().size() > 0) {
                     Iterator it = holder.getHolderBondAccounts().iterator();
@@ -608,22 +742,31 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 }
             }
 
-            getTransaction().commit();
-
-            return bondholders;
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
         } finally {
-            if (getTransaction() != null && !getTransaction().wasCommitted())
-                getTransaction().rollback();
+            closeSession();
         }
+        return bondholders;
     }
 
     @Override
     public List<HolderResidentialAddress> getHolderResidentialAddresses(int holderId) {
-        startOperation();
-        Criteria criteria = getSession().createCriteria(HolderResidentialAddress.class)
-                .add(Restrictions.eq("holder.id", holderId));
-        List<HolderResidentialAddress> returnlist = criteria.list();
-        getTransaction().commit();
+        List<HolderResidentialAddress> returnlist = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(HolderResidentialAddress.class)
+                    .add(Restrictions.eq("holder.id", holderId));
+            returnlist = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
         return returnlist;
     }
 
