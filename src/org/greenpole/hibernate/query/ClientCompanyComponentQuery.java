@@ -10,14 +10,17 @@ import java.util.Map;
 import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.BondType;
+import org.greenpole.hibernate.entity.ClearingHouse;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
 import org.greenpole.hibernate.entity.ClientCompanyPhoneNumber;
 import org.greenpole.hibernate.entity.Depository;
 import org.greenpole.hibernate.entity.InitialPublicOffer;
+import org.greenpole.hibernate.entity.IpoApplication;
 import org.greenpole.hibernate.entity.NseSector;
 import org.greenpole.hibernate.entity.PrivatePlacement;
+import org.greenpole.hibernate.entity.PrivatePlacementApplication;
 import org.greenpole.hibernate.entity.ShareQuotation;
 
 /**
@@ -252,10 +255,96 @@ public interface ClientCompanyComponentQuery {
     public boolean clientCompanyHasIpo(int clientCompanyId);
     
     /**
+     * Gets the ipo of a client company, whether active or not.
+     * @param clientCompanyId the company's id
+     * @return the client company's ipo
+     */
+    public InitialPublicOffer getClientCompanyIpo(int clientCompanyId);
+    
+    /**
+     * Gets an ipo object.
+     * @param ipoId the ipo id
+     * @return the ipo object
+     */
+    public InitialPublicOffer getIpo(int ipoId);
+    
+    /**
+     * Gets the active ipo of a client company
+     * @param clientCompanyId the company's id
+     * @return the client company's active ipo
+     */
+    public InitialPublicOffer getActiveClientCompanyIpo(int clientCompanyId);
+    
+    /**
+     * Gets an active ipo object.
+     * @param ipoId the ipo id
+     * @return the active ipo object
+     */
+    public InitialPublicOffer getActiveIpo(int ipoId);
+    
+    /**
+     * Checks if an IPO exists in the database.
+     * @param ipoId the ipo id
+     * @return true, if the IPO exists in the database. Otherwise, false
+     */
+    public boolean checkInitialPublicOffer(int ipoId);
+    
+    /**
+     * Checks if an IPO exists and is still open.
+     * @param ipoId the ipo id
+     * @return true, if the IPO exists and is still open. Otherwise, false
+     */
+    public boolean checkActiveInitialPublicOffer(int ipoId);
+    
+    /**
+     * Gets a list of all ipos.
+     * @return a list of all ipos
+     */
+    public List<InitialPublicOffer> getAllIpos();
+    
+    /**
+     * Gets a list of all active ipos.
+     * @return a list of all active ipos
+     */
+    public List<InitialPublicOffer> getAllActiveIpos();
+    
+    /**
+     * Gets all submitted ipo applications according to a specified ipo id 
+     * that have not been cancelled.
+     * @param ipoId the ipo id
+     * @return a list of ipo applications
+     */
+    public List<IpoApplication> getActiveIpoApplications(int ipoId);
+    
+    /**
+     * Gets all submitted ipo applications according to a specified ipo id 
+     * whether they have been cancelled or not.
+     * @param ipoId the ipo id
+     * @return a list of ipo applications
+     */
+    public List<IpoApplication> getAllIpoApplications(int ipoId);
+    
+    /**
      * Sets up a private placement.
      * @param privatePlacement the private placement to be created
      */
     public void createPrivatePlacement(PrivatePlacement privatePlacement);
+    
+    /**
+     * Gets all submitted private placement applications according to a specified private placement id
+     * whether they have been cancelled or not.
+     * @param ppId the private placement id
+     * @return a list of private placement applications
+     */
+    public List<PrivatePlacementApplication> getAllPrivatePlacementApplications(int ppId);
+    
+    /**
+     * Gets all submitted private placement applications according to a specified private placement id
+     * that have not been cancelled.
+     * @param ppId the private placement id
+     * @return a list of private placement applications
+     */
+    public List<PrivatePlacementApplication> getAllActivePrivatePlacementApplications(int ppId);
     
     /**
      * Retrieves a list of all available share unit quotations.
@@ -375,4 +464,68 @@ public interface ClientCompanyComponentQuery {
      * @return the depository object
      */
     public Depository getDepository(int depositoryId);
+    
+    /**
+     * Gets the clearing house according to a specified id.
+     * @param chId the clearing house id
+     * @return the clearing house object
+     */
+    public ClearingHouse getClearingHouse(int chId);
+    
+    /**
+     * Gets the private placement object according to a specified id.
+     * @param ppId the private placement id
+     * @return the private placement object
+     */
+    public PrivatePlacement getPrivatePlacement(int ppId);
+    
+    /**
+     * Checks if a private placement exists.
+     * @param ppId the private placement id
+     * @return true, if the private placement exists. Otherwise, false
+     */
+    public boolean checkPrivatePlacement(int ppId);
+    
+    /**
+     * Checks if a private placement exists while it's still active.
+     * @param ppId the private placement id
+     * @return true, if the private placement exists and is active. Otherwise, false
+     */
+    public boolean checkActivePrivatePlacement(int ppId);
+    
+    /**
+     * Checks if a client company has any open private placements.
+     * @param clientCompanyId the client company id
+     * @return true, if client company has an open private placement. Otherwise, false
+     */
+    public boolean checkClientCompanyPrivatePlacement(int clientCompanyId);
+    
+    /**
+     * Checks if a client company has an open private placement according to the specified private placement id.
+     * @param clientCompanyId the client company id
+     * @param ppId the private placement id
+     * @return true, if the private placement is open for the client company. Otherwise, false
+     */
+    public boolean checkClientCompanyPrivatePlacement(int clientCompanyId, int ppId);
+    
+    /**
+     * Gets the client company for which the specified rights issue belongs to.
+     * @param rightsId the rights issue id
+     * @return the client company object
+     */
+    public ClientCompany getRightsIssueClientCompany(int rightsId);
+    
+    /**
+     * Gets the client company for which the specified private placement belongs to.
+     * @param ppId the private placement id
+     * @return the client company object
+     */
+    public ClientCompany getPrivatePlacementClientCompany(int ppId);
+    
+    /**
+     * Gets the client company for which the specified ipo belongs to.
+     * @param ipoId the ipo id
+     * @return the client company object
+     */
+    public ClientCompany getIpoClientCompany(int ipoId);
 }

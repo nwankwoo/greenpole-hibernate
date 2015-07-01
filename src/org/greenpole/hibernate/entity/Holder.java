@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 25-Jun-2015 15:58:53 by Hibernate Tools 4.3.1
+// Generated 01-Jul-2015 10:37:17 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -23,6 +23,11 @@ public class Holder  implements java.io.Serializable {
      private String lastName;
      private String gender;
      private Date dob;
+     private String maritalStatus;
+     private String occupation;
+     private String religion;
+     private String stateOfOrigin;
+     private String lga;
      private Boolean taxExempted;
      private Boolean merged;
      private Boolean pryHolder;
@@ -57,7 +62,7 @@ public class Holder  implements java.io.Serializable {
     public Holder() {
     }
 
-    public Holder(Holder holder, HolderType holderType, Integer holderAcctNumber, String chn, String firstName, String middleName, String lastName, String gender, Date dob, Boolean taxExempted, Boolean merged, Boolean pryHolder, String pryAddress, Set holders, Set holderSignatures, Set ipoApplications, Set certificateTransfers, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set accountConsolidations, Set holderPostalAddresses, Set holderChangeses, Set administrators, Set holderBondAccounts, Set privatePlacementApplications, Set holderGmAttendances, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set textMessages, Set holderCompanyAccounts, Set stockbrokers, Set holderBonuses, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates) {
+    public Holder(Holder holder, HolderType holderType, Integer holderAcctNumber, String chn, String firstName, String middleName, String lastName, String gender, Date dob, String maritalStatus, String occupation, String religion, String stateOfOrigin, String lga, Boolean taxExempted, Boolean merged, Boolean pryHolder, String pryAddress, Set holders, Set holderSignatures, Set ipoApplications, Set certificateTransfers, Set rightsIssueApplications, Set digitalCaptures, Set processedTransactionHolders, Set powerOfAttorneys, Set holderResidentialAddresses, Set accountConsolidations, Set holderPostalAddresses, Set holderChangeses, Set administrators, Set holderBondAccounts, Set privatePlacementApplications, Set holderGmAttendances, Set holderPhoneNumbers, Set suspendedTransactionHolders, Set textMessages, Set holderCompanyAccounts, Set stockbrokers, Set holderBonuses, Set holderEmailAddresses, Set holderVotings, Set cautions, Set certificates) {
        this.holder = holder;
        this.holderType = holderType;
        this.holderAcctNumber = holderAcctNumber;
@@ -67,6 +72,11 @@ public class Holder  implements java.io.Serializable {
        this.lastName = lastName;
        this.gender = gender;
        this.dob = dob;
+       this.maritalStatus = maritalStatus;
+       this.occupation = occupation;
+       this.religion = religion;
+       this.stateOfOrigin = stateOfOrigin;
+       this.lga = lga;
        this.taxExempted = taxExempted;
        this.merged = merged;
        this.pryHolder = pryHolder;
@@ -175,6 +185,41 @@ public class Holder  implements java.io.Serializable {
     
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+    public String getMaritalStatus() {
+        return this.maritalStatus;
+    }
+    
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+    public String getOccupation() {
+        return this.occupation;
+    }
+    
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+    public String getReligion() {
+        return this.religion;
+    }
+    
+    public void setReligion(String religion) {
+        this.religion = religion;
+    }
+    public String getStateOfOrigin() {
+        return this.stateOfOrigin;
+    }
+    
+    public void setStateOfOrigin(String stateOfOrigin) {
+        this.stateOfOrigin = stateOfOrigin;
+    }
+    public String getLga() {
+        return this.lga;
+    }
+    
+    public void setLga(String lga) {
+        this.lga = lga;
     }
     public Boolean getTaxExempted() {
         return this.taxExempted;

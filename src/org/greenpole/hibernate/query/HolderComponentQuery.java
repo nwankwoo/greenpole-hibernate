@@ -26,7 +26,11 @@ import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.HolderType;
+import org.greenpole.hibernate.entity.IpoApplication;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
+import org.greenpole.hibernate.entity.PrivatePlacementApplication;
+import org.greenpole.hibernate.entity.RightsIssue;
+import org.greenpole.hibernate.entity.RightsIssueApplication;
 import org.greenpole.hibernate.entity.TransactionType;
 
 /**
@@ -116,6 +120,14 @@ public interface HolderComponentQuery {
      * @return true, if the holder exists. Otherwise, false
      */
     public boolean checkHolderAccount(String chn);
+    
+    /**
+     * Checks the existence of a holder.
+     * @param firstName the holder's first name
+     * @param lastName the holder's last name
+     * @return true, if the holder exists. Otherwise, false
+     */
+    public boolean checkHolderAccount(String firstName, String lastName);
     
     /**
      * Checks the existence of a holder company account.
@@ -593,4 +605,76 @@ public interface HolderComponentQuery {
      * @return true, if holder has an ESOP company account. Otherwise, false
      */
     public boolean holderHasEsopAccount(int holderId);
+    
+    /**
+     * Persists a holder's ipo application in the database.
+     * @param application the holder's ipo application
+     * @return true, if persistence is successful. Otherwise, false
+     */
+    public boolean applyForIpo(IpoApplication application);
+    
+    /**
+     * Persists holders' ipo applications in the database.
+     * @param applications the list of holder ipo applications
+     * @return true, if persistence is successful. Otherwise, false
+     */
+    public boolean applyForIpoMultiple(List<IpoApplication> applications);
+    
+    /**
+     * Persists a holder's private placement application in the database.
+     * @param application the holder's private placement application
+     * @return true, if persistence is successful. Otherwise, false
+     */
+    public boolean applyForPrivatePlacement(PrivatePlacementApplication application);
+    
+    /**
+     * Persists holders' private placement applications in the database.
+     * @param applications the list of holders' private placement applications
+     * @return true, if persistence is successful. Otherwise, false
+     */
+    public boolean applyForPrivatePlacementMultiple(List<PrivatePlacementApplication> applications);
+    
+    /**
+     * Persists a holder's rights issue application in the database.
+     * @param application the holder's rights issue application
+     * @return true, if persistence is successful. Otherwise, false
+     */
+    public boolean applyForRightsIssue(RightsIssueApplication application);
+    
+    /**
+     * Persists holders' rights issue applications in the database.
+     * @param applications the list of holders' rights issue applications
+     * @return true, if persistence is successful. Otherwise, false
+     */
+    public boolean applyForRightsIssueMultiple(List<RightsIssueApplication> applications);
+    
+    /**
+     * Gets the ipo application according to a specified id.
+     * @param applicationId the ipo application id
+     * @return the ipo application object
+     */
+    public IpoApplication getIpoApplication(int applicationId);
+    
+    /**
+     * Gets the private placement application according to a specified id.
+     * @param applicationId the private placement id
+     * @return the private placement object
+     */
+    public PrivatePlacementApplication getPrivatePlacementApplication(int applicationId);
+    
+    /**
+     * Gets the rights issue application according to a specified id.
+     * @param applicationId the rights issue application id
+     * @return the rights issue application object
+     */
+    public RightsIssueApplication getRightsIssueApplication(int applicationId);
+    
+    /**
+     * Checks if a holder bearing the specified first and last name combination has#
+     * a CHN.
+     * @param firstName holder first name
+     * @param lastName holder last name
+     * @return true, if holder has CHN. Otherwise, false
+     */
+    public boolean holderHasCHN(String firstName, String lastName);
 }

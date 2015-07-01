@@ -1,7 +1,8 @@
 package org.greenpole.hibernate.entity;
-// Generated 25-Jun-2015 15:58:53 by Hibernate Tools 4.3.1
+// Generated 01-Jul-2015 10:37:17 by Hibernate Tools 4.3.1
 
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class ClientCompany  implements java.io.Serializable {
      private String code;
      private String ceo;
      private String secretary;
-     private String depository_1;
+     private Date dateIncorp;
      private Boolean valid;
      private Boolean merged;
      private Boolean clientCompanyPrimary;
@@ -46,7 +47,7 @@ public class ClientCompany  implements java.io.Serializable {
     public ClientCompany() {
     }
 
-    public ClientCompany(ClientCompany clientCompany, Depository depository, NseSector nseSector, String name, String code, String ceo, String secretary, String depository_1, Boolean valid, Boolean merged, Boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyAddresses, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
+    public ClientCompany(ClientCompany clientCompany, Depository depository, NseSector nseSector, String name, String code, String ceo, String secretary, Date dateIncorp, Boolean valid, Boolean merged, Boolean clientCompanyPrimary, Set clientCompanies, Set initialPublicOffers, Set shareBonuses, Set gms, Set certificates, Set dividends, Set holderCompanyAccounts, Set reconstructions, Set clientCompanyAddresses, Set clientCompanyPhoneNumbers, Set clientCompanyEmailAddresses, Set privatePlacements, Set shareQuotations, Set dividendDeclareds, Set processedTransactions, Set rightsIssues, Set suspendedTransactions, Set bondOffers) {
        this.clientCompany = clientCompany;
        this.depository = depository;
        this.nseSector = nseSector;
@@ -54,7 +55,7 @@ public class ClientCompany  implements java.io.Serializable {
        this.code = code;
        this.ceo = ceo;
        this.secretary = secretary;
-       this.depository_1 = depository_1;
+       this.dateIncorp = dateIncorp;
        this.valid = valid;
        this.merged = merged;
        this.clientCompanyPrimary = clientCompanyPrimary;
@@ -141,12 +142,12 @@ public class ClientCompany  implements java.io.Serializable {
     public void setSecretary(String secretary) {
         this.secretary = secretary;
     }
-    public String getDepository_1() {
-        return this.depository_1;
+    public Date getDateIncorp() {
+        return this.dateIncorp;
     }
     
-    public void setDepository_1(String depository_1) {
-        this.depository_1 = depository_1;
+    public void setDateIncorp(Date dateIncorp) {
+        this.dateIncorp = dateIncorp;
     }
     public Boolean getValid() {
         return this.valid;

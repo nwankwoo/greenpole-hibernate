@@ -34,10 +34,13 @@ import org.greenpole.hibernate.entity.HolderPostalAddress;
 import org.greenpole.hibernate.entity.HolderResidentialAddress;
 import org.greenpole.hibernate.entity.HolderSignature;
 import org.greenpole.hibernate.entity.HolderType;
+import org.greenpole.hibernate.entity.IpoApplication;
 import org.greenpole.hibernate.entity.PowerOfAttorney;
+import org.greenpole.hibernate.entity.PrivatePlacementApplication;
 import org.greenpole.hibernate.entity.ProcessedTransaction;
 import org.greenpole.hibernate.entity.ProcessedTransactionHolder;
 import org.greenpole.hibernate.entity.ProcessedTransactionHolderId;
+import org.greenpole.hibernate.entity.RightsIssueApplication;
 import org.greenpole.hibernate.entity.Stockbroker;
 import org.greenpole.hibernate.entity.TransactionType;
 import org.greenpole.hibernate.exception.GreenpoleQueryException;
@@ -311,6 +314,29 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             Criteria criteria = getSession().createCriteria(Holder.class)
                     .add(Example.create(h).enableLike())
                     .add(Restrictions.eq("chn", chn))
+                    .setProjection(Projections.rowCount());
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return count > 0;
+    }
+
+    @Override
+    public boolean checkHolderAccount(String firstName, String lastName) {
+        Holder h = new Holder();
+        h.setPryHolder(true);
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Holder.class)
+                    .add(Example.create(h).enableLike())
+                    .add(Restrictions.eq("firstName", firstName))
+                    .add(Restrictions.eq("lastName", lastName))
                     .setProjection(Projections.rowCount());
             count = (Long) criteria.uniqueResult();
             commit();
@@ -844,6 +870,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public String getHolderPryPhoneNumber(int holderId) {
         String number = "";
         try {
+            startOperation();
             Criteria criteria = getSession().createCriteria(HolderPhoneNumber.class)
                     .add(Restrictions.eq("holder.id", holderId));
             List<HolderPhoneNumber> returnlist = criteria.list();
@@ -867,6 +894,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public HolderPhoneNumber getHolderPhoneNumber(int id) {
         HolderPhoneNumber phone = new HolderPhoneNumber();
         try {
+            startOperation();
             phone = (HolderPhoneNumber) searchObject(HolderPhoneNumber.class, id);
             commit();
         } catch (Exception ex) {
@@ -882,6 +910,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<HolderEmailAddress> getHolderEmailAddresses(int holderId) {
         List<HolderEmailAddress> returnlist = new ArrayList<>();
         try {
+            startOperation();
             Criteria criteria = getSession().createCriteria(HolderEmailAddress.class)
                     .add(Restrictions.eq("holder.id", holderId));
             returnlist = criteria.list();
@@ -899,6 +928,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public HolderEmailAddress getHolderEmailAddress(int id) {
         HolderEmailAddress email = new HolderEmailAddress();
         try {
+            startOperation();
             email = (HolderEmailAddress) searchObject(HolderEmailAddress.class, id);
             commit();
         } catch (Exception ex) {
@@ -914,6 +944,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public AdministratorResidentialAddress getAdministratorResidentialAddress(int id) {
         AdministratorResidentialAddress addy = new AdministratorResidentialAddress();
         try {
+            startOperation();
             addy = (AdministratorResidentialAddress) searchObject(AdministratorResidentialAddress.class, id);
             commit();
         } catch (Exception ex) {
@@ -929,6 +960,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public AdministratorPostalAddress getAdministratorPostalAddress(int id) {
         AdministratorPostalAddress addy = new AdministratorPostalAddress();
         try {
+            startOperation();
             addy = (AdministratorPostalAddress) searchObject(AdministratorPostalAddress.class, id);
             commit();
         } catch (Exception ex) {
@@ -959,6 +991,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<AdministratorEmailAddress> getAdministratorEmailAddresses(int administratorId) {
         List<AdministratorEmailAddress> emails = new ArrayList<>();
         try {
+            startOperation();
             Criteria criteria = getSession().createCriteria(AdministratorEmailAddress.class)
                     .add(Restrictions.eq("administrator.id", administratorId));
             emails = criteria.list();
@@ -976,6 +1009,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public AdministratorPhoneNumber getAdministratorPhoneNumber(int id) {
         AdministratorPhoneNumber phone = new AdministratorPhoneNumber();
         try {
+            startOperation();
             phone = (AdministratorPhoneNumber) searchObject(AdministratorPhoneNumber.class, id);
             commit();
         } catch (Exception ex) {
@@ -991,6 +1025,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
     public List<AdministratorPhoneNumber> getAdministratorPhoneNumbers(int administratorId) {
         List<AdministratorPhoneNumber> phones = new ArrayList<>();
         try {
+            startOperation();
             Criteria criteria = getSession().createCriteria(AdministratorPhoneNumber.class)
                     .add(Restrictions.eq("administrator.id", administratorId));
             phones = criteria.list();
@@ -1625,7 +1660,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 try {
                     criteria.add(Restrictions.eq("mergeDate", formatter.parse(startDate)));
                     returnlist = criteria.list();
-                    getTransaction().commit();
+                    commit();
                     return returnlist;
                 } catch (ParseException ex) {
                     logger.error("error parsing date - ", ex);
@@ -1636,7 +1671,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 try {
                     criteria.add(Restrictions.between("mergeDate", formatter.parse(startDate), formatter.parse(endDate)));
                     returnlist = criteria.list();
-                    getTransaction().commit();
+                    commit();
                     return returnlist;
                 } catch (ParseException ex) {
                     logger.error("error parsing date - ", ex);
@@ -1647,7 +1682,7 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 try {
                     criteria.add(Restrictions.lt("mergeDate", formatter.parse(startDate)));
                     returnlist = criteria.list();
-                    getTransaction().commit();
+                    commit();
                     return returnlist;
                 } catch (ParseException ex) {
                     logger.error("error parsing date - ", ex);
@@ -1658,14 +1693,14 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
                 try {
                     criteria.add(Restrictions.gt("mergeDate", formatter.parse(startDate)));
                     returnlist = criteria.list();
-                    getTransaction().commit();
+                    commit();
                     return returnlist;
                 } catch (ParseException ex) {
                     logger.error("error parsing date - ", ex);
                 }
             }
             returnlist = criteria.list();
-            getTransaction().commit();
+            commit();
         } catch (Exception ex) {
             logger.error("error thrown - ", ex);
             rollback();
@@ -1949,9 +1984,6 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
         } finally {
             closeSession();
         }
-        startOperation();
-        
-        getTransaction().commit();
         return type_list;
     }
 
@@ -2037,6 +2069,190 @@ public class HolderComponentQueryImpl extends GeneralisedAbstractDao implements 
             closeSession();
         }
         return count > 0;
+    }
+
+    @Override
+    public boolean applyForIpo(IpoApplication application) {
+        boolean success = false;
+        try {
+            startOperation();
+            createUpdateObject(application);
+            commit();
+            success = true;
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return success;
+    }
+
+    @Override
+    public boolean applyForIpoMultiple(List<IpoApplication> applications) {
+        boolean success = false;
+        try {
+            startOperation();
+            applications.stream().forEach((application) -> {
+                createUpdateObject(application);
+            });
+            commit();
+            success = true;
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return success;
+    }
+
+    @Override
+    public boolean applyForPrivatePlacement(PrivatePlacementApplication application) {
+        boolean success = false;
+        try {
+            startOperation();
+            createUpdateObject(application);
+            commit();
+            success = true;
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return success;
+    }
+
+    @Override
+    public boolean applyForPrivatePlacementMultiple(List<PrivatePlacementApplication> applications) {
+        boolean success = false;
+        try {
+            startOperation();
+            applications.stream().forEach((application) -> {
+                createUpdateObject(application);
+            });
+            commit();
+            success = true;
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return success;
+    }
+
+    @Override
+    public boolean applyForRightsIssue(RightsIssueApplication application) {
+        boolean success = false;
+        try {
+            startOperation();
+            createUpdateObject(application);
+            commit();
+            success = true;
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return success;
+    }
+
+    @Override
+    public boolean applyForRightsIssueMultiple(List<RightsIssueApplication> applications) {
+        boolean success = false;
+        try {
+            startOperation();
+            applications.stream().forEach((application) -> {
+                createUpdateObject(application);
+            });
+            commit();
+            success = true;
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return success;
+    }
+
+    @Override
+    public IpoApplication getIpoApplication(int applicationId) {
+        IpoApplication application = new IpoApplication();
+        try {
+            startOperation();
+            application = (IpoApplication) searchObject(IpoApplication.class, applicationId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return application;
+    }
+
+    @Override
+    public PrivatePlacementApplication getPrivatePlacementApplication(int applicationId) {
+        PrivatePlacementApplication application = new PrivatePlacementApplication();
+        try {
+            startOperation();
+            application = (PrivatePlacementApplication) searchObject(IpoApplication.class, applicationId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return application;
+    }
+
+    @Override
+    public RightsIssueApplication getRightsIssueApplication(int applicationId) {
+        RightsIssueApplication application = new RightsIssueApplication();
+        try {
+            startOperation();
+            application = (RightsIssueApplication) searchObject(IpoApplication.class, applicationId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return application;
+    }
+
+    @Override
+    public boolean holderHasCHN(String firstName, String lastName) {
+        Holder h = new Holder();
+        h.setPryHolder(true);
+        boolean hasChn = false;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(Holder.class)
+                    .add(Example.create(h).enableLike())
+                    .add(Restrictions.eq("firstName", firstName))
+                    .add(Restrictions.eq("lastName", lastName));
+            List<Holder> list = criteria.list();
+            for (Holder check : list) {
+                if (check.getChn() != null && !"".equals(check.getChn())) {
+                    hasChn = true;
+                    break;
+                }
+            }
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return hasChn;
     }
     
     /**

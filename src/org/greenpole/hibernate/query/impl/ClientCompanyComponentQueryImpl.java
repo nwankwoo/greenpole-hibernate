@@ -13,6 +13,7 @@ import java.util.Objects;
 import org.greenpole.hibernate.entity.BondOffer;
 import org.greenpole.hibernate.entity.BondOfferPaymentPlan;
 import org.greenpole.hibernate.entity.BondType;
+import org.greenpole.hibernate.entity.ClearingHouse;
 import org.greenpole.hibernate.entity.ClientCompany;
 import org.greenpole.hibernate.entity.ClientCompanyAddress;
 import org.greenpole.hibernate.entity.ClientCompanyEmailAddress;
@@ -21,8 +22,10 @@ import org.greenpole.hibernate.entity.Depository;
 import org.greenpole.hibernate.entity.HolderBondAccount;
 import org.greenpole.hibernate.entity.HolderCompanyAccount;
 import org.greenpole.hibernate.entity.InitialPublicOffer;
+import org.greenpole.hibernate.entity.IpoApplication;
 import org.greenpole.hibernate.entity.NseSector;
 import org.greenpole.hibernate.entity.PrivatePlacement;
+import org.greenpole.hibernate.entity.PrivatePlacementApplication;
 import org.greenpole.hibernate.entity.ShareQuotation;
 import org.greenpole.hibernate.exception.GreenpoleQueryException;
 import org.greenpole.hibernate.query.ClientCompanyComponentQuery;
@@ -538,7 +541,7 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
                 });
             }
             
-            getTransaction().commit();
+            commit();
             updated = true;
             return updated;
         } catch (Exception ex) {
@@ -671,6 +674,189 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
     }
 
     @Override
+    public InitialPublicOffer getClientCompanyIpo(int clientCompanyId) {
+        InitialPublicOffer ipo = new InitialPublicOffer();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(InitialPublicOffer.class)
+                    .add(Restrictions.eq("clientCompany.id", clientCompanyId));
+            ipo = (InitialPublicOffer) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return ipo;
+    }
+
+    @Override
+    public InitialPublicOffer getIpo(int ipoId) {
+        InitialPublicOffer ipo = new InitialPublicOffer();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(InitialPublicOffer.class)
+                    .add(Restrictions.idEq(ipo));
+            ipo = (InitialPublicOffer) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return ipo;
+    }
+
+    @Override
+    public InitialPublicOffer getActiveClientCompanyIpo(int clientCompanyId) {
+        InitialPublicOffer ipo = new InitialPublicOffer();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(InitialPublicOffer.class)
+                    .add(Restrictions.eq("clientCompany.id", clientCompanyId))
+                    .add(Restrictions.eq("ipoClosed", false));
+            ipo = (InitialPublicOffer) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return ipo;
+    }
+
+    @Override
+    public InitialPublicOffer getActiveIpo(int ipoId) {
+        InitialPublicOffer ipo = new InitialPublicOffer();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(InitialPublicOffer.class)
+                    .add(Restrictions.idEq(ipo))
+                    .add(Restrictions.eq("ipoClosed", false));
+            ipo = (InitialPublicOffer) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return ipo;
+    }
+
+    @Override
+    public boolean checkInitialPublicOffer(int ipoId) {
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(InitialPublicOffer.class)
+                    .add(Restrictions.idEq(ipoId));
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return count > 0;
+    }
+
+    @Override
+    public boolean checkActiveInitialPublicOffer(int ipoId) {
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(InitialPublicOffer.class)
+                    .add(Restrictions.eq("ipoClosed", false))
+                    .add(Restrictions.idEq(ipoId));
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return count > 0;
+    }
+
+    @Override
+    public List<InitialPublicOffer> getAllIpos() {
+        List<InitialPublicOffer> all = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(InitialPublicOffer.class);
+            all = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return all;
+    }
+
+    @Override
+    public List<InitialPublicOffer> getAllActiveIpos() {
+        List<InitialPublicOffer> all = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(InitialPublicOffer.class)
+                    .add(Restrictions.eq("ipoClosed", false));
+            all = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return all;
+    }
+
+    @Override
+    public List<IpoApplication> getActiveIpoApplications(int ipoId) {
+        List<IpoApplication> all = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(IpoApplication.class)
+                    .add(Restrictions.eq("initialPublicOffer.id", ipoId))
+                    .add(Restrictions.eq("canceled", false));
+            all = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return all;
+    }
+
+    @Override
+    public List<IpoApplication> getAllIpoApplications(int ipoId) {
+        List<IpoApplication> all = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(IpoApplication.class)
+                    .add(Restrictions.eq("initialPublicOffer.id", ipoId));
+            all = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return all;
+    }
+
+    @Override
     public void createPrivatePlacement(PrivatePlacement privatePlacement) {
         try {
             startOperation();
@@ -682,6 +868,43 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
         } finally {
             closeSession();
         }
+    }
+
+    @Override
+    public List<PrivatePlacementApplication> getAllPrivatePlacementApplications(int ppId) {
+        List<PrivatePlacementApplication> all = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PrivatePlacementApplication.class)
+                    .add(Restrictions.eq("privatePlacement.id", ppId));
+            all = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return all;
+    }
+
+    @Override
+    public List<PrivatePlacementApplication> getAllActivePrivatePlacementApplications(int ppId) {
+        List<PrivatePlacementApplication> all = new ArrayList<>();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PrivatePlacementApplication.class)
+                    .add(Restrictions.eq("privatePlacement.id", ppId))
+                    .add(Restrictions.eq("canceled", false));
+            all = criteria.list();
+            commit();
+        } catch (Exception ex) {
+            logger.error("error thrown - ", ex);
+            rollback();
+        } finally {
+            closeSession();
+        }
+        return all;
     }
 
     @Override
@@ -1221,5 +1444,168 @@ public class ClientCompanyComponentQueryImpl extends GeneralisedAbstractDao impl
             closeSession();
         }
         return depository;
+    }
+
+    @Override
+    public ClearingHouse getClearingHouse(int chId) {
+        ClearingHouse clearingHouse = new ClearingHouse();
+        try {
+            startOperation();
+            clearingHouse = (ClearingHouse) searchObject(ClearingHouse.class, chId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return clearingHouse;
+    }
+
+    @Override
+    public PrivatePlacement getPrivatePlacement(int ppId) {
+        PrivatePlacement pp = new PrivatePlacement();
+        try {
+            startOperation();
+            pp = (PrivatePlacement) searchObject(PrivatePlacement.class, ppId);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return pp;
+    }
+
+    @Override
+    public boolean checkPrivatePlacement(int ppId) {
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PrivatePlacement.class)
+                    .add(Restrictions.idEq(ppId));
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return count > 0;
+    }
+
+    @Override
+    public boolean checkActivePrivatePlacement(int ppId) {
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PrivatePlacement.class)
+                    .add(Restrictions.eq("placementClosed", false))
+                    .add(Restrictions.idEq(ppId));
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return count > 0;
+    }
+
+    @Override
+    public boolean checkClientCompanyPrivatePlacement(int clientCompanyId) {
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PrivatePlacement.class)
+                    .add(Restrictions.eq("clientCompany.id", clientCompanyId));
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return count > 0;
+    }
+
+    @Override
+    public boolean checkClientCompanyPrivatePlacement(int clientCompanyId, int ppId) {
+        Long count = 0L;
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(PrivatePlacement.class)
+                    .add(Restrictions.idEq(ppId))
+                    .add(Restrictions.eq("clientCompany.id", clientCompanyId));
+            count = (Long) criteria.uniqueResult();
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return count > 0;
+    }
+
+    @Override
+    public ClientCompany getRightsIssueClientCompany(int rightsId) {
+        ClientCompany cc = new ClientCompany();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                    .createAlias("rightsIssues", "r")
+                    .add(Restrictions.eq("r.id", rightsId));
+            cc = (ClientCompany) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return cc;
+    }
+
+    @Override
+    public ClientCompany getPrivatePlacementClientCompany(int ppId) {
+        ClientCompany cc = new ClientCompany();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                    .createAlias("privatePlacements", "p")
+                    .add(Restrictions.eq("p.id", ppId));
+            cc = (ClientCompany) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return cc;
+    }
+
+    @Override
+    public ClientCompany getIpoClientCompany(int ipoId) {
+        ClientCompany cc = new ClientCompany();
+        try {
+            startOperation();
+            Criteria criteria = getSession().createCriteria(ClientCompany.class)
+                    .createAlias("initialPublicOffers", "i")
+                    .add(Restrictions.eq("i.id", ipoId));
+            cc = (ClientCompany) criteria.list().get(0);
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            logger.error("error thrown - ", ex);
+        } finally {
+            closeSession();
+        }
+        return cc;
     }
 }

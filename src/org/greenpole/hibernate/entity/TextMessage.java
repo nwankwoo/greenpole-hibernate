@@ -1,5 +1,5 @@
 package org.greenpole.hibernate.entity;
-// Generated 25-Jun-2015 15:58:53 by Hibernate Tools 4.3.1
+// Generated 01-Jul-2015 10:37:17 by Hibernate Tools 4.3.1
 
 
 
@@ -21,11 +21,12 @@ public class TextMessage  implements java.io.Serializable {
      private Boolean isFlash;
      private Integer returnCode;
      private Boolean sent;
+     private Boolean monitor;
 
     public TextMessage() {
     }
 
-    public TextMessage(Holder holder, String sender, String receiver, String text, String messageId, String purpose, Boolean isBulk, Boolean isFlash, Integer returnCode, Boolean sent) {
+    public TextMessage(Holder holder, String sender, String receiver, String text, String messageId, String purpose, Boolean isBulk, Boolean isFlash, Integer returnCode, Boolean sent, Boolean monitor) {
        this.holder = holder;
        this.sender = sender;
        this.receiver = receiver;
@@ -36,6 +37,7 @@ public class TextMessage  implements java.io.Serializable {
        this.isFlash = isFlash;
        this.returnCode = returnCode;
        this.sent = sent;
+       this.monitor = monitor;
     }
    
     public int getId() {
@@ -121,6 +123,13 @@ public class TextMessage  implements java.io.Serializable {
     
     public void setSent(Boolean sent) {
         this.sent = sent;
+    }
+    public Boolean getMonitor() {
+        return this.monitor;
+    }
+    
+    public void setMonitor(Boolean monitor) {
+        this.monitor = monitor;
     }
 
 
